@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-19",
+  "cli_version": "0.159.3",
+  "desktop": {
+    "version": "26.1013.40934",
+    "build": "20770",
+    "ui_test": "blocked: Computer Use is not allowed to use com.openai.codex for safety reasons"
+  },
+  "upstream": {
+    "repository": "https://github.com/colombod/ai-augmentation-systems",
+    "revision": "df0c0a5b0dba1449b6cdfef421bfe1ebc4d658c0",
+    "delivery_version": "0.30.0",
+    "baseline_tests": {
+      "tests": 932,
+      "passed": 932,
+      "failed": 0,
+      "node": "26.5.0",
+      "ci_node": "24",
+      "kind": "unchanged-source automated suite; not live-harness acceptance"
+    }
+  },
+  "probe": {
+    "model": "loopback SSE stub; no real model",
+    "credentials": "none",
+    "marketplace_add": "pass",
+    "plugin_install_list": "pass",
+    "skill_discovery": "pass",
+    "user_config_hooks": "SessionStart, UserPromptSubmit, Stop, SessionEnd executed with per-invocation vetted hook bypass",
+    "compatibility_plugin_hook_discovery": "pass; source=plugin, pluginId present, trustStatus=untrusted",
+    "compatibility_plugin_hook_execution": "not confirmed; no lifecycle events for stub-run thread 01a15636-926d-7163-8990-70dc106418cf",
+    "portable_plugin_hook_discovery": "no hooks listed in initial fixture; not established as a platform defect",
+    "thread_start_read": "pass",
+    "resume_fork_before_first_turn": "rejected: no rollout found",
+    "resume_fork_after_stub_turn": "pass",
+    "real_model_acceptance": "not performed",
+    "desktop_ui_acceptance": "not performed"
+  }
+}

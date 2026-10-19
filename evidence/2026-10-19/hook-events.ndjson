@@ -1,0 +1,4 @@
+{"hook_event_name": "SessionStart", "session_id": "01a15636-0f27-7683-b7c3-2efbe6783b29", "turn_id": null, "tool_name": null, "source": "startup"}
+{"hook_event_name": "UserPromptSubmit", "session_id": "01a15636-0f27-7683-b7c3-2efbe6783b29", "turn_id": "01a15636-0f31-7c81-ad2b-8cf8baa04d99", "tool_name": null, "source": null}
+{"hook_event_name": "Stop", "session_id": "01a15636-0f27-7683-b7c3-2efbe6783b29", "turn_id": "01a15636-0f31-7c81-ad2b-8cf8baa04d99", "tool_name": null, "source": null}
+{"hook_event_name": "SessionEnd", "session_id": "01a15636-0f27-7683-b7c3-2efbe6783b29", "turn_id": null, "tool_name": null, "source": null}

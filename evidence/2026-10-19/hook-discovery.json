@@ -1,0 +1,38 @@
+[
+  {
+    "run": "vetted",
+    "eventName": "sessionStart",
+    "handlerType": "command",
+    "source": "plugin",
+    "pluginId": "mechanism-probe@mechanism-probe",
+    "trustStatus": "untrusted",
+    "enabled": true
+  },
+  {
+    "run": "vetted",
+    "eventName": "sessionEnd",
+    "handlerType": "command",
+    "source": "plugin",
+    "pluginId": "mechanism-probe@mechanism-probe",
+    "trustStatus": "untrusted",
+    "enabled": true
+  },
+  {
+    "run": "vetted",
+    "eventName": "userPromptSubmit",
+    "handlerType": "command",
+    "source": "plugin",
+    "pluginId": "mechanism-probe@mechanism-probe",
+    "trustStatus": "untrusted",
+    "enabled": true
+  },
+  {
+    "run": "vetted",
+    "eventName": "stop",
+    "handlerType": "command",
+    "source": "plugin",
+    "pluginId": "mechanism-probe@mechanism-probe",
+    "trustStatus": "untrusted",
+    "enabled": true
+  }
+]

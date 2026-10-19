@@ -1,0 +1,7 @@
+{
+  "name": "ai-augmentation-systems-openai",
+  "interface": {
+    "displayName": "AI Augmentation Systems - OpenAI"
+  },
+  "plugins": []
+}
