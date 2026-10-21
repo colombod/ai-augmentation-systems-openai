@@ -54,6 +54,10 @@ Use `/hooks` in Codex CLI to inspect the plugin's current command definitions an
 
 Registered events: `SessionStart`, `SessionEnd`, `UserPromptSubmit`, `PreToolUse`, `PostToolUse`, `PermissionRequest`, `SubagentStart`, `SubagentStop`, `PreCompact`, `PostCompact`, `Stop`, and `Interrupt`. Only callbacks actually emitted by the host can appear; event coverage can differ by host/version. `Stop` ends a turn; only `SessionEnd` denotes session termination.
 
+See the packaged [event catalogue and schema reference](references/hook-events.md) for every event's trigger, common and event-specific input fields, subagent correlation and examples. Machine-readable references are included for [host inputs](schemas/hook-input.schema.json) and [saved JSONL records](schemas/log-record.schema.json); these are distinct formats.
+
+For future Amplifier work, see [conversation data, agent responses and hook replies](references/amplifier-integration.md). It documents user prompts, latest main/subagent messages, tool results, correlation limits and the separate hook-to-Codex response contract. It is reference material; no Amplifier adapter or content capture is enabled.
+
 ## Find and view logs
 
 Codex supplies the installed plugin's writable directory as `PLUGIN_DATA`. Logs live at:
@@ -84,7 +88,7 @@ This location was checked with the local Codex installation. An empty or relativ
 
 `SubagentStart` and `SubagentStop` were observed in the parent chat's session file. Match the new lifecycle entries using `agent_id`; when supplied at stop, `agent_transcript_path` points to Codex's own child transcript. It is separate from this plugin's event log and is not a newly created child event-log file. The plugin does not infer a child's session filename from its agent identifier, or claim to capture child tool events the host did not deliver. Other callbacks are routed by the session identifier the host supplies; ordinary tool-event records do not carry agent attribution.
 
-The source helper can inspect logs written by installed preview.1. Source preview.3 does not automatically update an installed copy; use the supported plugin refresh/reinstall flow to update it. New metadata appears only after updating; historical records are never rewritten.
+The source helper can inspect logs written by installed preview.1. Source preview.4 does not automatically update an installed copy; use the supported plugin refresh/reinstall flow to update it. New metadata appears only after updating; historical records are never rewritten.
 
 For a standalone check, create a data directory and use its canonical absolute path (resolve symlinks, including macOS `/tmp`/`/var` aliases):
 

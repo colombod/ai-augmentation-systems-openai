@@ -1,6 +1,6 @@
 {
   "name": "codex-hook-event-log",
-  "version": "0.1.0-preview.3",
+  "version": "0.1.0-preview.4",
   "private": true,
   "type": "module",
   "description": "TypeScript transport for a local Rust Codex event-type logger",
@@ -8,6 +8,11 @@
     "build": "node scripts/build.mjs",
     "test": "node --test tests/*.test.mjs"
   },
-  "engines": { "node": ">=22" },
-  "devDependencies": { "@types/node": "22.15.30", "typescript": "5.8.3" }
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "@types/node": "22.15.30",
+    "typescript": "5.8.3"
+  }
 }

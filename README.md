@@ -10,7 +10,7 @@ guide. Maintained separately from the
 | Plugin | What it does | Current status |
 |---|---|---|
 | [Delivery](plugins/delivery/README.md) | Turns a product idea into a brief, research, requirements, architecture, roadmap and implementation handoff; reviews the results afterward | Local runtime preview `0.1.0-preview.6`; targeted CLI/native workflow tests; desktop and ChatGPT acceptance pending |
-| [Hook Event Log](plugins/hook-event-log/README.md) | Writes lifecycle types and minimal subagent identifiers/transcript links to local session files, using TypeScript and Rust | Source `0.1.0-preview.3`; real desktop callbacks observed with preview.1; build and refresh installed copies for updates |
+| [Hook Event Log](plugins/hook-event-log/README.md) | Writes lifecycle types and minimal subagent identifiers/transcript links to local session files, using TypeScript and Rust | Source `0.1.0-preview.4`, with packaged event/schema reference; real desktop callbacks observed with preview.1; refresh installed copies for updates |
 
 Delivery provides 15 skills, 20 templates and 10 review lenses. The autonomous
 shipping workflow remains unfinished. Local persistent-session coordination and

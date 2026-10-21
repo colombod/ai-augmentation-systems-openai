@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.0-preview.4
+
+- Package a complete twelve-event catalogue, common/per-event field reference and examples.
+- Include JSON Schema references for permissive documented host inputs and reduced saved records, linked from the README.
+- Document prompt/agent/tool content availability, correlation limits and hook replies for future Amplifier integration, without enabling content capture.
+- Documentation and schema assets only; hook execution and saved record behavior are unchanged.
+
 ## 0.1.0-preview.3
 
 - Include host-provided subagent IDs and types on SubagentStart and SubagentStop records.

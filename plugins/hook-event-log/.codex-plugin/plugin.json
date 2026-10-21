@@ -1,6 +1,6 @@
 {
   "name": "hook-event-log",
-  "version": "0.1.0-preview.3",
+  "version": "0.1.0-preview.4",
   "description": "Observe Codex lifecycle events and follow subagent identifiers and transcript links without storing prompts or tool content.",
   "author": {
     "name": "Diego Colombo"

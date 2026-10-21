@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ai-augmentation-systems-openai:hook-event-log:log-record:1",
+  "title": "Hook Event Log saved JSONL record",
+  "description": "Validate one saved line at a time. Ordinary records have only event_type. Historical one-key subagent records remain valid. Byte/path annotations complement, not replace, Rust validation.",
+  "oneOf": [
+    {
+      "type": "object",
+      "required": [
+        "event_type"
+      ],
+      "properties": {
+        "event_type": {
+          "enum": [
+            "SessionStart",
+            "SessionEnd",
+            "UserPromptSubmit",
+            "PreToolUse",
+            "PostToolUse",
+            "PermissionRequest",
+            "PreCompact",
+            "PostCompact",
+            "Stop",
+            "Interrupt"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "event_type"
+      ],
+      "properties": {
+        "event_type": {
+          "const": "SubagentStart"
+        },
+        "agent_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024,
+          "pattern": "\\S",
+          "not": {
+            "pattern": "[\\u0000-\\u001f\\u007f-\\u009f]"
+          },
+          "x-maxUtf8Bytes": 1024,
+          "description": "Rust also enforces this UTF-8 byte bound; JSON Schema maxLength counts characters."
+        },
+        "agent_type": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "\\S",
+          "not": {
+            "pattern": "[\\u0000-\\u001f\\u007f-\\u009f]"
+          },
+          "x-maxUtf8Bytes": 256,
+          "description": "Rust also enforces this UTF-8 byte bound; JSON Schema maxLength counts characters."
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "event_type"
+      ],
+      "properties": {
+        "event_type": {
+          "const": "SubagentStop"
+        },
+        "agent_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024,
+          "pattern": "\\S",
+          "not": {
+            "pattern": "[\\u0000-\\u001f\\u007f-\\u009f]"
+          },
+          "x-maxUtf8Bytes": 1024,
+          "description": "Rust also enforces this UTF-8 byte bound; JSON Schema maxLength counts characters."
+        },
+        "agent_type": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "\\S",
+          "not": {
+            "pattern": "[\\u0000-\\u001f\\u007f-\\u009f]"
+          },
+          "x-maxUtf8Bytes": 256,
+          "description": "Rust also enforces this UTF-8 byte bound; JSON Schema maxLength counts characters."
+        },
+        "agent_transcript_path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096,
+          "pattern": "\\S",
+          "not": {
+            "pattern": "[\\u0000-\\u001f\\u007f-\\u009f]"
+          },
+          "x-maxUtf8Bytes": 4096,
+          "description": "Host-provided Unix absolute path. Recorded without reading the file; Rust also checks UTF-8 bytes and platform absoluteness.",
+          "allOf": [
+            {
+              "pattern": "^/"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  ]
+}
