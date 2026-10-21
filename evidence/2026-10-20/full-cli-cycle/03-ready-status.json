@@ -1,0 +1,83 @@
+{
+  "roles": [
+    {
+      "name": "builder",
+      "spec": {
+        "cwd": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/product",
+        "git_metadata_write": true,
+        "instructions": "Synthetic delivery acceptance fixture. Stay within your assigned role/stage. Use only bound delivery tools for canonical writes/Beads and native shell for actual observations. Do not delegate, browse, publish, merge, push, alter hooks/security settings or imply human consent. Preserve failures. Be precise about local tests versus hosted CI (not present). Claim assigned task through delivery_task_claim. Implement only the tiny Python CLI and meaningful tests in product. Capture actual test output under .delivery-evidence, commit explicit code/test paths with normal Git, submit delivery_task_implemented only after successful local tests and exact committed HEAD. Do not git add .delivery-evidence or invent CI.",
+        "lane": "builder",
+        "model": "gpt-6.1-sol"
+      },
+      "thread": null,
+      "turn": null,
+      "phase": "prepared",
+      "last_event": null,
+      "git_commit_capability": "opt-in independent metadata profile; verified on execution",
+      "observation": "prepared"
+    },
+    {
+      "name": "coordinator",
+      "spec": {
+        "cwd": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/planning",
+        "instructions": "Synthetic delivery acceptance fixture. Stay within your assigned role/stage. Use only bound delivery tools for canonical writes/Beads and native shell for actual observations. Do not delegate, browse, publish, merge, push, alter hooks/security settings or imply human consent. Preserve failures. Be precise about local tests versus hosted CI (not present). Coordinate this tiny delivery and hand the brief/story drafting assignment to product-manager via delivery_send.",
+        "lane": "read-only",
+        "model": "gpt-6.1-sol"
+      },
+      "thread": "01a15b51-d491-7a22-9444-466ef79e4de4",
+      "turn": null,
+      "phase": "idle",
+      "last_event": 1792533546.902584,
+      "git_commit_capability": "not enabled; product file edits only",
+      "observation": "idle"
+    },
+    {
+      "name": "delivery-manager",
+      "spec": {
+        "cwd": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/planning",
+        "instructions": "Synthetic delivery acceptance fixture. Stay within your assigned role/stage. Use only bound delivery tools for canonical writes/Beads and native shell for actual observations. Do not delegate, browse, publish, merge, push, alter hooks/security settings or imply human consent. Preserve failures. Be precise about local tests versus hosted CI (not present). Own canonical story materialization, readiness surfaces and honest gate status. Use controlled task tools; never edit Beads directly.",
+        "lane": "read-only",
+        "model": "gpt-6.1-sol"
+      },
+      "thread": "01a15b53-475e-7e83-b05f-4b0941a47f7c",
+      "turn": null,
+      "phase": "idle",
+      "last_event": 1792533588.754753,
+      "git_commit_capability": "not enabled; product file edits only",
+      "observation": "idle"
+    },
+    {
+      "name": "product-manager",
+      "spec": {
+        "cwd": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/planning",
+        "instructions": "Synthetic delivery acceptance fixture. Stay within your assigned role/stage. Use only bound delivery tools for canonical writes/Beads and native shell for actual observations. Do not delegate, browse, publish, merge, push, alter hooks/security settings or imply human consent. Preserve failures. Be precise about local tests versus hosted CI (not present). Own concrete product brief and acceptance criteria. Read the assigned phase skill and referenced templates. Save canonical drafts via delivery_artifact_write. Do not enqueue other roles unless explicitly requested.",
+        "lane": "read-only",
+        "model": "gpt-6.1-sol"
+      },
+      "thread": "01a15b52-68b8-7573-b885-f8257ca2f002",
+      "turn": null,
+      "phase": "idle",
+      "last_event": 1792533561.3872461,
+      "git_commit_capability": "not enabled; product file edits only",
+      "observation": "idle"
+    },
+    {
+      "name": "reviewer",
+      "spec": {
+        "cwd": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/product",
+        "instructions": "Synthetic delivery acceptance fixture. Stay within your assigned role/stage. Use only bound delivery tools for canonical writes/Beads and native shell for actual observations. Do not delegate, browse, publish, merge, push, alter hooks/security settings or imply human consent. Preserve failures. Be precise about local tests versus hosted CI (not present). Independently inspect actual code and exact HEAD. Execute meaningful tests and user CLI cases using python3 -B / PYTHONDONTWRITEBYTECODE=1; avoid heredocs/tempfiles because this lane is read-only. Save exact command/output/head findings via delivery_artifact_write to reviews/*.md. Submit independent review and surface observations with protected review file evidence. Never claim authenticated human or hosted CI.",
+        "lane": "read-only",
+        "model": "gpt-6.1-sol"
+      },
+      "thread": null,
+      "turn": null,
+      "phase": "prepared",
+      "last_event": null,
+      "git_commit_capability": "not enabled; product file edits only",
+      "observation": "prepared"
+    }
+  ],
+  "pending": [],
+  "task_authority": "Beads",
+  "acceptance": "prototype; worker isolation/recovery acceptance pending"
+}

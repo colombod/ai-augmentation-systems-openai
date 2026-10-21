@@ -1,0 +1,5 @@
+{
+  "probe": "read-only exact supervisor PID ps query",
+  "result": "PermissionError: Operation not permitted: ps",
+  "effect": "No audit/control action executed; use waited process records and primary root outer-exit observation"
+}

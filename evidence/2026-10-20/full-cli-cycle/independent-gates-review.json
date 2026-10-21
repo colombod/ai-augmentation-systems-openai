@@ -1,0 +1,54 @@
+{
+  "scope": "Independent implementation-session review of one supervised real-model public-CLI cycle through honest operator barrier; no source/harness/DB edits by this reviewer",
+  "issue": "fullcycle-6m8",
+  "head": "32746b7d72bbbb4263c2ecf8a737c1c1613f9bbe",
+  "initial_run_outcome": "failed",
+  "initial_run_error": "No actual successful native controlled tool call: delivery_task_gate_status",
+  "native_evidence_ids": {
+    "peer_handoff": 28,
+    "pm_second_turn_terminal": 93,
+    "staged_commit": 153,
+    "implementation": 158,
+    "review": 192,
+    "surface": 196,
+    "final_dm_queue_user_message": 215,
+    "final_gate_status": 217,
+    "final_accept_refusal": 220,
+    "final_dm_terminal": 225
+  },
+  "checks": {
+    "real_builder_commit_exit0": true,
+    "independent_native_reviewer_thread": true,
+    "criteria_seal_consistent": true,
+    "head_consistent": true,
+    "reviewer_captured_output_blocks_exactly_match_native": true,
+    "protected_review_hash_matches_gate": true,
+    "final_native_user_message_bound_to_original_queue": true,
+    "final_native_turn_completed": true,
+    "submissions_complete": true,
+    "canonical_task_in_progress": true,
+    "accepted_false": true,
+    "no_accepted_or_receipt_intent_gate_event": true,
+    "blackbox_grade_source_matches_committed_head": true,
+    "blackbox_grade_all21_pass": true
+  },
+  "actual_checks_observed": {
+    "builder_local_tests": 7,
+    "reviewer_local_tests": 7,
+    "reviewer_independent_cli_cases": 9,
+    "root_independent_blackbox_cases": 21
+  },
+  "bounded_interventions_preserved": [
+    "Initial judge call skipped for incomplete required state; corrective operator-queued native turn produced OpenAI advisory response.",
+    "Builder pathspec commit required disallowed temporary index path and requested outside-sandbox retry. Public revoke and exact-turn steering preserved denial; builder removed only generated Python cache and used ordinary staged-index commit within existing permissions.",
+    "Initial harness waited for an already-idle reused role and falsely finished before new DM turn. Initial failure retained; public CLI continuation consumed the original queued message without resend or DB mutation."
+  ],
+  "limits": [
+    "This is one supervised synthetic software feature, not an unattended autonomous reliability benchmark.",
+    "The full 15-phase planning workflow was not exercised; native persistent team, brief/story and controlled delivery path were.",
+    "Actual product surface is local macOS Python CLI; desktop/ChatGPT behavior is not established.",
+    "Tests are local. Hosted CI, authenticated person identity, real operator acceptance, merge/push/publication are not established.",
+    "Judge selection used OpenAI advisory here. Jev fullcycle behavior is not established by this run."
+  ],
+  "all_checks_pass": true
+}

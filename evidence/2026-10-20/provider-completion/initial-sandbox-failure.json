@@ -1,0 +1,9 @@
+{
+  "stage": "initial node test execution under default sandbox",
+  "tests": 15,
+  "passed": 6,
+  "failed": 9,
+  "failure": "listen EPERM: operation not permitted 127.0.0.1",
+  "classification": "test fixture socket denied, not failed provider behavior",
+  "resolution": "reran identical and expanded tests with explicit loopback execution approval; later raw outputs retained"
+}

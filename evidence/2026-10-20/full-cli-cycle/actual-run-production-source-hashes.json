@@ -1,0 +1,15 @@
+{
+  "captured_at": 1792534062.728003,
+  "scope": "actual run and continuation; before later instruction-only guidance correction",
+  "sha256": {
+    "plugins/delivery/scripts/runtime.py": "74f5a7d3a602a3037b567ef679f861a9f7e0e3b69a0703d0eb8241d5550cd1ae",
+    "plugins/delivery/scripts/codex_rpc.py": "f28c46c75fbf15ab43c7a14746582963496e7e83ad9fe109cf38ecd6b79e6dd6",
+    "plugins/delivery/scripts/delivery_gates.py": "292da1e4a4db8d4603377fd547b953cd4bd030e1fad4291bb10b562594311b77",
+    "plugins/delivery/scripts/artifacts.py": "31f5558e1f33e15bad21c1c70b17f78cebd59879f5cbff994cbe6921de33e12f",
+    "plugins/delivery/scripts/operator_capture.py": "87578a6af946229772047b3a46b468c9ad6441fc3f7dbc065a9fefb2b8bb27a1",
+    "plugins/delivery/scripts/judge.js": "206e56589e5ed9cbe50cb0f1b56323fa028c1e7b475927ad2e45c1b254ae9a9f",
+    "plugins/delivery/scripts/lib/judge.js": "9826613af1fc6c5f78af00e3e0a65e2016a77633db9d9c400dad20b1eac67d9a",
+    "plugins/delivery/scripts/lib/openai-judge.js": "ded004a155f8a2d33f7be32e8166db70f2905f67f6175e09e1d7b9ded50edd61",
+    "plugins/delivery/references/team-runtime.md": "e30c0cacb680bf871391e00c50c1ed0d6d52d0d41b00d59fb36066fcd5da56f2"
+  }
+}

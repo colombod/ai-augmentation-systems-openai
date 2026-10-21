@@ -1,0 +1,33 @@
+{
+  "note": "Synthetic, implementer-labelled evaluation. Operator must review before selecting in trusted runtime configuration. No provider is enabled by this file.",
+  "records": [
+    {
+      "provider": "jev",
+      "model": "jev-1.13.0",
+      "question": "relay_request",
+      "version": "1.1",
+      "instructions_sha256": "4f21f13b940769896a2cb16400787073a17aeecf8bfde7ddf3073d5f78dad471",
+      "block_threshold": 0.8,
+      "warn_threshold": 0.5,
+      "cases": 20,
+      "positive_cases": 10,
+      "negative_cases": 10,
+      "failures": 0,
+      "evidence_sha256": "890fc5e10325b239442234117f3e9f6bba75aff5ca41f920696596e79b6be03a"
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-6-luna",
+      "question": "relay_request",
+      "version": "1.1",
+      "instructions_sha256": "4f21f13b940769896a2cb16400787073a17aeecf8bfde7ddf3073d5f78dad471",
+      "block_threshold": 0.8,
+      "warn_threshold": 0.5,
+      "cases": 20,
+      "positive_cases": 10,
+      "negative_cases": 10,
+      "failures": 0,
+      "evidence_sha256": "890fc5e10325b239442234117f3e9f6bba75aff5ca41f920696596e79b6be03a"
+    }
+  ]
+}

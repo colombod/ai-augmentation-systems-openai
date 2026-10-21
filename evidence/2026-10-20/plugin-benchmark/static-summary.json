@@ -1,0 +1,187 @@
+{
+  "kind": "heuristic static scores, not model-quality or success rates",
+  "rows": [
+    {
+      "skill": "architecture",
+      "score": 81,
+      "grade": "C",
+      "estimated_trigger_tokens": 70,
+      "estimated_instruction_tokens": 1525,
+      "warning_ids": [
+        "invoke_cost_tokens-budget-high",
+        "description-trigger-weak",
+        "coverage-artifacts-unavailable"
+      ]
+    },
+    {
+      "skill": "brief",
+      "score": 81,
+      "grade": "C",
+      "estimated_trigger_tokens": 69,
+      "estimated_instruction_tokens": 1571,
+      "warning_ids": [
+        "invoke_cost_tokens-budget-high",
+        "description-trigger-weak",
+        "coverage-artifacts-unavailable"
+      ]
+    },
+    {
+      "skill": "challenge",
+      "score": 81,
+      "grade": "C",
+      "estimated_trigger_tokens": 90,
+      "estimated_instruction_tokens": 1515,
+      "warning_ids": [
+        "invoke_cost_tokens-budget-high",
+        "description-trigger-weak",
+        "coverage-artifacts-unavailable"
+      ]
+    },
+    {
+      "skill": "design",
+      "score": 81,
+      "grade": "C",
+      "estimated_trigger_tokens": 79,
+      "estimated_instruction_tokens": 1410,
+      "warning_ids": [
+        "invoke_cost_tokens-budget-high",
+        "description-trigger-weak",
+        "coverage-artifacts-unavailable"
+      ]
+    },
+    {
+      "skill": "personas",
+      "score": 81,
+      "grade": "C",
+      "estimated_trigger_tokens": 76,
+      "estimated_instruction_tokens": 2128,
+      "warning_ids": [
+        "invoke_cost_tokens-budget-high",
+        "description-trigger-weak",
+        "coverage-artifacts-unavailable"
+      ]
+    },
+    {
+      "skill": "prd",
+      "score": 77,
+      "grade": "C",
+      "estimated_trigger_tokens": 104,
+      "estimated_instruction_tokens": 2605,
+      "warning_ids": [
+        "invoke_cost_tokens-budget-high",
+        "description-trigger-weak",
+        "trigger_cost_tokens-budget-high",
+        "coverage-artifacts-unavailable"
+      ]
+    },
+    {
+      "skill": "realign",
+      "score": 81,
+      "grade": "C",
+      "estimated_trigger_tokens": 65,
+      "estimated_instruction_tokens": 1290,
+      "warning_ids": [
+        "invoke_cost_tokens-budget-high",
+        "description-trigger-weak",
+        "coverage-artifacts-unavailable"
+      ]
+    },
+    {
+      "skill": "research",
+      "score": 81,
+      "grade": "C",
+      "estimated_trigger_tokens": 75,
+      "estimated_instruction_tokens": 1315,
+      "warning_ids": [
+        "invoke_cost_tokens-budget-high",
+        "description-trigger-weak",
+        "coverage-artifacts-unavailable"
+      ]
+    },
+    {
+      "skill": "roadmap",
+      "score": 81,
+      "grade": "C",
+      "estimated_trigger_tokens": 67,
+      "estimated_instruction_tokens": 1517,
+      "warning_ids": [
+        "invoke_cost_tokens-budget-high",
+        "description-trigger-weak",
+        "coverage-artifacts-unavailable"
+      ]
+    },
+    {
+      "skill": "simulate",
+      "score": 67,
+      "grade": "D",
+      "estimated_trigger_tokens": 152,
+      "estimated_instruction_tokens": 3024,
+      "warning_ids": [
+        "invoke_cost_tokens-budget-high",
+        "trigger_cost_tokens-budget-high",
+        "description-trigger-weak",
+        "coverage-artifacts-unavailable"
+      ]
+    },
+    {
+      "skill": "sprint-review",
+      "score": 81,
+      "grade": "C",
+      "estimated_trigger_tokens": 66,
+      "estimated_instruction_tokens": 1995,
+      "warning_ids": [
+        "invoke_cost_tokens-budget-high",
+        "description-trigger-weak",
+        "coverage-artifacts-unavailable"
+      ]
+    },
+    {
+      "skill": "sprint",
+      "score": 77,
+      "grade": "C",
+      "estimated_trigger_tokens": 107,
+      "estimated_instruction_tokens": 1530,
+      "warning_ids": [
+        "invoke_cost_tokens-budget-high",
+        "description-trigger-weak",
+        "trigger_cost_tokens-budget-high",
+        "coverage-artifacts-unavailable"
+      ]
+    },
+    {
+      "skill": "start",
+      "score": 91,
+      "grade": "B",
+      "estimated_trigger_tokens": 45,
+      "estimated_instruction_tokens": 578,
+      "warning_ids": [
+        "description-trigger-weak",
+        "invoke_cost_tokens-budget-high",
+        "coverage-artifacts-unavailable"
+      ]
+    },
+    {
+      "skill": "status",
+      "score": 91,
+      "grade": "B",
+      "estimated_trigger_tokens": 52,
+      "estimated_instruction_tokens": 518,
+      "warning_ids": [
+        "description-trigger-weak",
+        "invoke_cost_tokens-budget-high",
+        "coverage-artifacts-unavailable"
+      ]
+    },
+    {
+      "skill": "stories",
+      "score": 86,
+      "grade": "B",
+      "estimated_trigger_tokens": 59,
+      "estimated_instruction_tokens": 2158,
+      "warning_ids": [
+        "invoke_cost_tokens-budget-high",
+        "coverage-artifacts-unavailable"
+      ]
+    }
+  ]
+}

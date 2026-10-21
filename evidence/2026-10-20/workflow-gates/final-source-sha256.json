@@ -1,0 +1,4 @@
+{
+  "plugins/delivery/scripts/delivery_gates.py": "292da1e4a4db8d4603377fd547b953cd4bd030e1fad4291bb10b562594311b77",
+  "tests/delivery/test_delivery_gates.py": "87de698663d59d330bbb2c5d739dd69af726efbb7fee78f08a8fd07511ef2d59"
+}

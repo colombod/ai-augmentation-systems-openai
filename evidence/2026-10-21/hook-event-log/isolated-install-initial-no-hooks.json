@@ -1,0 +1,31 @@
+{
+  "codex": "codex-cli 0.159.3",
+  "registration": {
+    "marketplaceName": "ai-augmentation-systems-openai",
+    "installedRoot": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/hook-event-log-install-rr6xsqiy/market",
+    "alreadyAdded": false
+  },
+  "install": {
+    "pluginId": "hook-event-log@ai-augmentation-systems-openai",
+    "name": "hook-event-log",
+    "marketplaceName": "ai-augmentation-systems-openai",
+    "version": "0.1.0-preview.1",
+    "installedPath": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/hook-event-log-install-rr6xsqiy/home/plugins/cache/ai-augmentation-systems-openai/hook-event-log/0.1.0-preview.1",
+    "authPolicy": "ON_USE"
+  },
+  "hooks": {
+    "data": [
+      {
+        "cwd": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/hook-event-log-install-rr6xsqiy/project",
+        "hooks": [],
+        "warnings": [],
+        "errors": []
+      }
+    ]
+  },
+  "thread_started": true,
+  "event_logs_before_trust": [],
+  "model_calls": 0,
+  "trust_bypass": false,
+  "desktop_acceptance": "unable-to-check; independent required surface"
+}

@@ -1,0 +1,64 @@
+{
+  "kind": "independent read-only pre-run audit of failure fixes",
+  "verdict": "No remaining blocker identified in reviewed denial and driver synchronization paths; fresh full scenario remains separate acceptance",
+  "independent_tests": {
+    "runtime": {
+      "passed": 43,
+      "total": 43,
+      "file": "runtime-tests-final.txt"
+    },
+    "driver": {
+      "passed": 12,
+      "total": 12,
+      "file": "driver-tests-final.txt"
+    }
+  },
+  "actual_negative_probe_review": {
+    "all_checks": true,
+    "checks": {
+      "actual_native_request_denied": true,
+      "no_pending_operator_request": true,
+      "no_capture_or_signing_event": true,
+      "guard_preserved": true,
+      "policy_not_human_authority": true,
+      "actual_terminal_observed": true
+    },
+    "decision": "cancel",
+    "native_terminal": "interrupted",
+    "scope": "Another agent executed the real native probe; this auditor reviewed preserved evidence and did not launch duplicate model calls."
+  },
+  "substantive_findings": [
+    {
+      "finding": "planned_stop previously masked an already-exited supervisor as normal SIGINT cleanup",
+      "resolution": "Helper now rejects prior exit and forced termination; requested signal/exit status are distinct; real child process regression tests pass."
+    },
+    {
+      "finding": "hardened helper accepted only clean0/-SIGINT but production runtime treated KeyboardInterrupt as error2",
+      "resolution": "Production entrypoint now reports status interrupted and clean exit0, separate from operational errors2. Actual entrypoint/serve-finally regression verifies adapter cleanup; helper did not weaken arbitrary error2 acceptance."
+    }
+  ],
+  "verified_properties": [
+    "Command/file approval requests are auto-denied only after exact active native thread/turn binding, including early buffered requests.",
+    "Only supported decline/cancel decisions or protocol error can leave denial branch; no grant/policy amendment, pending row, prompt, capture or signer.",
+    "Native completion/interruption remains authoritative; denial response does not fabricate task completion.",
+    "Real native user-input and protected gate capture remain separate, with no invented human authority.",
+    "Driver binds queue ID to authoritative native userMessage, thread and turn, then matching completed terminal; idle role/stale prior turn cannot satisfy wait.",
+    "Peer handoff and downstream tool results are scoped to the originating native turn.",
+    "First judge call must match actual catalogue fields and yield a typed selected-provider/model advisory result; skipped/error/retry cannot pass.",
+    "Expected acceptance failure must exactly match missing operator-terminal capture; no arbitrary failed accept counts as human barrier.",
+    "Any false semantic check, error, snapshot failure or cleanup failure returns nonzero; unique attempts preserve prior evidence/source.",
+    "Fresh scenario rejects extra operator messages, control interventions and native guard denial requests; does not quietly accept attended recovery as a clean run."
+  ],
+  "source_sha256": {
+    "plugins/delivery/scripts/runtime.py": "bf1b4f11c5f302036355636098aadc32bd12783838c46c731e0b74ad48a536b7",
+    "scripts/cli_cycle_harness.py": "d970bbfd3413db8c3bd680361e4fa2c0ad0f425dcad869fc995a7a70438ca9d7",
+    "evidence/2026-10-20/full-cli-cycle/runner.py": "184fe9c35057beefcfe1519ad585c0050c12376d47ae6f549e3d7e400191aaef",
+    "tests/delivery/test_runtime.py": "44cebfe3afeee2106d0746e6194210a51c3f6aed81ce351cf1262e814c3d3552",
+    "tests/delivery/test_cli_cycle_harness.py": "fa1d56f4a4a4e82686acefcd0d917e588d6bb8f3adf2ebc705b5982b21d49cd5"
+  },
+  "limits": [
+    "Pre-run source and bounded tests only; fresh full model scenario is owned/run separately by root.",
+    "No desktop UI, ChatGPT, autonomous single-prompt delivery or genuine human acceptance is established by this audit.",
+    "Native cancel deliberately interrupts a forbidden turn; it does not demonstrate autonomous recovery."
+  ]
+}

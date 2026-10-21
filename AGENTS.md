@@ -8,6 +8,12 @@ This repository hosts multiple OpenAI plugins. Follow any plugin-specific
 - Do not create Markdown TODO lists or ad hoc memory files.
 - Keep every installable plugin self-contained under `plugins/<name>/`.
 - Keep diagnostic fixtures outside the marketplace catalogue.
+- Port assessments, implementation reviews and validation evidence are maintainer
+  material outside `plugins/`; never include them in installable plugin archives
+  or link them as required resources from packaged skills or package READMEs.
+- Package only the selected `plugins/<name>/` directory when making an archive,
+  never the marketplace repository root. Retain the package's changelog, licence,
+  attribution and upstream provenance for future alignment.
 - Preserve source attribution and the upstream revision for imported material.
 - Never alter the existing Claude marketplace as a side effect of this port.
 - Do not confuse persistent delivery roles with temporary reviewer subagents.

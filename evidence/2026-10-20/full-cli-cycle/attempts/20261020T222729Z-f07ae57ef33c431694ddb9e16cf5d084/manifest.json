@@ -1,0 +1,8 @@
+{
+  "fixture": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-8frrftqa",
+  "planning": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-8frrftqa/planning",
+  "product": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-8frrftqa/product",
+  "database": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-8frrftqa/planning/.delivery/runtime/coordinator.sqlite",
+  "evidence": "/Users/colombod/workspaces/delivery-plugin-openai/evidence/2026-10-20/full-cli-cycle/attempts/20261020T222729Z-f07ae57ef33c431694ddb9e16cf5d084",
+  "scope": "real native/public CLI through operator barrier; no real human acceptance"
+}

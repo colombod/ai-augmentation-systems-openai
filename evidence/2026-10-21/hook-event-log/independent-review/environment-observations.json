@@ -1,0 +1,11 @@
+{
+  "observations": [
+    {"command":"npm test","result":"First source revision 10/10 tests passed; actual packaged node-to-Rust execution."},
+    {"command":"cargo test --locked --manifest-path plugins/hook-event-log/core/Cargo.toml","exit_code":127,"result":"cargo not on shell PATH"},
+    {"command":"python3 scripts/validate_marketplace.py","exit_code":1,"result":"system Python lacks jsonschema"},
+    {"command":"PATH=/Users/colombod/.cargo/bin:$PATH cargo test --locked --manifest-path plugins/hook-event-log/core/Cargo.toml","exit_code":0,"result":"7 Rust integration tests passed; no unit/doc tests defined"},
+    {"command":"npm test after compatibility manifest correction","exit_code":0,"result":"11 packaged integration tests passed"},
+    {"command":"UV_CACHE_DIR=/private/tmp/hook-log-uv-cache uv run --offline --index-url https://pypi.org/simple --with jsonschema python scripts/validate_marketplace.py","exit_code":1,"result":"jsonschema not found in resolver cache"},
+    {"command":"/private/tmp/hook-log-uv-cache/archive-v0/wYQzblBauy7unvqY/bin/python scripts/validate_marketplace.py","exit_code":0,"result":"Marketplace valid: 2 published plugin(s)"}
+  ]
+}

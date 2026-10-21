@@ -1,0 +1,182 @@
+{
+  "kind": "real model/public CLI cycle through operator acceptance barrier",
+  "started_at": 1792533433.8794932,
+  "fixture": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_",
+  "planning": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/planning",
+  "product": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/product",
+  "model": "gpt-6.1-sol",
+  "contract": "Given exactly one text argument, python3 slugify.py TEXT lowercases ASCII A-Z, converts each maximal run of characters outside ASCII [A-Za-z0-9] to one hyphen, trims edge hyphens and prints one newline with exit 0; all-separator input prints an empty line, and missing TEXT exits 2.",
+  "stages": [
+    {
+      "stage": "fixture-setup",
+      "time": 1792533433.879503
+    },
+    {
+      "stage": "public-prepare",
+      "time": 1792533445.2924988,
+      "roster": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/planning/.delivery/team.json"
+    },
+    {
+      "stage": "coordinator-and-product-manager",
+      "time": 1792533451.751711
+    },
+    {
+      "stage": "supervisor-restart-after-manager",
+      "time": 1792533544.51281
+    },
+    {
+      "stage": "materialize-and-ready",
+      "time": 1792533546.715849
+    },
+    {
+      "stage": "builder-implementation",
+      "time": 1792533590.038445,
+      "issue": "fullcycle-6m8",
+      "product": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/product"
+    },
+    {
+      "stage": "independent-review",
+      "time": 1792533806.305681,
+      "product": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/product",
+      "head": "32746b7d72bbbb4263c2ecf8a737c1c1613f9bbe"
+    },
+    {
+      "stage": "operator-acceptance-barrier",
+      "time": 1792533901.4572852
+    },
+    {
+      "stage": "failed",
+      "time": 1792533901.5592792,
+      "error": "No actual successful native controlled tool call: delivery_task_gate_status"
+    }
+  ],
+  "accepted": false,
+  "stage": "failed",
+  "judge_key_present": true,
+  "initial_head": "0dfa456c259f2b47c50bcf75ccf84a0e37f2ce31",
+  "serve_instances": [
+    {
+      "pid": 11764,
+      "started_at": 1792533449.743834,
+      "mode": "normal CLI; no operator terminal or receipt capability",
+      "exit_code": 2,
+      "stopped_at": 1792533544.551156,
+      "signal": "SIGINT, normal operator stop"
+    },
+    {
+      "pid": 13057,
+      "started_at": 1792533544.556149,
+      "mode": "normal CLI; no operator terminal or receipt capability",
+      "exit_code": 2,
+      "stopped_at": 1792533901.74129,
+      "signal": "SIGINT, normal operator stop"
+    }
+  ],
+  "pm_thread_before_restart": "01a15b52-68b8-7573-b885-f8257ca2f002",
+  "pm_thread_after_restart": "01a15b52-68b8-7573-b885-f8257ca2f002",
+  "same_pm_thread": true,
+  "surface": {
+    "host": "local macOS",
+    "app": "Python slugify CLI",
+    "mode": "terminal subprocess",
+    "criterion": "Given exactly one text argument, python3 slugify.py TEXT lowercases ASCII A-Z, converts each maximal run of characters outside ASCII [A-Za-z0-9] to one hyphen, trims edge hyphens and prints one newline with exit 0; all-separator input prints an empty line, and missing TEXT exits 2."
+  },
+  "issue": "fullcycle-6m8",
+  "implementation": {
+    "id": "d594a723-ee99-4452-9162-f0512a32ad9d",
+    "action": "implemented",
+    "issue": "fullcycle-6m8",
+    "actor": {
+      "role": "builder",
+      "thread": "01a15b53-f137-7bc0-abe0-eb1bfc59bf8e",
+      "turn": "01a15b53-f1b3-7963-a3ac-97b9825c8b4d",
+      "lane": "builder",
+      "cwd": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/product"
+    },
+    "seal": "d7aeebe2dec84835e705178dd89d6708b5e864131754350b0b24349a684b0b59",
+    "time": 1792533802.372567,
+    "evidence": [
+      {
+        "path": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/product/.delivery-evidence/builder-tests.txt",
+        "sha256": "3e16f38dad868b98f5b9b69e1f239618de080b49ebaac00e1334f364e3298879"
+      }
+    ],
+    "passed": true,
+    "evidence_trust": "worker-submitted",
+    "readiness": "949557a8-1643-4743-9c43-1dbe2863f06c",
+    "head": "32746b7d72bbbb4263c2ecf8a737c1c1613f9bbe"
+  },
+  "product_head": "32746b7d72bbbb4263c2ecf8a737c1c1613f9bbe",
+  "review": {
+    "id": "58e8d9c8-8191-4825-9d06-34bae5dc5ed3",
+    "action": "review",
+    "issue": "fullcycle-6m8",
+    "actor": {
+      "role": "reviewer",
+      "thread": "01a15b57-3d1a-7671-a2b5-eed78bbddac9",
+      "turn": "01a15b57-3e99-73b2-85ba-c7e5371ccff5",
+      "lane": "read-only",
+      "cwd": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/product"
+    },
+    "seal": "d7aeebe2dec84835e705178dd89d6708b5e864131754350b0b24349a684b0b59",
+    "time": 1792533888.329947,
+    "evidence": [
+      {
+        "path": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/planning/.delivery/reviews/slugify-independent.md",
+        "sha256": "0433e18d62359957816340e09e77af2038859423989737f7a2c1674aabc144c7",
+        "artifact_event_id": 187,
+        "artifact_origin": {
+          "role": "reviewer",
+          "thread": "01a15b57-3d1a-7671-a2b5-eed78bbddac9",
+          "turn": "01a15b57-3e99-73b2-85ba-c7e5371ccff5",
+          "lane": "read-only"
+        }
+      }
+    ],
+    "implementation": "d594a723-ee99-4452-9162-f0512a32ad9d",
+    "approved": true,
+    "readiness": "949557a8-1643-4743-9c43-1dbe2863f06c",
+    "head": "32746b7d72bbbb4263c2ecf8a737c1c1613f9bbe"
+  },
+  "surface_submission": {
+    "id": "26f3e591-1a36-486d-b519-49ea3d947727",
+    "action": "surface",
+    "issue": "fullcycle-6m8",
+    "actor": {
+      "role": "reviewer",
+      "thread": "01a15b57-3d1a-7671-a2b5-eed78bbddac9",
+      "turn": "01a15b57-3e99-73b2-85ba-c7e5371ccff5",
+      "lane": "read-only",
+      "cwd": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/product"
+    },
+    "seal": "d7aeebe2dec84835e705178dd89d6708b5e864131754350b0b24349a684b0b59",
+    "time": 1792533897.277725,
+    "surface": {
+      "host": "local macOS",
+      "app": "Python slugify CLI",
+      "mode": "terminal subprocess",
+      "criterion": "Given exactly one text argument, python3 slugify.py TEXT lowercases ASCII A-Z, converts each maximal run of characters outside ASCII [A-Za-z0-9] to one hyphen, trims edge hyphens and prints one newline with exit 0; all-separator input prints an empty line, and missing TEXT exits 2."
+    },
+    "kind": "real-host-observation",
+    "evidence": [
+      {
+        "path": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/planning/.delivery/reviews/slugify-independent.md",
+        "sha256": "0433e18d62359957816340e09e77af2038859423989737f7a2c1674aabc144c7",
+        "artifact_event_id": 187,
+        "artifact_origin": {
+          "role": "reviewer",
+          "thread": "01a15b57-3d1a-7671-a2b5-eed78bbddac9",
+          "turn": "01a15b57-3e99-73b2-85ba-c7e5371ccff5",
+          "lane": "read-only"
+        }
+      }
+    ],
+    "review": "58e8d9c8-8191-4825-9d06-34bae5dc5ed3",
+    "evidence_trust": "submitted-not-authenticated",
+    "readiness": "949557a8-1643-4743-9c43-1dbe2863f06c",
+    "head": "32746b7d72bbbb4263c2ecf8a737c1c1613f9bbe"
+  },
+  "error": "No actual successful native controlled tool call: delivery_task_gate_status",
+  "traceback": "Traceback (most recent call last):\n  File \"/Users/colombod/workspaces/delivery-plugin-openai/evidence/2026-10-20/full-cli-cycle/runner.py\", line 152, in <module>\n    main()\n    ~~~~^^\n  File \"/Users/colombod/workspaces/delivery-plugin-openai/evidence/2026-10-20/full-cli-cycle/runner.py\", line 145, in main\n    wait_idle(['delivery-manager'],240);STATE['gate_status']=must_tool('delivery_task_gate_status');snapshot('06-acceptance-barrier')\n                                                             ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/colombod/workspaces/delivery-plugin-openai/evidence/2026-10-20/full-cli-cycle/runner.py\", line 87, in must_tool\n    if not matches:raise RuntimeError('No actual successful native controlled tool call: '+tool)\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: No actual successful native controlled tool call: delivery_task_gate_status\n",
+  "finished_at": 1792533901.744203
+}

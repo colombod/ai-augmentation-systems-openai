@@ -1,0 +1,5 @@
+{
+  "fixture": "Disposable repository and safe marker only; no credentials or real product files",
+  "ordinary_status_executed_configured_helper": true,
+  "explicit_fsmonitor_false_avoids_helper_execution": true
+}

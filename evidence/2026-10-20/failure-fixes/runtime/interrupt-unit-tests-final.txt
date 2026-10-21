@@ -1,0 +1,55 @@
+test_merged_connectors_are_disabled_individually_and_inventory_checked (test_runtime.RPCIsolationTests.test_merged_connectors_are_disabled_individually_and_inventory_checked) ... ok
+test_native_connected_tool_inventory_prevents_startup (test_runtime.RPCIsolationTests.test_native_connected_tool_inventory_prevents_startup) ... ok
+test_async_terminal_wait_keeps_revocation_responsive (test_runtime.RuntimeTests.test_async_terminal_wait_keeps_revocation_responsive) ... {"operator_request": "e083f766-4750-4e5c-a0bf-1a0f7e349203", "method": "item/tool/requestUserInput", "params": {"threadId": "native-thread", "turnId": "native-turn", "questions": [{"id": "q", "question": "Choose"}]}}
+ok
+test_builder_cannot_mutate_privileged_plugin_implementation (test_runtime.RuntimeTests.test_builder_cannot_mutate_privileged_plugin_implementation) ... ok
+test_changed_judge_config_fails_before_provider_invocation (test_runtime.RuntimeTests.test_changed_judge_config_fails_before_provider_invocation) ... ok
+test_completed_turn_is_distinct_from_started_and_unknown_events (test_runtime.RuntimeTests.test_completed_turn_is_distinct_from_started_and_unknown_events) ... ok
+test_control_unknown_result_never_replayed (test_runtime.RuntimeTests.test_control_unknown_result_never_replayed) ... ok
+test_crash_recovery_resumes_binding_without_replaying_external_effects (test_runtime.RuntimeTests.test_crash_recovery_resumes_binding_without_replaying_external_effects) ... ok
+test_denial_replay_stale_and_unbound_requests_do_not_create_capture (test_runtime.RuntimeTests.test_denial_replay_stale_and_unbound_requests_do_not_create_capture) ... ok
+test_early_dynamic_request_is_bound_after_native_turn_response (test_runtime.RuntimeTests.test_early_dynamic_request_is_bound_after_native_turn_response) ... ok
+test_early_worker_approval_is_denied_only_after_exact_turn_binding (test_runtime.RuntimeTests.test_early_worker_approval_is_denied_only_after_exact_turn_binding) ... ok
+test_exact_steer_and_interrupt_ack_do_not_imply_completion (test_runtime.RuntimeTests.test_exact_steer_and_interrupt_ack_do_not_imply_completion) ... ok
+test_explicit_session_migration_preserves_history_and_never_replays_work (test_runtime.RuntimeTests.test_explicit_session_migration_preserves_history_and_never_replays_work) ... ok
+test_fast_terminal_notification_before_rpc_reply_is_not_lost (test_runtime.RuntimeTests.test_fast_terminal_notification_before_rpc_reply_is_not_lost) ... ok
+test_forbidden_worker_approvals_never_wait_or_capture_with_or_without_authority (test_runtime.RuntimeTests.test_forbidden_worker_approvals_never_wait_or_capture_with_or_without_authority) ... ok
+test_git_metadata_flag_requires_explicit_builder_boolean (test_runtime.RuntimeTests.test_git_metadata_flag_requires_explicit_builder_boolean) ... ok
+test_git_metadata_optin_rejects_hardlinks_and_changed_branch (test_runtime.RuntimeTests.test_git_metadata_optin_rejects_hardlinks_and_changed_branch) ... ok
+test_git_metadata_optin_rejects_shared_worktree_and_alternates (test_runtime.RuntimeTests.test_git_metadata_optin_rejects_shared_worktree_and_alternates) ... ok
+test_judge_without_explicit_config_is_unavailable_not_fallback (test_runtime.RuntimeTests.test_judge_without_explicit_config_is_unavailable_not_fallback) ... ok
+test_legacy_pending_capture_cannot_approve_worker_sandbox_escape (test_runtime.RuntimeTests.test_legacy_pending_capture_cannot_approve_worker_sandbox_escape) ... ok
+test_native_lane_mismatch_refuses_turn (test_runtime.RuntimeTests.test_native_lane_mismatch_refuses_turn) ... ok
+test_native_policy_requires_explicit_human_reviewer_and_bound_cwd (test_runtime.RuntimeTests.test_native_policy_requires_explicit_human_reviewer_and_bound_cwd) ... ok
+test_native_request_expiry_disconnect_and_unbound_identity_grant_nothing (test_runtime.RuntimeTests.test_native_request_expiry_disconnect_and_unbound_identity_grant_nothing) ... {"operator_request": "72c17c8b-04fb-4ae5-87f7-cb68e4f047d5", "method": "item/tool/requestUserInput", "params": {"threadId": "native-thread", "turnId": "native-turn", "itemId": "item1"}}
+{"operator_request": "d71772f6-223c-4a0e-afa4-ec3128008192", "method": "item/tool/requestUserInput", "params": {"threadId": "native-thread", "turnId": "native-turn", "itemId": "item1"}}
+ok
+test_native_roles_receive_canonical_package_and_peer_context (test_runtime.RuntimeTests.test_native_roles_receive_canonical_package_and_peer_context) ... ok
+test_only_bound_unexpired_answer_is_consumed_once (test_runtime.RuntimeTests.test_only_bound_unexpired_answer_is_consumed_once) ... {"operator_request": "81f016e7-3c01-46fe-b682-2a719fbad6b7", "method": "item/tool/requestUserInput", "params": {"threadId": "native-thread", "turnId": "native-turn"}}
+ok
+test_opt_in_git_metadata_profile_is_precise_and_pinned (test_runtime.RuntimeTests.test_opt_in_git_metadata_profile_is_precise_and_pinned) ... ok
+test_peer_routing_binds_sender_to_native_thread_and_never_human_authority (test_runtime.RuntimeTests.test_peer_routing_binds_sender_to_native_thread_and_never_human_authority) ... ok
+test_pending_unicode_question_hash_matches_capture_validator (test_runtime.RuntimeTests.test_pending_unicode_question_hash_matches_capture_validator) ... {"operator_request": "9f3da1c8-27ef-46ef-b4f1-98b452f936f7", "method": "item/tool/requestUserInput", "params": {"threadId": "native-thread", "turnId": "native-turn", "questions": [{"id": "cafe", "question": "Caf\u00e9?"}]}}
+ok
+test_public_entrypoint_operational_failure_still_exits_two (test_runtime.RuntimeTests.test_public_entrypoint_operational_failure_still_exits_two) ... ok
+test_public_entrypoint_sigint_is_clean_and_closes_adapter (test_runtime.RuntimeTests.test_public_entrypoint_sigint_is_clean_and_closes_adapter) ... ok
+test_real_question_requests_keep_operator_capture_path (test_runtime.RuntimeTests.test_real_question_requests_keep_operator_capture_path) ... {"operator_request": "a6c68b44-ed20-49b0-bf05-5ad89b9e4868", "method": "item/tool/requestUserInput", "params": {"threadId": "native-thread", "turnId": "native-turn", "questions": [{"id": "q", "question": "Which scope?"}]}}
+ok
+test_recovery_requires_exact_native_terminal_before_resuming_queue (test_runtime.RuntimeTests.test_recovery_requires_exact_native_terminal_before_resuming_queue) ... ok
+test_reserved_profiles_cannot_inject_permissions_without_explicit_optin (test_runtime.RuntimeTests.test_reserved_profiles_cannot_inject_permissions_without_explicit_optin) ... ok
+test_resume_rejects_changed_native_tool_inventory (test_runtime.RuntimeTests.test_resume_rejects_changed_native_tool_inventory) ... ok
+test_resume_revalidates_effective_native_lane (test_runtime.RuntimeTests.test_resume_revalidates_effective_native_lane) ... ok
+test_revocation_before_forwarding_discards_answer (test_runtime.RuntimeTests.test_revocation_before_forwarding_discards_answer) ... {"operator_request": "818ca9a8-784c-4884-a119-3692df466e74", "method": "item/tool/requestUserInput", "params": {"threadId": "native-thread", "turnId": "native-turn"}}
+ok
+test_session_migration_refuses_wrong_or_nonterminal_native_turn (test_runtime.RuntimeTests.test_session_migration_refuses_wrong_or_nonterminal_native_turn) ... ok
+test_status_never_calls_missing_activity_success (test_runtime.RuntimeTests.test_status_never_calls_missing_activity_success) ... ok
+test_team_preparation_rolls_back_conflicting_role_identity (test_runtime.RuntimeTests.test_team_preparation_rolls_back_conflicting_role_identity) ... ok
+test_unknown_effect_on_rpc_timeout_is_not_retried (test_runtime.RuntimeTests.test_unknown_effect_on_rpc_timeout_is_not_retried) ... ok
+test_unknown_permission_requests_and_stale_approval_deny_without_capture (test_runtime.RuntimeTests.test_unknown_permission_requests_and_stale_approval_deny_without_capture) ... ok
+test_watchdog_does_not_call_silent_active_work_complete (test_runtime.RuntimeTests.test_watchdog_does_not_call_silent_active_work_complete) ... ok
+test_worker_denial_respects_native_offered_decisions_and_never_grants (test_runtime.RuntimeTests.test_worker_denial_respects_native_offered_decisions_and_never_grants) ... ok
+
+----------------------------------------------------------------------
+Ran 43 tests in 1.222s
+
+OK

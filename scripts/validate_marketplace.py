@@ -1,9 +1,19 @@
-"""Validate the catalogue and published package boundaries without dependencies."""
+"""Validate catalogue boundaries and portable manifests against a vendored schema."""
 import json
 import re
 from pathlib import Path
+from jsonschema import Draft202012Validator
 
 ROOT = Path(__file__).resolve().parents[1]
+SCHEMA_PATH = ROOT / 'schemas/agent-plugins/1.0.0/plugin.schema.json'
+SCHEMA = json.loads(SCHEMA_PATH.read_text())
+Draft202012Validator.check_schema(SCHEMA)
+MANIFEST_VALIDATOR = Draft202012Validator(SCHEMA)
+
+
+def validate_manifest(data):
+    """Use the complete published schema, including nested metadata constraints."""
+    MANIFEST_VALIDATOR.validate(data)
 
 
 def validate(root=ROOT):
@@ -28,6 +38,8 @@ def validate(root=ROOT):
         if not manifest.exists():
             manifest = package / '.codex-plugin/plugin.json'
         data = json.loads(manifest.read_text())
+        if manifest.parent == package:
+            validate_manifest(data)
         assert data['name'] == name, 'Catalogue and package names differ'
         assert re.fullmatch(r'\d+\.\d+\.\d+(?:-[A-Za-z0-9.-]+)?', data['version']), 'Use semver'
         assert data.get('description'), 'Package needs a description'

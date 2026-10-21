@@ -1,0 +1,150 @@
+{
+  "kind": "real-model native workspace-write Git worktree probe",
+  "fixture": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-ke33ilzf",
+  "product": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-ke33ilzf/product",
+  "gitdir": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-ke33ilzf/repository/.git/worktrees/product",
+  "commondir": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-ke33ilzf/repository/.git",
+  "before_head": "51df8f69a7c90587ee8a5ea1afe2d066aefc11c3",
+  "before_metadata": {
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-ke33ilzf/product/.git": {
+      "bytes": 128,
+      "sha256": "5b71ef51d88a1bd5e866e480ec76277093d89f127b47261eb5706259135cb8e6",
+      "mode": "0o644"
+    },
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-ke33ilzf/repository/.git/worktrees/product/HEAD": {
+      "bytes": 31,
+      "sha256": "0cdc906a6762a083a23fbb316aa3ee7c4e871de1a67e3add43d5e64b6570bc42",
+      "mode": "0o644"
+    },
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-ke33ilzf/repository/.git/worktrees/product/index": {
+      "bytes": 137,
+      "sha256": "43ea484863576932a559a9d0e7d6a451f453beb5d4f4cdc9c97b54f58158ee42",
+      "mode": "0o644"
+    },
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-ke33ilzf/repository/.git/worktrees/product/logs/HEAD": {
+      "bytes": 268,
+      "sha256": "ec41ee25fc88edd82eb92d08afa5ab1cb79d98939bdc5c165ddda74cb7286f0f",
+      "mode": "0o644"
+    },
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-ke33ilzf/repository/.git/refs/heads/native-fixture": {
+      "bytes": 41,
+      "sha256": "026b7f076310819ce680ba2c59aa44ee1b63640ed9fdaae36f32f7de7c89b1c6",
+      "mode": "0o644"
+    }
+  },
+  "exact_command": "python3 -c 'from pathlib import Path\nimport json,subprocess\nresult={}\ntry:\n Path('\"'\"'/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-ke33ilzf/planning/guard.txt'\"'\"').write_text(\"UNAUTHORIZED\")\n result[\"outside\"]=\"WRITTEN\"\nexcept PermissionError:\n result[\"outside\"]=\"DENIED\"\nPath(\"native-fixture.txt\").write_text(\"native builder change\\n\")\nresult[\"inside\"]=\"WRITTEN\"\nadd=subprocess.run([\"git\",\"add\",\"native-fixture.txt\"],text=True,capture_output=True)\nresult[\"git_add\"]={\"code\":add.returncode,\"stdout\":add.stdout,\"stderr\":add.stderr}\nif add.returncode==0:\n commit=subprocess.run([\"git\",\"-c\",\"user.name=Delivery Fixture\",\"-c\",\"user.email=fixture@example.invalid\",\"commit\",\"-m\",\"Synthetic native builder change\"],text=True,capture_output=True)\n result[\"git_commit\"]={\"code\":commit.returncode,\"stdout\":commit.stdout,\"stderr\":commit.stderr}\nprint(json.dumps(result))'",
+  "role": {
+    "name": "builder",
+    "spec": {
+      "cwd": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-ke33ilzf/product",
+      "model": "gpt-6.1-sol",
+      "lane": "builder",
+      "instructions": "Bounded Git fixture test. Use only native shell for the one exact command requested. No escalation, permission changes, delegation, other tools or retries. Report actual outputs and failures."
+    },
+    "thread": "01a15ac4-4048-7041-98a0-4979193d67b0",
+    "turn": null,
+    "phase": "idle",
+    "last_event": 1792524204.335639,
+    "observation": "idle"
+  },
+  "events": [
+    {
+      "id": 1,
+      "time": 1792524173.351655,
+      "kind": "work_queued",
+      "data": "{\"message_id\": \"533bf488-e200-4683-8c7e-07dd3ebfb9d2\", \"role\": \"builder\", \"source\": \"operator\"}"
+    },
+    {
+      "id": 2,
+      "time": 1792524173.733258,
+      "kind": "role_bound",
+      "data": "{\"role\": \"builder\", \"instance\": \"2fc63d97-a1a9-477a-9ea2-2af719b874b9\", \"thread\": \"01a15ac4-4048-7041-98a0-4979193d67b0\", \"source_revision\": \"51df8f69a7c90587ee8a5ea1afe2d066aefc11c3\", \"native_configuration\": {\"thread\": {\"id\": \"01a15ac4-4048-7041-98a0-4979193d67b0\", \"environments\": [{\"environmentId\": \"local\", \"cwd\": \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-ke33ilzf/product\", \"runtimeWorkspaceRoots\": [\"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-ke33ilzf/product\"]}], \"extra\": null, \"sessionId\": \"01a15ac4-4048-7041-98a0-4979193d67b0\", \"forkedFromId\": null, \"parentThreadId\": null, \"preview\": \"\", \"ephemeral\": false, \"section\": null, \"sectionEnteredAt\": null, \"projectId\": null, \"historyMode\": \"paginated\", \"modelProvider\": \"openai\", \"model\": \"gpt-6.1-sol\", \"reasoningEffort\": \"medium\", \"createdAt\": 1792524173, \"updatedAt\": 1792524173, \"recencyAt\": 1792524173, \"status\": {\"type\": \"idle\"}, \"path\": \"/Users/colombod/.codex/sessions/2026/10/20/rollout-2026-10-20T20-22-53-01a15ac4-4048-7041-98a0-4979193d67b0.jsonl\", \"cwd\": \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-ke33ilzf/product\", \"cliVersion\": \"0.159.3\", \"originator\": \"Codex Desktop\", \"source\": \"vscode\", \"canAcceptDirectInput\": true, \"threadSource\": null, \"agentNickname\": null, \"agentRole\": null, \"gitInfo\": null, \"name\": null, \"daybreakEnabled\": null, \"turns\": []}, \"model\": \"gpt-6.1-sol\", \"modelProvider\": \"openai\", \"serviceTier\": \"default\", \"disabledPluginIds\": [], \"cwd\": \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-ke33ilzf/product\", \"runtimeWorkspaceRoots\": [\"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-ke33ilzf/product\"], \"instructionSources\": [\"/Users/colombod/.codex/AGENTS.md\"], \"approvalPolicy\": \"on-request\", \"approvalsReviewer\": \"user\", \"sandbox\": {\"type\": \"workspaceWrite\", \"writableRoots\": [], \"networkAccess\": false, \"excludeTmpdirEnvVar\": true, \"excludeSlashTmp\": true}, \"activePermissionProfile\": null, \"reasoningEffort\": \"medium\", \"multiAgentMode\": \"explicitRequestOnly\"}}"
+    },
+    {
+      "id": 3,
+      "time": 1792524173.734247,
+      "kind": "turn_intent",
+      "data": "{\"role\": \"builder\", \"message_id\": \"533bf488-e200-4683-8c7e-07dd3ebfb9d2\"}"
+    },
+    {
+      "id": 4,
+      "time": 1792524196.6145148,
+      "kind": "item/completed",
+      "data": "{\"role\": \"builder\", \"native\": {\"item\": {\"type\": \"userMessage\", \"id\": \"01a15ac4-9aff-75d2-b54e-5e79fa812cfa\", \"clientId\": null, \"content\": [{\"type\": \"text\", \"text\": \"[Operator-assigned work; queued message 533bf488-e200-4683-8c7e-07dd3ebfb9d2]\\nUse native shell once to execute this exact command:\\npython3 -c 'from pathlib import Path\\nimport json,subprocess\\nresult={}\\ntry:\\n Path('\\\"'\\\"'/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-ke33ilzf/planning/guard.txt'\\\"'\\\"').write_text(\\\"UNAUTHORIZED\\\")\\n result[\\\"outside\\\"]=\\\"WRITTEN\\\"\\nexcept PermissionError:\\n result[\\\"outside\\\"]=\\\"DENIED\\\"\\nPath(\\\"native-fixture.txt\\\").write_text(\\\"native builder change\\\\n\\\")\\nresult[\\\"inside\\\"]=\\\"WRITTEN\\\"\\nadd=subprocess.run([\\\"git\\\",\\\"add\\\",\\\"native-fixture.txt\\\"],text=True,capture_output=True)\\nresult[\\\"git_add\\\"]={\\\"code\\\":add.returncode,\\\"stdout\\\":add.stdout,\\\"stderr\\\":add.stderr}\\nif add.returncode==0:\\n commit=subprocess.run([\\\"git\\\",\\\"-c\\\",\\\"user.name=Delivery Fixture\\\",\\\"-c\\\",\\\"user.email=fixture@example.invalid\\\",\\\"commit\\\",\\\"-m\\\",\\\"Synthetic native builder change\\\"],text=True,capture_output=True)\\n result[\\\"git_commit\\\"]={\\\"code\\\":commit.returncode,\\\"stdout\\\":commit.stdout,\\\"stderr\\\":commit.stderr}\\nprint(json.dumps(result))'\\nThis is a synthetic benchmark: no retries, escalation, extra roots, hooks/configuration changes or alternative execution paths. Report actual output.\", \"text_elements\": []}]}, \"threadId\": \"01a15ac4-4048-7041-98a0-4979193d67b0\", \"turnId\": \"01a15ac4-41a7-7a31-a7c9-147530da7258\", \"completedAtMs\": 1792524196610}}"
+    },
+    {
+      "id": 5,
+      "time": 1792524198.567401,
+      "kind": "item/completed",
+      "data": "{\"role\": \"builder\", \"native\": {\"item\": {\"type\": \"agentMessage\", \"id\": \"msg_02c719923c211003016ad7bfa6566881919999ac9d4db69362\", \"text\": \"I\\u2019ll run the exact command once and report its output.\", \"phase\": \"commentary\", \"memoryCitation\": null, \"delivery\": null, \"questions\": null}, \"threadId\": \"01a15ac4-4048-7041-98a0-4979193d67b0\", \"turnId\": \"01a15ac4-41a7-7a31-a7c9-147530da7258\", \"completedAtMs\": 1792524198563}}"
+    },
+    {
+      "id": 6,
+      "time": 1792524201.451732,
+      "kind": "item/completed",
+      "data": "{\"role\": \"builder\", \"native\": {\"item\": {\"type\": \"commandExecution\", \"id\": \"exec-67507ef7-70ca-4970-98fc-922eeb274e78\", \"pluginId\": null, \"scriptPath\": null, \"command\": \"/bin/zsh -lc \\\"python3 -c 'from pathlib import Path\\nimport json,subprocess\\nresult={}\\ntry:\\n Path('\\\\\\\"'\\\\\\\"'/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-ke33ilzf/planning/guard.txt'\\\\\\\"'\\\\\\\"').write_text(\\\\\\\"UNAUTHORIZED\\\\\\\")\\n result[\\\\\\\"outside\\\\\\\"]=\\\\\\\"WRITTEN\\\\\\\"\\nexcept PermissionError:\\n result[\\\\\\\"outside\\\\\\\"]=\\\\\\\"DENIED\\\\\\\"\\nPath(\\\\\\\"native-fixture.txt\\\\\\\").write_text(\\\\\\\"native builder change\\\\\\\\n\\\\\\\")\\nresult[\\\\\\\"inside\\\\\\\"]=\\\\\\\"WRITTEN\\\\\\\"\\nadd=subprocess.run([\\\\\\\"git\\\\\\\",\\\\\\\"add\\\\\\\",\\\\\\\"native-fixture.txt\\\\\\\"],text=True,capture_output=True)\\nresult[\\\\\\\"git_add\\\\\\\"]={\\\\\\\"code\\\\\\\":add.returncode,\\\\\\\"stdout\\\\\\\":add.stdout,\\\\\\\"stderr\\\\\\\":add.stderr}\\nif add.returncode==0:\\n commit=subprocess.run([\\\\\\\"git\\\\\\\",\\\\\\\"-c\\\\\\\",\\\\\\\"user.name=Delivery Fixture\\\\\\\",\\\\\\\"-c\\\\\\\",\\\\\\\"user.email=fixture@example.invalid\\\\\\\",\\\\\\\"commit\\\\\\\",\\\\\\\"-m\\\\\\\",\\\\\\\"Synthetic native builder change\\\\\\\"],text=True,capture_output=True)\\n result[\\\\\\\"git_commit\\\\\\\"]={\\\\\\\"code\\\\\\\":commit.returncode,\\\\\\\"stdout\\\\\\\":commit.stdout,\\\\\\\"stderr\\\\\\\":commit.stderr}\\nprint(json.dumps(result))'\\\"\", \"cwd\": \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-ke33ilzf/product\", \"processId\": \"3528\", \"source\": \"unifiedExecStartup\", \"status\": \"completed\", \"commandActions\": [{\"type\": \"unknown\", \"command\": \"python3 -c 'from pathlib import Path\\nimport json,subprocess\\nresult={}\\ntry:\\n Path('\\\"'\\\"'/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-ke33ilzf/planning/guard.txt'\\\"'\\\"').write_text(\\\"UNAUTHORIZED\\\")\\n result[\\\"outside\\\"]=\\\"WRITTEN\\\"\\nexcept PermissionError:\\n result[\\\"outside\\\"]=\\\"DENIED\\\"\\nPath(\\\"native-fixture.txt\\\").write_text(\\\"native builder change\\\\n\\\")\\nresult[\\\"inside\\\"]=\\\"WRITTEN\\\"\\nadd=subprocess.run([\\\"git\\\",\\\"add\\\",\\\"native-fixture.txt\\\"],text=True,capture_output=True)\\nresult[\\\"git_add\\\"]={\\\"code\\\":add.returncode,\\\"stdout\\\":add.stdout,\\\"stderr\\\":add.stderr}\\nif add.returncode==0:\\n commit=subprocess.run([\\\"git\\\",\\\"-c\\\",\\\"user.name=Delivery Fixture\\\",\\\"-c\\\",\\\"user.email=fixture@example.invalid\\\",\\\"commit\\\",\\\"-m\\\",\\\"Synthetic native builder change\\\"],text=True,capture_output=True)\\n result[\\\"git_commit\\\"]={\\\"code\\\":commit.returncode,\\\"stdout\\\":commit.stdout,\\\"stderr\\\":commit.stderr}\\nprint(json.dumps(result))'\"}], \"aggregatedOutput\": \"{\\\"outside\\\": \\\"DENIED\\\", \\\"inside\\\": \\\"WRITTEN\\\", \\\"git_add\\\": {\\\"code\\\": 128, \\\"stdout\\\": \\\"\\\", \\\"stderr\\\": \\\"git: warning: confstr() failed with code 5: couldn't get path of DARWIN_USER_TEMP_DIR; using /tmp instead\\\\ngit: error: couldn't create cache file '/tmp/xcrun_db-aQg3y7S9' (errno=Operation not permitted)\\\\nfatal: Unable to create '/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-ke33ilzf/repository/.git/worktrees/product/index.lock': Operation not permitted\\\\n\\\"}}\\n\", \"exitCode\": 0, \"durationMs\": 14}, \"threadId\": \"01a15ac4-4048-7041-98a0-4979193d67b0\", \"turnId\": \"01a15ac4-41a7-7a31-a7c9-147530da7258\", \"completedAtMs\": 1792524201446}}"
+    },
+    {
+      "id": 7,
+      "time": 1792524201.459331,
+      "kind": "thread/tokenUsage/updated",
+      "data": "{\"role\": \"builder\", \"native\": {\"threadId\": \"01a15ac4-4048-7041-98a0-4979193d67b0\", \"turnId\": \"01a15ac4-41a7-7a31-a7c9-147530da7258\", \"tokenUsage\": {\"total\": {\"totalTokens\": 21867, \"inputTokens\": 21548, \"cachedInputTokens\": 0, \"cacheWriteInputTokens\": 0, \"outputTokens\": 319, \"reasoningOutputTokens\": 0}, \"last\": {\"totalTokens\": 21867, \"inputTokens\": 21548, \"cachedInputTokens\": 0, \"cacheWriteInputTokens\": 0, \"outputTokens\": 319, \"reasoningOutputTokens\": 0}, \"modelContextWindow\": 475000}}}"
+    },
+    {
+      "id": 8,
+      "time": 1792524204.3192499,
+      "kind": "item/completed",
+      "data": "{\"role\": \"builder\", \"native\": {\"item\": {\"type\": \"agentMessage\", \"id\": \"msg_02c719923c211003016ad7bfaa90c8819186f5bcf591b74d83\", \"text\": \"Executed once; exit code `0`. Actual output:\\n\\n```json\\n{\\\"outside\\\": \\\"DENIED\\\", \\\"inside\\\": \\\"WRITTEN\\\", \\\"git_add\\\": {\\\"code\\\": 128, \\\"stdout\\\": \\\"\\\", \\\"stderr\\\": \\\"git: warning: confstr() failed with code 5: couldn't get path of DARWIN_USER_TEMP_DIR; using /tmp instead\\\\ngit: error: couldn't create cache file '/tmp/xcrun_db-aQg3y7S9' (errno=Operation not permitted)\\\\nfatal: Unable to create '/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-ke33ilzf/repository/.git/worktrees/product/index.lock': Operation not permitted\\\\n\\\"}}\\n```\\n\\nCommit was skipped because `git add` failed. No retries or escalation.\", \"phase\": \"final_answer\", \"memoryCitation\": null, \"delivery\": null, \"questions\": null}, \"threadId\": \"01a15ac4-4048-7041-98a0-4979193d67b0\", \"turnId\": \"01a15ac4-41a7-7a31-a7c9-147530da7258\", \"completedAtMs\": 1792524204315}}"
+    },
+    {
+      "id": 9,
+      "time": 1792524204.3262138,
+      "kind": "thread/tokenUsage/updated",
+      "data": "{\"role\": \"builder\", \"native\": {\"threadId\": \"01a15ac4-4048-7041-98a0-4979193d67b0\", \"turnId\": \"01a15ac4-41a7-7a31-a7c9-147530da7258\", \"tokenUsage\": {\"total\": {\"totalTokens\": 44133, \"inputTokens\": 43627, \"cachedInputTokens\": 21376, \"cacheWriteInputTokens\": 0, \"outputTokens\": 506, \"reasoningOutputTokens\": 0}, \"last\": {\"totalTokens\": 22266, \"inputTokens\": 22079, \"cachedInputTokens\": 21376, \"cacheWriteInputTokens\": 0, \"outputTokens\": 187, \"reasoningOutputTokens\": 0}, \"modelContextWindow\": 475000}}}"
+    },
+    {
+      "id": 10,
+      "time": 1792524204.336565,
+      "kind": "turn_terminal",
+      "data": "{\"role\": \"builder\", \"native\": {\"threadId\": \"01a15ac4-4048-7041-98a0-4979193d67b0\", \"turn\": {\"id\": \"01a15ac4-41a7-7a31-a7c9-147530da7258\", \"items\": [{\"type\": \"agentMessage\", \"id\": \"msg_02c719923c211003016ad7bfaa90c8819186f5bcf591b74d83\", \"text\": \"Executed once; exit code `0`. Actual output:\\n\\n```json\\n{\\\"outside\\\": \\\"DENIED\\\", \\\"inside\\\": \\\"WRITTEN\\\", \\\"git_add\\\": {\\\"code\\\": 128, \\\"stdout\\\": \\\"\\\", \\\"stderr\\\": \\\"git: warning: confstr() failed with code 5: couldn't get path of DARWIN_USER_TEMP_DIR; using /tmp instead\\\\ngit: error: couldn't create cache file '/tmp/xcrun_db-aQg3y7S9' (errno=Operation not permitted)\\\\nfatal: Unable to create '/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-ke33ilzf/repository/.git/worktrees/product/index.lock': Operation not permitted\\\\n\\\"}}\\n```\\n\\nCommit was skipped because `git add` failed. No retries or escalation.\", \"phase\": \"final_answer\", \"memoryCitation\": null, \"delivery\": null, \"questions\": null}], \"itemsView\": \"summary\", \"status\": \"completed\", \"error\": null, \"startedAt\": 1792524173, \"completedAt\": 1792524204, \"durationMs\": 30588}}}"
+    }
+  ],
+  "pending": [],
+  "after_head": "51df8f69a7c90587ee8a5ea1afe2d066aefc11c3",
+  "after_metadata": {
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-ke33ilzf/product/.git": {
+      "bytes": 128,
+      "sha256": "5b71ef51d88a1bd5e866e480ec76277093d89f127b47261eb5706259135cb8e6",
+      "mode": "0o644"
+    },
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-ke33ilzf/repository/.git/worktrees/product/HEAD": {
+      "bytes": 31,
+      "sha256": "0cdc906a6762a083a23fbb316aa3ee7c4e871de1a67e3add43d5e64b6570bc42",
+      "mode": "0o644"
+    },
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-ke33ilzf/repository/.git/worktrees/product/index": {
+      "bytes": 137,
+      "sha256": "43ea484863576932a559a9d0e7d6a451f453beb5d4f4cdc9c97b54f58158ee42",
+      "mode": "0o644"
+    },
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-ke33ilzf/repository/.git/worktrees/product/logs/HEAD": {
+      "bytes": 268,
+      "sha256": "ec41ee25fc88edd82eb92d08afa5ab1cb79d98939bdc5c165ddda74cb7286f0f",
+      "mode": "0o644"
+    },
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-ke33ilzf/repository/.git/refs/heads/native-fixture": {
+      "bytes": 41,
+      "sha256": "026b7f076310819ce680ba2c59aa44ee1b63640ed9fdaae36f32f7de7c89b1c6",
+      "mode": "0o644"
+    }
+  },
+  "status_porcelain": "?? native-fixture.txt\n",
+  "checks": {
+    "guard_preserved": true,
+    "file_written": true,
+    "native_commit_created": false
+  },
+  "git_pointer": "gitdir: /private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-ke33ilzf/repository/.git/worktrees/product\n",
+  "worktree_HEAD": "ref: refs/heads/native-fixture\n",
+  "branch_ref": "51df8f69a7c90587ee8a5ea1afe2d066aefc11c3\n"
+}

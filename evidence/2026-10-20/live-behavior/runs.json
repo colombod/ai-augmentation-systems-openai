@@ -1,0 +1,132 @@
+{
+  "codex": "codex-cli 0.159.3",
+  "runs": [
+    {
+      "id": "status-without-access",
+      "resources_sha256": {
+        "skills/status/SKILL.md": "e5cfd07daba0784255e596218d8613765ce39f72ea38fec2ede5611d077bd641",
+        "references/runtime.md": "45b8510aa553f3d63591c43662cdba87404d0b4e7efbcc98968c3a6902f58f33",
+        "references/conventions.md": "1fe40963a4b0c9f5f4b4e653502f9dc5373a8bb334595e018b6ad073c8162ff5",
+        "templates/writing-standard.md": "eaca48384279103b1143aadabb74adb6a82569f0fc66854c93329c4529ae6fe1",
+        "templates/glossary.md": "83a0119269962d79887980ae53e68a088af9b75a7df77a7c92bea05882a496a3"
+      },
+      "capability_restrictions": "simulated in prompt; tool traces must also be inspected",
+      "model": "CLI default, no model override",
+      "host_acceptance": "native Codex model behavior only; not desktop or ChatGPT product acceptance",
+      "exit_code": 0,
+      "elapsed_seconds": 8.93,
+      "answer_present": true,
+      "event_types": [
+        "item.completed",
+        "thread.started",
+        "turn.completed",
+        "turn.started"
+      ],
+      "items": [
+        {
+          "type": "agent_message",
+          "status": null
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 21093,
+          "cached_input_tokens": 12288,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 130,
+          "reasoning_output_tokens": 0
+        }
+      ]
+    },
+    {
+      "id": "brief-without-delegation-or-save",
+      "resources_sha256": {
+        "skills/brief/SKILL.md": "cbb6d5b5d913559226a5efdb8fb7c410dd628b40284f572d8c0c3cf64a1b464c",
+        "references/runtime.md": "45b8510aa553f3d63591c43662cdba87404d0b4e7efbcc98968c3a6902f58f33",
+        "references/conventions.md": "1fe40963a4b0c9f5f4b4e653502f9dc5373a8bb334595e018b6ad073c8162ff5",
+        "templates/writing-standard.md": "eaca48384279103b1143aadabb74adb6a82569f0fc66854c93329c4529ae6fe1",
+        "templates/glossary.md": "83a0119269962d79887980ae53e68a088af9b75a7df77a7c92bea05882a496a3",
+        "templates/brief.md": "d003c9f268275be1eeac199822970f56924f272210864973ad708ad6a791a05a",
+        "templates/version-history.md": "3149db6b1dec677ae0079ca6f62f9a6e43200b97fb028bc3094fec9a8d723dae",
+        "references/reviewers/product-owner.md": "dec8098add44df1e6a45498e8ba27c6354b5808226f47f7664fdd38902e75c5b",
+        "references/reviewers/business-analyst.md": "e72549150eba9d7130ee50f9a639c6c21707a349e168a576437448f108bee26b",
+        "references/reviewers/feature-critic.md": "1520c14bbedceb08149386007413077e8ee1bf975e0ae93bf3b0d5b1e1c429a6"
+      },
+      "capability_restrictions": "simulated in prompt; tool traces must also be inspected",
+      "model": "CLI default, no model override",
+      "host_acceptance": "native Codex model behavior only; not desktop or ChatGPT product acceptance",
+      "exit_code": 0,
+      "elapsed_seconds": 49.22,
+      "answer_present": true,
+      "event_types": [
+        "item.completed",
+        "thread.started",
+        "turn.completed",
+        "turn.started"
+      ],
+      "items": [
+        {
+          "type": "agent_message",
+          "status": null
+        },
+        {
+          "type": "agent_message",
+          "status": null
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 27619,
+          "cached_input_tokens": 12288,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1606,
+          "reasoning_output_tokens": 112
+        }
+      ]
+    },
+    {
+      "id": "simulation-without-workers",
+      "resources_sha256": {
+        "skills/simulate/SKILL.md": "9c565061e3a2e952ea44dc08e5702fef12a154ce0ab9cf4ae990177cabf06c1c",
+        "references/runtime.md": "45b8510aa553f3d63591c43662cdba87404d0b4e7efbcc98968c3a6902f58f33",
+        "references/conventions.md": "1fe40963a4b0c9f5f4b4e653502f9dc5373a8bb334595e018b6ad073c8162ff5",
+        "templates/writing-standard.md": "eaca48384279103b1143aadabb74adb6a82569f0fc66854c93329c4529ae6fe1",
+        "templates/glossary.md": "83a0119269962d79887980ae53e68a088af9b75a7df77a7c92bea05882a496a3",
+        "templates/interview.md": "7a1234e3169509b6fb885a183e860dc68d699631257f59715b0642671ef1a50e",
+        "templates/simulation.md": "f2e0e52e8a733e78da490045770ed3e16a7e4a67f544d6c2ccbd31ba6d3742f7",
+        "references/reviewers/persona-simulator.md": "8affe092ad09131829268b9a058dafb9fef227e4cd46bd63c0eced4c7e77a21a"
+      },
+      "capability_restrictions": "simulated in prompt; tool traces must also be inspected",
+      "model": "CLI default, no model override",
+      "host_acceptance": "native Codex model behavior only; not desktop or ChatGPT product acceptance",
+      "exit_code": 0,
+      "elapsed_seconds": 47.81,
+      "answer_present": true,
+      "event_types": [
+        "item.completed",
+        "thread.started",
+        "turn.completed",
+        "turn.started"
+      ],
+      "items": [
+        {
+          "type": "agent_message",
+          "status": null
+        },
+        {
+          "type": "agent_message",
+          "status": null
+        }
+      ],
+      "usage": [
+        {
+          "input_tokens": 25302,
+          "cached_input_tokens": 12288,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 1610,
+          "reasoning_output_tokens": 144
+        }
+      ]
+    }
+  ]
+}

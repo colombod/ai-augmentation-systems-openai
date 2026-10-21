@@ -1,0 +1,14 @@
+[
+  {
+    "index_flag": "--assume-unchanged",
+    "dirty_bytes": "other",
+    "ordinary_status": "",
+    "old_gate_returned_original_head": true
+  },
+  {
+    "index_flag": "--skip-worktree",
+    "dirty_bytes": "other",
+    "ordinary_status": "",
+    "old_gate_returned_original_head": true
+  }
+]

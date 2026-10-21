@@ -1,0 +1,291 @@
+[
+  {
+    "event_id": 8,
+    "time": 1792533465.4643772,
+    "role": "coordinator",
+    "thread": "01a15b51-d491-7a22-9444-466ef79e4de4",
+    "turn": "01a15b51-d52b-7d12-b3e5-c4e89cec078f",
+    "tool": "delivery_judge",
+    "result": {
+      "success": true,
+      "contentItems": [
+        {
+          "type": "inputText",
+          "text": "{\"question\": \"is_fix\", \"version\": \"1\", \"provider\": \"openai\", \"mode\": \"advisory\", \"advisory\": true, \"human_authority\": false, \"skipped\": true, \"reason\": \"state_incomplete\", \"dropped\": [\"task\"], \"dropped_count\": 1, \"missing\": [\"candidate\", \"linked_item\", \"context\"], \"policy\": {\"status\": \"unavailable\", \"protected\": false, \"gate_allowed\": true, \"blocking_eligible\": false, \"reason\": \"state_incomplete\"}}"
+        }
+      ]
+    }
+  },
+  {
+    "event_id": 24,
+    "time": 1792533484.111707,
+    "role": "coordinator",
+    "thread": "01a15b51-d491-7a22-9444-466ef79e4de4",
+    "turn": "01a15b51-d52b-7d12-b3e5-c4e89cec078f",
+    "tool": "delivery_artifact_write",
+    "result": {
+      "success": true,
+      "contentItems": [
+        {
+          "type": "inputText",
+          "text": "{\"path\": \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/planning/.delivery/initiatives/slugify/delivery-plan.md\", \"relative_path\": \"initiatives/slugify/delivery-plan.md\", \"sha256\": \"95330e5ed012086766113b252ba72cc4be1dbf543ba40bcd2c37025a68078bb9\", \"previous_sha256\": null, \"actor\": {\"role\": \"coordinator\", \"thread\": \"01a15b51-d491-7a22-9444-466ef79e4de4\", \"turn\": \"01a15b51-d52b-7d12-b3e5-c4e89cec078f\", \"lane\": \"read-only\"}, \"persistence\": \"saved\", \"authority\": \"draft submission; no human consent\", \"intent_id\": \"d6697eb3-4a82-4bc5-b865-24356d3465e1\"}"
+        }
+      ]
+    }
+  },
+  {
+    "event_id": 28,
+    "time": 1792533489.845512,
+    "role": "coordinator",
+    "thread": "01a15b51-d491-7a22-9444-466ef79e4de4",
+    "turn": "01a15b51-d52b-7d12-b3e5-c4e89cec078f",
+    "tool": "delivery_send",
+    "result": {
+      "success": true,
+      "contentItems": [
+        {
+          "type": "inputText",
+          "text": "{\"queued_message_id\": \"791a4a86-4901-4f6e-8467-21033ea86293\", \"human_authority\": false}"
+        }
+      ]
+    }
+  },
+  {
+    "event_id": 58,
+    "time": 1792533538.02195,
+    "role": "coordinator",
+    "thread": "01a15b51-d491-7a22-9444-466ef79e4de4",
+    "turn": "01a15b52-ff3e-7d32-8f47-431545013fad",
+    "tool": "delivery_judge",
+    "result": {
+      "success": true,
+      "contentItems": [
+        {
+          "type": "inputText",
+          "text": "{\"question\": \"is_fix\", \"version\": \"1\", \"provider\": \"openai\", \"mode\": \"advisory\", \"advisory\": true, \"human_authority\": false, \"type\": \"noul\", \"model\": \"gpt-6-luna\", \"answer\": \"no\", \"p\": 0, \"latencyMs\": 627.4, \"inputTokens\": 222, \"outputTokens\": 0, \"policy\": {\"status\": \"advisory\", \"protected\": false, \"gate_allowed\": true, \"blocking_eligible\": false, \"reason\": \"advisory_question\"}}"
+        }
+      ]
+    }
+  },
+  {
+    "event_id": 66,
+    "time": 1792533540.46513,
+    "role": "product-manager",
+    "thread": "01a15b52-68b8-7573-b885-f8257ca2f002",
+    "turn": "01a15b52-6a0b-7043-9c9f-861d3e33c2ec",
+    "tool": "delivery_artifact_write",
+    "result": {
+      "success": true,
+      "contentItems": [
+        {
+          "type": "inputText",
+          "text": "{\"path\": \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/planning/.delivery/initiatives/slugify/brief.md\", \"relative_path\": \"initiatives/slugify/brief.md\", \"sha256\": \"9a48df0dfbf147fa54789b013549250cf31612d1ca218386acb9098b0bb01c0c\", \"previous_sha256\": null, \"actor\": {\"role\": \"product-manager\", \"thread\": \"01a15b52-68b8-7573-b885-f8257ca2f002\", \"turn\": \"01a15b52-6a0b-7043-9c9f-861d3e33c2ec\", \"lane\": \"read-only\"}, \"persistence\": \"saved\", \"authority\": \"draft submission; no human consent\", \"intent_id\": \"54b854b7-871b-4d18-8205-7e70ac787423\"}"
+        }
+      ]
+    }
+  },
+  {
+    "event_id": 70,
+    "time": 1792533540.4734411,
+    "role": "product-manager",
+    "thread": "01a15b52-68b8-7573-b885-f8257ca2f002",
+    "turn": "01a15b52-6a0b-7043-9c9f-861d3e33c2ec",
+    "tool": "delivery_artifact_write",
+    "result": {
+      "success": true,
+      "contentItems": [
+        {
+          "type": "inputText",
+          "text": "{\"path\": \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/planning/.delivery/stories/slugify-cli.md\", \"relative_path\": \"stories/slugify-cli.md\", \"sha256\": \"5248e97daf1fc5c2af0919c09f3eb9abcbf2ef20b58af4065ef53ee5b2a3f3eb\", \"previous_sha256\": null, \"actor\": {\"role\": \"product-manager\", \"thread\": \"01a15b52-68b8-7573-b885-f8257ca2f002\", \"turn\": \"01a15b52-6a0b-7043-9c9f-861d3e33c2ec\", \"lane\": \"read-only\"}, \"persistence\": \"saved\", \"authority\": \"draft submission; no human consent\", \"intent_id\": \"d456d45c-05a5-483a-ac6b-9b5e0ed668a3\"}"
+        }
+      ]
+    }
+  },
+  {
+    "event_id": 98,
+    "time": 1792533579.376868,
+    "role": "delivery-manager",
+    "thread": "01a15b53-475e-7e83-b05f-4b0941a47f7c",
+    "turn": "01a15b53-47cb-72c3-b501-44e5b02c17ca",
+    "tool": "delivery_task_materialize",
+    "result": {
+      "success": true,
+      "contentItems": [
+        {
+          "type": "inputText",
+          "text": "{\"issue\": \"fullcycle-6m8\", \"reused\": false, \"readiness_granted\": false, \"source_sha256\": \"5248e97daf1fc5c2af0919c09f3eb9abcbf2ef20b58af4065ef53ee5b2a3f3eb\"}"
+        }
+      ]
+    }
+  },
+  {
+    "event_id": 102,
+    "time": 1792533586.595257,
+    "role": "delivery-manager",
+    "thread": "01a15b53-475e-7e83-b05f-4b0941a47f7c",
+    "turn": "01a15b53-47cb-72c3-b501-44e5b02c17ca",
+    "tool": "delivery_task_ready",
+    "result": {
+      "success": true,
+      "contentItems": [
+        {
+          "type": "inputText",
+          "text": "{\"id\": \"b816081a-cb7d-4e78-ba57-f762c940bdfe\", \"action\": \"ready\", \"issue\": \"fullcycle-6m8\", \"actor\": {\"role\": \"delivery-manager\", \"thread\": \"01a15b53-475e-7e83-b05f-4b0941a47f7c\", \"turn\": \"01a15b53-47cb-72c3-b501-44e5b02c17ca\", \"lane\": \"read-only\", \"cwd\": \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/planning\"}, \"seal\": \"d7aeebe2dec84835e705178dd89d6708b5e864131754350b0b24349a684b0b59\", \"time\": 1792533586.594229, \"readiness\": \"949557a8-1643-4743-9c43-1dbe2863f06c\", \"surfaces\": [{\"host\": \"local macOS\", \"app\": \"Python slugify CLI\", \"mode\": \"terminal subprocess\", \"criterion\": \"Given exactly one text argument, python3 slugify.py TEXT lowercases ASCII A-Z, converts each maximal run of characters outside ASCII [A-Za-z0-9] to one hyphen, trims edge hyphens and prints one newline with exit 0; all-separator input prints an empty line, and missing TEXT exits 2.\"}], \"assumptions\": [], \"reason\": \"initial readiness\"}"
+        }
+      ]
+    }
+  },
+  {
+    "event_id": 115,
+    "time": 1792533625.581922,
+    "role": "builder",
+    "thread": "01a15b53-f137-7bc0-abe0-eb1bfc59bf8e",
+    "turn": "01a15b53-f1b3-7963-a3ac-97b9825c8b4d",
+    "tool": "delivery_task_claim",
+    "result": {
+      "success": true,
+      "contentItems": [
+        {
+          "type": "inputText",
+          "text": "{\"id\": \"1f484dc4-c61e-4917-8da6-1fe9eb7a12bd\", \"action\": \"claim\", \"issue\": \"fullcycle-6m8\", \"actor\": {\"role\": \"builder\", \"thread\": \"01a15b53-f137-7bc0-abe0-eb1bfc59bf8e\", \"turn\": \"01a15b53-f1b3-7963-a3ac-97b9825c8b4d\", \"lane\": \"builder\", \"cwd\": \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/product\"}, \"seal\": \"d7aeebe2dec84835e705178dd89d6708b5e864131754350b0b24349a684b0b59\", \"time\": 1792533625.580805, \"readiness\": \"949557a8-1643-4743-9c43-1dbe2863f06c\", \"operation\": \"83d00aac-cdd6-4188-8b23-5219a66eb8c8\"}"
+        }
+      ]
+    }
+  },
+  {
+    "event_id": 121,
+    "time": 1792533633.2071528,
+    "role": "builder",
+    "thread": "01a15b53-f137-7bc0-abe0-eb1bfc59bf8e",
+    "turn": "01a15b53-f1b3-7963-a3ac-97b9825c8b4d",
+    "tool": "delivery_task_show",
+    "result": {
+      "success": true,
+      "contentItems": [
+        {
+          "type": "inputText",
+          "text": "{\"issue\": [{\"id\": \"fullcycle-6m8\", \"title\": \"Convert a text argument to an ASCII slug with slugify.py\", \"description\": \"# Convert a text argument to an ASCII slug with slugify.py\\n\\nAs a terminal script author, I want to run `python3 slugify.py TEXT` and capture a deterministic ASCII slug so that my scripts use consistent text labels. Deliver the CLI in the specified product root. Unicode outside ASCII is a separator, not transliteration.\\n\\n## Acceptance criteria\\n\\nGiven exactly one text argument, python3 slugify.py TEXT lowercases ASCII A-Z, converts each maximal run of characters outside ASCII [A-Za-z0-9] to one hyphen, trims edge hyphens and prints one newline with exit 0; all-separator input prints an empty line, and missing TEXT exits 2.\\n\", \"acceptance_criteria\": \"Given exactly one text argument, python3 slugify.py TEXT lowercases ASCII A-Z, converts each maximal run of characters outside ASCII [A-Za-z0-9] to one hyphen, trims edge hyphens and prints one newline with exit 0; all-separator input prints an empty line, and missing TEXT exits 2.\", \"notes\": \"delivery-claim-op:83d00aac-cdd6-4188-8b23-5219a66eb8c8\", \"status\": \"in_progress\", \"priority\": 2, \"issue_type\": \"task\", \"assignee\": \"builder\", \"owner\": \"fixture@example.invalid\", \"created_at\": \"2026-10-20T21:59:34Z\", \"created_by\": \"delivery-manager\", \"updated_at\": \"2026-10-20T22:00:20Z\", \"started_at\": \"2026-10-20T22:00:20Z\", \"external_ref\": \"delivery-story:5ea63a10dfa270a1b0e9772486596720a78fbf6ab0c49cedaea7245760c2d6a1\", \"metadata\": {\"delivery_operation\": \"4f27956c-e358-48fa-b936-39aa79a76543\", \"delivery_source_key\": \"5ea63a10dfa270a1b0e9772486596720a78fbf6ab0c49cedaea7245760c2d6a1\", \"delivery_source_path\": \"stories/slugify-cli.md\", \"delivery_source_sha256\": \"5248e97daf1fc5c2af0919c09f3eb9abcbf2ef20b58af4065ef53ee5b2a3f3eb\"}, \"labels\": [\"delivery-draft\"], \"dependent_count\": 0, \"dependency_count\": 0, \"comment_count\": 0}]}"
+        }
+      ]
+    }
+  },
+  {
+    "event_id": 158,
+    "time": 1792533802.3735309,
+    "role": "builder",
+    "thread": "01a15b53-f137-7bc0-abe0-eb1bfc59bf8e",
+    "turn": "01a15b53-f1b3-7963-a3ac-97b9825c8b4d",
+    "tool": "delivery_task_implemented",
+    "result": {
+      "success": true,
+      "contentItems": [
+        {
+          "type": "inputText",
+          "text": "{\"id\": \"d594a723-ee99-4452-9162-f0512a32ad9d\", \"action\": \"implemented\", \"issue\": \"fullcycle-6m8\", \"actor\": {\"role\": \"builder\", \"thread\": \"01a15b53-f137-7bc0-abe0-eb1bfc59bf8e\", \"turn\": \"01a15b53-f1b3-7963-a3ac-97b9825c8b4d\", \"lane\": \"builder\", \"cwd\": \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/product\"}, \"seal\": \"d7aeebe2dec84835e705178dd89d6708b5e864131754350b0b24349a684b0b59\", \"time\": 1792533802.372567, \"evidence\": [{\"path\": \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/product/.delivery-evidence/builder-tests.txt\", \"sha256\": \"3e16f38dad868b98f5b9b69e1f239618de080b49ebaac00e1334f364e3298879\"}], \"passed\": true, \"evidence_trust\": \"worker-submitted\", \"readiness\": \"949557a8-1643-4743-9c43-1dbe2863f06c\", \"head\": \"32746b7d72bbbb4263c2ecf8a737c1c1613f9bbe\"}"
+        }
+      ]
+    }
+  },
+  {
+    "event_id": 170,
+    "time": 1792533831.892779,
+    "role": "reviewer",
+    "thread": "01a15b57-3d1a-7671-a2b5-eed78bbddac9",
+    "turn": "01a15b57-3e99-73b2-85ba-c7e5371ccff5",
+    "tool": "delivery_task_show",
+    "result": {
+      "success": true,
+      "contentItems": [
+        {
+          "type": "inputText",
+          "text": "{\"issue\": [{\"id\": \"fullcycle-6m8\", \"title\": \"Convert a text argument to an ASCII slug with slugify.py\", \"description\": \"# Convert a text argument to an ASCII slug with slugify.py\\n\\nAs a terminal script author, I want to run `python3 slugify.py TEXT` and capture a deterministic ASCII slug so that my scripts use consistent text labels. Deliver the CLI in the specified product root. Unicode outside ASCII is a separator, not transliteration.\\n\\n## Acceptance criteria\\n\\nGiven exactly one text argument, python3 slugify.py TEXT lowercases ASCII A-Z, converts each maximal run of characters outside ASCII [A-Za-z0-9] to one hyphen, trims edge hyphens and prints one newline with exit 0; all-separator input prints an empty line, and missing TEXT exits 2.\\n\", \"acceptance_criteria\": \"Given exactly one text argument, python3 slugify.py TEXT lowercases ASCII A-Z, converts each maximal run of characters outside ASCII [A-Za-z0-9] to one hyphen, trims edge hyphens and prints one newline with exit 0; all-separator input prints an empty line, and missing TEXT exits 2.\", \"notes\": \"delivery-claim-op:83d00aac-cdd6-4188-8b23-5219a66eb8c8\", \"status\": \"in_progress\", \"priority\": 2, \"issue_type\": \"task\", \"assignee\": \"builder\", \"owner\": \"fixture@example.invalid\", \"created_at\": \"2026-10-20T21:59:34Z\", \"created_by\": \"delivery-manager\", \"updated_at\": \"2026-10-20T22:00:20Z\", \"started_at\": \"2026-10-20T22:00:20Z\", \"external_ref\": \"delivery-story:5ea63a10dfa270a1b0e9772486596720a78fbf6ab0c49cedaea7245760c2d6a1\", \"metadata\": {\"delivery_operation\": \"4f27956c-e358-48fa-b936-39aa79a76543\", \"delivery_source_key\": \"5ea63a10dfa270a1b0e9772486596720a78fbf6ab0c49cedaea7245760c2d6a1\", \"delivery_source_path\": \"stories/slugify-cli.md\", \"delivery_source_sha256\": \"5248e97daf1fc5c2af0919c09f3eb9abcbf2ef20b58af4065ef53ee5b2a3f3eb\"}, \"labels\": [\"delivery-draft\"], \"dependent_count\": 0, \"dependency_count\": 0, \"comment_count\": 0}]}"
+        }
+      ]
+    }
+  },
+  {
+    "event_id": 188,
+    "time": 1792533880.9612741,
+    "role": "reviewer",
+    "thread": "01a15b57-3d1a-7671-a2b5-eed78bbddac9",
+    "turn": "01a15b57-3e99-73b2-85ba-c7e5371ccff5",
+    "tool": "delivery_artifact_write",
+    "result": {
+      "success": true,
+      "contentItems": [
+        {
+          "type": "inputText",
+          "text": "{\"path\": \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/planning/.delivery/reviews/slugify-independent.md\", \"relative_path\": \"reviews/slugify-independent.md\", \"sha256\": \"0433e18d62359957816340e09e77af2038859423989737f7a2c1674aabc144c7\", \"previous_sha256\": null, \"actor\": {\"role\": \"reviewer\", \"thread\": \"01a15b57-3d1a-7671-a2b5-eed78bbddac9\", \"turn\": \"01a15b57-3e99-73b2-85ba-c7e5371ccff5\", \"lane\": \"read-only\"}, \"persistence\": \"saved\", \"authority\": \"draft submission; no human consent\", \"intent_id\": \"cdb20c10-234d-4e07-8ea8-22176617ef5c\"}"
+        }
+      ]
+    }
+  },
+  {
+    "event_id": 192,
+    "time": 1792533888.330739,
+    "role": "reviewer",
+    "thread": "01a15b57-3d1a-7671-a2b5-eed78bbddac9",
+    "turn": "01a15b57-3e99-73b2-85ba-c7e5371ccff5",
+    "tool": "delivery_task_review",
+    "result": {
+      "success": true,
+      "contentItems": [
+        {
+          "type": "inputText",
+          "text": "{\"id\": \"58e8d9c8-8191-4825-9d06-34bae5dc5ed3\", \"action\": \"review\", \"issue\": \"fullcycle-6m8\", \"actor\": {\"role\": \"reviewer\", \"thread\": \"01a15b57-3d1a-7671-a2b5-eed78bbddac9\", \"turn\": \"01a15b57-3e99-73b2-85ba-c7e5371ccff5\", \"lane\": \"read-only\", \"cwd\": \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/product\"}, \"seal\": \"d7aeebe2dec84835e705178dd89d6708b5e864131754350b0b24349a684b0b59\", \"time\": 1792533888.329947, \"evidence\": [{\"path\": \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/planning/.delivery/reviews/slugify-independent.md\", \"sha256\": \"0433e18d62359957816340e09e77af2038859423989737f7a2c1674aabc144c7\", \"artifact_event_id\": 187, \"artifact_origin\": {\"role\": \"reviewer\", \"thread\": \"01a15b57-3d1a-7671-a2b5-eed78bbddac9\", \"turn\": \"01a15b57-3e99-73b2-85ba-c7e5371ccff5\", \"lane\": \"read-only\"}}], \"implementation\": \"d594a723-ee99-4452-9162-f0512a32ad9d\", \"approved\": true, \"readiness\": \"949557a8-1643-4743-9c43-1dbe2863f06c\", \"head\": \"32746b7d72bbbb4263c2ecf8a737c1c1613f9bbe\"}"
+        }
+      ]
+    }
+  },
+  {
+    "event_id": 196,
+    "time": 1792533897.278403,
+    "role": "reviewer",
+    "thread": "01a15b57-3d1a-7671-a2b5-eed78bbddac9",
+    "turn": "01a15b57-3e99-73b2-85ba-c7e5371ccff5",
+    "tool": "delivery_task_surface",
+    "result": {
+      "success": true,
+      "contentItems": [
+        {
+          "type": "inputText",
+          "text": "{\"id\": \"26f3e591-1a36-486d-b519-49ea3d947727\", \"action\": \"surface\", \"issue\": \"fullcycle-6m8\", \"actor\": {\"role\": \"reviewer\", \"thread\": \"01a15b57-3d1a-7671-a2b5-eed78bbddac9\", \"turn\": \"01a15b57-3e99-73b2-85ba-c7e5371ccff5\", \"lane\": \"read-only\", \"cwd\": \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/product\"}, \"seal\": \"d7aeebe2dec84835e705178dd89d6708b5e864131754350b0b24349a684b0b59\", \"time\": 1792533897.277725, \"surface\": {\"host\": \"local macOS\", \"app\": \"Python slugify CLI\", \"mode\": \"terminal subprocess\", \"criterion\": \"Given exactly one text argument, python3 slugify.py TEXT lowercases ASCII A-Z, converts each maximal run of characters outside ASCII [A-Za-z0-9] to one hyphen, trims edge hyphens and prints one newline with exit 0; all-separator input prints an empty line, and missing TEXT exits 2.\"}, \"kind\": \"real-host-observation\", \"evidence\": [{\"path\": \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/planning/.delivery/reviews/slugify-independent.md\", \"sha256\": \"0433e18d62359957816340e09e77af2038859423989737f7a2c1674aabc144c7\", \"artifact_event_id\": 187, \"artifact_origin\": {\"role\": \"reviewer\", \"thread\": \"01a15b57-3d1a-7671-a2b5-eed78bbddac9\", \"turn\": \"01a15b57-3e99-73b2-85ba-c7e5371ccff5\", \"lane\": \"read-only\"}}], \"review\": \"58e8d9c8-8191-4825-9d06-34bae5dc5ed3\", \"evidence_trust\": \"submitted-not-authenticated\", \"readiness\": \"949557a8-1643-4743-9c43-1dbe2863f06c\", \"head\": \"32746b7d72bbbb4263c2ecf8a737c1c1613f9bbe\"}"
+        }
+      ]
+    }
+  },
+  {
+    "event_id": 217,
+    "time": 1792534000.090084,
+    "role": "delivery-manager",
+    "thread": "01a15b53-475e-7e83-b05f-4b0941a47f7c",
+    "turn": "01a15b59-f3ce-76e2-b5a2-e70888dc8002",
+    "tool": "delivery_task_gate_status",
+    "result": {
+      "success": true,
+      "contentItems": [
+        {
+          "type": "inputText",
+          "text": "{\"issue\": \"fullcycle-6m8\", \"head\": \"32746b7d72bbbb4263c2ecf8a737c1c1613f9bbe\", \"criteria_hash\": \"d7aeebe2dec84835e705178dd89d6708b5e864131754350b0b24349a684b0b59\", \"missing_surfaces\": [], \"submissions_complete\": true, \"accepted\": false, \"task_authority\": \"Beads\", \"acceptance_blockers\": [\"Explicit current operator-terminal attestation required\", \"Surface and CI submissions need operator verification; no automatic host authentication\", \"External user-run Beads/Git mutations are outside coordinator authority\"]}"
+        }
+      ]
+    }
+  },
+  {
+    "event_id": 220,
+    "time": 1792534006.219141,
+    "role": "delivery-manager",
+    "thread": "01a15b53-475e-7e83-b05f-4b0941a47f7c",
+    "turn": "01a15b59-f3ce-76e2-b5a2-e70888dc8002",
+    "tool": "delivery_task_accept",
+    "result": {
+      "success": false,
+      "contentItems": [
+        {
+          "type": "inputText",
+          "text": "Protected acceptance requires explicit operator terminal capture"
+        }
+      ]
+    }
+  }
+]

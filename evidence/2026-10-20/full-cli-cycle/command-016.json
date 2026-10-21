@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "git",
+    "-C",
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/product",
+    "rev-parse",
+    "HEAD"
+  ],
+  "cwd": null,
+  "code": 0,
+  "stdout": "0dfa456c259f2b47c50bcf75ccf84a0e37f2ce31\n",
+  "stderr": ""
+}

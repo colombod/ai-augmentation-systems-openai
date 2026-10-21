@@ -1,0 +1,8 @@
+{
+  "scenario": "artifact_saved persistence fails after os.replace",
+  "error": "synthetic event persistence failure",
+  "canonical_bytes": "new bytes",
+  "event_count_before": 1,
+  "event_count_after": 1,
+  "old_revision_preserved": true
+}

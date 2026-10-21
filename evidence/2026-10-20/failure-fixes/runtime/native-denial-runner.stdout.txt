@@ -1,0 +1,1 @@
+{"all_pass": true, "error": null, "checks": {"actual_native_request_denied": true, "no_pending_operator_request": true, "no_capture_or_signing_event": true, "guard_preserved": true, "policy_not_human_authority": true, "actual_terminal_observed": true}, "fixture": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-deny-native-btnxae_d"}

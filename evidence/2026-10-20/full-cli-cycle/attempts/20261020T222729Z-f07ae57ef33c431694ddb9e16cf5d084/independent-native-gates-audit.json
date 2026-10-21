@@ -1,0 +1,56 @@
+{
+  "scope": "Read-only independent actual-ledger audit of fresh one-feature publicCLI attempt; no reviewer source/harness/state edits, steering or model calls",
+  "attempt": "20261020T222729Z-f07ae57ef33c431694ddb9e16cf5d084",
+  "issue": "fullcycle-8f7",
+  "head": "b87785b9a8f2f3fc3cd532f683a8228619245b08",
+  "checks": {
+    "all16_semantic_checks_true": true,
+    "source_head_agrees_across_implementation_review_surface_gate": true,
+    "criteria_seal_agrees": true,
+    "reviewer_independent_thread": true,
+    "all_long_review_transcripts_match_native": true,
+    "review_file_matches_protected_gate_hash": true,
+    "final_exact_queue_message_in_native_user_input": true,
+    "final_exact_turn_terminal_completed": true,
+    "final_status_and_capture_refusal_same_turn": true,
+    "actual_judge_answer_first_call": true,
+    "normal_planned_stops_exit0": true,
+    "no_claimed_human_acceptance": true,
+    "no_controls_or_native_guard_or_extra_operator_messages": true
+  },
+  "all_checks_pass": true,
+  "review_transcript_matches": [
+    {
+      "bytes": 2207,
+      "native_events": [
+        169
+      ]
+    },
+    {
+      "bytes": 369,
+      "native_events": [
+        171
+      ]
+    },
+    {
+      "bytes": 1982,
+      "native_events": [
+        174
+      ]
+    }
+  ],
+  "final_dm_proof": {
+    "role": "delivery-manager",
+    "message_id": "3ac8a465-c2b1-4f78-a39b-5e8e3767f40b",
+    "native_thread": "01a15b6f-04bc-7452-999e-bbe493cac460",
+    "native_turn": "01a15b72-c7a3-79e2-a74e-54a07598a092",
+    "intent_event": 196,
+    "user_message_events": [
+      197
+    ],
+    "terminal_event": 207,
+    "queue_state": "idle"
+  },
+  "observed_review_checks": "3 local unittest methods, 12 independent CLI subprocess cases, exhaustive in-memory Unicode function oracle (not 1114112 CLI executions)",
+  "limits": "Local scripted CLI cycle through explicit human-capture refusal. No real operator approval, hosted CI, desktop/ChatGPT, all15planningphases or broad reliability acceptance."
+}

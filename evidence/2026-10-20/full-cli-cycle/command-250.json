@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "/Users/colombod/workspaces/delivery-plugin-openai/plugins/delivery/scripts/runtime.py",
+    "--project",
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/planning",
+    "send",
+    "--role",
+    "delivery-manager",
+    "--message-file",
+    "/Users/colombod/workspaces/delivery-plugin-openai/evidence/2026-10-20/full-cli-cycle/08-delivery-manager-assignment.txt"
+  ],
+  "cwd": null,
+  "code": 0,
+  "stdout": "{\"message_id\": \"ff91efba-aa0d-4428-b46c-4fa938c77472\"}\n",
+  "stderr": ""
+}

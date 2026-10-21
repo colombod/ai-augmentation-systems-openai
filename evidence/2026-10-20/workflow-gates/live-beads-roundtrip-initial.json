@@ -1,0 +1,281 @@
+{
+  "test_type": "synthetic OS PTY terminal response, real Beads and Git; no human/product acceptance",
+  "observations": [
+    {
+      "action": "ready",
+      "result": {
+        "action": "ready",
+        "issue": "gatelive-415",
+        "actor": {
+          "role": "delivery-manager",
+          "thread": "thread-delivery-manager",
+          "turn": "turn-delivery-manager",
+          "lane": "read-only",
+          "cwd": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/tmp40y2ccsp/planning"
+        },
+        "seal": "f74ad716a609e72892a1aa302b4ecfeb324ff988e72a13f81a11f78d2e6a9448",
+        "time": 1792523558.800318,
+        "readiness": "795e7a66-6013-46c7-ac37-1b10e1333a28",
+        "surfaces": [
+          {
+            "host": "Codex",
+            "app": "CLI",
+            "mode": "local",
+            "criterion": "Criterion A"
+          }
+        ],
+        "assumptions": [],
+        "reason": "initial readiness"
+      }
+    },
+    {
+      "action": "claim",
+      "result": {
+        "action": "claim",
+        "issue": "gatelive-415",
+        "actor": {
+          "role": "builder",
+          "thread": "thread-builder",
+          "turn": "turn-builder",
+          "lane": "builder",
+          "cwd": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/tmp40y2ccsp/product"
+        },
+        "seal": "f74ad716a609e72892a1aa302b4ecfeb324ff988e72a13f81a11f78d2e6a9448",
+        "time": 1792523572.08406,
+        "readiness": "795e7a66-6013-46c7-ac37-1b10e1333a28"
+      }
+    },
+    {
+      "action": "implemented",
+      "result": {
+        "action": "implemented",
+        "issue": "gatelive-415",
+        "actor": {
+          "role": "builder",
+          "thread": "thread-builder",
+          "turn": "turn-builder",
+          "lane": "builder",
+          "cwd": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/tmp40y2ccsp/product"
+        },
+        "seal": "f74ad716a609e72892a1aa302b4ecfeb324ff988e72a13f81a11f78d2e6a9448",
+        "time": 1792523576.473485,
+        "evidence": [
+          {
+            "path": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/tmp40y2ccsp/product/.delivery-evidence/test-output",
+            "sha256": "efce7f426012d0e8da5505fe8d73f91aa23a3b289654392e3243f26528516546"
+          }
+        ],
+        "passed": true,
+        "evidence_trust": "worker-submitted",
+        "readiness": "795e7a66-6013-46c7-ac37-1b10e1333a28",
+        "head": "a05487d33538f7f01d3c48e5ac3438e932ee985e"
+      }
+    },
+    {
+      "action": "review",
+      "result": {
+        "action": "review",
+        "issue": "gatelive-415",
+        "actor": {
+          "role": "reviewer",
+          "thread": "thread-reviewer",
+          "turn": "turn-reviewer",
+          "lane": "read-only",
+          "cwd": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/tmp40y2ccsp/product"
+        },
+        "seal": "f74ad716a609e72892a1aa302b4ecfeb324ff988e72a13f81a11f78d2e6a9448",
+        "time": 1792523580.88364,
+        "evidence": [
+          {
+            "path": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/tmp40y2ccsp/product/.delivery-evidence/review-output",
+            "sha256": "293a211bc334a1c886128e7a9acc12746a905535e3bb5639b51802ad9dc0a9e4"
+          }
+        ],
+        "implementation": 1792523576.473485,
+        "approved": true,
+        "readiness": "795e7a66-6013-46c7-ac37-1b10e1333a28",
+        "head": "a05487d33538f7f01d3c48e5ac3438e932ee985e"
+      }
+    },
+    {
+      "action": "surface",
+      "result": {
+        "action": "surface",
+        "issue": "gatelive-415",
+        "actor": {
+          "role": "reviewer",
+          "thread": "thread-reviewer",
+          "turn": "turn-reviewer",
+          "lane": "read-only",
+          "cwd": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/tmp40y2ccsp/product"
+        },
+        "seal": "f74ad716a609e72892a1aa302b4ecfeb324ff988e72a13f81a11f78d2e6a9448",
+        "time": 1792523585.2629051,
+        "surface": {
+          "host": "Codex",
+          "app": "CLI",
+          "mode": "local",
+          "criterion": "Criterion A"
+        },
+        "kind": "real-host-observation",
+        "evidence": [
+          {
+            "path": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/tmp40y2ccsp/product/.delivery-evidence/host-output",
+            "sha256": "61ffd5b7aea9b420b87881ea878e3a7a3e6ee55905e28582075257974e834a9c"
+          }
+        ],
+        "review": 1792523580.88364,
+        "evidence_trust": "submitted-not-authenticated",
+        "readiness": "795e7a66-6013-46c7-ac37-1b10e1333a28",
+        "head": "a05487d33538f7f01d3c48e5ac3438e932ee985e"
+      }
+    },
+    {
+      "action": "accept",
+      "result": {
+        "operator_capture_required": true,
+        "scope": {
+          "action": "delivery-accept",
+          "issue": "gatelive-415",
+          "head": "a05487d33538f7f01d3c48e5ac3438e932ee985e",
+          "criteria_hash": "f74ad716a609e72892a1aa302b4ecfeb324ff988e72a13f81a11f78d2e6a9448",
+          "evidence_digest": "4e5f11bd233805364d8337fe87c17d6760f97d3f227e6648eaaead273ac4b6c2"
+        },
+        "question": {
+          "attestation": "Accepting attests that I personally verified the current commit, criteria, passing CI, no unresolved conflicts, independent review, and actual declared host/app/mode observations below. Worker submissions alone are insufficient. This closes only the Beads task and authorizes no merge, push or publication.",
+          "scope": {
+            "action": "delivery-accept",
+            "issue": "gatelive-415",
+            "head": "a05487d33538f7f01d3c48e5ac3438e932ee985e",
+            "criteria_hash": "f74ad716a609e72892a1aa302b4ecfeb324ff988e72a13f81a11f78d2e6a9448",
+            "evidence_digest": "4e5f11bd233805364d8337fe87c17d6760f97d3f227e6648eaaead273ac4b6c2"
+          },
+          "criteria": "Criterion A",
+          "surfaces": [
+            {
+              "host": "Codex",
+              "app": "CLI",
+              "mode": "local",
+              "criterion": "Criterion A"
+            }
+          ],
+          "implementation": {
+            "action": "implemented",
+            "issue": "gatelive-415",
+            "actor": {
+              "role": "builder",
+              "thread": "thread-builder",
+              "turn": "turn-builder",
+              "lane": "builder",
+              "cwd": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/tmp40y2ccsp/product"
+            },
+            "seal": "f74ad716a609e72892a1aa302b4ecfeb324ff988e72a13f81a11f78d2e6a9448",
+            "time": 1792523576.473485,
+            "evidence": [
+              {
+                "path": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/tmp40y2ccsp/product/.delivery-evidence/test-output",
+                "sha256": "efce7f426012d0e8da5505fe8d73f91aa23a3b289654392e3243f26528516546"
+              }
+            ],
+            "passed": true,
+            "evidence_trust": "worker-submitted",
+            "readiness": "795e7a66-6013-46c7-ac37-1b10e1333a28",
+            "head": "a05487d33538f7f01d3c48e5ac3438e932ee985e"
+          },
+          "review": {
+            "action": "review",
+            "issue": "gatelive-415",
+            "actor": {
+              "role": "reviewer",
+              "thread": "thread-reviewer",
+              "turn": "turn-reviewer",
+              "lane": "read-only",
+              "cwd": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/tmp40y2ccsp/product"
+            },
+            "seal": "f74ad716a609e72892a1aa302b4ecfeb324ff988e72a13f81a11f78d2e6a9448",
+            "time": 1792523580.88364,
+            "evidence": [
+              {
+                "path": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/tmp40y2ccsp/product/.delivery-evidence/review-output",
+                "sha256": "293a211bc334a1c886128e7a9acc12746a905535e3bb5639b51802ad9dc0a9e4"
+              }
+            ],
+            "implementation": 1792523576.473485,
+            "approved": true,
+            "readiness": "795e7a66-6013-46c7-ac37-1b10e1333a28",
+            "head": "a05487d33538f7f01d3c48e5ac3438e932ee985e"
+          },
+          "observations": [
+            {
+              "action": "surface",
+              "issue": "gatelive-415",
+              "actor": {
+                "role": "reviewer",
+                "thread": "thread-reviewer",
+                "turn": "turn-reviewer",
+                "lane": "read-only",
+                "cwd": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/tmp40y2ccsp/product"
+              },
+              "seal": "f74ad716a609e72892a1aa302b4ecfeb324ff988e72a13f81a11f78d2e6a9448",
+              "time": 1792523585.2629051,
+              "surface": {
+                "host": "Codex",
+                "app": "CLI",
+                "mode": "local",
+                "criterion": "Criterion A"
+              },
+              "kind": "real-host-observation",
+              "evidence": [
+                {
+                  "path": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/tmp40y2ccsp/product/.delivery-evidence/host-output",
+                  "sha256": "61ffd5b7aea9b420b87881ea878e3a7a3e6ee55905e28582075257974e834a9c"
+                }
+              ],
+              "review": 1792523580.88364,
+              "evidence_trust": "submitted-not-authenticated",
+              "readiness": "795e7a66-6013-46c7-ac37-1b10e1333a28",
+              "head": "a05487d33538f7f01d3c48e5ac3438e932ee985e"
+            }
+          ],
+          "options": [
+            "accept",
+            "decline",
+            "cancel"
+          ]
+        }
+      }
+    }
+  ],
+  "accept_result": {
+    "issue": "gatelive-415",
+    "status": "closed",
+    "accepted": true,
+    "authority": "explicit operator-terminal attestation",
+    "merge_authorized": false,
+    "external_mutation_guarantee": false
+  },
+  "canonical_task": {
+    "id": "gatelive-415",
+    "title": "Synthetic controlled gate fixture",
+    "acceptance_criteria": "Criterion A",
+    "status": "closed",
+    "priority": 2,
+    "issue_type": "task",
+    "assignee": "builder",
+    "owner": "colombod@me.com",
+    "created_at": "2026-10-20T19:12:33Z",
+    "created_by": "Diego",
+    "updated_at": "2026-10-20T19:13:25Z",
+    "started_at": "2026-10-20T19:12:47Z",
+    "closed_at": "2026-10-20T19:13:25Z",
+    "close_reason": "Delivery operator attested head a05487d33538f7f01d3c48e5ac3438e932ee985e; criteria f74ad716a609e72892a1aa302b4ecfeb324ff988e72a13f81a11f78d2e6a9448; evidence 4e5f11bd233805364d8337fe87c17d6760f97d3f227e6648eaaead273ac4b6c2",
+    "dependent_count": 0,
+    "dependency_count": 0,
+    "comment_count": 0
+  },
+  "limitations": [
+    "No native Codex model/desktop/ChatGPT was exercised",
+    "CI and host observations are fixture text explicitly operator-attested by automated PTY input",
+    "No merge/push/global external mutation guarantee"
+  ]
+}

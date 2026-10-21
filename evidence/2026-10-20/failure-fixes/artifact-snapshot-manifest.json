@@ -1,0 +1,14 @@
+{
+  "head": "b87785b9a8f2f3fc3cd532f683a8228619245b08",
+  "product": {
+    "README.md": "b33aa73a2daf1630bf8f7bef216161966c77f1b4f2e73ba8c698cfa2e2203d5b",
+    "slugify.py": "f9100e6418a7f0c9d48658b89d70bcbd9eeac2d530f68b507bb52c51f1d306f5",
+    "test_slugify.py": "cabcf77bfb101febd8dda90e3d87f9cdf125b2c5ca3e4c15aaad499f8dc0d18a"
+  },
+  "canonical_artifacts": {
+    "initiatives/slugify/delivery-plan.md": "c4e398a660f1ac7145b90bac8191a8567f1bf4c1b68c2c91b372b64b531230c6",
+    "initiatives/slugify/brief.md": "b34f7cab82c4db70251f6c81276bef42e423076ec319dd25d536cfb3081c6c88",
+    "stories/slugify-cli.md": "a24c2d56278627cfec79f6531d364b0a1a85c1d47b78852b297ac5f6802b2de2",
+    "reviews/slugify-independent.md": "c9deab5f5e83fb7155a136670f3508dabf7264f824670552fcf7e98c6f226dfa"
+  }
+}

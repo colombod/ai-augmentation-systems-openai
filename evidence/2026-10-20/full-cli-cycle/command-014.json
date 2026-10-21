@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "/Users/colombod/workspaces/delivery-plugin-openai/plugins/delivery/scripts/project.py",
+    "init",
+    "--project",
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/planning",
+    "--initiative",
+    "slugify"
+  ],
+  "cwd": null,
+  "code": 0,
+  "stdout": "{\n  \"delivery_root\": \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/planning/.delivery\",\n  \"initiative\": \"slugify\",\n  \"created\": [\n    \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/planning/.delivery\",\n    \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/planning/.delivery/initiatives\",\n    \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/planning/.delivery/initiatives/slugify\",\n    \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/planning/.delivery/personas\",\n    \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/planning/.delivery/interviews\",\n    \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/planning/.delivery/simulations\",\n    \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/planning/.delivery/decisions\",\n    \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/planning/.delivery/stories\",\n    \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/planning/.delivery/reviews\",\n    \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/planning/.delivery/sprints\"\n  ],\n  \"capability\": \"planning-preview\",\n  \"artifacts_overwritten\": 0\n}\n",
+  "stderr": ""
+}

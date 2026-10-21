@@ -1,0 +1,143 @@
+{
+  "package": "/Users/colombod/workspaces/delivery-plugin-openai/plugins/hook-event-log",
+  "temporary_root": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/event-independent-nwhc_5s9",
+  "checks": [
+    {
+      "name": "all twelve actual adapter invocations quiet",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "one-key event-only records",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "hashed session routing",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "owner-only file and event directory",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "payload sentinel excluded from persisted data",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "normal adapter max latency under one second",
+      "passed": true,
+      "details": 0.04918037500465289
+    },
+    {
+      "name": "32 concurrent adapter processes succeed",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "32 concurrent records complete exactly once",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "distinct sessions succeed",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "distinct sessions have separate files",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "malformed rejected privately without disk writes",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "array rejected privately without disk writes",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "missing-session rejected privately without disk writes",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "unknown-event rejected privately without disk writes",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "blank-session rejected privately without disk writes",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "oversize rejected privately without disk writes",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "exact one MiB accepted",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "missing data root fixed failure",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "relative data root fixed failure",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "root symlink refused",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "ancestor symlink refused",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "symlink refused without guard mutation",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "hardlink refused without guard mutation",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "fifo refused without guard mutation",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "public-file refused without guard mutation",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "public-directory refused without guard mutation",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "idle stdin deadline quiet payload-free failure",
+      "passed": true,
+      "details": 2.4760145419859327
+    }
+  ],
+  "passed": 27,
+  "total": 27
+}

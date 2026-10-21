@@ -1,0 +1,20 @@
+{
+  "kind": "actual public CLI idle native serve signal test, no model calls",
+  "fixture": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-idle-interrupt-r22cva6j",
+  "model_calls_requested": 0,
+  "started_at": 1792535205.254144,
+  "native_startup_completed": true,
+  "serve_exit_code": 0,
+  "shutdown_record": {
+    "status": "interrupted"
+  },
+  "status_exit_code": 0,
+  "status": {
+    "roles": [],
+    "pending": [],
+    "task_authority": "Beads",
+    "acceptance": "prototype; worker isolation/recovery acceptance pending"
+  },
+  "error": "'queue'",
+  "finished_at": 1792535205.547606
+}

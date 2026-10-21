@@ -1,0 +1,28 @@
+
+> codex-hook-event-log@0.1.0-preview.2 test
+> node --test tests/*.test.mjs
+
+✔ twelve registered event types produce only exact one-key records (449.734ms)
+✔ 32 concurrent invocations append complete records (149.371125ms)
+✔ malformed, missing identifiers and unknown events create no log (278.397708ms)
+✔ absent and relative PLUGIN_DATA fail quietly (88.578417ms)
+✔ exact 1 MiB input is accepted; 1 byte over is rejected (87.985042ms)
+✔ log target symlink is refused and destination unchanged (49.557459ms)
+✔ idle stdin is terminated below configured hook timeout (2444.729375ms)
+✔ missing binary fails with no content leak (40.2895ms)
+✔ hung native child is killed within hook deadline (2450.964417ms)
+✔ hook registration matches implemented supported events (0.662417ms)
+✔ compatibility manifest exposes hooks without conflicting portable root (0.678333ms)
+✔ latest helper selects by mtime and preserves contents and filesystem metadata (130.05875ms)
+✔ explicit root takes precedence over CODEX_HOME and HOME (75.328417ms)
+✔ CODEX_HOME and HOME default resolve the documented plugin directory (137.826125ms)
+✔ invalid overrides and missing logs fail without creating paths (258.608667ms)
+✔ symlink roots and entries are not followed (124.113084ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6087.479917

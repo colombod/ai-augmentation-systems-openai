@@ -1,0 +1,16 @@
+{
+  "prior_real_final_dm_proof": {
+    "role": "delivery-manager",
+    "message_id": "ff91efba-aa0d-4428-b46c-4fa938c77472",
+    "native_thread": "01a15b53-475e-7e83-b05f-4b0941a47f7c",
+    "native_turn": "01a15b59-f3ce-76e2-b5a2-e70888dc8002",
+    "intent_event": 213,
+    "user_message_events": [
+      215
+    ],
+    "terminal_event": 225,
+    "queue_state": "idle"
+  },
+  "prior_real_coordinator_to_pm_handoff": "791a4a86-4901-4f6e-8467-21033ea86293",
+  "prior_real_skipped_first_judge_correctly_rejected": true
+}

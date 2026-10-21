@@ -1,0 +1,32 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.02s
+     Running unittests src/lib.rs (plugins/hook-event-log/core/target/debug/deps/event_log_core-d33eb626593489a4)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (plugins/hook-event-log/core/target/debug/deps/event_log_core-ca2328a2b84240c2)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/contracts.rs (plugins/hook-event-log/core/target/debug/deps/contracts-193a2b0ca4c1880a)
+
+running 7 tests
+test malformed_unsupported_or_missing_identifiers_create_nothing ... ok
+test exact_byte_boundary_accepted_and_one_extra_byte_rejected ... ok
+test symlink_directories_targets_hardlinks_and_insecure_files_rejected ... ok
+test every_supported_event_serializes_one_key_only_and_routes_by_hash ... ok
+test process_contract_quiet_success_fixed_private_failures ... ok
+test thirty_two_processes_append_complete_records ... ok
+test lock_contention_is_bounded_and_does_not_write ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.36s
+
+   Doc-tests event_log_core
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "git",
+    "-C",
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-8frrftqa/seed",
+    "commit",
+    "--quiet",
+    "-m",
+    "Synthetic delivery fixture seed"
+  ],
+  "cwd": null,
+  "code": 0,
+  "stdout": "",
+  "stderr": ""
+}

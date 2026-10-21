@@ -1,0 +1,43 @@
+{
+  "codex": "codex-cli 0.159.3",
+  "package_version": "0.1.0-preview.2",
+  "installation": "passed",
+  "skills_discovered": [
+    "delivery:architecture",
+    "delivery:brief",
+    "delivery:challenge",
+    "delivery:design",
+    "delivery:personas",
+    "delivery:prd",
+    "delivery:realign",
+    "delivery:research",
+    "delivery:roadmap",
+    "delivery:simulate",
+    "delivery:sprint",
+    "delivery:sprint-review",
+    "delivery:start",
+    "delivery:status",
+    "delivery:stories"
+  ],
+  "installed_helper": "passed",
+  "model_calls": 0,
+  "acceptance": {
+    "cli_install_and_discovery": "passed",
+    "real_model_workflow": "not-tested",
+    "desktop_ui": "not-tested",
+    "chatgpt": "not-tested"
+  },
+  "package_checks": {
+    "unit_and_package_tests": {
+      "passed": 10,
+      "failed": 0
+    },
+    "codex_skill_validator": {
+      "passed": 15,
+      "failed": 0
+    },
+    "catalogue": "passed"
+  },
+  "scope": "Native design and host-aware instruction revision; no custom server, tunnel, judge, hooks or persistent-role runtime deployed",
+  "publication": "local working tree; not committed or pushed"
+}

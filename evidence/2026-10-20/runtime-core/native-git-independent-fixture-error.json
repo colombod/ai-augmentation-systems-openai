@@ -1,0 +1,6 @@
+{
+  "stage": "fixture metadata collection before native model call",
+  "error": "IsADirectoryError: independent clone .git is a directory; probe initially assumed linked-worktree .git file",
+  "fixture": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-7zi5tz91",
+  "native_model_invoked": false
+}

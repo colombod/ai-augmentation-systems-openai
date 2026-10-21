@@ -1,0 +1,15 @@
+{
+  "case": "brief",
+  "exit_code": -15,
+  "error": null,
+  "elapsed_seconds": 2.29,
+  "before_sha256": {
+    "idea.md": "67dea792ec3ff3982238c9051f59035b07aeb20a59b9ef54e1cf76d697384133"
+  },
+  "after_sha256": {
+    "idea.md": "67dea792ec3ff3982238c9051f59035b07aeb20a59b9ef54e1cf76d697384133"
+  },
+  "usage": [],
+  "items": [],
+  "answer_present": false
+}

@@ -1,5 +1,257 @@
 # Delivery port assessment
 
+## Current design: OpenAI capabilities first
+
+The delivery outcomes are the product: a grounded plan, traceable requirements,
+review findings, an implementation handoff and an honest acceptance record.
+The Claude role launcher and hook topology are source-audit findings, not the
+architecture to reproduce. A plugin must use capabilities exposed by its current
+host; packaging cannot create missing tools, local access or authority.
+
+The default is one self-contained, skills-only delivery package. OpenAI documents
+skills as usable without MCP when packaged guidance and existing tools suffice.
+This makes instructions, templates and review lenses the common foundation;
+it does not imply every host can run the helper or access the same files.
+[Official skill guidance](https://developers.openai.com/plugins/build/skills).
+
+| User outcome | Codex CLI / desktop local project | ChatGPT with the plugin available |
+|---|---|---|
+| Brief through roadmap and stories | Skills read/write authorized project artifacts | Skills use provided files or available connected documents; return artifacts when direct saving is unavailable |
+| Canonical planning record | Existing project `.delivery/` and native file tools | Explicit accessible document store, or identified source snapshots with export; never imply a local repo was updated |
+| Deterministic initialization / inventory | Packaged Python helper when Python and shell access are present | Optional execution only in an actually available environment; otherwise inspect supplied artifacts without claiming helper results |
+| Critical review | Read-only native reviewers when delegation is available and authorized | Same rule; otherwise clearly labeled single-session lens passes |
+| Implementation and acceptance | Native coding/test tools on the real target, subject to permissions | Handoff to Codex or an existing authorized tool; unavailable execution remains unverified |
+| Long-running coordination | Native sessions/subagents where exposed; a separate local app-server client only if later justified | No assumption a plugin can spawn persistent role chats or run a watchdog |
+| Guarded actions | Host approvals/sandbox plus tested operation-specific checks | Host/tool authorization; no assumed local hook enforcement |
+
+These are design contracts, not cross-surface acceptance results. Plain ChatGPT
+Chat, Work cloud, Work with local access, and Codex desktop are distinct execution
+contexts. Detect actual tools and workspace access before acting. The universal
+directory shares distribution, not runtime powers; cloud-orchestrated Work does
+not support plugin lifecycle hooks.
+[Supported plugin surfaces and limits](https://learn.chatgpt.com/docs/plugins).
+
+### Deployment: MCP is optional
+
+No server, tunnel, background process or new cloud account is required for the
+default planning workflow. Prefer tools the user already connected before adding
+a custom service. A GitHub connection, for example, is useful only for operations
+its installed tools actually expose and the user authorized; it is not a general
+shell or automatic local-worktree access.
+
+| Optional integration | What has to run | Deployment consequence |
+|---|---|---|
+| Codex local MCP | A local stdio process, or a reachable HTTP service | Can stay on the user's machine; no public hosting required |
+| Custom ChatGPT MCP over HTTPS | Our service at a reachable authenticated endpoint | Someone must operate the service; a GitHub plugin repo does not host it |
+| Custom ChatGPT MCP through Secure MCP Tunnel | A private/local MCP process plus the tunnel client | No public inbound endpoint required, but both processes and connectivity must remain available |
+| Existing connected provider | The provider's service | No new delivery server to operate; access and supported actions still depend on that connection |
+
+Codex documents local stdio and HTTP MCP transports in its
+[MCP guide](https://learn.chatgpt.com/docs/extend/mcp?surface=cli).
+ChatGPT's direct custom-server flow uses an HTTPS MCP URL from a deployment or
+development tunnel; see the [MCP quickstart](https://developers.openai.com/plugins/build/app-quickstart).
+Secure MCP Tunnel also supports private/local servers without exposing them
+publicly. It requires a running client/server, tunnel permissions, correct
+workspace associations and custom-MCP access; it is an optional deployment to
+validate, not an installed feature of this plugin.
+[Tunnel requirements](https://developers.openai.com/api/docs/guides/secure-mcp-tunnels).
+
+### Coordination, hooks and judging
+
+Role names in the planning preview are responsibilities and review instructions.
+Persistent coordination, protected transitions and recovery remain required
+outcomes of the full Codex delivery runtime. They are not waived by releasing a
+planning preview. Their execution interface is surface-specific: a ChatGPT
+planning session without execution access can prepare a handoff, but cannot be
+advertised as a running shipping team. The contract below defines that boundary.
+
+The portable workflow uses explicit phase checks and records their evidence.
+These are procedural checks, not security enforcement. Optional Codex hooks can
+add checks only after execution/trust and actual supported events/tool payloads
+are accepted on that client. A custom tool can enforce its own writes; neither
+a skill nor an MCP server governs every unrelated tool the host exposes.
+The hook probe remains open for that optional capability; it no longer blocks
+the skills-only release.
+
+Judge selection remains `disabled`, `jev` or `openai`, explicitly configured.
+It is optional classification, separate from the host model that follows the
+skills. The default planning flow works without a judge. In local Codex a future
+adapter can use a local helper and provider credentials without an inbound server.
+ChatGPT needs an actual supported credentialed execution path or an optional
+connected tool before invoking either provider; a local environment variable or
+the user's ChatGPT subscription must not be assumed to provide that path.
+Without it, report judging unavailable/disabled; do not silently switch provider
+or replace an opted-in judge with host-model intuition. No judge establishes
+human consent or grants execution authority.
+
+Distribution also has separate acceptance: CLI local/Git catalogue installation,
+desktop installation, and an actually available ChatGPT directory/workspace
+installation route. A private Git repo and CLI discovery do not establish
+ChatGPT installability. The current Python-backed preview has only CLI package
+checks; the host-aware instructions need real scenario acceptance on each
+surface. No hosted service or tunnel has been created.
+
+## Implementation started: planning preview
+
+The initial `0.1.0-preview.1` slice, now revised as `0.1.0-preview.4`, contains:
+15 native skills, 20 adapted templates, ten reviewer lenses and non-destructive
+Python initialization/inventory helpers. Source attribution and per-import
+upstream hashes are in the package. It is self-contained and imports no Claude
+runtime code. See its README for installation and capability limits.
+
+Codex CLI 0.159.3 installed it in a temporary home, discovered all 15 namespaced
+skills and executed the installed helper. This was an installation/protocol check
+with zero model calls. It does not establish planning quality, desktop acceptance
+or shipping-team parity. No judge provider is called; provider selection and the
+guarded runtime remain separate implementation work.
+
+Three targeted live Codex CLI model scenarios have since passed manual review:
+status with no source artifacts, a frame brief with no delegation or persistence,
+and synthetic interviews with no workers. The interview's initial leading
+follow-up was corrected in the skill and its rerun passed. All four executions
+are retained under `evidence/2026-10-20/live-behavior`; no tool calls were observed.
+These tests supplied resources inline and simulated absent capabilities. They
+do not establish installed-plugin activation, real missing-tool surfaces,
+full-pipeline quality, desktop UI or ChatGPT acceptance.
+
+## Full Codex runtime contract
+
+The local `0.1.0-preview.6` runtime now implements persistent native roles,
+controlled canonical artifact saves, Beads workflow gates, bound operator-terminal
+receipts and explicitly selected Jev/OpenAI judging. Real Codex probes establish
+same-thread restart, controlled peer messaging, both provider bridges, and an
+opt-in independent-clone builder that stages and commits while protected paths
+remain denied. Combined automated checks pass 121 Python regression tests; the
+unchanged judge adapters previously passed 22 Node tests.
+
+The contract below remains the required product scope. These targeted results do
+not establish a complete autonomous delivery cycle, authenticated desktop UI or
+ChatGPT operation. Protected acceptance currently closes a Beads task after an
+operator attests CI/conflicts/surface evidence; automatic merge, push and deployment
+are not implemented. See the [fresh CLI fixes and results](../evidence/2026-10-20/failure-fixes/README.md)
+and [earlier integration evidence](../evidence/2026-10-20/delegated-integration/README.md).
+
+The earlier preview included only planning and the project helper. The tables
+below distinguish the current local implementation from remaining acceptance.
+
+### Execution boundary and native interfaces
+
+The proposed full runtime is a local coordinator owned by the operator, using
+Codex rather than a hosted delivery service. CLI and desktop can invoke its
+bounded local command interface through their authorized execution tools. The
+coordinator owns its worker sessions; this does not mean it can create or control
+the desktop app's visible chats. A shell-less ChatGPT session receives status or
+a handoff through available tools; no local team is silently launched there.
+
+The current app-server exposes `thread/start`, `thread/read`, `thread/resume`,
+`thread/fork`, `turn/start`, `turn/steer` and `turn/interrupt`, plus item/turn
+notifications and approval requests. The installed 0.159.3 generated schema
+confirms these interfaces, but our probes only establish selected plumbing.
+Official documentation currently labels app-server experimental and unsupported
+for production workloads. Consequently an app-server-backed coordinator is a
+prototype until the deployment accepts that limitation or a supported interface
+replaces it; it cannot be sold as production-ready parity.
+[Native protocol and maturity](https://learn.chatgpt.com/docs/app-server).
+
+| Delivery operation | Native mechanism / local implementation | Failure behavior |
+|---|---|---|
+| Prepare team | Resolve private planning repo, existing Beads DB, product repo and role worktrees; inspect available model/configuration capabilities | Reject conflicting identity/root/worktree assignments before starting workers |
+| Start persistent role | Coordinator creates a non-ephemeral thread with role instructions, actual cwd and supported permissions | Store a role-to-thread binding only after a valid response; a thread with no persisted turn is not recoverable |
+| Send work / inter-role message | Local coordinator validates sender, recipient, initiative and scope; queues input for `turn/start` or bound `turn/steer` | Never inject peer text as authenticated human instruction; do not steer a stale turn ID |
+| Observe progress | Consume actual `item/started`, `item/completed` and `turn/completed` events | Record incomplete/failed/declined distinctly; a tool-start event is not success |
+| Stop / recovery | Interrupt the exact active turn; after reconnect read/resume the recorded thread and reconcile terminal state | Never restart work from missing events by assuming success; escalate uncertain external effects |
+| Human interaction | Forward native question/approval requests to an operator-controlled client; correlate responses to the pending request | Timeout, cleared request, disconnect, refusal or peer response grants no authority |
+| Status / watchdog | Read coordinator bindings, last received events and Beads; distinguish active, idle, stale, stopped and unknown | No heartbeat means unknown/stale, never task completion; do not kill unrelated processes |
+
+Do not use app-server `process/*` or `thread/shellCommand` as a worker execution
+shortcut: those APIs operate outside the thread sandbox. The coordinator must
+use the actual supported permission model and refuse startup if a required
+restriction cannot be represented. There is no dangerous approval/trust bypass
+in the design. The 0.159.3 protocol schema is the adapter input; changes in a
+client build require compatibility checks, not field guessing.
+
+### Persistent roles and temporary reviewers
+
+The operator-facing coordinator, Product Manager and Delivery Manager retain
+their own durable sessions. Builders receive separate product worktrees.
+Staffing, observation, spike research and real-surface checking remain explicit
+responsibilities; a deployment may combine or separate their sessions only if
+its roster states that choice and preserves independent author/reviewer checks.
+A temporary review lens cannot impersonate any of these durable roles.
+
+Each role binding records team, instance, permitted roots, thread ID, configured
+model, effective capabilities and source revision. These are coordinator records,
+not model-writable identity claims. Store bindings and append-only runtime events
+in the private planning project under `.delivery/runtime/`; Beads remains the
+task/dependency authority. Do not duplicate mutable task status in a second task
+database. Respect project instructions when choosing the canonical root.
+
+Model presets use explicitly available Codex models; never translate Opus,
+Sonnet or Haiku names into an assumed equivalent. An unavailable configured
+model pauses the role or asks for an explicit configuration change. Usage records
+retain provider/model/unit data; unknown usage stays unknown, not Sonnet-weighted
+cost or invented remaining budget.
+
+### Controlled transitions, authority and evidence
+
+The proposed transition path is draft → ready → claimed → implemented → reviewed
+→ surface-verified → accepted. Preview `ready` remains manually planning-ready;
+it is not a full-runtime readiness seal.
+
+| Transition | Required binding / check | Invalidation or refusal |
+|---|---|---|
+| Ready | Delivery owner records current criteria hash, declared surface, assumptions and dependencies | Changed criteria, refuted assumptions, missing real-host spike or unresolved blocking dependency require renewed readiness |
+| Claim | Coordinator validates the bound worker identity and Beads dependency/current-state transaction | Concurrent/stale claim, unready work or wrong lane cannot proceed through this command |
+| Implemented | Builder supplies actual commit SHA and test output; records failed checks too | A textual "done" message alone does not change acceptance state |
+| Reviewed | Separate reviewer is bound to exact head SHA and criteria hash | Author cannot approve their own work; a new commit or criteria change invalidates the review |
+| Surface verified | Record actual target host/app/mode, deployed SHA, criterion, actor, observation time and capture/command/result references | Stub, source-only, wrong-host, wrong-version or unobservable evidence is not real-surface acceptance |
+| Accepted / merge | Authorized delivery owner checks current review, criteria, CI, conflicts and required real-surface evidence | No delegated classification can grant consent; mismatched head/version or missing authority refuses the operation |
+
+These transitions must run through a deterministic local API/CLI with atomic
+checks against current state. Tests must also exercise attempted direct mutations
+using the actual worker permissions. Hooks may add checks after their acceptance,
+but a hook name, skill guideline or MCP wrapper is not global enforcement.
+Describe any remaining bypass paths honestly. The coordinator's authority covers
+its workers and controlled commands, not unrelated user-run clients or shell
+sessions. If claimed lane/evidence protection cannot survive a supported worker
+tool path, the full-runtime release is blocked rather than relabeled protected.
+
+An operator decision records the exact question/options, answer, pending request
+ID, thread/turn/item binding, source revision, scope, expiry and revocation state.
+Only a response captured by the operator-facing client can be a candidate human
+decision. `serverRequest/resolved` alone is insufficient: it can also signal
+cleanup without an answer. No automatic timeout selection counts as consent.
+Replay, expired, revoked, unmatched or already-consumed authority is rejected.
+The client/provenance adapter must be tested; transcript text, JSON actor fields
+and hash chains alone do not authenticate a person. A deployment without a
+verified capture path keeps the protected transition unavailable.
+
+Jev/OpenAI classification uses the separately selected adapter, minimal declared
+inputs and explicit error/refusal results. It may inform the named question's
+advisory or blocking policy only after provider-specific calibration. It cannot
+author an operator response, override native approval or silently select another
+provider. CLI direct outbound calls require no inbound MCP server. A later MCP
+interface can expose the same controlled operations without changing their rules.
+
+### Required acceptance scenarios and current disposition
+
+| Scenario | Expected observable result | Current evidence |
+|---|---|---|
+| Portable package ingest and native CLI install | Schema validation, all expected skills and resources found | Schema/CLI probes; not account ingestion |
+| No shell / no connections | Prepare an export or report missing inputs; do not claim saved files or helper execution | Explicit instruction branches; real-model acceptance still required |
+| No delegation | Sequential review is usable and labeled; independent convergence unavailable | Explicit phase branches; actual behavior still needs testing |
+| Persistent worker restart | Resume the correct worker after a real completed turn without duplicate external effects | Real same-thread Codex restart and controlled peer-tool dispatch; unknown effects are not replayed |
+| Manager writes product / worker spoofs identity | Native permissions and controlled operations refuse; no fabricated identity admitted | Implemented; automated denial tests and targeted native sandbox probes, not full-host acceptance |
+| Peer answer / timeout / replay / revoked decision | Protected action stays denied with a bound reason | Implemented; OS-terminal synthetic capture and denial/replay/revocation tests, not real human identity acceptance |
+| Criteria change / new commit / wrong deployed surface | Old readiness, review or evidence no longer authorizes acceptance | Implemented current-head/criteria/evidence binding and invalidation tests; surface evidence remains operator-attested |
+| Provider missing / refuses / times out | Report disabled/unavailable/error without provider switch or consent inference | Both adapters implemented; malformed/refusal tests, synthetic benchmarks and real native bridge calls; no fallback |
+| Desktop or ChatGPT installation and real task | Verify the actual host and artifact persistence path; report unsupported runtime capabilities | Pending, separately from CLI protocol checks |
+
+The buildable sequence is tracked in Beads: portable package/phase corrections,
+real workflow acceptance, then local runtime implementation against this contract
+and its denial/recovery tests. The full runtime remains part of the intended
+delivery product, not an optional feature discarded to fit the shared preview.
+
 ## Source baseline
 
 - Repository: [colombod/ai-augmentation-systems](https://github.com/colombod/ai-augmentation-systems).
@@ -10,7 +262,7 @@
 - Unchanged-source test run: 932 passed, zero failed on Node 26.5.0. Upstream CI
   specifies Node 24. Local suite success is not live Claude or OpenAI acceptance.
 
-## Operating model to preserve
+## Claude operating model: source audit, not a mandatory blueprint
 
 Persistent Chief of Staff, Product Manager, Delivery Manager and builder sessions
 coordinate through messages and Beads. Reviewer personas are temporary lenses;
@@ -22,7 +274,7 @@ environment identity, `.delivery-role.json` and `CLAUDE.local.md`. Session hooks
 refresh instructions and liveness. These form one runtime system: copying only
 skill prose or renaming tools does not preserve its guarantees.
 
-## Port boundaries
+## Source components to reassess against the native design
 
 | Component | Reuse candidate | Required adaptation |
 |---|---|---|
@@ -75,9 +327,15 @@ change review and maintenance of provenance for copied/adapted files.
 
 ## Acceptance boundary
 
-Before shipping the team, demonstrate independently in CLI and desktop:
-role startup and recovery; allowed and forbidden actions; human-versus-peer
-decision capture; exact question binding; decisions surviving restart; no
-self-review/self-acceptance; review invalidation after new commits; and evidence
-bound to the agreed criteria and deployed customer surface. ChatGPT requires its
-own execution/distribution validation. The open work is tracked in Beads.
+Accept the server-free workflow independently on CLI, desktop and an actual
+ChatGPT installation: resolve accessible artifacts, preserve prior revisions,
+handle absent shell/delegation/connections, export when direct persistence is
+unavailable, and report source/runtime/UI evidence honestly. Judge absence and
+hook absence must not prevent core planning.
+
+Accept optional native coordination, guarded tool actions, hooks, judge adapters
+and any custom MCP deployment separately before advertising them. Require real
+allowed/denied operations, restart and review invalidation tests for capabilities
+that claim those guarantees. A missing approval binding means the action remains
+unavailable; it does not justify inventing a Claude-style transcript origin.
+The evolving work and dependencies are tracked in Beads.

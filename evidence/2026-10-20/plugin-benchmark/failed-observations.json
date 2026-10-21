@@ -1,0 +1,20 @@
+[
+  {
+    "step": "init-benchmark portable package",
+    "exit_code": 1,
+    "observed_error": "Benchmarking only supports Codex skills and plugins.",
+    "reason": "Bundled evaluator recognizes only .codex-plugin/plugin.json"
+  },
+  {
+    "step": "selected-skill first harness",
+    "exit_code": 1,
+    "observed_error": "StopIteration at skill path filter",
+    "reason": "Discovery resolves symlink alias to installed canonical path; corrected harness filter, no package change",
+    "model_calls": 0
+  },
+  {
+    "step": "initial CLI dependent brief",
+    "exit_code": -15,
+    "reason": "Stopped benchmark after observing file-search fallback instead of clean plugin activation; start completed before interruption reached child"
+  }
+]

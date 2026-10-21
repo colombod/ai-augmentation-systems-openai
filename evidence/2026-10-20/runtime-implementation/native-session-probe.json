@@ -1,0 +1,123 @@
+{
+  "workspace": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-runtime-native-2d9mezg1",
+  "checks": {
+    "first_completed": true,
+    "same_thread_resumed": true,
+    "second_completed": true,
+    "same_thread_after_second": true
+  },
+  "first": {
+    "name": "coordinator",
+    "spec": {
+      "cwd": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-runtime-native-2d9mezg1",
+      "model": "gpt-6.1-sol",
+      "lane": "read-only",
+      "instructions": "Bounded synthetic persistence check. Do not use tools or delegate. Return exactly the text requested."
+    },
+    "thread": "01a15aae-f5f3-7711-8151-268dc37c58a3",
+    "turn": null,
+    "phase": "idle",
+    "last_event": 1792522788.5672362,
+    "observation": "idle"
+  },
+  "second": {
+    "name": "coordinator",
+    "spec": {
+      "cwd": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-runtime-native-2d9mezg1",
+      "model": "gpt-6.1-sol",
+      "lane": "read-only",
+      "instructions": "Bounded synthetic persistence check. Do not use tools or delegate. Return exactly the text requested."
+    },
+    "thread": "01a15aae-f5f3-7711-8151-268dc37c58a3",
+    "turn": null,
+    "phase": "idle",
+    "last_event": 1792522798.3070269,
+    "observation": "idle"
+  },
+  "events": [
+    {
+      "id": 1,
+      "time": 1792522778.095477,
+      "kind": "operator_work_queued",
+      "data": "{\"message_id\": \"258148c2-c3b1-4008-8f53-1a053d4d9852\", \"role\": \"coordinator\"}"
+    },
+    {
+      "id": 2,
+      "time": 1792522778.647553,
+      "kind": "turn_intent",
+      "data": "{\"role\": \"coordinator\", \"message_id\": \"258148c2-c3b1-4008-8f53-1a053d4d9852\"}"
+    },
+    {
+      "id": 3,
+      "time": 1792522785.841148,
+      "kind": "item/completed",
+      "data": "{\"role\": \"coordinator\", \"native\": {\"item\": {\"type\": \"userMessage\", \"id\": \"01a15aaf-142a-7681-b009-1bdbf1439ee4\", \"clientId\": null, \"content\": [{\"type\": \"text\", \"text\": \"[Operator-assigned work; queued message 258148c2-c3b1-4008-8f53-1a053d4d9852]\\nReturn exactly DELIVERY_PERSISTENCE_FIRST\", \"text_elements\": []}]}, \"threadId\": \"01a15aae-f5f3-7711-8151-268dc37c58a3\", \"turnId\": \"01a15aae-f819-7473-b0f0-3454d0de2099\", \"completedAtMs\": 1792522785838}}"
+    },
+    {
+      "id": 4,
+      "time": 1792522788.539968,
+      "kind": "item/completed",
+      "data": "{\"role\": \"coordinator\", \"native\": {\"item\": {\"type\": \"agentMessage\", \"id\": \"msg_0e413506a81d9f45016ad7ba23b1848191addf1dbaf86b1f17\", \"text\": \"DELIVERY_PERSISTENCE_FIRST\", \"phase\": \"final_answer\", \"memoryCitation\": null, \"delivery\": null, \"questions\": null}, \"threadId\": \"01a15aae-f5f3-7711-8151-268dc37c58a3\", \"turnId\": \"01a15aae-f819-7473-b0f0-3454d0de2099\", \"completedAtMs\": 1792522788534}}"
+    },
+    {
+      "id": 5,
+      "time": 1792522788.5563982,
+      "kind": "thread/tokenUsage/updated",
+      "data": "{\"role\": \"coordinator\", \"native\": {\"threadId\": \"01a15aae-f5f3-7711-8151-268dc37c58a3\", \"turnId\": \"01a15aae-f819-7473-b0f0-3454d0de2099\", \"tokenUsage\": {\"total\": {\"totalTokens\": 25945, \"inputTokens\": 25935, \"cachedInputTokens\": 8064, \"cacheWriteInputTokens\": 0, \"outputTokens\": 10, \"reasoningOutputTokens\": 0}, \"last\": {\"totalTokens\": 25945, \"inputTokens\": 25935, \"cachedInputTokens\": 8064, \"cacheWriteInputTokens\": 0, \"outputTokens\": 10, \"reasoningOutputTokens\": 0}, \"modelContextWindow\": 475000}}}"
+    },
+    {
+      "id": 6,
+      "time": 1792522788.568204,
+      "kind": "turn_terminal",
+      "data": "{\"role\": \"coordinator\", \"native\": {\"threadId\": \"01a15aae-f5f3-7711-8151-268dc37c58a3\", \"turn\": {\"id\": \"01a15aae-f819-7473-b0f0-3454d0de2099\", \"items\": [{\"type\": \"agentMessage\", \"id\": \"msg_0e413506a81d9f45016ad7ba23b1848191addf1dbaf86b1f17\", \"text\": \"DELIVERY_PERSISTENCE_FIRST\", \"phase\": \"final_answer\", \"memoryCitation\": null, \"delivery\": null, \"questions\": null}], \"itemsView\": \"summary\", \"status\": \"completed\", \"error\": null, \"startedAt\": 1792522778, \"completedAt\": 1792522788, \"durationMs\": 9901}}}"
+    },
+    {
+      "id": 7,
+      "time": 1792522788.7094588,
+      "kind": "role_recovered",
+      "data": "{\"role\": \"coordinator\", \"phase\": \"idle\"}"
+    },
+    {
+      "id": 8,
+      "time": 1792522788.710369,
+      "kind": "operator_work_queued",
+      "data": "{\"message_id\": \"cac9149a-00b2-4e80-b8ec-1a68f30ce5c1\", \"role\": \"coordinator\"}"
+    },
+    {
+      "id": 9,
+      "time": 1792522788.7111301,
+      "kind": "turn_intent",
+      "data": "{\"role\": \"coordinator\", \"message_id\": \"cac9149a-00b2-4e80-b8ec-1a68f30ce5c1\"}"
+    },
+    {
+      "id": 10,
+      "time": 1792522788.7124639,
+      "kind": "thread/tokenUsage/updated",
+      "data": "{\"role\": \"coordinator\", \"native\": {\"threadId\": \"01a15aae-f5f3-7711-8151-268dc37c58a3\", \"turnId\": \"01a15aae-f819-7473-b0f0-3454d0de2099\", \"tokenUsage\": {\"total\": {\"totalTokens\": 25945, \"inputTokens\": 25935, \"cachedInputTokens\": 8064, \"cacheWriteInputTokens\": 0, \"outputTokens\": 10, \"reasoningOutputTokens\": 0}, \"last\": {\"totalTokens\": 25945, \"inputTokens\": 25935, \"cachedInputTokens\": 8064, \"cacheWriteInputTokens\": 0, \"outputTokens\": 10, \"reasoningOutputTokens\": 0}, \"modelContextWindow\": 475000}}}"
+    },
+    {
+      "id": 11,
+      "time": 1792522795.87782,
+      "kind": "item/completed",
+      "data": "{\"role\": \"coordinator\", \"native\": {\"item\": {\"type\": \"userMessage\", \"id\": \"01a15aaf-3b5d-7ff0-9e2c-b444ca9168bb\", \"clientId\": null, \"content\": [{\"type\": \"text\", \"text\": \"[Operator-assigned work; queued message cac9149a-00b2-4e80-b8ec-1a68f30ce5c1]\\nReturn exactly DELIVERY_PERSISTENCE_SECOND\", \"text_elements\": []}]}, \"threadId\": \"01a15aae-f5f3-7711-8151-268dc37c58a3\", \"turnId\": \"01a15aaf-1f68-7f50-a821-fccd9b6e34cb\", \"completedAtMs\": 1792522795873}}"
+    },
+    {
+      "id": 12,
+      "time": 1792522798.2860548,
+      "kind": "item/completed",
+      "data": "{\"role\": \"coordinator\", \"native\": {\"item\": {\"type\": \"agentMessage\", \"id\": \"msg_0f1cb5bb00fb6802016ad7ba2e12988191916c2d1b0b92d4e3\", \"text\": \"DELIVERY_PERSISTENCE_SECOND\", \"phase\": \"final_answer\", \"memoryCitation\": null, \"delivery\": null, \"questions\": null}, \"threadId\": \"01a15aae-f5f3-7711-8151-268dc37c58a3\", \"turnId\": \"01a15aaf-1f68-7f50-a821-fccd9b6e34cb\", \"completedAtMs\": 1792522798281}}"
+    },
+    {
+      "id": 13,
+      "time": 1792522798.296818,
+      "kind": "thread/tokenUsage/updated",
+      "data": "{\"role\": \"coordinator\", \"native\": {\"threadId\": \"01a15aae-f5f3-7711-8151-268dc37c58a3\", \"turnId\": \"01a15aaf-1f68-7f50-a821-fccd9b6e34cb\", \"tokenUsage\": {\"total\": {\"totalTokens\": 54365, \"inputTokens\": 54345, \"cachedInputTokens\": 33792, \"cacheWriteInputTokens\": 0, \"outputTokens\": 20, \"reasoningOutputTokens\": 0}, \"last\": {\"totalTokens\": 28420, \"inputTokens\": 28410, \"cachedInputTokens\": 25728, \"cacheWriteInputTokens\": 0, \"outputTokens\": 10, \"reasoningOutputTokens\": 0}, \"modelContextWindow\": 475000}}}"
+    },
+    {
+      "id": 14,
+      "time": 1792522798.307986,
+      "kind": "turn_terminal",
+      "data": "{\"role\": \"coordinator\", \"native\": {\"threadId\": \"01a15aae-f5f3-7711-8151-268dc37c58a3\", \"turn\": {\"id\": \"01a15aaf-1f68-7f50-a821-fccd9b6e34cb\", \"items\": [{\"type\": \"agentMessage\", \"id\": \"msg_0f1cb5bb00fb6802016ad7ba2e12988191916c2d1b0b92d4e3\", \"text\": \"DELIVERY_PERSISTENCE_SECOND\", \"phase\": \"final_answer\", \"memoryCitation\": null, \"delivery\": null, \"questions\": null}], \"itemsView\": \"summary\", \"status\": \"completed\", \"error\": null, \"startedAt\": 1792522788, \"completedAt\": 1792522798, \"durationMs\": 9584}}}"
+    }
+  ]
+}

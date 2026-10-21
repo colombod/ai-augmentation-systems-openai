@@ -1,0 +1,8 @@
+{
+  "surface": "Codex desktop",
+  "attempt": "cua.getApp(\"Codex\")",
+  "result": "Computer Use is not allowed to use the app com.openai.codex for safety reasons.",
+  "acceptance": "unable-to-check",
+  "trust_bypass": false,
+  "observed_at": "2026-10-21"
+}

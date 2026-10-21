@@ -1,0 +1,8 @@
+Delivery planning preview derives selected skills, templates and reviewer lenses
+from Diego Colombo's ai-augmentation-systems delivery plugin, version 0.30.0,
+revision df0c0a5b0dba1449b6cdfef421bfe1ebc4d658c0, under the MIT license.
+Copyright (c) 2026 Diego Colombo. See LICENSE and upstream.json.
+
+Native Codex instructions and Python helpers are new work. This package does not
+include the upstream Claude hooks, role launcher, permissions or judge runtime.
+Imported content has been adapted; it does not establish feature parity.

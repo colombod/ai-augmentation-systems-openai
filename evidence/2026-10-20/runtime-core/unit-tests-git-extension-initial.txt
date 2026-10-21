@@ -1,0 +1,51 @@
+test_merged_connectors_are_disabled_individually_and_inventory_checked (test_runtime.RPCIsolationTests.test_merged_connectors_are_disabled_individually_and_inventory_checked) ... ok
+test_native_connected_tool_inventory_prevents_startup (test_runtime.RPCIsolationTests.test_native_connected_tool_inventory_prevents_startup) ... ok
+test_async_terminal_wait_keeps_revocation_responsive (test_runtime.RuntimeTests.test_async_terminal_wait_keeps_revocation_responsive) ... {"operator_request": "d9cd0cbd-a235-4272-8457-060fb6c41c72", "method": "item/tool/requestUserInput", "params": {"threadId": "native-thread", "turnId": "native-turn", "questions": [{"id": "q", "question": "Choose"}]}}
+ok
+test_builder_cannot_mutate_privileged_plugin_implementation (test_runtime.RuntimeTests.test_builder_cannot_mutate_privileged_plugin_implementation) ... ok
+test_changed_judge_config_fails_before_provider_invocation (test_runtime.RuntimeTests.test_changed_judge_config_fails_before_provider_invocation) ... ok
+test_completed_turn_is_distinct_from_started_and_unknown_events (test_runtime.RuntimeTests.test_completed_turn_is_distinct_from_started_and_unknown_events) ... ok
+test_control_unknown_result_never_replayed (test_runtime.RuntimeTests.test_control_unknown_result_never_replayed) ... ok
+test_crash_recovery_resumes_binding_without_replaying_external_effects (test_runtime.RuntimeTests.test_crash_recovery_resumes_binding_without_replaying_external_effects) ... ok
+test_early_dynamic_request_is_bound_after_native_turn_response (test_runtime.RuntimeTests.test_early_dynamic_request_is_bound_after_native_turn_response) ... ok
+test_exact_steer_and_interrupt_ack_do_not_imply_completion (test_runtime.RuntimeTests.test_exact_steer_and_interrupt_ack_do_not_imply_completion) ... ok
+test_explicit_session_migration_preserves_history_and_never_replays_work (test_runtime.RuntimeTests.test_explicit_session_migration_preserves_history_and_never_replays_work) ... ok
+test_fast_terminal_notification_before_rpc_reply_is_not_lost (test_runtime.RuntimeTests.test_fast_terminal_notification_before_rpc_reply_is_not_lost) ... ok
+test_judge_without_explicit_config_is_unavailable_not_fallback (test_runtime.RuntimeTests.test_judge_without_explicit_config_is_unavailable_not_fallback) ... ok
+test_native_lane_mismatch_refuses_turn (test_runtime.RuntimeTests.test_native_lane_mismatch_refuses_turn) ... ok
+test_native_policy_requires_explicit_human_reviewer_and_bound_cwd (test_runtime.RuntimeTests.test_native_policy_requires_explicit_human_reviewer_and_bound_cwd) ... ok
+test_native_request_expiry_disconnect_and_unbound_identity_grant_nothing (test_runtime.RuntimeTests.test_native_request_expiry_disconnect_and_unbound_identity_grant_nothing) ... {"operator_request": "1c883d9a-7029-4d3c-b103-6e9f5c2eb806", "method": "item/commandExecution/requestApproval", "params": {"threadId": "native-thread", "turnId": "native-turn", "itemId": "item1"}}
+{"operator_request": "cf45af9c-3cdd-4b39-87f9-08ef19a8d100", "method": "item/commandExecution/requestApproval", "params": {"threadId": "native-thread", "turnId": "native-turn", "itemId": "item1"}}
+ok
+test_only_bound_unexpired_answer_is_consumed_once (test_runtime.RuntimeTests.test_only_bound_unexpired_answer_is_consumed_once) ... {"operator_request": "ca83cbe3-04bc-4b3c-81d0-962f0cdd3b6f", "method": "item/commandExecution/requestApproval", "params": {"threadId": "native-thread", "turnId": "native-turn"}}
+ok
+test_peer_routing_binds_sender_to_native_thread_and_never_human_authority (test_runtime.RuntimeTests.test_peer_routing_binds_sender_to_native_thread_and_never_human_authority) ... ok
+test_pending_unicode_question_hash_matches_capture_validator (test_runtime.RuntimeTests.test_pending_unicode_question_hash_matches_capture_validator) ... {"operator_request": "9b97a26d-9e4b-4921-9b25-270467201d60", "method": "item/tool/requestUserInput", "params": {"threadId": "native-thread", "turnId": "native-turn", "questions": [{"id": "cafe", "question": "Caf\u00e9?"}]}}
+ok
+test_recovery_requires_exact_native_terminal_before_resuming_queue (test_runtime.RuntimeTests.test_recovery_requires_exact_native_terminal_before_resuming_queue) ... ok
+test_resume_rejects_changed_native_tool_inventory (test_runtime.RuntimeTests.test_resume_rejects_changed_native_tool_inventory) ... ok
+test_resume_revalidates_effective_native_lane (test_runtime.RuntimeTests.test_resume_revalidates_effective_native_lane) ... ok
+test_revocation_before_forwarding_discards_answer (test_runtime.RuntimeTests.test_revocation_before_forwarding_discards_answer) ... {"operator_request": "aed6e5a4-a19f-4cb9-aded-ca1799ca8205", "method": "item/commandExecution/requestApproval", "params": {"threadId": "native-thread", "turnId": "native-turn"}}
+ok
+test_session_migration_refuses_wrong_or_nonterminal_native_turn (test_runtime.RuntimeTests.test_session_migration_refuses_wrong_or_nonterminal_native_turn) ... ok
+test_status_never_calls_missing_activity_success (test_runtime.RuntimeTests.test_status_never_calls_missing_activity_success) ... ok
+test_team_preparation_rolls_back_conflicting_role_identity (test_runtime.RuntimeTests.test_team_preparation_rolls_back_conflicting_role_identity) ... FAIL
+test_unknown_effect_on_rpc_timeout_is_not_retried (test_runtime.RuntimeTests.test_unknown_effect_on_rpc_timeout_is_not_retried) ... ok
+test_unknown_permission_requests_and_stale_approval_deny_without_capture (test_runtime.RuntimeTests.test_unknown_permission_requests_and_stale_approval_deny_without_capture) ... ok
+test_valid_capture_cannot_approve_worker_sandbox_escape (test_runtime.RuntimeTests.test_valid_capture_cannot_approve_worker_sandbox_escape) ... {"operator_request": "3747cc3e-4648-4339-835f-88a754cc2427", "method": "item/commandExecution/requestApproval", "params": {"threadId": "native-thread", "turnId": "native-turn"}}
+ok
+test_watchdog_does_not_call_silent_active_work_complete (test_runtime.RuntimeTests.test_watchdog_does_not_call_silent_active_work_complete) ... ok
+
+======================================================================
+FAIL: test_team_preparation_rolls_back_conflicting_role_identity (test_runtime.RuntimeTests.test_team_preparation_rolls_back_conflicting_role_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/colombod/workspaces/delivery-plugin-openai/tests/delivery/test_runtime.py", line 127, in test_team_preparation_rolls_back_conflicting_role_identity
+    with self.assertRaises(R.RuntimeError_):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError_ not raised
+
+----------------------------------------------------------------------
+Ran 30 tests in 0.548s
+
+FAILED (failures=1)

@@ -1,0 +1,22 @@
+{
+  "plugins/hook-event-log/.codex-plugin/plugin.json": "daf54b0ef87962fa90f3efe8bd783e78cfe00da5b396b145863f87d875acc547",
+  "plugins/hook-event-log/.gitignore": "7ab5414c40c788affcf41f75166917fa8b54d054007885b9d8b1bb637fea8b2c",
+  "plugins/hook-event-log/CHANGELOG.md": "c8c76e681ebeac577c1903286d5ee300eb6f34a8062f035fb8aa58d41fc59e93",
+  "plugins/hook-event-log/LICENSE": "4fd2efd9faf00d0adbea920a93d4bc03f01e6a188bb402f25f05f5b1d1e4c61d",
+  "plugins/hook-event-log/README.md": "4137c53da9d46ce1d2e676b42a45b6c7dbcfb810dc342f876b0b2d80ae48b20d",
+  "plugins/hook-event-log/bin/darwin-arm64/event-log-core": "1525cb17c015c56eae7107c40bb361ef359b6d393e08fb6aab4a3f7e08bc190c",
+  "plugins/hook-event-log/core/.gitignore": "306fd52e74fca6746e12acc750f232de15e71da917756a1270d74c91f5eb7368",
+  "plugins/hook-event-log/core/Cargo.lock": "9a900082257d50211a2f1c61da0ef3aaa7b817f17fddd485e34ac73ff0fe0d55",
+  "plugins/hook-event-log/core/Cargo.toml": "e8590ec2f961c414b5287925cb366eb27a10b20547be3e57d773572fab555530",
+  "plugins/hook-event-log/core/src/lib.rs": "63c6e73dcbff4b767b91a1cf3ed00336566a407ee78d8963e9c05cdb2b1e5d9c",
+  "plugins/hook-event-log/core/src/main.rs": "887571a5c2a67bb6880224034b596ba3270ad5f2142a07fd19ffa68ff96b59f6",
+  "plugins/hook-event-log/core/tests/contracts.rs": "7198136f6b1b7748301cf700f88b224e7c40471a8298d47686d105c730b7488b",
+  "plugins/hook-event-log/dist/hook.js": "7c1a22882d677d7234011f6b85757263a07d5368c5beb64ff2b0bce3fb2437fa",
+  "plugins/hook-event-log/hooks/hooks.json": "93024c8dd196b2fd48774557044ab55b4ac4ed1827f4bf0eff4aa57ce35a2719",
+  "plugins/hook-event-log/package-lock.json": "8b571330da777df2959fd480b76b83594b0920d27681e8ba040c04592fbd8fe6",
+  "plugins/hook-event-log/package.json": "d61da1df989bc9a04f067270520222a54124db41308dc40e8fb2d7f873418c86",
+  "plugins/hook-event-log/scripts/build.mjs": "d528834d798d295b5c1dd49da74c8e1560d958ea2e9bdf78100780173b611724",
+  "plugins/hook-event-log/src/hook.ts": "49c177aebe85bb3a78f77f5593a7e671320226967522af1b861356c542cb7310",
+  "plugins/hook-event-log/tests/hook.test.mjs": "9ea1682ca489b4205091c3ece61be345f8f56ad184ebcfd6fb3a8962fa41ad22",
+  "plugins/hook-event-log/tsconfig.json": "31fd5b477c49e8832e3dd2bcbf883d9327addb60e051fc7f2a0d628257dad390"
+}

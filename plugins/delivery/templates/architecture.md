@@ -1,0 +1,104 @@
+<!--
+BUDGET — target 1000 words, hard cap 1600 words. Excludes code, YAML and data tables.
+Interface blocks and NFR tables are data.
+Obey ../templates/writing-standard.md. Cut restatement, narration
+and hedging first; never cut findings, citations, grounding labels, open questions, or
+IDs a later phase reads. Over the cap? Say so in the document, and why.
+-->
+
+# Architecture: <feature name>
+
+> Written by $delivery:architecture. Owned by Solution Architect, with QA Strategist.
+> Status: draft | reviewed | agreed  ·  Last updated: <date>
+> PRD: `.delivery/initiatives/<initiative>/prd.md`
+
+## Approach
+
+The design in a paragraph, and the single most important decision behind it.
+
+## Codebase context
+
+What exists today in the areas this touches. Real paths, checked.
+
+| Path | Role today | Change |
+| :-- | :-- | :-- |
+| `src/...` | | new / modified / extended / untouched |
+
+## Setup — prerequisite, not a feature or a phase
+
+Environment, repository, framework and build-system work this design needs before Phase 1
+can start. Never assigned an `FR-n`, never its own roadmap phase — no persona completes a
+journey through "npm init ran." Gates Phase 1's entry criteria in roadmap.md.
+
+| Setup item | Establishes | Blocks (component / spike) |
+| :-- | :-- | :-- |
+
+**None needed because:** (if so — state why, don't omit the section)
+
+## Component structure
+
+How the pieces fit. Name the seams — module boundaries, dependency direction.
+Specify interfaces, not interiors.
+
+```
+<diagram or structured list>
+```
+
+## Interfaces and data contracts
+
+```
+<signatures, schemas, event shapes>
+```
+
+## Meeting the non-functional requirements
+
+Address every `NFR-n` from the PRD. If one cannot be met, say so here rather
+than discovering it in load testing.
+
+| NFR | Target | How the design meets it | Confidence |
+| :-- | :-- | :-- | :-- |
+| NFR-1 | | | high / medium / low |
+
+## Decisions
+
+Consequential choices get an ADR in `.delivery/decisions/`. Summarize here.
+
+| ADR | Decision | Alternatives rejected |
+| :-- | :-- | :-- |
+| ADR-001 | | |
+
+## Spikes — what must be proven before committing
+
+The most valuable output of this document. Each spike is a specific question
+with a time box, not "investigate X", and names the decision it informs and the
+rule that turns its result into that decision: which answer means build, which
+means change the design, which means stop. Every claim the design rests on that
+nobody has seen hold goes in the register, `assumptions.md`
+(`templates/assumptions.md`); a spike that answers one names it, and is probed in
+the real host, never on the documentation.
+
+| # | Question to answer | Decision it informs | Decision rule | Decision owner | Time box | Blocks | Assumption |
+| :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- |
+| 1 | | | build if ...; change the design if ...; stop if ... | DM \| PM \| owner | | | A-1 |
+
+## Migration and rollback
+
+Required for any change to persisted data or public interfaces.
+
+**Forward:**
+**Back:**
+**Not applicable because:** (if so)
+
+## Test strategy
+
+Owned by QA Strategist. Risk-based, not uniform.
+
+| Area | Risk (likelihood × impact) | Test level | Notes |
+| :-- | :-- | :-- | :-- |
+
+**Deliberately thin coverage:** where, and why that is acceptable.
+
+## Risks
+
+| Risk | Likelihood | Impact | Mitigation | Owner |
+| :-- | :-- | :-- | :-- | :-- |

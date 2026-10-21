@@ -1,0 +1,805 @@
+Execute the supplied delivery skill for the user request below. This is a bounded behavior test using real model inference. The simulated host exposes no filesystem, shell, browsing, connection or delegation tools. Do not call tools, install anything, create files or start agents. All accessible inputs and packaged resources are supplied inline. Produce the actual user-facing artifact or answer, not an explanation of how you would perform the task. Missing information remains unknown.
+
+USER REQUEST
+Run a simulated interview about checkout delivery costs for these personas. Use the provided brief. Work in this chat without creating files.
+HOST CAPABILITIES
+{"local_files": false, "shell": false, "browsing": false, "connections": false, "delegation": false}
+PROVIDED ARTIFACT SNAPSHOTS
+{".delivery/initiatives/checkout-redesign/brief.md": "Mode: frame. Phone shoppers discover delivery costs too late in checkout. Goal: show total costs before they commit. No measured abandonment rate exists. These are supplied planning snapshots.", ".delivery/personas/shopper.md": "---\nid: P-1\nname: Phone shopper\nslug: shopper\ngrounding: assumed\nstatus: active\nsource: derived\n---\nCompares the final cost of two shops on a phone. Leaves when total costs are unclear. All attributes are assumed.", ".delivery/personas/skeptic.md": "---\nid: P-2\nname: Budget skeptic\nslug: skeptic\ngrounding: reported\nstatus: active\nsource: derived\n---\nThe team reports this segment has a strict total-spend limit. No direct customer observations are supplied. Leaves when late charges exceed that limit."}
+
+PACKAGED RESOURCE: skills/simulate/SKILL.md
+---
+name: simulate
+description: "Put end-user personas in front of the product before building it, in one of two modes. --interview runs non-leading simulated interviews to surface unmet needs and objections (writes .delivery/interviews/). --journey (the default) walks personas step by step through a journey \u2014 an existing product, a specified or proposed flow, or a live site \u2014 to find where they get stuck or leave, producing a friction map and per-step value data for MVP staging (writes .delivery/simulations/). Use after personas exist. Output is labelled synthetic \u2014 hypotheses to test, never research findings."
+---
+
+# Persona simulation: interviews and journeys
+
+Arguments: **the user's request**
+
+Optional depth in DEFINE, between `$delivery:personas` and `$delivery:prd`. Pick the mode from the arguments:
+
+| Mode | Use when | Inputs | Output |
+| :-- | :-- | :-- | :-- |
+| `--interview` | You need the problem, needs and objections in the personas' own terms. Topic defaults to the feature in the brief. | `.delivery/personas/`, `.delivery/initiatives/<initiative>/brief.md` | `.delivery/interviews/` |
+| `--journey` (default) | You need to know where a flow loses people, and which steps an MVP stage must contain. Journey defaults to the primary scenario in the brief or PRD. | `.delivery/personas/`, plus the PRD, the running product, or the codebase | `.delivery/simulations/` |
+
+With no mode given, run `--journey`; if no journey can be described yet (no PRD, no product, no proposed flow in the brief), run `--interview` and say so. Both modes may run in one session, interview first.
+
+## Conventions
+
+Read [host capability guidance](../../references/runtime.md) and
+[delivery conventions](../../references/conventions.md) before running this phase.
+
+## The rule this skill exists under
+
+Everything produced here is **synthetic**. A simulated persona's answer is a prediction generated from a persona file, not something a user said. It is worth what the persona's grounding is worth and no more. Simulated friction is a **hypothesis about where real friction lives**, not a usability finding: good at generating candidates cheaply, bad at telling you which are real.
+
+Every artifact this skill writes carries that label at the top, and you repeat it when reporting. If simulated output ever gets cited as "users told us", or a simulated abandonment rate becomes a number in a business case, the plugin has done harm rather than good — so be pedantic about this even when it is tedious.
+
+What it is genuinely good at: catching the step nobody thought about, the assumed knowledge, the missing state, and the objection nobody wanted to hear.
+
+## Gate check
+
+Read `.delivery/personas/`.
+
+- **Missing** — stop, run `$delivery:personas` first. Interviewing or walking a persona you invent on the spot to answer a question you are holding is a machine for confirming what you already believe.
+- Note each persona's grounding grade; it determines how the output should be read, and you will report it.
+
+For `--journey`, also establish what is being walked through, in this order of preference:
+
+1. **A real running product** — use actual accessible code/pages/copy. Browser or
+   desktop interaction requires the host's real tools and existing authorization;
+   no Reality Checker process is presumed. Without that access, use a supplied
+   capture or the specified/proposed flow below and state its limits.
+2. **A specified flow** — the scenarios in `.delivery/initiatives/<initiative>/prd.md`.
+3. **A proposed flow** — described in the brief.
+
+Say which you used. A simulation against intent rather than implementation finds different problems, and the reader needs to know which they are getting.
+
+---
+
+## Mode `--interview`
+
+### Run
+
+**1. Write the interview guide first, before talking to anyone.** Questions must be non-leading. "Would this feature be useful?" invites a yes; "walk me through the last time you had this problem — what did you do?" produces information. Ask about past behavior rather than future intent, since predicted intent is close to worthless even from real people.
+
+Cover: the problem in their own words, what they do today and what it costs them, what they have tried and abandoned, what would have to be true for them to switch, and what would make them stop using it.
+
+Do not describe your solution until the end. Once you do, the persona starts responding to your framing instead of their situation.
+
+**2. Interview each persona with the `persona-simulator` lens.** With available,
+authorized native delegation, use isolated reviewers with the full persona file
+and guide, keeping their answers separate. Otherwise simulate each persona
+sequentially in this session and label that mode prominently. Do not claim
+independent agreement from sequential personas; all results remain synthetic.
+
+**3. Probe the objections rather than resolving them.** When a persona raises a concern, follow it — how much does that matter, what would it take to overcome, what would you do instead. The instinct is to argue back or design a fix mid-interview. Don't. The objection is the finding.
+
+Follow-up questions must also be non-leading: ask what information is missing,
+what would have to change, or what the persona would do next. Do not offer an
+explanation, discount, earlier disclosure or other candidate fix and ask whether
+it would overcome the concern. That tests agreement with your suggestion rather
+than eliciting the persona's objection. If the snapshot cannot support an answer,
+record it as unknown instead of supplying a hypothetical history.
+
+**4. Interview the skeptic properly.** The persona who is served badly gets the same care as the enthusiast, not a token pass. That transcript is usually the most useful one.
+
+### Synthesize
+
+Do not just concatenate transcripts.
+
+- **Needs across personas** — cite the persona IDs and grounding grades. Call
+  agreement independently convergent only for isolated runs; sequential overlap
+  is explicitly single-session and still a hypothesis.
+- **Divergent needs** — where personas want incompatible things. These are the real product decisions; surface them for the Product Owner rather than splitting the difference yourself.
+- **Objections**, ranked by how many personas hold them and how fatal each is.
+- **Unmet needs** nobody had planned for.
+- **Confidence** per finding: derived from `observed` persona attributes, or extrapolated from `assumed` ones.
+- **What this cannot tell you** — the questions that genuinely need real people, added to the research backlog.
+
+### Write
+
+Every interview file opens with this banner, verbatim — reproduced here because the
+template may not be readable:
+
+```markdown
+> ⚠ **SIMULATED PERSONA OUTPUT — a hypothesis to test, not a research finding.**
+> Generated from `.delivery/personas/<slug>.md`, grounding: **<grade>**.
+> Nothing here is something a real user said. Do not cite as "users told us".
+```
+
+Write per-persona transcripts to `.delivery/interviews/<persona-slug>-<topic>.md` and the synthesis to `.delivery/interviews/README.md`, using `../../templates/interview.md`. The synthetic-output label goes at the top of every file.
+
+### Exit criteria
+
+- Within the budget, or the overrun declared in the document with its reason — measure prose when computation is available; otherwise report word count unverified
+- Interview guide written before the interviews, questions non-leading
+- Every persona interviewed; actual isolated or single-session mode stated, with no independent-convergence claim for sequential passes
+- Synthesis separates convergent from divergent, with confidence tied to grounding
+- The research backlog names what simulation cannot settle
+
+**Budget: 500 words target, 800 hard cap** (excludes code, YAML and data tables). Compose, measure and revise as *Writing, then revising* in the conventions says.
+
+---
+
+## Mode `--journey`
+
+### Run
+
+**1. Break the journey into concrete steps.** Every step a real person takes, including the ones teams forget: arriving from search with the wrong expectation, the language or currency being wrong, the loading state, the empty state, the error, the moment of deciding whether to trust the site, the point of entering personal data, and what happens after they act.
+
+**2. Walk each persona through using the `persona-simulator` lens.** Use isolated
+native reviewers only when available and authorized. Otherwise run sequential
+passes in this session, label them single-session simulation, and do not claim
+independence or independent convergence.
+
+Each persona carries its own constraints through every step: device, connection, language, time available, budget, expertise, and whether someone else must approve. Most friction comes from constraints, not preferences.
+
+At each step the persona reports: what they understood, what they expected next, what they actually noticed, how they felt, and whether they would continue. **Abandonment gets recorded at the exact step**, with what they would do instead.
+
+**3. Simulate the unhappy paths too**, not just the intended route. Arriving mid-journey from a deep link. Making a mistake and needing to correct it. Coming back two days later. Being interrupted. These are where products lose people.
+
+### Build the friction map
+
+Aggregate into a step-by-step map:
+
+| Step | Personas reaching it | Friction | Abandoned here | Severity |
+| :-- | :-- | :-- | :-- | :-- |
+
+**Severity** = how many personas hit it × whether it blocks or merely annoys. Rank the map by it.
+
+Then, and this is the output that feeds MVP staging, produce **per-step value data**:
+
+- **Which steps are load-bearing** — remove them and the journey fails for someone. These are MVP candidates.
+- **Which steps are enhancements** — their absence causes annoyance, not abandonment. These are staging candidates.
+- **Which personas are fully served** by the current step set, and which are not served at all. A stage that serves nobody end to end is not a stage, and this is how you detect that.
+
+### Write
+
+Every simulation file opens with this banner, verbatim — it is reproduced here because
+the template may not be readable:
+
+```markdown
+> ⚠ **SIMULATED OUTPUT — hypotheses about where friction lives, not usability findings.**
+> Personas walked: <list, with grounding grades>. Nobody was observed.
+> Never turn a simulated abandonment count into a number in a business case.
+```
+
+Write to `.delivery/simulations/<journey-slug>.md` using `../../templates/simulation.md`, with the synthetic label at the top. Note which basis you walked — real product, specified flow, or proposed flow.
+
+### Exit criteria
+
+- Within the budget, or the overrun declared in the document with its reason — measure prose when computation is available; otherwise report word count unverified
+- Journey broken into concrete steps including empty, error and return states
+- Every persona walked; actual isolated or single-session mode stated, with no independent-convergence claim for sequential passes
+- Abandonment recorded at specific steps with the alternative they would choose
+- Friction map ranked by severity
+- Load-bearing versus enhancement steps separated, and per-persona end-to-end coverage stated
+- Basis of the simulation stated
+
+**Budget: 900 words target, 1500 hard cap** (excludes code, YAML and data tables). Compose, measure and revise as *Writing, then revising* in the conventions says.
+
+---
+
+## Hand off
+
+Report with the synthetic label attached.
+
+- **`--interview`**: lead with the divergences and the fatal objections — the comfortable findings are not what this mode is for. Next: `$delivery:simulate --journey` to walk personas through the actual journey.
+- **`--journey`**: report the ranked friction map and the load-bearing step set. Flag any persona that cannot complete the journey at all — that is either a scope decision or a segment you are choosing not to serve, and it should be a choice rather than an accident. Next: `$delivery:prd` — it writes the scenarios if they are not yet written, and its MVP-staging step reads the friction map directly.
+
+END RESOURCE
+
+
+PACKAGED RESOURCE: references/runtime.md
+# Delivery on Codex and ChatGPT
+
+The planning workflow uses packaged skills, templates, reviewer lenses and tools
+the current host actually exposes. It requires no delivery server or MCP
+connection. This preview does not launch persistent roles, enforce permission
+lanes, record tool invocations, authenticate decisions, stamp criteria hashes,
+materialise Beads, merge or deploy. Project instructions and permissions apply;
+an invoked skill does not grant unrelated authority.
+
+## Establish available capabilities
+
+Before each phase, identify the actual accessible project/artifacts, read and
+write tools, shell/Python availability, search tools and authorized delegation.
+Use available capabilities; do not assume them from a product name. Codex CLI,
+Codex desktop, ChatGPT Chat and ChatGPT Work can expose different tools. Loading
+a plugin cannot supply missing local filesystem access or install a service.
+
+Resolve resources from the skill that the host loaded. From
+`skills/<phase>/SKILL.md`, `../..` is this package's root when represented as files.
+Use the host's resource reader when resources are exposed another way. A path
+the host cannot open is unavailable, not permission to invent its contents.
+Read the full active skill, its conventions and named inputs; after compaction,
+read them again. References to "the user's request" mean actual conversation
+context, not a literal argument variable. Use the host's skill picker; Codex
+invocation examples use `$delivery:brief`, while ChatGPT can expose `@` selection.
+
+## Artifacts and persistence
+
+Choose one canonical artifact store for the initiative. In a local Codex project,
+use its existing `.delivery/` and native file tools. With connected documents,
+use only existing authorized read/write operations and preserve the same IDs,
+initiative namespaces and history. Local file paths in phases are logical
+artifact names in a document-backed workflow; they do not imply local access.
+
+If the user provides uploaded files, treat them as identified snapshots. When
+direct persistence is unavailable, return a complete document/export with its
+intended filename, source revision and changes; say **prepared, not saved to the
+canonical store**. A Markdown answer must not be reported as a repository update.
+Do not silently establish a second canonical store. Missing source artifacts or
+access keep their prerequisites unsatisfied; obtain the inputs instead of
+fabricating current state. Status cannot infer a remote project's live state
+from an old upload.
+
+The Python helper is optional. Run it only with an actual shell, Python and
+access to the selected workspace. Without those capabilities, inspect available
+artifacts directly and label the result manual. For prose budgets, use an
+available computation tool; if exact counting is unavailable, report the count
+unverified instead of inventing a number. Never claim a command was run when
+its result was inferred. Do not install an MCP server to make a planning phase
+work.
+
+## Review and coordination
+
+Names such as `product-owner` identify documents in
+`references/reviewers/<name>.md`, not registered tools or automatically running
+team members. Read the applicable lens. Use native delegation only when exposed
+and authorized by the project/session. Give reviewers the raw inputs and
+read-only assignments without each other's findings; coordinate the result.
+
+If delegation is unavailable or prohibited, use sequential passes labeled
+**single-session review**. Do not call their agreement independent convergence.
+Parallel-review steps and exit criteria are conditional on actual capability;
+name missing independence in the handoff. A required independent release review
+remains incomplete. Simulated personas always remain synthetic. Persistent
+coordination is a separate optional native integration, not something this
+package creates by assigning a role name.
+
+## Evidence and authority
+
+Separate source inspection, stub checks, real commands, real-model results and
+UI observations. GUI claims need an inspected capture; CLI claims need actual
+output and exit code; TUI layout needs a visual terminal capture. A sandbox test
+does not establish behavior on an inaccessible customer host. Missing execution
+or capture access means unable to check; prepare an explicit Codex/test handoff.
+
+Planning `ready` is a manual assessment, not an enforced gate. Cite actual
+decisions/evidence; do not invent `dec-`/`ev-` records, live role status or
+authenticated consent. No plugin hooks or judge provider are enabled. Future
+judging is explicitly disabled/Jev/OpenAI and needs a real credentialed execution
+path on that surface. Missing provider access never silently changes provider
+or delegates the selected classification to host-model intuition. The host
+model can still do ordinary planning without a separate judge. Neither model
+classification nor a procedural phase check grants execution authority.
+
+END RESOURCE
+
+
+PACKAGED RESOURCE: references/conventions.md
+# Delivery conventions
+
+Shared rules for the pipeline skills. A skill that points here is bound by every section
+it names exactly as if that section were written in the skill itself. Read the whole file
+once per skill run; it is short.
+
+## Where `.delivery/` resolves to
+
+Read `runtime.md` first. The filesystem rules below apply when local project
+access actually exists. Otherwise `.delivery/...` names logical artifacts in the
+explicit canonical document store or supplied snapshots. Preserve initiative
+namespaces and IDs there. Return complete exports when writes are unavailable;
+never claim local initialization or canonical persistence from a prepared draft.
+
+Not necessarily the repository root. Resolve before reading or writing any artifact:
+
+1. **Reuse.** Reuse the nearest existing ancestor `.delivery/`. If there is instead a nested component workspace, select that component explicitly; never create a second one beside it. The helper refuses ambiguity instead of picking a sibling.
+2. **Explicit override.** Otherwise honor a delivery-root path stated in the nearest `AGENTS.md`.
+3. **Ask, don't guess.** Otherwise, if this repository holds more than one independently-releasable component (multiple `package.json`/`plugin.json`/`pyproject.toml`, workspace members, or similar) stop and ask which component this work belongs to. Silently defaulting to the repo root in a multi-component repo is the failure this step exists to prevent.
+4. **Default.** Otherwise, use `.delivery/` at the repository root.
+
+## Which initiative
+
+Every artifact below lives under `.delivery/initiatives/<slug>/`, never directly under
+`.delivery/` — this is what lets independent initiatives (epics, sprints, parallel
+workstreams) be planned in parallel branches without colliding on the same shared file
+(`ADR-004`; the incident that motivated it: two initiatives independently continued the same
+`S-n`/`FR-n` sequence in one shared `prd.md`, discovered only at merge). Resolve which
+initiative before reading or writing any artifact:
+
+1. **Explicit signal.** The user names an initiative, or one is already established for this
+   conversation — use it.
+2. **Exactly one exists.** If `.delivery/initiatives/` has exactly one subdirectory, use it
+   without asking — this keeps single-initiative projects exactly as simple as before this
+   convention existed.
+3. **Ask, don't guess.** Otherwise (zero, or more than one, with no explicit signal) — ask
+   which initiative this work belongs to, or whether to start a new one. Never silently
+   default to the most recently modified one.
+4. **Starting a new initiative.** Confirm its slug (kebab-case, derived from the brief
+   subject or what the user names) before creating `.delivery/initiatives/<slug>/` — check it
+   doesn't collide with an existing initiative slug or any other top-level `.delivery/` entry.
+   A genuinely new initiative needs its own `$delivery:brief`, or an explicit
+   `extends: <existing-slug>` note (in this new initiative's own first artifact) declaring it
+   reuses an existing initiative's problem framing instead of running its own — state which,
+   don't leave it implicit.
+
+Cross-cutting, project-wide, never per-initiative: `.delivery/glossary.md`,
+`.delivery/personas/`, `.delivery/interviews/`, `.delivery/simulations/`,
+`.delivery/decisions/ADR-NNN-*.md`. This preview has no invocation ledger.
+`.delivery/stories/`, `.delivery/reviews/`, `.delivery/sprints/` stay flat but are prefixed
+by initiative slug, matching `stories/<slug>-NN-<name>.md`'s existing convention.
+
+## Open blocking findings
+
+Read `.delivery/reviews/`. If any finding against an artifact
+this phase consumes has status `open` and severity `blocking`, **stop and report them** — do
+not proceed. A blocking finding is one a reviewer said must be resolved before this point;
+building on it means every downstream artifact inherits a known, documented defect with no
+resolution on record.
+
+Resolving means the finding is marked `fixed`, or `rejected` with the reason recorded. The
+user may still choose to proceed over an open finding — that is their call, not a default.
+Ask, and record what they chose.
+
+## Language
+
+Read `.delivery/glossary.md` first and use its terms exactly. If it does not exist, create
+it as *Keeping the glossary* below says — or, for a small effort, collect terms as you go and
+propose the file at the end. Do not coin synonyms for concepts it already names.
+
+Any term you need that is missing gets **proposed explicitly**, with a definition in the
+business's vocabulary and a concrete referent. Any term carrying two meanings gets raised as
+a defect, not resolved silently.
+
+**Questions go out in the vocabulary of whoever must answer them**, with a worked example in
+their world. A question for the business owner written in engineering terms is a blocker
+with a name on it, not a question. If a question is really an engineering call, decide it
+here rather than routing it to them.
+
+### Keeping the glossary
+
+`.delivery/glossary.md`, one agreed term per concept, written from
+`../templates/glossary.md` (budget: 500 words target, 900 hard cap). It is
+project-wide and every skill reads it; any skill that coins or meets a new term adds it.
+Every document is written by someone fluent in a different dialect — the analyst's *booking
+window* is the architect's *date range* and the owner's *price list* — and the damage shows
+at the edges: questions the owner cannot answer, requirements that drift into two concepts,
+and a hand-off the runner has to guess at.
+
+1. **Curate, never regenerate.** If the file exists, edit it. Terms are stable: changing a
+   definition means saying what it was, what it is now, and which documents were written
+   under the old meaning.
+2. **Harvest the terms actually in use** — the originator's own words first (they outrank
+   everything), then the brief, PRD, personas, architecture, and real identifiers in code
+   and data.
+3. **Resolve collisions.** Synonyms (several words, one concept): pick one, list the rest as
+   *aliases, not to be used*, with the document each came from. Homonyms (one word, several
+   concepts): split them and rename at least one.
+4. **Let the business word win.** Where domain and code disagree, the domain term is the
+   entry and the code identifier is recorded as its implementation name. Do not rename code
+   as a side effect.
+5. **Define in the owner's words**, plain sentence first, precise one after if needed, and
+   **ground each term** in a worked example, a file path or a value from the data.
+6. **A term nobody can define crisply** is an unresolved product decision wearing a noun:
+   list it as an open question for the originator, never invent a definition.
+7. **Sweep for completeness.** Every domain noun in the existing artifacts appears in the
+   glossary or is deliberately excluded, and no synonym is left without one canonical term.
+
+**Report what changed** when you hand off: new terms, resolved synonyms, and any term that could
+not be defined. Those are product decisions, and they belong to the originator.
+
+During `$delivery:status`, manually compare the active artifacts with the glossary; the inventory helper does not extract domain terms.
+
+## Writing, then revising
+
+The skill states the budget: a word target and a hard cap (both exclude code, YAML and data tables).
+
+**Compose first. Do not try to hit the budget while writing.** Restraint during
+composition trades substance for brevity in the wrong order — the findings get thinner
+while the scaffolding survives. Write what the artifact needs, then cut what it does not.
+
+**Then measure, do not estimate.** The budget counts **prose only**. Data tables, code
+blocks and YAML are excluded, so measure with them stripped:
+
+With local execution, use the helper below. On another surface, use available
+computation tools with the same exclusions. If none are available, preserve the
+substance and state **word count unverified**; an exact-count exit criterion
+remains unverified. Do not invent a count or require a new server for counting.
+
+```sh
+python3 <resolved-plugin-root>/scripts/project.py words <artifact-path>
+```
+
+The helper strips HTML comments, initial YAML frontmatter, fenced code and
+pipe-prefixed table rows before counting prose. Use pipe-prefixed data tables.
+Inline code remains prose; this is a Markdown budget convention, not a full parser.
+
+A plain `wc -w` counts the tables and will overstate the total, often by several times.
+Measuring the wrong number leads to cutting the wrong thing.
+
+**Rows in a data table can never help you meet the budget, because they are not counted.**
+Deleting them is pure loss for zero benefit. The term table, the requirement table, the
+findings table, the friction map — these *are* the artifact. If a revision pass is removing
+rows, it has misunderstood the rule and should stop.
+
+**If the count exceeds the hard cap, you are not finished.** Make a revision pass over the file and
+delete, in this order, until it fits:
+
+1. Preamble, recap, and any sentence describing what the document is about to say
+2. **Restatement** — the same fact as prose *and* a table row *and* a summary bullet. Keep the form that carries it best; delete the others. This is almost always the biggest win.
+3. Process narration — "I examined X and found Y" becomes Y
+4. Hedging — either you know it, or it is labelled an assumption. Both are shorter.
+5. Citations past the first for a given claim
+6. Examples past the first, unless the next one shows a *different* failure mode
+
+Then re-measure with the same command and confirm.
+
+**Never delete** any row of a data table, findings and their failure scenarios, one citation per claim, grounding
+and confidence labels, synthetic-output warnings, open questions, or IDs a later phase
+reads. If the artifact cannot fit without losing those, keep them, exceed the cap, and
+**write the final count and the reason into the document**. A declared overrun is a
+judgement. A silent one is a habit.
+
+END RESOURCE
+
+
+PACKAGED RESOURCE: templates/writing-standard.md
+# Writing standard
+
+Every artifact in this pipeline obeys this. Skills reference it; do not restate it in them.
+
+## The problem this exists to prevent
+
+These documents are written by an agent that has just read a great deal and wants to show
+its work. Left alone it produces something exhaustive, accurate and unread. **An artifact
+nobody finishes has failed, no matter how correct it is.** A 25-page brief and a 2-page
+brief containing the same six decisions are not equally good.
+
+The failure is not length as such. It is **restatement**: the same fact appearing as a
+narrative sentence, then a table row, then a summary bullet, then a recap.
+
+## Budgets
+
+Each template states a target and a hard cap in its header. The target is what a good
+artifact costs; the cap is where you stop and cut.
+
+Budgets exclude code blocks, YAML and data tables — a table of twelve tokens is twelve
+facts, not padding.
+
+If you exceed the cap, **say so in the document and say why** — "cap 800 words, this is
+1,400 because the estimator defect needed six worked examples." An explicit overrun is a
+judgement call. A silent one is a habit.
+
+## What to cut, in order
+
+Cut in this order until you are within budget. **Never reorder it to protect prose.**
+
+1. **Preamble and recap.** No "in this document we will", no summary of what you just said. The reader can scroll up.
+2. **Restatement.** Each fact appears once, in the form that carries it best. If it is in a table, it is not also a sentence.
+3. **Narration of process.** "I examined the codebase and found that…" → the finding. How you got there matters only when it affects confidence.
+4. **Hedging.** "It may possibly be the case that this could potentially…" Either you know, or you mark it as an assumption with a grade. Both are shorter.
+5. **Redundant citations.** One file:line proves a claim. Five prove the same claim.
+6. **Illustrative examples beyond the first.** The second example earns its place only when it shows a *different* failure mode.
+
+## What never gets cut
+
+Cutting these to hit a budget defeats the purpose. If the artifact cannot fit without
+losing them, overrun and say why.
+
+- **Findings and their concrete failure scenarios**
+- **Citations** — one per claim, but never zero
+- **Grounding and confidence labels**, and the synthetic-output warnings
+- **Open questions and unknowns.** These are the first thing a tired writer drops and the most expensive thing to lose.
+- **Anything a downstream phase reads as input** — requirement IDs, persona IDs, token names, acceptance criteria
+
+## Form
+
+- **Tables over prose** for anything with repeating structure. A finding with five attributes is a row.
+- **One idea per sentence.** Long sentences hide unexamined joins.
+- **Lead with the conclusion.** The reason follows it, if it is needed at all.
+- **No adverbial throat-clearing** — "importantly", "notably", "it is worth noting that".
+- **Prose is for reasoning**: a tradeoff, a judgement, why a decision went one way. Never for data.
+
+## The test
+
+Before writing the artifact, ask: *what are the decisions or findings here?* Count them.
+That count is what the document is for. Everything else is scaffolding, and scaffolding
+should be as thin as it can be while still holding the thing up.
+
+After writing, ask of each paragraph: *if I deleted this, what would the reader no longer
+know?* If the answer is "nothing", delete it.
+
+END RESOURCE
+
+
+PACKAGED RESOURCE: templates/glossary.md
+<!--
+BUDGET — target 500 words, hard cap 900, for the prose only. The term table is data and
+excluded; it grows as large as the domain needs.
+The prose here is curation notes. The value is in the table.
+-->
+
+# Glossary — the ubiquitous language
+
+> Every document, question and conversation in this project uses these terms and only these
+> terms. One concept, one word. Where a role's professional dialect prefers another word, the
+> dialect gives way.
+>
+> **Owned by:** Product Owner (arbitrates) · **Curated by:** Business Analyst
+> Last curated: `<date>`
+
+## How to use this
+
+- **Before writing anything**, read this file. Use these terms exactly.
+- **Need a word that is not here?** Propose it — do not just use it. An undefined word
+  reaches implementation as a guess.
+- **Found a word meaning two things?** That is a defect. Raise it; do not pick one silently.
+- **Changing a definition** requires recording what it meant before and which documents were
+  written under the old meaning.
+
+## Terms
+
+| Term | Definition (in the business's words) | Referent | Code identifier | Aliases — do not use |
+| :-- | :-- | :-- | :-- | :-- |
+| | | example, path or value | `identifier`, if it differs | words this replaces, and where they came from |
+
+Definitions must be ones the originator would recognise and could have written. Where
+precision needs technical vocabulary, give the plain sentence first and the precise one
+after it, clearly marked as such.
+
+## Deliberately excluded
+
+Words that appear in the project but are not domain terms — generic technical vocabulary,
+library names, framework concepts. Listing them stops the same debate recurring.
+
+| Word | Why it is not a domain term |
+| :-- | :-- |
+
+## Homonyms resolved
+
+One word that meant several things, now split. The most dangerous category, because nothing
+looks wrong until two people act on different readings.
+
+| Original word | Meanings found | Now called | Where the collision was |
+| :-- | :-- | :-- | :-- |
+
+## Terms nobody could define
+
+A concept nobody can define crisply is usually an unresolved product decision wearing a
+noun. These are open questions, not vocabulary gaps — do not invent a definition to close
+the row.
+
+| Word | Who used it | What is actually undecided | Owner |
+| :-- | :-- | :-- | :-- |
+
+## Conventions
+
+Formats and units that cause silent, expensive errors when assumed. One line each; cheaper
+than the incident.
+
+| Convention | Rule | Example |
+| :-- | :-- | :-- |
+| Dates, business-facing | | |
+| Dates, in data files | | |
+| Currency | | |
+| Time zone | | |
+
+## Curation log
+
+What changed and why. A definition's history is how you tell whether the team's
+understanding is converging or thrashing.
+
+| Date | Change | Reason | Documents written under the old meaning |
+| :-- | :-- | :-- | :-- |
+
+END RESOURCE
+
+
+PACKAGED RESOURCE: templates/interview.md
+<!--
+BUDGET — target 500 words, hard cap 800 words. Excludes code, YAML and data tables.
+Per transcript; the synthesis is tables.
+Obey ../templates/writing-standard.md. Cut restatement, narration
+and hedging first; never cut findings, citations, grounding labels, open questions, or
+IDs a later phase reads. Over the cap? Say so in the document, and why.
+-->
+
+# Persona interview: <persona> — <topic>
+
+> ⚠ **SIMULATED PERSONA OUTPUT — a hypothesis to test, not a research finding.**
+> Generated from `.delivery/personas/<slug>.md`, grounding: **<grade>**.
+> Nothing here is something a real user said. Do not cite as "users told us".
+
+## Interview guide
+
+Written before the interview. Questions about past behavior, not predicted intent.
+
+1. 
+2. 
+
+**Solution described at:** question N (everything after this point is a reaction to
+our framing, not to their situation — weight accordingly)
+
+## Transcript
+
+**Q:**
+**A:**
+
+## Out of character
+
+**Friction points:**
+**Objections, and how fatal each is:**
+**Unmet needs:**
+**What would change their mind:**
+**Unknown to this persona:** where the persona file did not say and this would have
+been a guess
+
+---
+
+# Synthesis (in `README.md` only)
+
+## Convergent needs
+
+State whether persona runs were isolated or sequential in one session. Only
+isolated runs support independent convergence; label agreement in sequential
+passes accordingly. All output remains a hypothesis, never user research.
+
+| Need | Personas | Their grounding | Confidence |
+| :-- | :-- | :-- | :-- |
+
+## Divergent needs
+
+Where personas want incompatible things. **These are the real product decisions.**
+Surface them; do not split the difference.
+
+| Tension | Persona A wants | Persona B wants | Decision needed |
+| :-- | :-- | :-- | :-- |
+
+## Objections
+
+Ranked by how many personas hold them and how fatal each is.
+
+| Objection | Held by | Fatal? | What would answer it |
+| :-- | :-- | :-- | :-- |
+
+## What this cannot tell you
+
+Questions that need real people. Added to the research backlog.
+
+| Question | Why simulation can't settle it | How to find out |
+| :-- | :-- | :-- |
+
+END RESOURCE
+
+
+PACKAGED RESOURCE: templates/simulation.md
+<!--
+BUDGET — target 900 words, hard cap 1500 words. Excludes code, YAML and data tables.
+The friction map and coverage tables are data and excluded.
+Obey ../templates/writing-standard.md. Cut restatement, narration
+and hedging first; never cut findings, citations, grounding labels, open questions, or
+IDs a later phase reads. Over the cap? Say so in the document, and why.
+-->
+
+# Journey simulation: <journey>
+
+> ⚠ **SIMULATED OUTPUT — hypotheses about where friction lives, not usability findings.**
+> Never turn a simulated abandonment count into a number in a business case.
+
+**Basis:** real running product / specified flow (PRD) / proposed flow (brief)
+**Personas walked:** <list, with grounding grades>
+**Date:** <date>
+
+## Journey steps
+
+Every step a real person takes, including arrival with wrong expectations, loading,
+empty, error, correction, and return-two-days-later.
+
+| # | Step | What the product does |
+| :-- | :-- | :-- |
+| 1 | | |
+
+## Per-persona walk
+
+### <Persona>
+
+| Step | Understood | Expected next | Actually noticed | Continue? |
+| :-- | :-- | :-- | :-- | :-- |
+
+**Abandoned at step:** <n or none> · **Went to:** <alternative>
+
+## Friction map
+
+Ranked by severity = personas affected × blocks-or-annoys.
+
+| Step | Personas reaching | Friction | Abandoned here | Severity |
+| :-- | :-- | :-- | :-- | :-- |
+
+## Step value — input to MVP staging
+
+**Load-bearing steps** — remove them and the journey fails for someone. MVP candidates.
+
+| Step | Fails for | Why load-bearing |
+| :-- | :-- | :-- |
+
+**Enhancement steps** — absence annoys but does not block. Staging candidates.
+
+| Step | Annoys | Deferrable because |
+| :-- | :-- | :-- |
+
+## End-to-end coverage
+
+The test of whether a proposed stage is a real stage.
+
+| Persona | Completes journey? | Blocked at |
+| :-- | :-- | :-- |
+
+**Personas served by no complete path:** — this is either a scope decision or a
+segment being dropped. It should be a choice.
+
+## What simulation likely got wrong
+
+Where the personas' reactions were extrapolation rather than evidence, and what
+real observation would settle it.
+
+END RESOURCE
+
+
+PACKAGED RESOURCE: references/reviewers/persona-simulator.md
+
+You embody one end-user persona. You are given a persona file, and you respond **as that person** — not as an assistant describing what that person might think.
+
+## What you are and are not
+
+You are a structured way to think from someone else's position. You are **not** that person, and nothing you say is evidence about real users. Everything you produce is synthetic and must be labelled as such. If your output is ever quoted as "users said", that is a misuse and you should say so.
+
+You are read-only by construction. You cannot change the product, and you should not try to design it. Reacting is your whole job.
+
+## Staying in character
+
+**Adopt the persona's constraints, not just their preferences.** Their device, their connection, their language, their available time, their budget, their expertise, whether they are distracted, whether someone else has to approve the decision. Most friction lives in constraints, not tastes.
+
+**Bring their context with you.** They arrive mid-task, having already looked at three competitors, with a specific worry. They do not arrive as a blank evaluator. Say what you came in expecting and let it colour what you notice.
+
+**Notice what you would actually notice.** A real person skims, misses the third bullet, does not read the FAQ, and forms an opinion in seconds. Do not perform careful analysis the persona would never do. If the persona would bounce in four seconds, bounce in four seconds and say why — that is the finding.
+
+**Have their reaction, including the unhelpful ones.** Confusion, irritation, suspicion about price, and boredom are all valid outputs. If something does not make sense to this persona, say you do not understand it rather than reasoning your way to what was meant. Your incomprehension is the signal.
+
+**Stay inside what the persona would know.** No product-team vocabulary. No awareness of the roadmap or the constraints behind a decision. If the persona would not know what a "locale fallback" is, you do not know either.
+
+**Report abandonment honestly.** If you would leave, say at exactly which step and what you would do instead. The alternative you would switch to is important information.
+
+## Discipline against flattery
+
+The failure mode of a simulated persona is agreeableness. A persona that likes everything produces a comfortable report and no value. But manufactured hostility is just as useless — it trains people to discount you.
+
+So: react as the persona genuinely would given their stated motivations and skepticism. If the thing solves their problem, say so and say why specifically. If it does not, say where it breaks down. Let the persona's stated abandonment conditions do the work rather than deciding in advance to be positive or negative.
+
+Where you are uncertain what this persona would do — where the persona file does not say and you would be guessing — flag it as **unknown to this persona**. That uncertainty is more useful than a confident invention, and it tells the researcher what the persona file is missing.
+
+## Your output
+
+Speak in first person, in character. Then close with a clearly separated section, out of character:
+
+- **Friction points** — where you struggled, and at which step
+- **Abandonment risk** — would you leave, when, for what alternative
+- **Unmet need** — what you wanted that was not there
+- **What would change your mind** — the specific thing that would convert you
+- **Confidence** — which of your reactions follow from the persona's evidence-grounded attributes, and which are your own extrapolation
+
+Every report you produce carries the label: *simulated persona output — a hypothesis to test, not a research finding.*
+
+## Context integrity
+
+Your system prompt survives compaction; your working context does not. If your context
+has been summarized mid-task, re-read the artifacts you cite from disk before writing —
+a citation must trace to a file read in this session, never to a summary's recollection
+of one. The same goes for the glossary: the moment you can no longer see its exact
+terms, read it again before your next sentence.
+
+END RESOURCE

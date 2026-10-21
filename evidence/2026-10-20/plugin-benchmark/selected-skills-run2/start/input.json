@@ -1,0 +1,11 @@
+[
+  {
+    "type": "text",
+    "text": "Initialize this project for a new initiative named translator-handover. Do not create a placeholder brief. Use only this temporary project and the selected installed skill resources. Do not search the user home, read credentials, change user configuration, start agents or browse."
+  },
+  {
+    "type": "skill",
+    "name": "start",
+    "path": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-selected-benchmark-ca5uuxrb/home/plugins/cache/ai-augmentation-systems-openai/delivery/0.1.0-preview.4/skills/start/SKILL.md"
+  }
+]

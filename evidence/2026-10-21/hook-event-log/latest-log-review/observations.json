@@ -1,0 +1,36 @@
+{
+  "checks": {
+    "source_versions_preview2": true,
+    "installed_version_preview1": true,
+    "hook_registration_unchanged": true,
+    "hook_adapter_unchanged": true,
+    "helper_actual_user_data_success": true,
+    "helper_selects_receipt_session": true,
+    "receipt_snapshot_hash": true,
+    "receipt_snapshot_line_count": true,
+    "snapshot_exact_event_only_schema": true,
+    "snapshot_subagent_lifecycle_pair": true
+  },
+  "passed": 10,
+  "total": 10,
+  "source_versions": {
+    "package.json": "0.1.0-preview.2",
+    "package-lock.json": "0.1.0-preview.2",
+    ".codex-plugin/plugin.json": "0.1.0-preview.2"
+  },
+  "actual_helper": {
+    "returncode": 0,
+    "stdout": "/Users/colombod/.codex/plugins/data/hook-event-log-ai-augmentation-systems-openai/event-types/e5b32fbfe51474fd30987776d80d377a8fec7f7da8fa8859e3563570ec9bfd53.jsonl\n",
+    "stderr": ""
+  },
+  "snapshot_event_counts": {
+    "UserPromptSubmit": 5,
+    "PreToolUse": 27,
+    "PostToolUse": 26,
+    "Stop": 1,
+    "SubagentStart": 1,
+    "SubagentStop": 1,
+    "PermissionRequest": 1
+  },
+  "runtime_observation": "Actual helper subprocess reads directory metadata; native hook callbacks may concurrently append to the selected session file. No source/config/trust/cache mutations by reviewer."
+}

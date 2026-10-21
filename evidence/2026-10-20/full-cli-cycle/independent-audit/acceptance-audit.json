@@ -1,0 +1,144 @@
+{
+  "kind": "independent read-only acceptance audit of synthetic public runtime CLI cycle",
+  "verdict": "PASS bounded staged lifecycle through expected operator barrier; initial harness failure preserved",
+  "all_checks": true,
+  "checks": {
+    "public_cli_prepare_exit0": true,
+    "five_separate_native_threads": true,
+    "actual_peer_handoff_consumed": true,
+    "pm_resumed_same_thread_completed_second_turn": true,
+    "canonical_artifact_hash_provenance": true,
+    "real_supported_git_commit_exit0": true,
+    "implementation_review_surface_gate_same_head": true,
+    "independent_native_reviewer": true,
+    "actual_independent_tests_and_cli_assertions": true,
+    "protected_review_event_provenance": true,
+    "root_blackbox21_pass_source_unchanged": true,
+    "no_sandbox_expansion_grant": true,
+    "exact_queued_continuation_all_checks": true,
+    "honest_acceptance_barrier": true,
+    "no_accepted_gate_record": true
+  },
+  "head": "32746b7d72bbbb4263c2ecf8a737c1c1613f9bbe",
+  "issue": "fullcycle-6m8",
+  "roles": [
+    {
+      "name": "coordinator",
+      "thread": "01a15b51-d491-7a22-9444-466ef79e4de4",
+      "phase": "idle"
+    },
+    {
+      "name": "product-manager",
+      "thread": "01a15b52-68b8-7573-b885-f8257ca2f002",
+      "phase": "idle"
+    },
+    {
+      "name": "delivery-manager",
+      "thread": "01a15b53-475e-7e83-b05f-4b0941a47f7c",
+      "phase": "idle"
+    },
+    {
+      "name": "builder",
+      "thread": "01a15b53-f137-7bc0-abe0-eb1bfc59bf8e",
+      "phase": "idle"
+    },
+    {
+      "name": "reviewer",
+      "thread": "01a15b57-3d1a-7671-a2b5-eed78bbddac9",
+      "phase": "idle"
+    }
+  ],
+  "artifact_provenance": [
+    {
+      "relative_path": "initiatives/slugify/delivery-plan.md",
+      "sha256": "95330e5ed012086766113b252ba72cc4be1dbf543ba40bcd2c37025a68078bb9",
+      "saved_event": 23,
+      "actor": {
+        "role": "coordinator",
+        "thread": "01a15b51-d491-7a22-9444-466ef79e4de4",
+        "turn": "01a15b51-d52b-7d12-b3e5-c4e89cec078f",
+        "lane": "read-only"
+      },
+      "intent_id": "d6697eb3-4a82-4bc5-b865-24356d3465e1",
+      "current_bytes_match_event": true
+    },
+    {
+      "relative_path": "initiatives/slugify/brief.md",
+      "sha256": "9a48df0dfbf147fa54789b013549250cf31612d1ca218386acb9098b0bb01c0c",
+      "saved_event": 65,
+      "actor": {
+        "role": "product-manager",
+        "thread": "01a15b52-68b8-7573-b885-f8257ca2f002",
+        "turn": "01a15b52-6a0b-7043-9c9f-861d3e33c2ec",
+        "lane": "read-only"
+      },
+      "intent_id": "54b854b7-871b-4d18-8205-7e70ac787423",
+      "current_bytes_match_event": true
+    },
+    {
+      "relative_path": "stories/slugify-cli.md",
+      "sha256": "5248e97daf1fc5c2af0919c09f3eb9abcbf2ef20b58af4065ef53ee5b2a3f3eb",
+      "saved_event": 69,
+      "actor": {
+        "role": "product-manager",
+        "thread": "01a15b52-68b8-7573-b885-f8257ca2f002",
+        "turn": "01a15b52-6a0b-7043-9c9f-861d3e33c2ec",
+        "lane": "read-only"
+      },
+      "intent_id": "d456d45c-05a5-483a-ac6b-9b5e0ed668a3",
+      "current_bytes_match_event": true
+    },
+    {
+      "relative_path": "reviews/slugify-independent.md",
+      "sha256": "0433e18d62359957816340e09e77af2038859423989737f7a2c1674aabc144c7",
+      "saved_event": 187,
+      "actor": {
+        "role": "reviewer",
+        "thread": "01a15b57-3d1a-7671-a2b5-eed78bbddac9",
+        "turn": "01a15b57-3e99-73b2-85ba-c7e5371ccff5",
+        "lane": "read-only"
+      },
+      "intent_id": "cdb20c10-234d-4e07-8ea8-22176617ef5c",
+      "current_bytes_match_event": true
+    }
+  ],
+  "supported_commit": [
+    {
+      "event_id": 153,
+      "command": "/bin/zsh -lc 'git commit -m \"Implement ASCII slugify CLI with unittest coverage\"'",
+      "exitCode": 0,
+      "output": "[delivery-slugify 32746b7] Implement ASCII slugify CLI with unittest coverage\n 2 files changed, 86 insertions(+)\n create mode 100644 slugify.py\n create mode 100644 test_slugify.py\n"
+    }
+  ],
+  "reviewer_test_events": [
+    179
+  ],
+  "harness_inspection": {
+    "runner_uses_public_cli_prepare_send_status_serve": true,
+    "sqlite_connections_are_mode_ro_in_runner_and_continuation": true,
+    "manual_role_or_task_sqlite_seeding_observed": false,
+    "qualified_marketplace_skill_activation": false,
+    "autonomous_single_prompt_orchestration": false,
+    "real_human_acceptance": false
+  },
+  "preserved_failures_and_interventions": [
+    "Initial is_fix state used undeclared task field, correctly skipped as state_incomplete; later explicit operator correction separately recorded.",
+    "Initial pathspec git commit failed exit128 on next-index lock, confirmed by bounded original native rollout response in native-initial-commit-failure.json.",
+    "Requested outside-sandbox retry was revoked, with no approval answer. Public CLI steer led to supported normal staged commit; permissions were not widened.",
+    "Original harness phase-idle waiter raced final DM queue and reported failure. Separate public serve continuation consumed the existing never-started message without resend or DB edits.",
+    "Reviewer Git commands preserved denied xcrun cache-write warnings while actual read/test commands exited0."
+  ],
+  "scope_limits": [
+    "Toy local CLI product and staged runtime lifecycle only; package skill read by native shell, not ordinary qualified marketplace activation.",
+    "Requires explicit operator instructions/interventions in this run; does not establish autonomous single-prompt delivery.",
+    "No real operator-terminal acceptance, hosted CI, merge, push, publication, Codex desktop UI or ChatGPT acceptance.",
+    "Worker surface/review submissions remain submissions; final gate correctly refused without operator capture."
+  ],
+  "sources": {
+    "original_result": "../result.json",
+    "continuation_result": "../continuation/result.json",
+    "continuation_events": "../continuation/events.json",
+    "pm_continuity": "../pm-restart-actual-queue-proof.json",
+    "root_blackbox": "../root-acceptance/black-box-results.json"
+  }
+}

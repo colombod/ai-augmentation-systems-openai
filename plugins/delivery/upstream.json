@@ -1,0 +1,284 @@
+{
+  "repository": "https://github.com/colombod/ai-augmentation-systems",
+  "revision": "df0c0a5b0dba1449b6cdfef421bfe1ebc4d658c0",
+  "plugin_version": "0.30.0",
+  "license": "MIT",
+  "files": [
+    {
+      "source": "templates/adr.md",
+      "target": "templates/adr.md",
+      "sha256": "305ef076a04cd65818364942a3d593d0abb570823ff8f8a1e615fcc557e05771",
+      "adaptation": "adapted template; native resource paths and preview evidence limits"
+    },
+    {
+      "source": "templates/architecture.md",
+      "target": "templates/architecture.md",
+      "sha256": "ea44a41fb1a3ec2c272be56ad71a5e461385d9d1f2c7fac314bff50e6f60c889",
+      "adaptation": "adapted template; native resource paths and preview evidence limits"
+    },
+    {
+      "source": "templates/assumptions.md",
+      "target": "templates/assumptions.md",
+      "sha256": "842691a298729df97ad52f4b5a6476cce5fef02ce7c4bd447221f39fd3c8498d",
+      "adaptation": "adapted template; native resource paths and preview evidence limits"
+    },
+    {
+      "source": "templates/brief.md",
+      "target": "templates/brief.md",
+      "sha256": "b5c5bc6997c237281bce30a1d9499f8297f74ad7315b2396b0818d2df65d3fec",
+      "adaptation": "adapted template; native resource paths and preview evidence limits"
+    },
+    {
+      "source": "templates/design-system.md",
+      "target": "templates/design-system.md",
+      "sha256": "f90986ad837d6a85d59012131d3a3a3a4c466766d18391f5b0ac2a93cbec6a53",
+      "adaptation": "adapted template; native resource paths and preview evidence limits"
+    },
+    {
+      "source": "templates/findings.md",
+      "target": "templates/findings.md",
+      "sha256": "de8ac2f9731353900d153d5452ca00dced1514950ee951d87c49216c040b7ff5",
+      "adaptation": "adapted template; native resource paths and preview evidence limits"
+    },
+    {
+      "source": "templates/glossary.md",
+      "target": "templates/glossary.md",
+      "sha256": "83a0119269962d79887980ae53e68a088af9b75a7df77a7c92bea05882a496a3",
+      "adaptation": "adapted template; native resource paths and preview evidence limits"
+    },
+    {
+      "source": "templates/interview.md",
+      "target": "templates/interview.md",
+      "sha256": "cf691a7bb3aa901b2922dad25f3bdff30b43ba25c7b60299b5a9f508086941c5",
+      "adaptation": "adapted template; native resource paths and preview evidence limits"
+    },
+    {
+      "source": "templates/persona.md",
+      "target": "templates/persona.md",
+      "sha256": "22f8faac0e28c698890582bb02e8be34d0b535472d6cc45453f53abc444c8359",
+      "adaptation": "adapted template; native resource paths and preview evidence limits"
+    },
+    {
+      "source": "templates/prd.md",
+      "target": "templates/prd.md",
+      "sha256": "34991ccd613df084a646f1368826f6f0bc71af61c9a3211b48712708ec2d07b4",
+      "adaptation": "adapted template; native resource paths and preview evidence limits"
+    },
+    {
+      "source": "templates/prioritization.md",
+      "target": "templates/prioritization.md",
+      "sha256": "8e8424f7f27796ff1fbfe950275540c3d0fcf40af7214b7cadb82c762d197762",
+      "adaptation": "adapted template; native resource paths and preview evidence limits"
+    },
+    {
+      "source": "templates/research.md",
+      "target": "templates/research.md",
+      "sha256": "47051fe590d6f579ae5bc9392446fccf20cf23d411d71725c55c252d914f29df",
+      "adaptation": "adapted template; native resource paths and preview evidence limits"
+    },
+    {
+      "source": "templates/roadmap.md",
+      "target": "templates/roadmap.md",
+      "sha256": "cb0092e00dc3235d5190b5ac9de1ddae8a93ccd84015d39dd4f7b775492a54fb",
+      "adaptation": "adapted template; native resource paths and preview evidence limits"
+    },
+    {
+      "source": "templates/simulation.md",
+      "target": "templates/simulation.md",
+      "sha256": "0fb700cef671d0c7308d2f8baef748d9587489aa8384865498c260202b504814",
+      "adaptation": "adapted template; native resource paths and preview evidence limits"
+    },
+    {
+      "source": "templates/sprint-review.md",
+      "target": "templates/sprint-review.md",
+      "sha256": "d3bbb75a15e0cd6b63b1db275b5de68fd6e598bfc8e9482ccdeee20d86cf3fd5",
+      "adaptation": "adapted template; native resource paths and preview evidence limits"
+    },
+    {
+      "source": "templates/sprint.md",
+      "target": "templates/sprint.md",
+      "sha256": "decd6158a0c5a90f8bf4c481fc3bd55f77dd17d492032ba8b4e67108f081634d",
+      "adaptation": "adapted template; native resource paths and preview evidence limits"
+    },
+    {
+      "source": "templates/story.md",
+      "target": "templates/story.md",
+      "sha256": "734bf3ab04e8014c331b0fc564109d9c35938259217a80e91e4d80fa606913a6",
+      "adaptation": "adapted template; native resource paths and preview evidence limits"
+    },
+    {
+      "source": "templates/surface.json",
+      "target": "templates/surface.json",
+      "sha256": "861c63fa2b31d420c7d938d5bf188e9c4eb56c4a65555b5f47b81dbc6b2cb77b",
+      "adaptation": "adapted template; native resource paths and preview evidence limits"
+    },
+    {
+      "source": "templates/version-history.md",
+      "target": "templates/version-history.md",
+      "sha256": "3149db6b1dec677ae0079ca6f62f9a6e43200b97fb028bc3094fec9a8d723dae",
+      "adaptation": "adapted template; native resource paths and preview evidence limits"
+    },
+    {
+      "source": "templates/writing-standard.md",
+      "target": "templates/writing-standard.md",
+      "sha256": "eaca48384279103b1143aadabb74adb6a82569f0fc66854c93329c4529ae6fe1",
+      "adaptation": "adapted template; native resource paths and preview evidence limits"
+    },
+    {
+      "source": "agents/business-analyst.md",
+      "target": "references/reviewers/business-analyst.md",
+      "sha256": "47395290a70ded8c81a07d80d6c615cf5d0a3415ec9e2cca256054cd97c6d832",
+      "adaptation": "review lens; removed Claude model metadata and Chief of Staff runtime; QA uses direct evidence"
+    },
+    {
+      "source": "agents/delivery-lead.md",
+      "target": "references/reviewers/delivery-lead.md",
+      "sha256": "72e991693efc54b50b4b8e67b6eee224b8a383e1d22dc85d4220af0737489b37",
+      "adaptation": "review lens; removed Claude model metadata and Chief of Staff runtime; QA uses direct evidence"
+    },
+    {
+      "source": "agents/design-lead.md",
+      "target": "references/reviewers/design-lead.md",
+      "sha256": "224c16e40f1366dda3eeb705090047b62793d4b9b8a958ce17355c535f17d922",
+      "adaptation": "review lens; removed Claude model metadata and Chief of Staff runtime; QA uses direct evidence"
+    },
+    {
+      "source": "agents/feature-critic.md",
+      "target": "references/reviewers/feature-critic.md",
+      "sha256": "4fe82e5d4390c5456672bc6abca25c0582eb55c3821025da3e5ba1a20a672e38",
+      "adaptation": "review lens; removed Claude model metadata and Chief of Staff runtime; QA uses direct evidence"
+    },
+    {
+      "source": "agents/persona-simulator.md",
+      "target": "references/reviewers/persona-simulator.md",
+      "sha256": "1697888ddbe9fee9a430c3f36a4ed284116d6d860705dec4dbf8b20550133a35",
+      "adaptation": "review lens; removed Claude model metadata and Chief of Staff runtime; QA uses direct evidence"
+    },
+    {
+      "source": "agents/product-owner.md",
+      "target": "references/reviewers/product-owner.md",
+      "sha256": "8567da53009cc676ca428759fa6cdd8d282a00dcefb1ef2b8b29474d3aa8feed",
+      "adaptation": "review lens; removed Claude model metadata and Chief of Staff runtime; QA uses direct evidence"
+    },
+    {
+      "source": "agents/program-manager.md",
+      "target": "references/reviewers/program-manager.md",
+      "sha256": "4816eb073445c341e5417c70c4dc97acb009a5e3e03c9ffc311f29cd357c48e1",
+      "adaptation": "review lens; removed Claude model metadata and Chief of Staff runtime; QA uses direct evidence"
+    },
+    {
+      "source": "agents/qa-strategist.md",
+      "target": "references/reviewers/qa-strategist.md",
+      "sha256": "3f076e6af5fa104ed9c069897b94b90ae08a6f3f2d8b203dcc04d570cab4b97e",
+      "adaptation": "review lens; removed Claude model metadata and Chief of Staff runtime; QA uses direct evidence"
+    },
+    {
+      "source": "agents/solution-architect.md",
+      "target": "references/reviewers/solution-architect.md",
+      "sha256": "83f048f67e4173b92dc17de2ec4106872d07276d272c51c6c95fdd96a85a2b5a",
+      "adaptation": "review lens; removed Claude model metadata and Chief of Staff runtime; QA uses direct evidence"
+    },
+    {
+      "source": "agents/user-researcher.md",
+      "target": "references/reviewers/user-researcher.md",
+      "sha256": "d34937af16eecb8d172de9aa32ba9d14c7599b6e3ef2a1d2f40f71cabda4fa41",
+      "adaptation": "review lens; removed Claude model metadata and Chief of Staff runtime; QA uses direct evidence"
+    },
+    {
+      "source": "skills/brief/SKILL.md",
+      "target": "skills/brief/SKILL.md",
+      "sha256": "63efa708c0674b9d387e1f83353288c914f664f5792c9327137ffbed752fc6f6",
+      "adaptation": "native planning skill; removed Claude runtime requirements; explicit evidence and automation limits; host-aware artifact access, optional execution and no mandatory MCP service; explicit native tool, delegation, computation and evidence branches"
+    },
+    {
+      "source": "skills/research/SKILL.md",
+      "target": "skills/research/SKILL.md",
+      "sha256": "990cec5e3e1894ca1d2d986f172a3deeb04356ede1cbd52a9b91223d98e1893e",
+      "adaptation": "native planning skill; removed Claude runtime requirements; explicit evidence and automation limits; host-aware artifact access, optional execution and no mandatory MCP service; explicit native tool, delegation, computation and evidence branches"
+    },
+    {
+      "source": "skills/personas/SKILL.md",
+      "target": "skills/personas/SKILL.md",
+      "sha256": "eb0b4a9f9ca69e2cee81db909975f8c5641f46eca85d1bceb37a51c2fdbe910f",
+      "adaptation": "native planning skill; removed Claude runtime requirements; explicit evidence and automation limits; host-aware artifact access, optional execution and no mandatory MCP service; explicit native tool, delegation, computation and evidence branches"
+    },
+    {
+      "source": "skills/simulate/SKILL.md",
+      "target": "skills/simulate/SKILL.md",
+      "sha256": "14f99ec66527ba1a586dda0557023f6bda1e539d966c4ea4f933d6866765a443",
+      "adaptation": "native planning skill; removed Claude runtime requirements; explicit evidence and automation limits; host-aware artifact access, optional execution and no mandatory MCP service; explicit native tool, delegation, computation and evidence branches; non-leading follow-up guidance strengthened after observed live-model failure"
+    },
+    {
+      "source": "skills/prd/SKILL.md",
+      "target": "skills/prd/SKILL.md",
+      "sha256": "2ce050957ce29df913514f494327e2b3d847210594bdd333f3b26c722165cde7",
+      "adaptation": "native planning skill; removed Claude runtime requirements; explicit evidence and automation limits; host-aware artifact access, optional execution and no mandatory MCP service; explicit native tool, delegation, computation and evidence branches"
+    },
+    {
+      "source": "skills/design/SKILL.md",
+      "target": "skills/design/SKILL.md",
+      "sha256": "af3dc656a17939ce06683a92e1a8587bd36ea615d6484f8384d09ad113af5af5",
+      "adaptation": "native planning skill; removed Claude runtime requirements; explicit evidence and automation limits; host-aware artifact access, optional execution and no mandatory MCP service; explicit native tool, delegation, computation and evidence branches"
+    },
+    {
+      "source": "skills/architecture/SKILL.md",
+      "target": "skills/architecture/SKILL.md",
+      "sha256": "b6b83e5f09dc8b03f11c99569b0b68ed9175e329204ca18e787291f382e8c514",
+      "adaptation": "native planning skill; removed Claude runtime requirements; explicit evidence and automation limits; host-aware artifact access, optional execution and no mandatory MCP service; explicit native tool, delegation, computation and evidence branches"
+    },
+    {
+      "source": "skills/roadmap/SKILL.md",
+      "target": "skills/roadmap/SKILL.md",
+      "sha256": "670118fbb64c2c49584933a1dab6973bba7b11fac79b3d12ebc375b8439ed352",
+      "adaptation": "native planning skill; removed Claude runtime requirements; explicit evidence and automation limits; host-aware artifact access, optional execution and no mandatory MCP service; explicit native tool, delegation, computation and evidence branches"
+    },
+    {
+      "source": "skills/stories/SKILL.md",
+      "target": "skills/stories/SKILL.md",
+      "sha256": "3807dd9da76eb79404f05b2ed6ba3b444fc06c29b66b124eff09c0620daddb03",
+      "adaptation": "native planning skill; removed Claude runtime requirements; explicit evidence and automation limits; host-aware artifact access, optional execution and no mandatory MCP service; explicit native tool, delegation, computation and evidence branches"
+    },
+    {
+      "source": "skills/sprint/SKILL.md",
+      "target": "skills/sprint/SKILL.md",
+      "sha256": "aaaa65106c345ce564a212bcaa27d6088e696c0cadd0a974b8bde99c67663942",
+      "adaptation": "native planning skill; removed Claude runtime requirements; explicit evidence and automation limits; host-aware artifact access, optional execution and no mandatory MCP service; explicit native tool, delegation, computation and evidence branches"
+    },
+    {
+      "source": "skills/sprint-review/SKILL.md",
+      "target": "skills/sprint-review/SKILL.md",
+      "sha256": "f0b055e430ebbaac3ee83468942140aaa19f24f39712e07be619d2e2c1ecb8d3",
+      "adaptation": "native planning skill; removed Claude runtime requirements; explicit evidence and automation limits; host-aware artifact access, optional execution and no mandatory MCP service; explicit native tool, delegation, computation and evidence branches"
+    },
+    {
+      "source": "skills/realign/SKILL.md",
+      "target": "skills/realign/SKILL.md",
+      "sha256": "3a3592eeecc43226f788a7bcdd19f5423fe347662bda631153a36ac188a85b98",
+      "adaptation": "native planning skill; removed Claude runtime requirements; explicit evidence and automation limits; host-aware artifact access, optional execution and no mandatory MCP service; explicit native tool, delegation, computation and evidence branches"
+    },
+    {
+      "source": "skills/challenge/SKILL.md",
+      "target": "skills/challenge/SKILL.md",
+      "sha256": "310a22808fc7d107869152883dfddfb211714739857210dfc0e61fc851a49f59",
+      "adaptation": "native planning skill; removed Claude runtime requirements; explicit evidence and automation limits; host-aware artifact access, optional execution and no mandatory MCP service; explicit native tool, delegation, computation and evidence branches"
+    },
+    {
+      "source": "references/conventions.md",
+      "target": "references/conventions.md",
+      "sha256": "c2a77bc40f5c7a55071e617b594a1c3efe118474a9a8cd42bf401ac193cfa63e",
+      "adaptation": "native workspace resolution; accurate prose helper; no observer claims; host-aware artifact access, optional execution and no mandatory MCP service"
+    },
+    {
+      "source": "scripts/lib/judge.js",
+      "target": "scripts/lib/judge.js",
+      "sha256": "9453882ffef5b38c85f3e07418f3b4d1df8f19915132704dd5a148402a663fa0",
+      "adaptation": "Preserve pinned typed questions and filtering; add strict provider/config/domain/log validation, explicit Jev/OpenAI selection and fail-closed provider/model/question-specific calibration policy without Claude hooks or role markers"
+    },
+    {
+      "source": "judge/questions.json",
+      "target": "judge/questions.json",
+      "sha256": "891f7810083c56a04d68785ae1e7f811160f38705f66802f35b5e1c88cf9332a",
+      "adaptation": "Preserve question instructions/versions and historical upstream Jev measurement labels; make implicit relay blocking intent explicit; historical measurements are not OpenAI or port calibration"
+    }
+  ]
+}

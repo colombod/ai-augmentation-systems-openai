@@ -1,0 +1,16 @@
+{
+  "compatibility": {
+    "initialize": {
+      "userAgent": "Codex Desktop/0.159.3 (Mac OS 27.0.1; arm64) dumb (delivery_coordinator; 0.1.0)",
+      "codexHome": "/Users/colombod/.codex",
+      "platformFamily": "unix",
+      "platformOs": "macos"
+    },
+    "connected_tool_inventory": {
+      "servers": 6,
+      "tools": 0
+    },
+    "connected_tool_policy": "disabled; effective config checked",
+    "apps_feature": false
+  }
+}

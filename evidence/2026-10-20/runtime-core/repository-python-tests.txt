@@ -1,0 +1,27 @@
+.............................................E.........{"operator_request": "b66702cf-03bc-4de7-99c4-2a4a91ed95f4", "method": "item/tool/requestUserInput", "params": {"threadId": "native-thread", "turnId": "native-turn", "questions": [{"id": "q", "question": "Choose"}]}}
+.............{"operator_request": "609d311f-dd25-407b-aca6-ce8b10e2abce", "method": "item/commandExecution/requestApproval", "params": {"threadId": "native-thread", "turnId": "native-turn", "itemId": "item1"}}
+{"operator_request": "133b3aed-2ef8-4cb2-bd76-d1075fefe672", "method": "item/commandExecution/requestApproval", "params": {"threadId": "native-thread", "turnId": "native-turn", "itemId": "item1"}}
+.{"operator_request": "04377bb8-9eae-4c31-ad97-28dcd18ed0fe", "method": "item/commandExecution/requestApproval", "params": {"threadId": "native-thread", "turnId": "native-turn"}}
+..{"operator_request": "7975d3fa-b865-4374-b26d-f02b3a35df00", "method": "item/tool/requestUserInput", "params": {"threadId": "native-thread", "turnId": "native-turn", "questions": [{"id": "cafe", "question": "Caf\u00e9?"}]}}
+....{"operator_request": "53197178-7232-4719-ae12-178c732a70fb", "method": "item/commandExecution/requestApproval", "params": {"threadId": "native-thread", "turnId": "native-turn"}}
+......{"operator_request": "0a99bab7-5012-4232-a23e-aa742398cc29", "method": "item/commandExecution/requestApproval", "params": {"threadId": "native-thread", "turnId": "native-turn"}}
+..
+======================================================================
+ERROR: test_package (unittest.loader._FailedTest.test_package)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_package
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py", line 426, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py", line 367, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/Users/colombod/workspaces/delivery-plugin-openai/tests/delivery/test_package.py", line 7, in <module>
+    from jsonschema import ValidationError
+ModuleNotFoundError: No module named 'jsonschema'
+
+
+----------------------------------------------------------------------
+Ran 83 tests in 13.520s
+
+FAILED (errors=1)

@@ -1,0 +1,15 @@
+test_reserved_profiles_cannot_inject_permissions_without_explicit_optin (test_runtime.RuntimeTests.test_reserved_profiles_cannot_inject_permissions_without_explicit_optin) ... FAIL
+
+======================================================================
+FAIL: test_reserved_profiles_cannot_inject_permissions_without_explicit_optin (test_runtime.RuntimeTests.test_reserved_profiles_cannot_inject_permissions_without_explicit_optin)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/colombod/workspaces/delivery-plugin-openai/tests/delivery/test_runtime.py", line 416, in test_reserved_profiles_cannot_inject_permissions_without_explicit_optin
+    with self.assertRaises(R.RuntimeError_):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError_ not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.065s
+
+FAILED (failures=1)

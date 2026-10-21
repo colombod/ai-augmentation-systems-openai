@@ -1,0 +1,110 @@
+{
+  "kind": "real-model persistent session; not desktop UI acceptance",
+  "compatibility": {
+    "initialize": {
+      "userAgent": "Codex Desktop/0.159.3 (Mac OS 27.0.1; arm64) dumb (delivery_coordinator; 0.1.0)",
+      "codexHome": "/Users/colombod/.codex",
+      "platformFamily": "unix",
+      "platformOs": "macos"
+    },
+    "connected_tool_inventory": {
+      "servers": 6,
+      "tools": 0
+    },
+    "connected_tool_policy": "disabled; effective config checked",
+    "apps_feature": false,
+    "native_computer_browser_policy": "deny; effective config checked"
+  },
+  "first": {
+    "thread": "01a15ac1-0128-79c3-b8c5-4efda83cf481",
+    "turn": null,
+    "phase": "idle"
+  },
+  "recovered": {
+    "thread": "01a15ac1-0128-79c3-b8c5-4efda83cf481",
+    "turn": null,
+    "phase": "idle"
+  },
+  "second": {
+    "thread": "01a15ac1-0128-79c3-b8c5-4efda83cf481",
+    "turn": null,
+    "phase": "idle"
+  },
+  "same_thread": true,
+  "items": [
+    {
+      "role": "coordinator",
+      "native": {
+        "item": {
+          "type": "userMessage",
+          "id": "01a15ac1-202a-7650-abe7-b98483bcea29",
+          "clientId": null,
+          "content": [
+            {
+              "type": "text",
+              "text": "[Operator-assigned work; queued message f0ea37e8-4220-46bf-a28d-119f1efb9b66]\nReply exactly CORE_ONE",
+              "text_elements": []
+            }
+          ]
+        },
+        "threadId": "01a15ac1-0128-79c3-b8c5-4efda83cf481",
+        "turnId": "01a15ac1-029d-7c41-940a-1814c2e2bc84",
+        "completedAtMs": 1792523968557
+      }
+    },
+    {
+      "role": "coordinator",
+      "native": {
+        "item": {
+          "type": "agentMessage",
+          "id": "msg_0010b18f950355a1016ad7bec233ac8191a5df2d0ca974e2cb",
+          "text": "CORE_ONE",
+          "phase": "final_answer",
+          "memoryCitation": null,
+          "delivery": null,
+          "questions": null
+        },
+        "threadId": "01a15ac1-0128-79c3-b8c5-4efda83cf481",
+        "turnId": "01a15ac1-029d-7c41-940a-1814c2e2bc84",
+        "completedAtMs": 1792523970286
+      }
+    },
+    {
+      "role": "coordinator",
+      "native": {
+        "item": {
+          "type": "userMessage",
+          "id": "01a15ac1-4411-7a22-a493-528b495caf03",
+          "clientId": null,
+          "content": [
+            {
+              "type": "text",
+              "text": "[Operator-assigned work; queued message 61550d83-25f5-4835-be7f-a4fe32a1a20d]\nReply exactly CORE_TWO",
+              "text_elements": []
+            }
+          ]
+        },
+        "threadId": "01a15ac1-0128-79c3-b8c5-4efda83cf481",
+        "turnId": "01a15ac1-27cb-7581-bfb9-8084df141da1",
+        "completedAtMs": 1792523977748
+      }
+    },
+    {
+      "role": "coordinator",
+      "native": {
+        "item": {
+          "type": "agentMessage",
+          "id": "msg_0010b18f950355a1016ad7becbe87881919f6a5688f7c3bb47",
+          "text": "CORE_TWO",
+          "phase": "final_answer",
+          "memoryCitation": null,
+          "delivery": null,
+          "questions": null
+        },
+        "threadId": "01a15ac1-0128-79c3-b8c5-4efda83cf481",
+        "turnId": "01a15ac1-27cb-7581-bfb9-8084df141da1",
+        "completedAtMs": 1792523979999
+      }
+    }
+  ]
+}

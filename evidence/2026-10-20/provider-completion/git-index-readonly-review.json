@@ -1,0 +1,23 @@
+{
+  "scope": "isolated synthetic repositories, no native sandbox launch",
+  "results": [
+    {
+      "index_flag": "--assume-unchanged",
+      "actual_file_differs_from_head": true,
+      "git_status": "",
+      "guard_result": {
+        "returned_head": "04a7f256797e475e8bc1c2ac09496be94a517ab8",
+        "guard_rejected": false
+      }
+    },
+    {
+      "index_flag": "--skip-worktree",
+      "actual_file_differs_from_head": true,
+      "git_status": "",
+      "guard_result": {
+        "returned_head": "04a7f256797e475e8bc1c2ac09496be94a517ab8",
+        "guard_rejected": false
+      }
+    }
+  ]
+}

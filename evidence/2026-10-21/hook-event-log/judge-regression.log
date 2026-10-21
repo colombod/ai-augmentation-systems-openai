@@ -1,0 +1,194 @@
+✔ judgeConfig: off without a block, with provider none, or without the key; on with both (0.689459ms)
+✖ the key variable is pinned to TYPESAFE_*, and the endpoint comes only from a loopback DELIVERY_JUDGE_ENDPOINT (4.157625ms)
+✔ under node --test a real provider is never called (7.174834ms)
+✖ ask: a noul answer is typed, the key goes only in the header, and the log line has no state (1.508542ms)
+✖ ask: a choice answer carries confidence and probabilities (0.217417ms)
+✖ ask fails open: timeout, 401, 429, a closed port and a bad body give a reason, never a throw (0.173125ms)
+✖ ask rejects malformed answers as bad_response and does not follow a redirect (0.192667ms)
+✖ ask refuses locally: off, unknown question, sensitive or missing fields; nothing is sent (0.199792ms)
+✔ stats: calls, latency percentiles, tokens and the share at the thresholds per question (0.173125ms)
+✔ the catalogue: every question has a version, a type, declared state and instructions; divergence is warn-only (0.180625ms)
+✔ Copilot round 5: redaction replaces the whole path, not a prefix of it (1.550875ms)
+✔ configuration rejects typos, malformed calibration and cross-provider key selection (0.163167ms)
+✔ protected policy fails closed for unavailable, uncalibrated, alias, revised and other-provider scores (0.4235ms)
+✔ warn-only never blocks and second-key classification never grants authority (0.100458ms)
+✖ evaluate bridges answers to unavailable protected policy without leaking extra log metadata (0.167041ms)
+✖ Jev rejects incomplete distributions, arrays and refusals (0.168584ms)
+✔ CLI evaluate has stable protected output and never enables an unavailable provider (6.611167ms)
+✔ selection is explicit, isolated to each provider key, and does not fall back (0.555ms)
+✖ OpenAI predicate wire shape, declared state filtering and no human authority (4.414958ms)
+✖ OpenAI choice maps declared options and retains warn-only mode (1.4925ms)
+✖ refusals and malformed probabilities never become an answer (0.21075ms)
+✖ OpenAI rejects incomplete, duplicate, unnormalised and unknown choice probabilities (0.179625ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 10
+ℹ fail 12
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 82.646875
+
+✖ failing tests:
+
+test at tests/delivery/judge.test.js:50:1
+✖ the key variable is pinned to TYPESAFE_*, and the endpoint comes only from a loopback DELIVERY_JUDGE_ENDPOINT (4.157625ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:2145:21)
+      at listenInCluster (node:net:2224:12)
+      at node:net:2448:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at tests/delivery/judge.test.js:70:1
+✖ ask: a noul answer is typed, the key goes only in the header, and the log line has no state (1.508542ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:2145:21)
+      at listenInCluster (node:net:2224:12)
+      at node:net:2448:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at tests/delivery/judge.test.js:96:1
+✖ ask: a choice answer carries confidence and probabilities (0.217417ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:2145:21)
+      at listenInCluster (node:net:2224:12)
+      at node:net:2448:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at tests/delivery/judge.test.js:107:1
+✖ ask fails open: timeout, 401, 429, a closed port and a bad body give a reason, never a throw (0.173125ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:2145:21)
+      at listenInCluster (node:net:2224:12)
+      at node:net:2448:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at tests/delivery/judge.test.js:125:1
+✖ ask rejects malformed answers as bad_response and does not follow a redirect (0.192667ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:2145:21)
+      at listenInCluster (node:net:2224:12)
+      at node:net:2448:7
+      at processTicksAndRejections (node:internal/process/task_queues:90:21)
+      at runNextTicks (node:internal/process/task_queues:69:3)
+      at process.processImmediate (node:internal/timers:502:9) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at tests/delivery/judge.test.js:146:1
+✖ ask refuses locally: off, unknown question, sensitive or missing fields; nothing is sent (0.199792ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:2145:21)
+      at listenInCluster (node:net:2224:12)
+      at node:net:2448:7
+      at processTicksAndRejections (node:internal/process/task_queues:90:21)
+      at runNextTicks (node:internal/process/task_queues:69:3)
+      at process.processImmediate (node:internal/timers:502:9) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at tests/delivery/judge.test.js:252:1
+✖ evaluate bridges answers to unavailable protected policy without leaking extra log metadata (0.167041ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:2145:21)
+      at listenInCluster (node:net:2224:12)
+      at node:net:2448:7
+      at processTicksAndRejections (node:internal/process/task_queues:90:21)
+      at runNextTicks (node:internal/process/task_queues:69:3)
+      at process.processImmediate (node:internal/timers:502:9) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at tests/delivery/judge.test.js:261:1
+✖ Jev rejects incomplete distributions, arrays and refusals (0.168584ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:2145:21)
+      at listenInCluster (node:net:2224:12)
+      at node:net:2448:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at tests/delivery/openai-judge.test.js:19:1
+✖ OpenAI predicate wire shape, declared state filtering and no human authority (4.414958ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:2145:21)
+      at listenInCluster (node:net:2224:12)
+      at node:net:2448:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at tests/delivery/openai-judge.test.js:26:1
+✖ OpenAI choice maps declared options and retains warn-only mode (1.4925ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:2145:21)
+      at listenInCluster (node:net:2224:12)
+      at node:net:2448:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at tests/delivery/openai-judge.test.js:32:1
+✖ refusals and malformed probabilities never become an answer (0.21075ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:2145:21)
+      at listenInCluster (node:net:2224:12)
+      at node:net:2448:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }
+
+test at tests/delivery/openai-judge.test.js:37:1
+✖ OpenAI rejects incomplete, duplicate, unnormalised and unknown choice probabilities (0.179625ms)
+  Error: listen EPERM: operation not permitted 127.0.0.1
+      at Server.setupListenHandle [as _listen2] (node:net:2145:21)
+      at listenInCluster (node:net:2224:12)
+      at node:net:2448:7
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    code: 'EPERM',
+    errno: -1,
+    syscall: 'listen',
+    address: '127.0.0.1'
+  }

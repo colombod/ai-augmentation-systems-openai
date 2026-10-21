@@ -1,0 +1,11 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "delivery",
+  "version": "0.1.0-preview.6",
+  "description": "Turn product ideas into plans and coordinate implementation with persistent Codex roles, traceable reviews and explicitly selected decision providers.",
+  "author": {
+    "name": "Diego Colombo"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/colombod/ai-augmentation-systems-openai"
+}

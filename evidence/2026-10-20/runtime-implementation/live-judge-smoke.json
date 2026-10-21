@@ -1,0 +1,48 @@
+{
+  "synthetic_state": {
+    "candidate": "Repair an existing checklist item that cannot be unchecked",
+    "linked_item": "Previously shipped checklist",
+    "context": "An existing control fails when a person tries to undo a completed item"
+  },
+  "calibration": "One smoke case per provider; not provider calibration or blocking policy acceptance",
+  "runs": [
+    {
+      "provider": "jev",
+      "elapsed_ms": 251,
+      "result": {
+        "question": "is_fix",
+        "version": "1",
+        "provider": "jev",
+        "mode": "advisory",
+        "advisory": true,
+        "human_authority": false,
+        "type": "noul",
+        "model": "jev-1.13.0",
+        "answer": "yes",
+        "p": 0.95,
+        "latencyMs": 247.8,
+        "inputTokens": 335,
+        "outputTokens": 21
+      }
+    },
+    {
+      "provider": "openai",
+      "elapsed_ms": 1252,
+      "result": {
+        "question": "is_fix",
+        "version": "1",
+        "provider": "openai",
+        "mode": "advisory",
+        "advisory": true,
+        "human_authority": false,
+        "type": "noul",
+        "model": "gpt-6-luna",
+        "answer": "yes",
+        "p": 1,
+        "latencyMs": 1250.8,
+        "inputTokens": 207,
+        "outputTokens": 0
+      }
+    }
+  ]
+}

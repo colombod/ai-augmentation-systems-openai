@@ -1,0 +1,124 @@
+{
+  "checks": [
+    {
+      "name": "ordinary event remains one-key",
+      "passed": true
+    },
+    {
+      "name": "start only identity and type",
+      "passed": true
+    },
+    {
+      "name": "historical bytes preserved",
+      "passed": true
+    },
+    {
+      "name": "stop records transcript metadata without blocking FIFO read",
+      "passed": true
+    },
+    {
+      "name": "agent_id exact byte limit accepted",
+      "passed": true
+    },
+    {
+      "name": "agent_id one byte over omitted",
+      "passed": true
+    },
+    {
+      "name": "agent_id multibyte byte limit enforced",
+      "passed": true
+    },
+    {
+      "name": "agent_type exact byte limit accepted",
+      "passed": true
+    },
+    {
+      "name": "agent_type one byte over omitted",
+      "passed": true
+    },
+    {
+      "name": "agent_type multibyte byte limit enforced",
+      "passed": true
+    },
+    {
+      "name": "agent_transcript_path exact byte limit accepted",
+      "passed": true
+    },
+    {
+      "name": "agent_transcript_path one byte over omitted",
+      "passed": true
+    },
+    {
+      "name": "agent_transcript_path multibyte byte limit enforced",
+      "passed": true
+    },
+    {
+      "name": "invalid metadata omitted None",
+      "passed": true
+    },
+    {
+      "name": "invalid metadata omitted False",
+      "passed": true
+    },
+    {
+      "name": "invalid metadata omitted 123",
+      "passed": true
+    },
+    {
+      "name": "invalid metadata omitted []",
+      "passed": true
+    },
+    {
+      "name": "invalid metadata omitted {}",
+      "passed": true
+    },
+    {
+      "name": "invalid metadata omitted ''",
+      "passed": true
+    },
+    {
+      "name": "invalid metadata omitted ' '",
+      "passed": true
+    },
+    {
+      "name": "invalid metadata omitted 'control\\x7f'",
+      "passed": true
+    },
+    {
+      "name": "escaping preserves JSON strings",
+      "passed": true
+    },
+    {
+      "name": "unknown payload content never persisted",
+      "passed": true
+    },
+    {
+      "name": "no invented child log file",
+      "passed": true
+    },
+    {
+      "name": "32 concurrent maximum metadata records complete",
+      "passed": true
+    },
+    {
+      "name": "latest helper reads mixed record filenames",
+      "passed": true
+    },
+    {
+      "name": "source manifests and lock preview3",
+      "passed": true
+    }
+  ],
+  "passed": 27,
+  "total": 27,
+  "temporary_data": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/subagent-independent-3hhuo5k4/data",
+  "fifo_elapsed_seconds": 0.035381458001211286,
+  "expected_host_transcript_reads": false,
+  "final_documentation_recheck": {
+    "hook_description": "Record lifecycle event types and allowlisted subagent identifiers and transcript paths using a local Rust logger.",
+    "finding_status": "fixed and independently rechecked",
+    "readme_third_party_notice_link_present": true,
+    "packaged_third_party_notice_file_present": true,
+    "runtime_retest_needed": false
+  }
+}

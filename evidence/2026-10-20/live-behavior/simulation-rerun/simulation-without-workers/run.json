@@ -1,0 +1,44 @@
+{
+  "id": "simulation-without-workers",
+  "resources_sha256": {
+    "skills/simulate/SKILL.md": "b5be55f39310601e797c228d6fc375e6b9536753d1112d721cc2eb8592f42307",
+    "references/runtime.md": "45b8510aa553f3d63591c43662cdba87404d0b4e7efbcc98968c3a6902f58f33",
+    "references/conventions.md": "1fe40963a4b0c9f5f4b4e653502f9dc5373a8bb334595e018b6ad073c8162ff5",
+    "templates/writing-standard.md": "eaca48384279103b1143aadabb74adb6a82569f0fc66854c93329c4529ae6fe1",
+    "templates/glossary.md": "83a0119269962d79887980ae53e68a088af9b75a7df77a7c92bea05882a496a3",
+    "templates/interview.md": "7a1234e3169509b6fb885a183e860dc68d699631257f59715b0642671ef1a50e",
+    "templates/simulation.md": "f2e0e52e8a733e78da490045770ed3e16a7e4a67f544d6c2ccbd31ba6d3742f7",
+    "references/reviewers/persona-simulator.md": "8affe092ad09131829268b9a058dafb9fef227e4cd46bd63c0eced4c7e77a21a"
+  },
+  "capability_restrictions": "simulated in prompt; tool traces must also be inspected",
+  "model": "CLI default, no model override",
+  "host_acceptance": "native Codex model behavior only; not desktop or ChatGPT product acceptance",
+  "exit_code": 0,
+  "elapsed_seconds": 39.27,
+  "answer_present": true,
+  "event_types": [
+    "item.completed",
+    "thread.started",
+    "turn.completed",
+    "turn.started"
+  ],
+  "items": [
+    {
+      "type": "agent_message",
+      "status": null
+    },
+    {
+      "type": "agent_message",
+      "status": null
+    }
+  ],
+  "usage": [
+    {
+      "input_tokens": 25392,
+      "cached_input_tokens": 12288,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 1525,
+      "reasoning_output_tokens": 99
+    }
+  ]
+}

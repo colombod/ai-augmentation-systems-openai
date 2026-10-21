@@ -1,0 +1,10 @@
+{"stage": "fixture-setup"}
+{"stage": "public-prepare", "roster": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/planning/.delivery/team.json"}
+{"stage": "coordinator-and-product-manager"}
+{"stage": "supervisor-restart-after-manager"}
+{"stage": "materialize-and-ready"}
+{"stage": "builder-implementation", "issue": "fullcycle-6m8", "product": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/product"}
+{"stage": "independent-review", "product": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/product", "head": "32746b7d72bbbb4263c2ecf8a737c1c1613f9bbe"}
+{"stage": "operator-acceptance-barrier"}
+{"stage": "failed", "error": "No actual successful native controlled tool call: delivery_task_gate_status"}
+{"stage": "failed", "error": "No actual successful native controlled tool call: delivery_task_gate_status", "fixture": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_", "checks": null}

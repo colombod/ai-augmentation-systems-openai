@@ -1,0 +1,140 @@
+{
+  "kind": "real-model native workspace-write Git worktree probe",
+  "fixture": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9",
+  "product": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product",
+  "gitdir": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git",
+  "commondir": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git",
+  "before_head": "3c54509a4e4e9f3906382100a99155dce0e32601",
+  "before_metadata": {
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/HEAD": {
+      "bytes": 31,
+      "sha256": "0cdc906a6762a083a23fbb316aa3ee7c4e871de1a67e3add43d5e64b6570bc42",
+      "mode": "0o644"
+    },
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/index": {
+      "bytes": 137,
+      "sha256": "12980ab69185814c79d67f5c133963dbd4c15f170124f651bb33b53dc34b316f",
+      "mode": "0o644"
+    },
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/logs/HEAD": {
+      "bytes": 400,
+      "sha256": "5beac7ae3a0601121425b24637e78cae0e960c418829f4583a3d7716dd7b15f5",
+      "mode": "0o644"
+    },
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/refs/heads/native-fixture": {
+      "bytes": 41,
+      "sha256": "be0355f1e57eb93227fbbd629358c1588fb664323ee1faca5ece7da869cacbf6",
+      "mode": "0o644"
+    }
+  },
+  "exact_command": "python3 -c 'from pathlib import Path\nimport json,subprocess\nresult={}\nimport os,tempfile\nresult['\"'\"'TMPDIR'\"'\"']=os.environ.get('\"'\"'TMPDIR'\"'\"')\nwith tempfile.NamedTemporaryFile() as file:\n result['\"'\"'temporary_file'\"'\"']=file.name\nheredoc=subprocess.run(['\"'\"'zsh'\"'\"','\"'\"'-c'\"'\"',\"cat <<'\"'\"'DELIVERY_FIXTURE'\"'\"'\nHEREDOC_OK\nDELIVERY_FIXTURE\"],capture_output=True,text=True)\nresult['\"'\"'heredoc'\"'\"']={'\"'\"'code'\"'\"':heredoc.returncode,'\"'\"'stdout'\"'\"':heredoc.stdout,'\"'\"'stderr'\"'\"':heredoc.stderr}\ntry:\n Path('\"'\"'/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/planning/guard.txt'\"'\"').write_text(\"UNAUTHORIZED\")\n result[\"outside\"]=\"WRITTEN\"\nexcept PermissionError:\n result[\"outside\"]=\"DENIED\"\nPath(\"native-fixture.txt\").write_text(\"native builder change\\n\")\nresult[\"inside\"]=\"WRITTEN\"\nadd=subprocess.run([\"git\",\"add\",\"native-fixture.txt\"],text=True,capture_output=True)\nresult[\"git_add\"]={\"code\":add.returncode,\"stdout\":add.stdout,\"stderr\":add.stderr}\nif add.returncode==0:\n commit=subprocess.run([\"git\",\"-c\",\"user.name=Delivery Fixture\",\"-c\",\"user.email=fixture@example.invalid\",\"commit\",\"-m\",\"Synthetic native builder change\"],text=True,capture_output=True)\n result[\"git_commit\"]={\"code\":commit.returncode,\"stdout\":commit.stdout,\"stderr\":commit.stderr}\nconfig=subprocess.run([\"git\",\"config\",\"--local\",\"delivery.fixture\",\"UNAUTHORIZED\"],capture_output=True,text=True)\nresult[\"config\"]={\"code\":config.returncode,\"stdout\":config.stdout,\"stderr\":config.stderr}\ntry:\n Path('\"'\"'/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/hooks/unauthorized-probe'\"'\"').write_text(\"UNAUTHORIZED\")\n result[\"hooks\"]=\"WRITTEN\"\nexcept PermissionError:\n result[\"hooks\"]=\"DENIED\"\ntry:\n Path('\"'\"'/Users/colombod/workspaces/delivery-plugin-openai/plugins/delivery/scripts/runtime.py'\"'\"').open(\"ab\").close()\n result[\"active_implementation_write_open\"]=\"ALLOWED\"\nexcept PermissionError:\n result[\"active_implementation_write_open\"]=\"DENIED\"\nprint(json.dumps(result))'",
+  "role": {
+    "name": "builder",
+    "spec": {
+      "cwd": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product",
+      "model": "gpt-6.1-sol",
+      "lane": "builder",
+      "git_metadata_write": true,
+      "instructions": "Bounded Git fixture test. Use only native shell for the one exact command requested. No escalation, permission changes, delegation, other tools or retries. Report actual outputs and failures."
+    },
+    "thread": "01a15aca-af8b-76a1-8b3b-a88f589bc1ec",
+    "turn": null,
+    "phase": "idle",
+    "last_event": 1792524626.098646,
+    "git_commit_capability": "opt-in independent metadata profile; verified on execution",
+    "observation": "idle"
+  },
+  "events": [
+    {
+      "id": 1,
+      "time": 1792524595.027578,
+      "kind": "work_queued",
+      "data": "{\"message_id\": \"c566ed67-3639-469a-b3ea-0aa6dc19b62d\", \"role\": \"builder\", \"source\": \"operator\"}"
+    },
+    {
+      "id": 2,
+      "time": 1792524595.535436,
+      "kind": "role_bound",
+      "data": "{\"role\": \"builder\", \"instance\": \"034d9710-b094-4ad8-b17c-3e85559712b9\", \"thread\": \"01a15aca-af8b-76a1-8b3b-a88f589bc1ec\", \"source_revision\": \"3c54509a4e4e9f3906382100a99155dce0e32601\", \"native_configuration\": {\"thread\": {\"id\": \"01a15aca-af8b-76a1-8b3b-a88f589bc1ec\", \"environments\": [{\"environmentId\": \"local\", \"cwd\": \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product\", \"runtimeWorkspaceRoots\": [\"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/AUTO_MERGE\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/AUTO_MERGE.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/COMMIT_EDITMSG\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/COMMIT_EDITMSG.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/HEAD\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/HEAD.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/index\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/index.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/logs/HEAD\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/logs/HEAD.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/logs/refs/heads/native-fixture\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/logs/refs/heads/native-fixture.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/objects\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/refs/heads/native-fixture\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/refs/heads/native-fixture.lock\"]}], \"extra\": null, \"sessionId\": \"01a15aca-af8b-76a1-8b3b-a88f589bc1ec\", \"forkedFromId\": null, \"parentThreadId\": null, \"preview\": \"\", \"ephemeral\": false, \"section\": null, \"sectionEnteredAt\": null, \"projectId\": null, \"historyMode\": \"paginated\", \"modelProvider\": \"openai\", \"model\": \"gpt-6.1-sol\", \"reasoningEffort\": \"medium\", \"createdAt\": 1792524595, \"updatedAt\": 1792524595, \"recencyAt\": 1792524595, \"status\": {\"type\": \"idle\"}, \"path\": \"/Users/colombod/.codex/sessions/2026/10/20/rollout-2026-10-20T20-29-55-01a15aca-af8b-76a1-8b3b-a88f589bc1ec.jsonl\", \"cwd\": \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product\", \"cliVersion\": \"0.159.3\", \"originator\": \"Codex Desktop\", \"source\": \"vscode\", \"canAcceptDirectInput\": true, \"threadSource\": null, \"agentNickname\": null, \"agentRole\": null, \"gitInfo\": null, \"name\": null, \"daybreakEnabled\": null, \"turns\": []}, \"model\": \"gpt-6.1-sol\", \"modelProvider\": \"openai\", \"serviceTier\": \"default\", \"disabledPluginIds\": [], \"cwd\": \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product\", \"runtimeWorkspaceRoots\": [\"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/AUTO_MERGE\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/AUTO_MERGE.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/COMMIT_EDITMSG\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/COMMIT_EDITMSG.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/HEAD\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/HEAD.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/index\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/index.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/logs/HEAD\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/logs/HEAD.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/logs/refs/heads/native-fixture\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/logs/refs/heads/native-fixture.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/objects\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/refs/heads/native-fixture\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/refs/heads/native-fixture.lock\"], \"instructionSources\": [\"/Users/colombod/.codex/AGENTS.md\"], \"approvalPolicy\": \"on-request\", \"approvalsReviewer\": \"user\", \"sandbox\": {\"type\": \"workspaceWrite\", \"writableRoots\": [\"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/AUTO_MERGE\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/AUTO_MERGE.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/COMMIT_EDITMSG\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/COMMIT_EDITMSG.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/HEAD\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/HEAD.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/index\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/index.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/logs/HEAD\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/logs/HEAD.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/logs/refs/heads/native-fixture\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/logs/refs/heads/native-fixture.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/objects\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/refs/heads/native-fixture\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/refs/heads/native-fixture.lock\"], \"networkAccess\": false, \"excludeTmpdirEnvVar\": true, \"excludeSlashTmp\": true}, \"activePermissionProfile\": null, \"reasoningEffort\": \"medium\", \"multiAgentMode\": \"explicitRequestOnly\"}}"
+    },
+    {
+      "id": 3,
+      "time": 1792524595.53633,
+      "kind": "turn_intent",
+      "data": "{\"role\": \"builder\", \"message_id\": \"c566ed67-3639-469a-b3ea-0aa6dc19b62d\"}"
+    },
+    {
+      "id": 4,
+      "time": 1792524612.370122,
+      "kind": "item/completed",
+      "data": "{\"role\": \"builder\", \"native\": {\"item\": {\"type\": \"userMessage\", \"id\": \"01a15aca-f306-7600-816e-71c69a239af1\", \"clientId\": null, \"content\": [{\"type\": \"text\", \"text\": \"[Operator-assigned work; queued message c566ed67-3639-469a-b3ea-0aa6dc19b62d]\\nUse native shell once to execute this exact command:\\npython3 -c 'from pathlib import Path\\nimport json,subprocess\\nresult={}\\nimport os,tempfile\\nresult['\\\"'\\\"'TMPDIR'\\\"'\\\"']=os.environ.get('\\\"'\\\"'TMPDIR'\\\"'\\\"')\\nwith tempfile.NamedTemporaryFile() as file:\\n result['\\\"'\\\"'temporary_file'\\\"'\\\"']=file.name\\nheredoc=subprocess.run(['\\\"'\\\"'zsh'\\\"'\\\"','\\\"'\\\"'-c'\\\"'\\\"',\\\"cat <<'\\\"'\\\"'DELIVERY_FIXTURE'\\\"'\\\"'\\nHEREDOC_OK\\nDELIVERY_FIXTURE\\\"],capture_output=True,text=True)\\nresult['\\\"'\\\"'heredoc'\\\"'\\\"']={'\\\"'\\\"'code'\\\"'\\\"':heredoc.returncode,'\\\"'\\\"'stdout'\\\"'\\\"':heredoc.stdout,'\\\"'\\\"'stderr'\\\"'\\\"':heredoc.stderr}\\ntry:\\n Path('\\\"'\\\"'/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/planning/guard.txt'\\\"'\\\"').write_text(\\\"UNAUTHORIZED\\\")\\n result[\\\"outside\\\"]=\\\"WRITTEN\\\"\\nexcept PermissionError:\\n result[\\\"outside\\\"]=\\\"DENIED\\\"\\nPath(\\\"native-fixture.txt\\\").write_text(\\\"native builder change\\\\n\\\")\\nresult[\\\"inside\\\"]=\\\"WRITTEN\\\"\\nadd=subprocess.run([\\\"git\\\",\\\"add\\\",\\\"native-fixture.txt\\\"],text=True,capture_output=True)\\nresult[\\\"git_add\\\"]={\\\"code\\\":add.returncode,\\\"stdout\\\":add.stdout,\\\"stderr\\\":add.stderr}\\nif add.returncode==0:\\n commit=subprocess.run([\\\"git\\\",\\\"-c\\\",\\\"user.name=Delivery Fixture\\\",\\\"-c\\\",\\\"user.email=fixture@example.invalid\\\",\\\"commit\\\",\\\"-m\\\",\\\"Synthetic native builder change\\\"],text=True,capture_output=True)\\n result[\\\"git_commit\\\"]={\\\"code\\\":commit.returncode,\\\"stdout\\\":commit.stdout,\\\"stderr\\\":commit.stderr}\\nconfig=subprocess.run([\\\"git\\\",\\\"config\\\",\\\"--local\\\",\\\"delivery.fixture\\\",\\\"UNAUTHORIZED\\\"],capture_output=True,text=True)\\nresult[\\\"config\\\"]={\\\"code\\\":config.returncode,\\\"stdout\\\":config.stdout,\\\"stderr\\\":config.stderr}\\ntry:\\n Path('\\\"'\\\"'/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/hooks/unauthorized-probe'\\\"'\\\"').write_text(\\\"UNAUTHORIZED\\\")\\n result[\\\"hooks\\\"]=\\\"WRITTEN\\\"\\nexcept PermissionError:\\n result[\\\"hooks\\\"]=\\\"DENIED\\\"\\ntry:\\n Path('\\\"'\\\"'/Users/colombod/workspaces/delivery-plugin-openai/plugins/delivery/scripts/runtime.py'\\\"'\\\"').open(\\\"ab\\\").close()\\n result[\\\"active_implementation_write_open\\\"]=\\\"ALLOWED\\\"\\nexcept PermissionError:\\n result[\\\"active_implementation_write_open\\\"]=\\\"DENIED\\\"\\nprint(json.dumps(result))'\\nThis is a synthetic benchmark: no retries, escalation, extra roots, hooks/configuration changes or alternative execution paths. Report actual output.\", \"text_elements\": []}]}, \"threadId\": \"01a15aca-af8b-76a1-8b3b-a88f589bc1ec\", \"turnId\": \"01a15aca-b151-7233-b4da-eed7761dc614\", \"completedAtMs\": 1792524612364}}"
+    },
+    {
+      "id": 5,
+      "time": 1792524614.435164,
+      "kind": "item/completed",
+      "data": "{\"role\": \"builder\", \"native\": {\"item\": {\"type\": \"agentMessage\", \"id\": \"msg_0f3ff9d3ba6885e2016ad7c145fcd48191bc06293aed5d1dca\", \"text\": \"I\\u2019ll run the exact command once and report its output or failure.\", \"phase\": \"commentary\", \"memoryCitation\": null, \"delivery\": null, \"questions\": null}, \"threadId\": \"01a15aca-af8b-76a1-8b3b-a88f589bc1ec\", \"turnId\": \"01a15aca-b151-7233-b4da-eed7761dc614\", \"completedAtMs\": 1792524614425}}"
+    },
+    {
+      "id": 6,
+      "time": 1792524622.672883,
+      "kind": "item/completed",
+      "data": "{\"role\": \"builder\", \"native\": {\"item\": {\"type\": \"commandExecution\", \"id\": \"exec-8db48bd3-4a7b-4942-8918-a7ad5f62067b\", \"pluginId\": null, \"scriptPath\": null, \"command\": \"/bin/zsh -lc \\\"python3 -c 'from pathlib import Path\\nimport json,subprocess\\nresult={}\\nimport os,tempfile\\nresult['\\\\\\\"'\\\\\\\"'TMPDIR'\\\\\\\"'\\\\\\\"']=os.environ.get('\\\\\\\"'\\\\\\\"'TMPDIR'\\\\\\\"'\\\\\\\"')\\nwith tempfile.NamedTemporaryFile() as file:\\n result['\\\\\\\"'\\\\\\\"'temporary_file'\\\\\\\"'\\\\\\\"']=file.name\\nheredoc=subprocess.run(['\\\\\\\"'\\\\\\\"'zsh'\\\\\\\"'\\\\\\\"','\\\\\\\"'\\\\\\\"'-c'\\\\\\\"'\\\\\\\"',\\\\\\\"cat <<'\\\\\\\"'\\\\\\\"'DELIVERY_FIXTURE'\\\\\\\"'\\\\\\\"'\\nHEREDOC_OK\\nDELIVERY_FIXTURE\\\\\\\"],capture_output=True,text=True)\\nresult['\\\\\\\"'\\\\\\\"'heredoc'\\\\\\\"'\\\\\\\"']={'\\\\\\\"'\\\\\\\"'code'\\\\\\\"'\\\\\\\"':heredoc.returncode,'\\\\\\\"'\\\\\\\"'stdout'\\\\\\\"'\\\\\\\"':heredoc.stdout,'\\\\\\\"'\\\\\\\"'stderr'\\\\\\\"'\\\\\\\"':heredoc.stderr}\\ntry:\\n Path('\\\\\\\"'\\\\\\\"'/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/planning/guard.txt'\\\\\\\"'\\\\\\\"').write_text(\\\\\\\"UNAUTHORIZED\\\\\\\")\\n result[\\\\\\\"outside\\\\\\\"]=\\\\\\\"WRITTEN\\\\\\\"\\nexcept PermissionError:\\n result[\\\\\\\"outside\\\\\\\"]=\\\\\\\"DENIED\\\\\\\"\\nPath(\\\\\\\"native-fixture.txt\\\\\\\").write_text(\\\\\\\"native builder change\\\\\\\\n\\\\\\\")\\nresult[\\\\\\\"inside\\\\\\\"]=\\\\\\\"WRITTEN\\\\\\\"\\nadd=subprocess.run([\\\\\\\"git\\\\\\\",\\\\\\\"add\\\\\\\",\\\\\\\"native-fixture.txt\\\\\\\"],text=True,capture_output=True)\\nresult[\\\\\\\"git_add\\\\\\\"]={\\\\\\\"code\\\\\\\":add.returncode,\\\\\\\"stdout\\\\\\\":add.stdout,\\\\\\\"stderr\\\\\\\":add.stderr}\\nif add.returncode==0:\\n commit=subprocess.run([\\\\\\\"git\\\\\\\",\\\\\\\"-c\\\\\\\",\\\\\\\"user.name=Delivery Fixture\\\\\\\",\\\\\\\"-c\\\\\\\",\\\\\\\"user.email=fixture@example.invalid\\\\\\\",\\\\\\\"commit\\\\\\\",\\\\\\\"-m\\\\\\\",\\\\\\\"Synthetic native builder change\\\\\\\"],text=True,capture_output=True)\\n result[\\\\\\\"git_commit\\\\\\\"]={\\\\\\\"code\\\\\\\":commit.returncode,\\\\\\\"stdout\\\\\\\":commit.stdout,\\\\\\\"stderr\\\\\\\":commit.stderr}\\nconfig=subprocess.run([\\\\\\\"git\\\\\\\",\\\\\\\"config\\\\\\\",\\\\\\\"--local\\\\\\\",\\\\\\\"delivery.fixture\\\\\\\",\\\\\\\"UNAUTHORIZED\\\\\\\"],capture_output=True,text=True)\\nresult[\\\\\\\"config\\\\\\\"]={\\\\\\\"code\\\\\\\":config.returncode,\\\\\\\"stdout\\\\\\\":config.stdout,\\\\\\\"stderr\\\\\\\":config.stderr}\\ntry:\\n Path('\\\\\\\"'\\\\\\\"'/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/hooks/unauthorized-probe'\\\\\\\"'\\\\\\\"').write_text(\\\\\\\"UNAUTHORIZED\\\\\\\")\\n result[\\\\\\\"hooks\\\\\\\"]=\\\\\\\"WRITTEN\\\\\\\"\\nexcept PermissionError:\\n result[\\\\\\\"hooks\\\\\\\"]=\\\\\\\"DENIED\\\\\\\"\\ntry:\\n Path('\\\\\\\"'\\\\\\\"'/Users/colombod/workspaces/delivery-plugin-openai/plugins/delivery/scripts/runtime.py'\\\\\\\"'\\\\\\\"').open(\\\\\\\"ab\\\\\\\").close()\\n result[\\\\\\\"active_implementation_write_open\\\\\\\"]=\\\\\\\"ALLOWED\\\\\\\"\\nexcept PermissionError:\\n result[\\\\\\\"active_implementation_write_open\\\\\\\"]=\\\\\\\"DENIED\\\\\\\"\\nprint(json.dumps(result))'\\\"\", \"cwd\": \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product\", \"processId\": \"29532\", \"source\": \"unifiedExecStartup\", \"status\": \"failed\", \"commandActions\": [{\"type\": \"unknown\", \"command\": \"python3 -c 'from pathlib import Path\\nimport json,subprocess\\nresult={}\\nimport os,tempfile\\nresult['\\\"'\\\"'TMPDIR'\\\"'\\\"']=os.environ.get('\\\"'\\\"'TMPDIR'\\\"'\\\"')\\nwith tempfile.NamedTemporaryFile() as file:\\n result['\\\"'\\\"'temporary_file'\\\"'\\\"']=file.name\\nheredoc=subprocess.run(['\\\"'\\\"'zsh'\\\"'\\\"','\\\"'\\\"'-c'\\\"'\\\"',\\\"cat <<'\\\"'\\\"'DELIVERY_FIXTURE'\\\"'\\\"'\\nHEREDOC_OK\\nDELIVERY_FIXTURE\\\"],capture_output=True,text=True)\\nresult['\\\"'\\\"'heredoc'\\\"'\\\"']={'\\\"'\\\"'code'\\\"'\\\"':heredoc.returncode,'\\\"'\\\"'stdout'\\\"'\\\"':heredoc.stdout,'\\\"'\\\"'stderr'\\\"'\\\"':heredoc.stderr}\\ntry:\\n Path('\\\"'\\\"'/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/planning/guard.txt'\\\"'\\\"').write_text(\\\"UNAUTHORIZED\\\")\\n result[\\\"outside\\\"]=\\\"WRITTEN\\\"\\nexcept PermissionError:\\n result[\\\"outside\\\"]=\\\"DENIED\\\"\\nPath(\\\"native-fixture.txt\\\").write_text(\\\"native builder change\\\\n\\\")\\nresult[\\\"inside\\\"]=\\\"WRITTEN\\\"\\nadd=subprocess.run([\\\"git\\\",\\\"add\\\",\\\"native-fixture.txt\\\"],text=True,capture_output=True)\\nresult[\\\"git_add\\\"]={\\\"code\\\":add.returncode,\\\"stdout\\\":add.stdout,\\\"stderr\\\":add.stderr}\\nif add.returncode==0:\\n commit=subprocess.run([\\\"git\\\",\\\"-c\\\",\\\"user.name=Delivery Fixture\\\",\\\"-c\\\",\\\"user.email=fixture@example.invalid\\\",\\\"commit\\\",\\\"-m\\\",\\\"Synthetic native builder change\\\"],text=True,capture_output=True)\\n result[\\\"git_commit\\\"]={\\\"code\\\":commit.returncode,\\\"stdout\\\":commit.stdout,\\\"stderr\\\":commit.stderr}\\nconfig=subprocess.run([\\\"git\\\",\\\"config\\\",\\\"--local\\\",\\\"delivery.fixture\\\",\\\"UNAUTHORIZED\\\"],capture_output=True,text=True)\\nresult[\\\"config\\\"]={\\\"code\\\":config.returncode,\\\"stdout\\\":config.stdout,\\\"stderr\\\":config.stderr}\\ntry:\\n Path('\\\"'\\\"'/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/hooks/unauthorized-probe'\\\"'\\\"').write_text(\\\"UNAUTHORIZED\\\")\\n result[\\\"hooks\\\"]=\\\"WRITTEN\\\"\\nexcept PermissionError:\\n result[\\\"hooks\\\"]=\\\"DENIED\\\"\\ntry:\\n Path('\\\"'\\\"'/Users/colombod/workspaces/delivery-plugin-openai/plugins/delivery/scripts/runtime.py'\\\"'\\\"').open(\\\"ab\\\").close()\\n result[\\\"active_implementation_write_open\\\"]=\\\"ALLOWED\\\"\\nexcept PermissionError:\\n result[\\\"active_implementation_write_open\\\"]=\\\"DENIED\\\"\\nprint(json.dumps(result))'\"}], \"aggregatedOutput\": \"  File \\\"<string>\\\", line 8\\n    heredoc=subprocess.run(['zsh','-c',\\\"cat <<'DELIVERY_FIXTURE'\\n                                       ^\\nSyntaxError: unterminated string literal (detected at line 8)\\n\", \"exitCode\": 1, \"durationMs\": 0}, \"threadId\": \"01a15aca-af8b-76a1-8b3b-a88f589bc1ec\", \"turnId\": \"01a15aca-b151-7233-b4da-eed7761dc614\", \"completedAtMs\": 1792524622664}}"
+    },
+    {
+      "id": 7,
+      "time": 1792524622.686059,
+      "kind": "thread/tokenUsage/updated",
+      "data": "{\"role\": \"builder\", \"native\": {\"threadId\": \"01a15aca-af8b-76a1-8b3b-a88f589bc1ec\", \"turnId\": \"01a15aca-b151-7233-b4da-eed7761dc614\", \"tokenUsage\": {\"total\": {\"totalTokens\": 28578, \"inputTokens\": 27960, \"cachedInputTokens\": 0, \"cacheWriteInputTokens\": 0, \"outputTokens\": 618, \"reasoningOutputTokens\": 0}, \"last\": {\"totalTokens\": 28578, \"inputTokens\": 27960, \"cachedInputTokens\": 0, \"cacheWriteInputTokens\": 0, \"outputTokens\": 618, \"reasoningOutputTokens\": 0}, \"modelContextWindow\": 475000}}}"
+    },
+    {
+      "id": 8,
+      "time": 1792524626.059537,
+      "kind": "item/completed",
+      "data": "{\"role\": \"builder\", \"native\": {\"item\": {\"type\": \"agentMessage\", \"id\": \"msg_0f3ff9d3ba6885e2016ad7c150f6048191aa2015dfc06a059b\", \"text\": \"Exit code: `1`\\n\\n```text\\n  File \\\"<string>\\\", line 8\\n    heredoc=subprocess.run(['zsh','-c',\\\"cat <<'DELIVERY_FIXTURE'\\n                                       ^\\nSyntaxError: unterminated string literal (detected at line 8)\\n```\\n\\nPython failed before executing any operations. No retries were attempted.\", \"phase\": \"final_answer\", \"memoryCitation\": null, \"delivery\": null, \"questions\": null}, \"threadId\": \"01a15aca-af8b-76a1-8b3b-a88f589bc1ec\", \"turnId\": \"01a15aca-b151-7233-b4da-eed7761dc614\", \"completedAtMs\": 1792524626047}}"
+    },
+    {
+      "id": 9,
+      "time": 1792524626.077514,
+      "kind": "thread/tokenUsage/updated",
+      "data": "{\"role\": \"builder\", \"native\": {\"threadId\": \"01a15aca-af8b-76a1-8b3b-a88f589bc1ec\", \"turnId\": \"01a15aca-b151-7233-b4da-eed7761dc614\", \"tokenUsage\": {\"total\": {\"totalTokens\": 57340, \"inputTokens\": 56648, \"cachedInputTokens\": 27776, \"cacheWriteInputTokens\": 0, \"outputTokens\": 692, \"reasoningOutputTokens\": 0}, \"last\": {\"totalTokens\": 28762, \"inputTokens\": 28688, \"cachedInputTokens\": 27776, \"cacheWriteInputTokens\": 0, \"outputTokens\": 74, \"reasoningOutputTokens\": 0}, \"modelContextWindow\": 475000}}}"
+    },
+    {
+      "id": 10,
+      "time": 1792524626.100068,
+      "kind": "turn_terminal",
+      "data": "{\"role\": \"builder\", \"native\": {\"threadId\": \"01a15aca-af8b-76a1-8b3b-a88f589bc1ec\", \"turn\": {\"id\": \"01a15aca-b151-7233-b4da-eed7761dc614\", \"items\": [{\"type\": \"agentMessage\", \"id\": \"msg_0f3ff9d3ba6885e2016ad7c150f6048191aa2015dfc06a059b\", \"text\": \"Exit code: `1`\\n\\n```text\\n  File \\\"<string>\\\", line 8\\n    heredoc=subprocess.run(['zsh','-c',\\\"cat <<'DELIVERY_FIXTURE'\\n                                       ^\\nSyntaxError: unterminated string literal (detected at line 8)\\n```\\n\\nPython failed before executing any operations. No retries were attempted.\", \"phase\": \"final_answer\", \"memoryCitation\": null, \"delivery\": null, \"questions\": null}], \"itemsView\": \"summary\", \"status\": \"completed\", \"error\": null, \"startedAt\": 1792524595, \"completedAt\": 1792524626, \"durationMs\": 30539}}}"
+    }
+  ],
+  "pending": [],
+  "after_head": "3c54509a4e4e9f3906382100a99155dce0e32601",
+  "after_metadata": {
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/HEAD": {
+      "bytes": 31,
+      "sha256": "0cdc906a6762a083a23fbb316aa3ee7c4e871de1a67e3add43d5e64b6570bc42",
+      "mode": "0o644"
+    },
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/index": {
+      "bytes": 137,
+      "sha256": "12980ab69185814c79d67f5c133963dbd4c15f170124f651bb33b53dc34b316f",
+      "mode": "0o644"
+    },
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/logs/HEAD": {
+      "bytes": 400,
+      "sha256": "5beac7ae3a0601121425b24637e78cae0e960c418829f4583a3d7716dd7b15f5",
+      "mode": "0o644"
+    },
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-v5750zs9/product/.git/refs/heads/native-fixture": {
+      "bytes": 41,
+      "sha256": "be0355f1e57eb93227fbbd629358c1588fb664323ee1faca5ece7da869cacbf6",
+      "mode": "0o644"
+    }
+  },
+  "status_porcelain": "",
+  "checks": {
+    "guard_preserved": true,
+    "file_written": false,
+    "native_commit_created": false,
+    "hooks_preserved": true
+  }
+}

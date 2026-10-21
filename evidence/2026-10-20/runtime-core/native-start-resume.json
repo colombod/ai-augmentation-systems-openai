@@ -1,0 +1,13 @@
+{
+  "started": {
+    "thread": "01a15aba-f9e7-7cf0-8e99-dc2d222c1f46",
+    "sandbox": {
+      "type": "readOnly",
+      "networkAccess": false
+    },
+    "cwd_bound": true,
+    "reviewer": "user"
+  },
+  "profile": null,
+  "error": "{'code': -32600, 'message': 'no rollout found for thread id 01a15aba-f9e7-7cf0-8e99-dc2d222c1f46'}"
+}

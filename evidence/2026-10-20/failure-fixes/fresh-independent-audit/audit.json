@@ -1,0 +1,40 @@
+{
+  "attempt": "evidence/2026-10-20/full-cli-cycle/attempts/20261020T222729Z-f07ae57ef33c431694ddb9e16cf5d084",
+  "scope": "Independent read-only acceptance audit; staged public CLI runtime lifecycle, not marketplace/desktop/ChatGPT or autonomous single-prompt acceptance",
+  "checks": {
+    "driver_16_checks_pass": true,
+    "finished_without_errors": true,
+    "exact_seven_queue_native_proofs": true,
+    "first_only_judge_actual_typed_answer": true,
+    "judge_explicit_selected_provider_no_human_authority": true,
+    "pm_context_content_recovered_without_prompt_repetition": true,
+    "no_external_controls_or_native_guard_events": true,
+    "four_canonical_artifacts_hash_and_actor_bound": true,
+    "implementation_review_surface_exact_head": true,
+    "reviewer_independent_readonly_thread": true,
+    "protected_review_provenance_event180": true,
+    "holdouts_21_all_pass_and_exact_commit_source": true,
+    "exact_human_barrier_once": true,
+    "canonical_task_in_progress_no_human_acceptance": true,
+    "both_supervisors_waited_clean_no_forcing": true,
+    "outer_driver_exit0_primary_root_observation": true,
+    "production_snapshot_unchanged": true,
+    "runner_and_helper_unchanged": true
+  },
+  "passed": 18,
+  "total": 18,
+  "head": "b87785b9a8f2f3fc3cd532f683a8228619245b08",
+  "judge_event": 8,
+  "accept_refusal_event": 202,
+  "review_artifact_event": 180,
+  "pm_continuity_evidence": "pm-context-continuity.json",
+  "fresh_unittest_count_note": "Three unittest methods with parameterized cases; not the previous attempt seven methods. Actual builder and reviewer completed outputs independently inspected.",
+  "process_proof": "Both child supervisor wait return codes recorded clean0 in result; outer driver exit0 is primary root observation fresh-run-verification.json. Independent ps query unavailable: sandbox PermissionError. No additional control or signal attempted.",
+  "source_changes": [],
+  "limits": [
+    "No genuine human acceptance; canonical task remains in_progress",
+    "No hosted CI, merge, push or publication",
+    "Separate desktop UI and ordinary plugin activation not established",
+    "Script schedules initial role assignments; no corrective interventions observed"
+  ]
+}

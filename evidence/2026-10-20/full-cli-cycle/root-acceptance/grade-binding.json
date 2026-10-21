@@ -1,0 +1,9 @@
+{
+  "product_head": "32746b7d72bbbb4263c2ecf8a737c1c1613f9bbe",
+  "source_sha256": "93123e73e2362ca8b1f60cb26d71294164e0da629cee29e77b6290b10336d57a",
+  "committed_source_sha256": "93123e73e2362ca8b1f60cb26d71294164e0da629cee29e77b6290b10336d57a",
+  "matches_committed_source": true,
+  "cases": 21,
+  "passed": 21,
+  "no_product_files_written_by_grader": true
+}

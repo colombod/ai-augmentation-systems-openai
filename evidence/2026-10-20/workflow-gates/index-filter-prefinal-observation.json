@@ -1,0 +1,9 @@
+{
+  "source": "Observed output of owned unittest run; exec session 40294 in this chat tool transcript",
+  "observation": "Intermediate raw-hash verifier retained git status; configured clean/smudge safe-marker helper executed during head inspection",
+  "failed_test": "test_raw_hash_inspection_never_executes_repository_clean_filter",
+  "actual_assertion": "AssertionError: True is not false : Coordinator executed repository clean/smudge filter",
+  "other_failure": "Older dirty-file test expected wording not committed; intermediate raw-byte error wording did not contain it",
+  "fix": "Removed privileged status entirely; cached index-only comparison and untracked enumeration replace it; final raw-byte error retains precise dirty-file wording",
+  "raw_capture_location": "Original chat tool output; this JSON is an observation record, not a fabricated complete raw log"
+}

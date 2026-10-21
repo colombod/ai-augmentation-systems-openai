@@ -1,0 +1,5 @@
+{"timestamp":"2026-10-20T22:00:59.460482Z","level":"WARN","fields":{"message":"recorded sandbox violation: resource=filesystem backend=seatbelt reason=operation_not_permitted path=unknown"},"target":"codex_sandboxing::violation"}
+{"timestamp":"2026-10-20T22:02:55.777826Z","level":"WARN","fields":{"message":"client responded with error for Integer(4)","code":-32000},"target":"codex_app_server::outgoing_message"}
+{"timestamp":"2026-10-20T22:02:55.777902Z","level":"ERROR","fields":{"message":"request failed with client error: JSONRPCErrorError { code: -32000, data: None, message: \"Expired or stale operator request\" }"},"target":"codex_app_server::bespoke_event_handling"}
+{"timestamp":"2026-10-20T22:02:55.778105Z","level":"ERROR","fields":{"error":"exec_command failed: CreateProcess { message: \"Rejected(\\\"approval request failed\\\")\" }"},"target":"codex_core::tools::router"}
+{"error": "interrupted"}

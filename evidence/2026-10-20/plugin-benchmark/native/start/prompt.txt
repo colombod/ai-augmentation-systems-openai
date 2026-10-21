@@ -1,0 +1,2 @@
+$delivery:start
+Initialize this project for a new initiative named translator-handover. Use the packaged skill. Do not create a placeholder brief. Do not delegate or browse.

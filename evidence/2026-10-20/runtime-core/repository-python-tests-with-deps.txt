@@ -1,0 +1,12 @@
+.............................................................{"operator_request": "e2d2aef1-8554-40d2-8115-d306ea65da3c", "method": "item/tool/requestUserInput", "params": {"threadId": "native-thread", "turnId": "native-turn", "questions": [{"id": "q", "question": "Choose"}]}}
+.............{"operator_request": "d5841ea6-cb53-4dac-868b-a4052a6956d0", "method": "item/commandExecution/requestApproval", "params": {"threadId": "native-thread", "turnId": "native-turn", "itemId": "item1"}}
+{"operator_request": "2a1dd95f-5766-41d7-a2dc-63d0c97e0410", "method": "item/commandExecution/requestApproval", "params": {"threadId": "native-thread", "turnId": "native-turn", "itemId": "item1"}}
+.{"operator_request": "f8072172-33a4-4a63-ada1-8474ff2eeda5", "method": "item/commandExecution/requestApproval", "params": {"threadId": "native-thread", "turnId": "native-turn"}}
+..{"operator_request": "35b1100a-8d6e-4b57-9c40-a2d9a4c93480", "method": "item/tool/requestUserInput", "params": {"threadId": "native-thread", "turnId": "native-turn", "questions": [{"id": "cafe", "question": "Caf\u00e9?"}]}}
+....{"operator_request": "a62a6926-b9e3-4123-b2c9-76a5638989f0", "method": "item/commandExecution/requestApproval", "params": {"threadId": "native-thread", "turnId": "native-turn"}}
+......{"operator_request": "a2d69d5a-ca92-4e55-bf8d-34924187c8b0", "method": "item/commandExecution/requestApproval", "params": {"threadId": "native-thread", "turnId": "native-turn"}}
+..
+----------------------------------------------------------------------
+Ran 89 tests in 13.644s
+
+OK

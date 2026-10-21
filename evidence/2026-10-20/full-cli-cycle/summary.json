@@ -1,0 +1,304 @@
+{
+  "kind": "staged real-model public CLI delivery integration through operator acceptance barrier",
+  "not_one_prompt_autonomy": true,
+  "not_desktop_or_chatgpt_acceptance": true,
+  "actual_executed_drivers": [
+    "runner-initial.py",
+    "continuation.py"
+  ],
+  "future_runner_not_executed": "runner.py",
+  "fixture": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_",
+  "product": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/product",
+  "planning": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/planning",
+  "issue": "fullcycle-6m8",
+  "head": "32746b7d72bbbb4263c2ecf8a737c1c1613f9bbe",
+  "accepted": false,
+  "checks": {
+    "public_full_roster_five_roles": true,
+    "all_roles_actual_completed_native_turns": true,
+    "actual_pm_continuity": true,
+    "canonical_artifact_bytes_match_protected_saves": true,
+    "actual_committed_worktree_bytes_match": true,
+    "matching_builder_review_surface_head": true,
+    "independent_native_reviewer": true,
+    "root_holdout_21_pass": true,
+    "real_peer_handoff": true,
+    "real_openai_advisory": true,
+    "exact_final_queued_turn_proven": true,
+    "submissions_complete_unaccepted": true,
+    "actual_acceptance_refusal": true,
+    "beads_still_in_progress": true,
+    "no_accepted_gate_event": true
+  },
+  "all_checks_pass": true,
+  "walltime_seconds": 580.816,
+  "initial_driver_seconds": 467.865,
+  "continuation_seconds": 31.584,
+  "usage_by_role": {
+    "coordinator": {
+      "native_reported_latest_total": {
+        "totalTokens": 314828,
+        "inputTokens": 313400,
+        "cachedInputTokens": 275968,
+        "cacheWriteInputTokens": 0,
+        "outputTokens": 1428,
+        "reasoningOutputTokens": 68
+      },
+      "counter_resets_detected": [],
+      "usage_event_count": 12,
+      "completed_turns": 2,
+      "native_completed_turn_duration_ms": 53209,
+      "turns": [
+        {
+          "id": "01a15b51-d52b-7d12-b3e5-c4e89cec078f",
+          "thread": "01a15b51-d491-7a22-9444-466ef79e4de4",
+          "status": "completed",
+          "durationMs": 41309
+        },
+        {
+          "id": "01a15b52-ff3e-7d32-8f47-431545013fad",
+          "thread": "01a15b51-d491-7a22-9444-466ef79e4de4",
+          "status": "completed",
+          "durationMs": 11900
+        }
+      ]
+    },
+    "product-manager": {
+      "native_reported_latest_total": {
+        "totalTokens": 253754,
+        "inputTokens": 251692,
+        "cachedInputTokens": 173056,
+        "cacheWriteInputTokens": 0,
+        "outputTokens": 2062,
+        "reasoningOutputTokens": 70
+      },
+      "counter_resets_detected": [],
+      "usage_event_count": 9,
+      "completed_turns": 2,
+      "native_completed_turn_duration_ms": 67517,
+      "turns": [
+        {
+          "id": "01a15b52-6a0b-7043-9c9f-861d3e33c2ec",
+          "thread": "01a15b52-68b8-7573-b885-f8257ca2f002",
+          "status": "completed",
+          "durationMs": 52980
+        },
+        {
+          "id": "01a15b53-4730-7ff3-93ef-14a8ef9dd54e",
+          "thread": "01a15b52-68b8-7573-b885-f8257ca2f002",
+          "status": "completed",
+          "durationMs": 14537
+        }
+      ]
+    },
+    "delivery-manager": {
+      "native_reported_latest_total": {
+        "totalTokens": 257852,
+        "inputTokens": 257231,
+        "cachedInputTokens": 230144,
+        "cacheWriteInputTokens": 0,
+        "outputTokens": 621,
+        "reasoningOutputTokens": 0
+      },
+      "counter_resets_detected": [],
+      "usage_event_count": 9,
+      "completed_turns": 2,
+      "native_completed_turn_duration_ms": 67350,
+      "turns": [
+        {
+          "id": "01a15b53-47cb-72c3-b501-44e5b02c17ca",
+          "thread": "01a15b53-475e-7e83-b05f-4b0941a47f7c",
+          "status": "completed",
+          "durationMs": 41788
+        },
+        {
+          "id": "01a15b59-f3ce-76e2-b5a2-e70888dc8002",
+          "thread": "01a15b53-475e-7e83-b05f-4b0941a47f7c",
+          "status": "completed",
+          "durationMs": 25562
+        }
+      ]
+    },
+    "builder": {
+      "native_reported_latest_total": {
+        "totalTokens": 412752,
+        "inputTokens": 409414,
+        "cachedInputTokens": 375424,
+        "cacheWriteInputTokens": 0,
+        "outputTokens": 3338,
+        "reasoningOutputTokens": 222
+      },
+      "counter_resets_detected": [],
+      "usage_event_count": 12,
+      "completed_turns": 1,
+      "native_completed_turn_duration_ms": 214355,
+      "turns": [
+        {
+          "id": "01a15b53-f1b3-7963-a3ac-97b9825c8b4d",
+          "thread": "01a15b53-f137-7bc0-abe0-eb1bfc59bf8e",
+          "status": "completed",
+          "durationMs": 214355
+        }
+      ]
+    },
+    "reviewer": {
+      "native_reported_latest_total": {
+        "totalTokens": 248653,
+        "inputTokens": 245620,
+        "cachedInputTokens": 209280,
+        "cacheWriteInputTokens": 0,
+        "outputTokens": 3033,
+        "reasoningOutputTokens": 145
+      },
+      "counter_resets_detected": [],
+      "usage_event_count": 9,
+      "completed_turns": 1,
+      "native_completed_turn_duration_ms": 93615,
+      "turns": [
+        {
+          "id": "01a15b57-3e99-73b2-85ba-c7e5371ccff5",
+          "thread": "01a15b57-3d1a-7671-a2b5-eed78bbddac9",
+          "status": "completed",
+          "durationMs": 93615
+        }
+      ]
+    }
+  },
+  "usage_limits": "Raw native cumulative counters as reported. Resets are flagged; these whole-host/context counts do not isolate plugin overhead, establish a no-plugin baseline, measure provider price or prove statistical reliability. Native turn durations can overlap.",
+  "product_files": [
+    {
+      "path": "README.md",
+      "sha256": "b33aa73a2daf1630bf8f7bef216161966c77f1b4f2e73ba8c698cfa2e2203d5b",
+      "actual_worktree_matches_commit": true
+    },
+    {
+      "path": "slugify.py",
+      "sha256": "93123e73e2362ca8b1f60cb26d71294164e0da629cee29e77b6290b10336d57a",
+      "actual_worktree_matches_commit": true
+    },
+    {
+      "path": "test_slugify.py",
+      "sha256": "96a2e2143961da2b747d781e71ddfecd4fdb2f360f4876a3529bb83bc4bd9741",
+      "actual_worktree_matches_commit": true
+    }
+  ],
+  "canonical_artifacts": [
+    {
+      "event_id": 23,
+      "path": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/planning/.delivery/initiatives/slugify/delivery-plan.md",
+      "relative_path": "initiatives/slugify/delivery-plan.md",
+      "sha256": "95330e5ed012086766113b252ba72cc4be1dbf543ba40bcd2c37025a68078bb9",
+      "previous_sha256": null,
+      "actor": {
+        "role": "coordinator",
+        "thread": "01a15b51-d491-7a22-9444-466ef79e4de4",
+        "turn": "01a15b51-d52b-7d12-b3e5-c4e89cec078f",
+        "lane": "read-only"
+      },
+      "persistence": "saved",
+      "authority": "draft submission; no human consent",
+      "intent_id": "d6697eb3-4a82-4bc5-b865-24356d3465e1",
+      "current_sha256": "95330e5ed012086766113b252ba72cc4be1dbf543ba40bcd2c37025a68078bb9",
+      "matches_saved_event": true
+    },
+    {
+      "event_id": 65,
+      "path": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/planning/.delivery/initiatives/slugify/brief.md",
+      "relative_path": "initiatives/slugify/brief.md",
+      "sha256": "9a48df0dfbf147fa54789b013549250cf31612d1ca218386acb9098b0bb01c0c",
+      "previous_sha256": null,
+      "actor": {
+        "role": "product-manager",
+        "thread": "01a15b52-68b8-7573-b885-f8257ca2f002",
+        "turn": "01a15b52-6a0b-7043-9c9f-861d3e33c2ec",
+        "lane": "read-only"
+      },
+      "persistence": "saved",
+      "authority": "draft submission; no human consent",
+      "intent_id": "54b854b7-871b-4d18-8205-7e70ac787423",
+      "current_sha256": "9a48df0dfbf147fa54789b013549250cf31612d1ca218386acb9098b0bb01c0c",
+      "matches_saved_event": true
+    },
+    {
+      "event_id": 69,
+      "path": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/planning/.delivery/stories/slugify-cli.md",
+      "relative_path": "stories/slugify-cli.md",
+      "sha256": "5248e97daf1fc5c2af0919c09f3eb9abcbf2ef20b58af4065ef53ee5b2a3f3eb",
+      "previous_sha256": null,
+      "actor": {
+        "role": "product-manager",
+        "thread": "01a15b52-68b8-7573-b885-f8257ca2f002",
+        "turn": "01a15b52-6a0b-7043-9c9f-861d3e33c2ec",
+        "lane": "read-only"
+      },
+      "persistence": "saved",
+      "authority": "draft submission; no human consent",
+      "intent_id": "d456d45c-05a5-483a-ac6b-9b5e0ed668a3",
+      "current_sha256": "5248e97daf1fc5c2af0919c09f3eb9abcbf2ef20b58af4065ef53ee5b2a3f3eb",
+      "matches_saved_event": true
+    },
+    {
+      "event_id": 187,
+      "path": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/planning/.delivery/reviews/slugify-independent.md",
+      "relative_path": "reviews/slugify-independent.md",
+      "sha256": "0433e18d62359957816340e09e77af2038859423989737f7a2c1674aabc144c7",
+      "previous_sha256": null,
+      "actor": {
+        "role": "reviewer",
+        "thread": "01a15b57-3d1a-7671-a2b5-eed78bbddac9",
+        "turn": "01a15b57-3e99-73b2-85ba-c7e5371ccff5",
+        "lane": "read-only"
+      },
+      "persistence": "saved",
+      "authority": "draft submission; no human consent",
+      "intent_id": "cdb20c10-234d-4e07-8ea8-22176617ef5c",
+      "current_sha256": "0433e18d62359957816340e09e77af2038859423989737f7a2c1674aabc144c7",
+      "matches_saved_event": true
+    }
+  ],
+  "controlled_tool_counts": {
+    "delivery_judge": 2,
+    "delivery_artifact_write": 4,
+    "delivery_send": 1,
+    "delivery_task_materialize": 1,
+    "delivery_task_ready": 1,
+    "delivery_task_claim": 1,
+    "delivery_task_show": 2,
+    "delivery_task_implemented": 1,
+    "delivery_task_review": 1,
+    "delivery_task_surface": 1,
+    "delivery_task_gate_status": 1,
+    "delivery_task_accept": 1
+  },
+  "controlled_tool_failures": [
+    {
+      "event_id": 220,
+      "time": 1792534006.219141,
+      "role": "delivery-manager",
+      "thread": "01a15b53-475e-7e83-b05f-4b0941a47f7c",
+      "turn": "01a15b59-f3ce-76e2-b5a2-e70888dc8002",
+      "tool": "delivery_task_accept",
+      "result": {
+        "success": false,
+        "contentItems": [
+          {
+            "type": "inputText",
+            "text": "Protected acceptance requires explicit operator terminal capture"
+          }
+        ]
+      }
+    }
+  ],
+  "initial_harness_error_preserved": "No actual successful native controlled tool call: delivery_task_gate_status",
+  "interventions": [
+    "corrected malformed optional judge input in a new native coordinator turn",
+    "revoked prohibited out-of-sandbox request; exact-turn steer to supported staged-index Git commit and cache cleanup",
+    "restarted public serve to consume existing queued final DM message after original harness race"
+  ],
+  "separate_root_grade": {
+    "cases": 21,
+    "passed": 21,
+    "source_unchanged": true
+  },
+  "evidence_trust": "Native command journals + protected actor-bound submissions + actual file/Beads/Git checks; worker surface submissions remain unauthenticated. No real human receipt or hosted CI."
+}

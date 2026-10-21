@@ -1,0 +1,28 @@
+✔ judgeConfig: off without a block, with provider none, or without the key; on with both (0.683292ms)
+✔ the key variable is pinned to TYPESAFE_*, and the endpoint comes only from a loopback DELIVERY_JUDGE_ENDPOINT (4.239ms)
+✔ under node --test a real provider is never called (3.073458ms)
+✔ ask: a noul answer is typed, the key goes only in the header, and the log line has no state (8.21125ms)
+✔ ask: a choice answer carries confidence and probabilities (2.931875ms)
+✔ ask fails open: timeout, 401, 429, a closed port and a bad body give a reason, never a throw (114.213542ms)
+✔ ask rejects malformed answers as bad_response and does not follow a redirect (12.932958ms)
+✔ ask refuses locally: off, unknown question, sensitive or missing fields; nothing is sent (171.432583ms)
+✔ stats: calls, latency percentiles, tokens and the share at the thresholds per question (0.162125ms)
+✔ the catalogue: every question has a version, a type, declared state and instructions; divergence is warn-only (0.14175ms)
+✔ Copilot round 5: redaction replaces the whole path, not a prefix of it (1.620083ms)
+✔ configuration rejects typos, malformed calibration and cross-provider key selection (0.149791ms)
+✔ protected policy fails closed for unavailable, uncalibrated, alias, revised and other-provider scores (0.381042ms)
+✔ warn-only never blocks and second-key classification never grants authority (0.1015ms)
+✔ evaluate bridges answers to unavailable protected policy without leaking extra log metadata (4.322834ms)
+✔ Jev rejects incomplete distributions, arrays and refusals (7.290792ms)
+✔ selection is explicit, isolated to each provider key, and does not fall back (0.546125ms)
+✔ OpenAI predicate wire shape, declared state filtering and no human authority (10.914375ms)
+✔ OpenAI choice maps declared options and retains warn-only mode (2.234833ms)
+✔ refusals and malformed probabilities never become an answer (2.9715ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 570.357458

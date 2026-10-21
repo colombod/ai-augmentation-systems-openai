@@ -1,0 +1,2 @@
+{"timestamp":"2026-10-20T22:20:27.400621Z","level":"ERROR","fields":{"error":"exec_command failed: CreateProcess { message: \"TurnAborted\" }"},"target":"codex_core::tools::router"}
+{"error": "interrupted"}

@@ -1,0 +1,2 @@
+$delivery:brief
+Frame translator-handover using idea.md. Use the packaged skill and its actual resources. Use single-session review without delegation or browsing. Write the brief and any required shared glossary to this local workspace. Leave unanswered questions explicitly open with benchmark requester as owner; do not wait for answers in this bounded test. Do not invent measurements or interviews.

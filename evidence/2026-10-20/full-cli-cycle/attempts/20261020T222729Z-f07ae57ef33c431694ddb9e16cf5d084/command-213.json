@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "bd",
+    "show",
+    "fullcycle-8f7",
+    "--json",
+    "--readonly",
+    "--sandbox"
+  ],
+  "cwd": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-8frrftqa/planning",
+  "code": 0,
+  "stdout": "[\n  {\n    \"id\": \"fullcycle-8f7\",\n    \"title\": \"Convert one text argument to an ASCII slug with slugify.py\",\n    \"description\": \"# Convert one text argument to an ASCII slug with slugify.py\\n\\nAs a developer using a terminal, I want `python3 slugify.py TEXT` to produce a predictable ASCII slug so I can reuse the result in scripts. The intended file is `slugify.py` in the product root `/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-8frrftqa/product`. Unicode outside ASCII acts as a separator, with no transliteration.\\n\\n## Acceptance criteria\\n\\nGiven exactly one text argument, python3 slugify.py TEXT treats each maximal run of original characters outside ASCII [A-Za-z0-9] as one hyphen, lowercases retained ASCII A-Z, trims edge hyphens and prints one newline with exit 0; all-separator input prints an empty line, and missing TEXT exits 2.\\n\",\n    \"acceptance_criteria\": \"Given exactly one text argument, python3 slugify.py TEXT treats each maximal run of original characters outside ASCII [A-Za-z0-9] as one hyphen, lowercases retained ASCII A-Z, trims edge hyphens and prints one newline with exit 0; all-separator input prints an empty line, and missing TEXT exits 2.\",\n    \"notes\": \"delivery-claim-op:8145b093-19b6-4d5e-b80c-50c85fd5388f\",\n    \"status\": \"in_progress\",\n    \"priority\": 2,\n    \"issue_type\": \"task\",\n    \"assignee\": \"builder\",\n    \"owner\": \"fixture@example.invalid\",\n    \"created_at\": \"2026-10-20T22:29:52Z\",\n    \"created_by\": \"delivery-manager\",\n    \"updated_at\": \"2026-10-20T22:30:38Z\",\n    \"started_at\": \"2026-10-20T22:30:38Z\",\n    \"external_ref\": \"delivery-story:5ea63a10dfa270a1b0e9772486596720a78fbf6ab0c49cedaea7245760c2d6a1\",\n    \"metadata\": {\n      \"delivery_operation\": \"42116f6d-8e0c-45c2-a9eb-b82ef0728f0b\",\n      \"delivery_source_key\": \"5ea63a10dfa270a1b0e9772486596720a78fbf6ab0c49cedaea7245760c2d6a1\",\n      \"delivery_source_path\": \"stories/slugify-cli.md\",\n      \"delivery_source_sha256\": \"a24c2d56278627cfec79f6531d364b0a1a85c1d47b78852b297ac5f6802b2de2\"\n    },\n    \"labels\": [\n      \"delivery-draft\"\n    ],\n    \"dependent_count\": 0,\n    \"dependency_count\": 0,\n    \"comment_count\": 0\n  }\n]\n",
+  "stderr": ""
+}

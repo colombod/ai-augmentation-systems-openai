@@ -1,0 +1,8 @@
+{
+  "evidence/2026-10-20/full-cli-cycle/runner.py": "184fe9c35057beefcfe1519ad585c0050c12376d47ae6f549e3d7e400191aaef",
+  "scripts/cli_cycle_harness.py": "d970bbfd3413db8c3bd680361e4fa2c0ad0f425dcad869fc995a7a70438ca9d7",
+  "tests/delivery/test_cli_cycle_harness.py": "fa1d56f4a4a4e82686acefcd0d917e588d6bb8f3adf2ebc705b5982b21d49cd5",
+  "evidence/2026-10-20/full-cli-cycle/runner-initial.py": "882e25e21b67af8f3a36e3f78acf520539d1e7b17472ba38e4fe9712ed758d46",
+  "evidence/2026-10-20/full-cli-cycle/result.json": "a5c97065a0062b0a9fd182ad31ce909c570cfde8426fbe00cb9f35425532a0fa",
+  "evidence/2026-10-20/full-cli-cycle/continuation/result.json": "09ec92e81cea6416ef34287c4b0b23be0b6ecfa7106f4cfa1219cf23b0d5e3dd"
+}

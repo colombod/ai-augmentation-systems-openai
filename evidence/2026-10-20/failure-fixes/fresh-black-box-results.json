@@ -1,0 +1,179 @@
+{
+  "kind": "independent implementation-session black-box grade",
+  "contract": "ASCII alphanumeric slug CLI; Unicode separators; missing argument exit2",
+  "product": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-8frrftqa/product",
+  "source_sha256": "f9100e6418a7f0c9d48658b89d70bcbd9eeac2d530f68b507bb52c51f1d306f5",
+  "source_unchanged": true,
+  "cases": [
+    {
+      "input": "Hello WORLD",
+      "expected": "hello-world\n",
+      "code": 0,
+      "stdout": "hello-world\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "input": "  one...two___THREE  ",
+      "expected": "one-two-three\n",
+      "code": 0,
+      "stdout": "one-two-three\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "input": "",
+      "expected": "\n",
+      "code": 0,
+      "stdout": "\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "input": "---___!!!",
+      "expected": "\n",
+      "code": 0,
+      "stdout": "\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "input": "ABCxyz019",
+      "expected": "abcxyz019\n",
+      "code": 0,
+      "stdout": "abcxyz019\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "input": "\u00c9t\u00e9",
+      "expected": "t\n",
+      "code": 0,
+      "stdout": "t\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "input": "\u6771\u4eac",
+      "expected": "\n",
+      "code": 0,
+      "stdout": "\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "input": "foo\u6771\u4eacBAR",
+      "expected": "foo-bar\n",
+      "code": 0,
+      "stdout": "foo-bar\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "input": "A\u0301b",
+      "expected": "a-b\n",
+      "code": 0,
+      "stdout": "a-b\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "input": "\tAlpha\nBeta\rGamma\t",
+      "expected": "alpha-beta-gamma\n",
+      "code": 0,
+      "stdout": "alpha-beta-gamma\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "input": "0 00 007",
+      "expected": "0-00-007\n",
+      "code": 0,
+      "stdout": "0-00-007\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "input": "a-b",
+      "expected": "a-b\n",
+      "code": 0,
+      "stdout": "a-b\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "input": "a---b",
+      "expected": "a-b\n",
+      "code": 0,
+      "stdout": "a-b\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "input": "UPPER lower MiXeD",
+      "expected": "upper-lower-mixed\n",
+      "code": 0,
+      "stdout": "upper-lower-mixed\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "input": "a/b\\c:d;e",
+      "expected": "a-b-c-d-e\n",
+      "code": 0,
+      "stdout": "a-b-c-d-e\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "input": "a\ud83d\udca1b",
+      "expected": "a-b\n",
+      "code": 0,
+      "stdout": "a-b\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "input": "a\u00a0b",
+      "expected": "a-b\n",
+      "code": 0,
+      "stdout": "a-b\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "input": "\u212aelvin",
+      "expected": "elvin\n",
+      "code": 0,
+      "stdout": "elvin\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "input": "\u0130STANBUL",
+      "expected": "stanbul\n",
+      "code": 0,
+      "stdout": "stanbul\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "input": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "expected": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n",
+      "code": 0,
+      "stdout": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n",
+      "stderr": "",
+      "passed": true
+    },
+    {
+      "case": "missing text",
+      "code": 2,
+      "stdout": "",
+      "stderr": "usage: slugify.py TEXT\n",
+      "passed": true
+    }
+  ],
+  "passed": 21,
+  "total": 21,
+  "acceptance": "behavior only; no operator, CI, desktop or ChatGPT acceptance"
+}

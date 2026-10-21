@@ -1,0 +1,3567 @@
+{
+  "kind": "actual native fine-grained Git metadata permission experiment; not production policy",
+  "fixture": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b",
+  "product": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/product",
+  "gitdir": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/worktrees/product",
+  "commondir": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git",
+  "roots": [
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/objects",
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/refs/heads/native-fixture",
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/refs/heads/native-fixture.lock",
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/logs/refs/heads/native-fixture",
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/logs/refs/heads/native-fixture.lock",
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/worktrees/product/index",
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/worktrees/product/index.lock",
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/worktrees/product/COMMIT_EDITMSG",
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/worktrees/product/COMMIT_EDITMSG.lock",
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/worktrees/product/HEAD",
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/worktrees/product/HEAD.lock",
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/worktrees/product/logs/HEAD",
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/worktrees/product/logs/HEAD.lock"
+  ],
+  "before_head": "f5c0db81ee40ad6b12a3508ba1af8d73940b701e",
+  "events": [
+    {
+      "method": "remoteControl/status/changed",
+      "params": {
+        "status": "disabled",
+        "serverName": "Diegos-MacBook-Pro.local",
+        "installationId": "8819ca64-a663-4d51-ac71-4fe67224db16",
+        "environmentId": null
+      },
+      "emittedAtMs": 1792524274043
+    },
+    {
+      "method": "remoteControl/status/changed",
+      "params": {
+        "status": "disabled",
+        "serverName": "Diegos-MacBook-Pro.local",
+        "installationId": "8819ca64-a663-4d51-ac71-4fe67224db16",
+        "environmentId": null
+      },
+      "emittedAtMs": 1792524274114
+    },
+    {
+      "method": "thread/started",
+      "params": {
+        "thread": {
+          "id": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+          "environments": [
+            {
+              "environmentId": "local",
+              "cwd": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/product",
+              "runtimeWorkspaceRoots": [
+                "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/product",
+                "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/objects",
+                "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/refs/heads/native-fixture",
+                "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/refs/heads/native-fixture.lock",
+                "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/logs/refs/heads/native-fixture",
+                "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/logs/refs/heads/native-fixture.lock",
+                "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/worktrees/product/index",
+                "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/worktrees/product/index.lock",
+                "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/worktrees/product/COMMIT_EDITMSG",
+                "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/worktrees/product/COMMIT_EDITMSG.lock",
+                "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/worktrees/product/HEAD",
+                "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/worktrees/product/HEAD.lock",
+                "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/worktrees/product/logs/HEAD",
+                "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/worktrees/product/logs/HEAD.lock"
+              ]
+            }
+          ],
+          "extra": null,
+          "sessionId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+          "forkedFromId": null,
+          "parentThreadId": null,
+          "preview": "",
+          "ephemeral": false,
+          "section": null,
+          "sectionEnteredAt": null,
+          "projectId": null,
+          "historyMode": "paginated",
+          "modelProvider": "openai",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "medium",
+          "createdAt": 1792524274,
+          "updatedAt": 1792524274,
+          "recencyAt": 1792524274,
+          "status": {
+            "type": "idle"
+          },
+          "path": "/Users/colombod/.codex/sessions/2026/10/20/rollout-2026-10-20T20-24-34-01a15ac5-c9d4-73e1-a12a-bb46a61fda7b.jsonl",
+          "cwd": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/product",
+          "cliVersion": "0.159.3",
+          "originator": "Codex Desktop",
+          "source": "vscode",
+          "canAcceptDirectInput": true,
+          "threadSource": null,
+          "agentNickname": null,
+          "agentRole": null,
+          "gitInfo": null,
+          "name": null,
+          "daybreakEnabled": null,
+          "turns": []
+        }
+      },
+      "emittedAtMs": 1792524274629
+    },
+    {
+      "method": "thread/status/changed",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "status": {
+          "type": "active",
+          "activeFlags": []
+        }
+      },
+      "emittedAtMs": 1792524274673
+    },
+    {
+      "method": "turn/started",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turn": {
+          "id": "01a15ac5-cbc7-7232-a19f-02af91685658",
+          "items": [],
+          "itemsView": "notLoaded",
+          "status": "inProgress",
+          "error": null,
+          "startedAt": 1792524274,
+          "completedAt": null,
+          "durationMs": null
+        }
+      },
+      "emittedAtMs": 1792524274673
+    },
+    {
+      "method": "mcpServer/startupStatus/updated",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "name": "xcodebuildmcp",
+        "status": "starting",
+        "error": null,
+        "failureReason": null
+      },
+      "emittedAtMs": 1792524274869
+    },
+    {
+      "method": "mcpServer/startupStatus/updated",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "name": "chatgpt-meetings",
+        "status": "starting",
+        "error": null,
+        "failureReason": null
+      },
+      "emittedAtMs": 1792524274869
+    },
+    {
+      "method": "mcpServer/startupStatus/updated",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "name": "codex-security",
+        "status": "starting",
+        "error": null,
+        "failureReason": null
+      },
+      "emittedAtMs": 1792524274869
+    },
+    {
+      "method": "account/updated",
+      "params": {
+        "authMode": "chatgpt",
+        "planType": "team"
+      },
+      "emittedAtMs": 1792524274920
+    },
+    {
+      "method": "mcpServer/startupStatus/updated",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "name": "codex-security",
+        "status": "ready",
+        "error": null,
+        "failureReason": null
+      },
+      "emittedAtMs": 1792524274955
+    },
+    {
+      "method": "mcpServer/startupStatus/updated",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "name": "chatgpt-meetings",
+        "status": "ready",
+        "error": null,
+        "failureReason": null
+      },
+      "emittedAtMs": 1792524276037
+    },
+    {
+      "method": "mcpServer/startupStatus/updated",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "name": "xcodebuildmcp",
+        "status": "ready",
+        "error": null,
+        "failureReason": null
+      },
+      "emittedAtMs": 1792524276125
+    },
+    {
+      "method": "hook/started",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "run": {
+          "id": "session-start:2:/Users/colombod/.codex/hooks.json",
+          "eventName": "sessionStart",
+          "handlerType": "command",
+          "executionMode": "sync",
+          "scope": "thread",
+          "sourcePath": "/Users/colombod/.codex/hooks.json",
+          "source": "user",
+          "displayOrder": 2,
+          "status": "running",
+          "statusMessage": "Loading Beads context",
+          "startedAt": 1792524276,
+          "completedAt": null,
+          "durationMs": null,
+          "entries": []
+        }
+      },
+      "emittedAtMs": 1792524276754
+    },
+    {
+      "method": "hook/completed",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "run": {
+          "id": "session-start:2:/Users/colombod/.codex/hooks.json",
+          "eventName": "sessionStart",
+          "handlerType": "command",
+          "executionMode": "sync",
+          "scope": "thread",
+          "sourcePath": "/Users/colombod/.codex/hooks.json",
+          "source": "user",
+          "displayOrder": 2,
+          "status": "completed",
+          "statusMessage": "Loading Beads context",
+          "startedAt": 1792524276,
+          "completedAt": 1792524290,
+          "durationMs": 13766,
+          "entries": []
+        }
+      },
+      "emittedAtMs": 1792524290520
+    },
+    {
+      "method": "hook/started",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "run": {
+          "id": "user-prompt-submit:3:/Users/colombod/.codex/hooks.json",
+          "eventName": "userPromptSubmit",
+          "handlerType": "command",
+          "executionMode": "sync",
+          "scope": "turn",
+          "sourcePath": "/Users/colombod/.codex/hooks.json",
+          "source": "user",
+          "displayOrder": 3,
+          "status": "running",
+          "statusMessage": "Refreshing Beads context",
+          "startedAt": 1792524290,
+          "completedAt": null,
+          "durationMs": null,
+          "entries": []
+        }
+      },
+      "emittedAtMs": 1792524290521
+    },
+    {
+      "method": "hook/completed",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "run": {
+          "id": "user-prompt-submit:3:/Users/colombod/.codex/hooks.json",
+          "eventName": "userPromptSubmit",
+          "handlerType": "command",
+          "executionMode": "sync",
+          "scope": "turn",
+          "sourcePath": "/Users/colombod/.codex/hooks.json",
+          "source": "user",
+          "displayOrder": 3,
+          "status": "completed",
+          "statusMessage": "Refreshing Beads context",
+          "startedAt": 1792524290,
+          "completedAt": 1792524296,
+          "durationMs": 6264,
+          "entries": []
+        }
+      },
+      "emittedAtMs": 1792524296784
+    },
+    {
+      "method": "item/started",
+      "params": {
+        "item": {
+          "type": "userMessage",
+          "id": "01a15ac6-2250-74d0-8b1e-657cdfbd3bdd",
+          "clientId": null,
+          "content": [
+            {
+              "type": "text",
+              "text": "Execute this exact command once using native shell, without retries or escalation:\npython3 -c 'from pathlib import Path\nimport json,subprocess\nout={}\nfor label,path in [(\"planning\",'\"'\"'/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/planning/guard.txt'\"'\"'),(\"hooks\",'\"'\"'/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/hooks/unauthorized-probe'\"'\"')]:\n try:\n  Path(path).write_text(\"UNAUTHORIZED\")\n  out[label]=\"WRITTEN\"\n except PermissionError:\n  out[label]=\"DENIED\"\nPath(\"native-fixture.txt\").write_text(\"native metadata test\\n\")\nadd=subprocess.run(['\"'\"'/Library/Developer/CommandLineTools/usr/bin/git'\"'\"',\"add\",\"native-fixture.txt\"],text=True,capture_output=True)\nout[\"add\"]={\"code\":add.returncode,\"stdout\":add.stdout,\"stderr\":add.stderr}\nif add.returncode==0:\n commit=subprocess.run(['\"'\"'/Library/Developer/CommandLineTools/usr/bin/git'\"'\"',\"-c\",\"user.name=Delivery Fixture\",\"-c\",\"user.email=fixture@example.invalid\",\"commit\",\"-m\",\"Synthetic metadata fixture commit\"],text=True,capture_output=True)\n out[\"commit\"]={\"code\":commit.returncode,\"stdout\":commit.stdout,\"stderr\":commit.stderr}\nconfig=subprocess.run(['\"'\"'/Library/Developer/CommandLineTools/usr/bin/git'\"'\"',\"config\",\"--local\",\"delivery.fixture\",\"UNAUTHORIZED\"],text=True,capture_output=True)\nout[\"config\"]={\"code\":config.returncode,\"stdout\":config.stdout,\"stderr\":config.stderr}\nprint(json.dumps(out))'\nReport actual output.",
+              "text_elements": []
+            }
+          ]
+        },
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "startedAtMs": 1792524296788
+      },
+      "emittedAtMs": 1792524296788
+    },
+    {
+      "method": "item/completed",
+      "params": {
+        "item": {
+          "type": "userMessage",
+          "id": "01a15ac6-2250-74d0-8b1e-657cdfbd3bdd",
+          "clientId": null,
+          "content": [
+            {
+              "type": "text",
+              "text": "Execute this exact command once using native shell, without retries or escalation:\npython3 -c 'from pathlib import Path\nimport json,subprocess\nout={}\nfor label,path in [(\"planning\",'\"'\"'/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/planning/guard.txt'\"'\"'),(\"hooks\",'\"'\"'/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/hooks/unauthorized-probe'\"'\"')]:\n try:\n  Path(path).write_text(\"UNAUTHORIZED\")\n  out[label]=\"WRITTEN\"\n except PermissionError:\n  out[label]=\"DENIED\"\nPath(\"native-fixture.txt\").write_text(\"native metadata test\\n\")\nadd=subprocess.run(['\"'\"'/Library/Developer/CommandLineTools/usr/bin/git'\"'\"',\"add\",\"native-fixture.txt\"],text=True,capture_output=True)\nout[\"add\"]={\"code\":add.returncode,\"stdout\":add.stdout,\"stderr\":add.stderr}\nif add.returncode==0:\n commit=subprocess.run(['\"'\"'/Library/Developer/CommandLineTools/usr/bin/git'\"'\"',\"-c\",\"user.name=Delivery Fixture\",\"-c\",\"user.email=fixture@example.invalid\",\"commit\",\"-m\",\"Synthetic metadata fixture commit\"],text=True,capture_output=True)\n out[\"commit\"]={\"code\":commit.returncode,\"stdout\":commit.stdout,\"stderr\":commit.stderr}\nconfig=subprocess.run(['\"'\"'/Library/Developer/CommandLineTools/usr/bin/git'\"'\"',\"config\",\"--local\",\"delivery.fixture\",\"UNAUTHORIZED\"],text=True,capture_output=True)\nout[\"config\"]={\"code\":config.returncode,\"stdout\":config.stdout,\"stderr\":config.stderr}\nprint(json.dumps(out))'\nReport actual output.",
+              "text_elements": []
+            }
+          ]
+        },
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "completedAtMs": 1792524296788
+      },
+      "emittedAtMs": 1792524296792
+    },
+    {
+      "method": "item/started",
+      "params": {
+        "item": {
+          "type": "agentMessage",
+          "id": "msg_0a8ecac46c250e00016ad7c00adadc81918d0b47b2b9a92eb9",
+          "text": "",
+          "phase": "commentary",
+          "memoryCitation": null,
+          "delivery": null,
+          "questions": null
+        },
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "startedAtMs": 1792524298927
+      },
+      "emittedAtMs": 1792524298927
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c00adadc81918d0b47b2b9a92eb9",
+        "delta": "I"
+      },
+      "emittedAtMs": 1792524298957
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c00adadc81918d0b47b2b9a92eb9",
+        "delta": "\u2019ll"
+      },
+      "emittedAtMs": 1792524298957
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c00adadc81918d0b47b2b9a92eb9",
+        "delta": " run"
+      },
+      "emittedAtMs": 1792524298957
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c00adadc81918d0b47b2b9a92eb9",
+        "delta": " the"
+      },
+      "emittedAtMs": 1792524298957
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c00adadc81918d0b47b2b9a92eb9",
+        "delta": " exact"
+      },
+      "emittedAtMs": 1792524298957
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c00adadc81918d0b47b2b9a92eb9",
+        "delta": " command"
+      },
+      "emittedAtMs": 1792524299087
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c00adadc81918d0b47b2b9a92eb9",
+        "delta": " once"
+      },
+      "emittedAtMs": 1792524299089
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c00adadc81918d0b47b2b9a92eb9",
+        "delta": " and"
+      },
+      "emittedAtMs": 1792524299089
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c00adadc81918d0b47b2b9a92eb9",
+        "delta": " report"
+      },
+      "emittedAtMs": 1792524299089
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c00adadc81918d0b47b2b9a92eb9",
+        "delta": " its"
+      },
+      "emittedAtMs": 1792524299089
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c00adadc81918d0b47b2b9a92eb9",
+        "delta": " output"
+      },
+      "emittedAtMs": 1792524299090
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c00adadc81918d0b47b2b9a92eb9",
+        "delta": ","
+      },
+      "emittedAtMs": 1792524299090
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c00adadc81918d0b47b2b9a92eb9",
+        "delta": " without"
+      },
+      "emittedAtMs": 1792524299101
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c00adadc81918d0b47b2b9a92eb9",
+        "delta": " retries"
+      },
+      "emittedAtMs": 1792524299101
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c00adadc81918d0b47b2b9a92eb9",
+        "delta": " or"
+      },
+      "emittedAtMs": 1792524299101
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c00adadc81918d0b47b2b9a92eb9",
+        "delta": " escalation"
+      },
+      "emittedAtMs": 1792524299101
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c00adadc81918d0b47b2b9a92eb9",
+        "delta": "."
+      },
+      "emittedAtMs": 1792524299101
+    },
+    {
+      "method": "item/completed",
+      "params": {
+        "item": {
+          "type": "agentMessage",
+          "id": "msg_0a8ecac46c250e00016ad7c00adadc81918d0b47b2b9a92eb9",
+          "text": "I\u2019ll run the exact command once and report its output, without retries or escalation.",
+          "phase": "commentary",
+          "memoryCitation": null,
+          "delivery": null,
+          "questions": null
+        },
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "completedAtMs": 1792524299304
+      },
+      "emittedAtMs": 1792524299308
+    },
+    {
+      "method": "turn/moderationMetadata",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "metadata": {
+          "prompt": {
+            "omnimod": {
+              "protection_type": "omnimod",
+              "outputs": [
+                {
+                  "results": [
+                    {
+                      "category_flags": {
+                        "A1": false,
+                        "A2": false,
+                        "A3": false,
+                        "C1": false,
+                        "C11": false,
+                        "C2": false,
+                        "E1": false,
+                        "E2": false,
+                        "E3": false,
+                        "H1": false,
+                        "H2": false,
+                        "H3": false,
+                        "JB1": false,
+                        "K1": false,
+                        "K2": false,
+                        "K3": false,
+                        "K4": false,
+                        "P1": false,
+                        "P2": false,
+                        "P3": false,
+                        "P4": false,
+                        "PD1": false,
+                        "PD4": false,
+                        "S1": false,
+                        "S3+": false,
+                        "S4": false,
+                        "SH": false,
+                        "TXT-C3": false,
+                        "TXT-C4": false,
+                        "V1": false,
+                        "V2+": false,
+                        "V4+": false,
+                        "REFUSED": false,
+                        "CBRN-B1+": false,
+                        "IMG-C1": false,
+                        "IMG-C11": false,
+                        "IMG-C2": false,
+                        "IMG-S1": false,
+                        "IMG-SH": false,
+                        "IMG-V1": false,
+                        "IMG-V2+": false,
+                        "IMG-V4+": false
+                      }
+                    }
+                  ],
+                  "is_blocked": false
+                }
+              ]
+            }
+          },
+          "generation": {},
+          "tool_call": {},
+          "tool_response": {}
+        }
+      },
+      "emittedAtMs": 1792524305928
+    },
+    {
+      "method": "item/started",
+      "params": {
+        "item": {
+          "type": "commandExecution",
+          "id": "exec-e40445e7-da3d-47f2-925c-ccb456dcfdb2",
+          "pluginId": null,
+          "scriptPath": null,
+          "command": "/bin/zsh -lc \"python3 -c 'from pathlib import Path\nimport json,subprocess\nout={}\nfor label,path in [(\\\"planning\\\",'\\\"'\\\"'/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/planning/guard.txt'\\\"'\\\"'),(\\\"hooks\\\",'\\\"'\\\"'/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/hooks/unauthorized-probe'\\\"'\\\"')]:\n try:\n  Path(path).write_text(\\\"UNAUTHORIZED\\\")\n  out[label]=\\\"WRITTEN\\\"\n except PermissionError:\n  out[label]=\\\"DENIED\\\"\nPath(\\\"native-fixture.txt\\\").write_text(\\\"native metadata test\\\\n\\\")\nadd=subprocess.run(['\\\"'\\\"'/Library/Developer/CommandLineTools/usr/bin/git'\\\"'\\\"',\\\"add\\\",\\\"native-fixture.txt\\\"],text=True,capture_output=True)\nout[\\\"add\\\"]={\\\"code\\\":add.returncode,\\\"stdout\\\":add.stdout,\\\"stderr\\\":add.stderr}\nif add.returncode==0:\n commit=subprocess.run(['\\\"'\\\"'/Library/Developer/CommandLineTools/usr/bin/git'\\\"'\\\"',\\\"-c\\\",\\\"user.name=Delivery Fixture\\\",\\\"-c\\\",\\\"user.email=fixture@example.invalid\\\",\\\"commit\\\",\\\"-m\\\",\\\"Synthetic metadata fixture commit\\\"],text=True,capture_output=True)\n out[\\\"commit\\\"]={\\\"code\\\":commit.returncode,\\\"stdout\\\":commit.stdout,\\\"stderr\\\":commit.stderr}\nconfig=subprocess.run(['\\\"'\\\"'/Library/Developer/CommandLineTools/usr/bin/git'\\\"'\\\"',\\\"config\\\",\\\"--local\\\",\\\"delivery.fixture\\\",\\\"UNAUTHORIZED\\\"],text=True,capture_output=True)\nout[\\\"config\\\"]={\\\"code\\\":config.returncode,\\\"stdout\\\":config.stdout,\\\"stderr\\\":config.stderr}\nprint(json.dumps(out))'\"",
+          "cwd": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/product",
+          "processId": "38129",
+          "source": "unifiedExecStartup",
+          "status": "inProgress",
+          "commandActions": [
+            {
+              "type": "unknown",
+              "command": "python3 -c 'from pathlib import Path\nimport json,subprocess\nout={}\nfor label,path in [(\"planning\",'\"'\"'/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/planning/guard.txt'\"'\"'),(\"hooks\",'\"'\"'/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/hooks/unauthorized-probe'\"'\"')]:\n try:\n  Path(path).write_text(\"UNAUTHORIZED\")\n  out[label]=\"WRITTEN\"\n except PermissionError:\n  out[label]=\"DENIED\"\nPath(\"native-fixture.txt\").write_text(\"native metadata test\\n\")\nadd=subprocess.run(['\"'\"'/Library/Developer/CommandLineTools/usr/bin/git'\"'\"',\"add\",\"native-fixture.txt\"],text=True,capture_output=True)\nout[\"add\"]={\"code\":add.returncode,\"stdout\":add.stdout,\"stderr\":add.stderr}\nif add.returncode==0:\n commit=subprocess.run(['\"'\"'/Library/Developer/CommandLineTools/usr/bin/git'\"'\"',\"-c\",\"user.name=Delivery Fixture\",\"-c\",\"user.email=fixture@example.invalid\",\"commit\",\"-m\",\"Synthetic metadata fixture commit\"],text=True,capture_output=True)\n out[\"commit\"]={\"code\":commit.returncode,\"stdout\":commit.stdout,\"stderr\":commit.stderr}\nconfig=subprocess.run(['\"'\"'/Library/Developer/CommandLineTools/usr/bin/git'\"'\"',\"config\",\"--local\",\"delivery.fixture\",\"UNAUTHORIZED\"],text=True,capture_output=True)\nout[\"config\"]={\"code\":config.returncode,\"stdout\":config.stdout,\"stderr\":config.stderr}\nprint(json.dumps(out))'"
+            }
+          ],
+          "aggregatedOutput": null,
+          "exitCode": null,
+          "durationMs": null
+        },
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "startedAtMs": 1792524306054
+      },
+      "emittedAtMs": 1792524306054
+    },
+    {
+      "method": "item/completed",
+      "params": {
+        "item": {
+          "type": "commandExecution",
+          "id": "exec-e40445e7-da3d-47f2-925c-ccb456dcfdb2",
+          "pluginId": null,
+          "scriptPath": null,
+          "command": "/bin/zsh -lc \"python3 -c 'from pathlib import Path\nimport json,subprocess\nout={}\nfor label,path in [(\\\"planning\\\",'\\\"'\\\"'/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/planning/guard.txt'\\\"'\\\"'),(\\\"hooks\\\",'\\\"'\\\"'/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/hooks/unauthorized-probe'\\\"'\\\"')]:\n try:\n  Path(path).write_text(\\\"UNAUTHORIZED\\\")\n  out[label]=\\\"WRITTEN\\\"\n except PermissionError:\n  out[label]=\\\"DENIED\\\"\nPath(\\\"native-fixture.txt\\\").write_text(\\\"native metadata test\\\\n\\\")\nadd=subprocess.run(['\\\"'\\\"'/Library/Developer/CommandLineTools/usr/bin/git'\\\"'\\\"',\\\"add\\\",\\\"native-fixture.txt\\\"],text=True,capture_output=True)\nout[\\\"add\\\"]={\\\"code\\\":add.returncode,\\\"stdout\\\":add.stdout,\\\"stderr\\\":add.stderr}\nif add.returncode==0:\n commit=subprocess.run(['\\\"'\\\"'/Library/Developer/CommandLineTools/usr/bin/git'\\\"'\\\"',\\\"-c\\\",\\\"user.name=Delivery Fixture\\\",\\\"-c\\\",\\\"user.email=fixture@example.invalid\\\",\\\"commit\\\",\\\"-m\\\",\\\"Synthetic metadata fixture commit\\\"],text=True,capture_output=True)\n out[\\\"commit\\\"]={\\\"code\\\":commit.returncode,\\\"stdout\\\":commit.stdout,\\\"stderr\\\":commit.stderr}\nconfig=subprocess.run(['\\\"'\\\"'/Library/Developer/CommandLineTools/usr/bin/git'\\\"'\\\"',\\\"config\\\",\\\"--local\\\",\\\"delivery.fixture\\\",\\\"UNAUTHORIZED\\\"],text=True,capture_output=True)\nout[\\\"config\\\"]={\\\"code\\\":config.returncode,\\\"stdout\\\":config.stdout,\\\"stderr\\\":config.stderr}\nprint(json.dumps(out))'\"",
+          "cwd": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/product",
+          "processId": "38129",
+          "source": "unifiedExecStartup",
+          "status": "completed",
+          "commandActions": [
+            {
+              "type": "unknown",
+              "command": "python3 -c 'from pathlib import Path\nimport json,subprocess\nout={}\nfor label,path in [(\"planning\",'\"'\"'/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/planning/guard.txt'\"'\"'),(\"hooks\",'\"'\"'/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/hooks/unauthorized-probe'\"'\"')]:\n try:\n  Path(path).write_text(\"UNAUTHORIZED\")\n  out[label]=\"WRITTEN\"\n except PermissionError:\n  out[label]=\"DENIED\"\nPath(\"native-fixture.txt\").write_text(\"native metadata test\\n\")\nadd=subprocess.run(['\"'\"'/Library/Developer/CommandLineTools/usr/bin/git'\"'\"',\"add\",\"native-fixture.txt\"],text=True,capture_output=True)\nout[\"add\"]={\"code\":add.returncode,\"stdout\":add.stdout,\"stderr\":add.stderr}\nif add.returncode==0:\n commit=subprocess.run(['\"'\"'/Library/Developer/CommandLineTools/usr/bin/git'\"'\"',\"-c\",\"user.name=Delivery Fixture\",\"-c\",\"user.email=fixture@example.invalid\",\"commit\",\"-m\",\"Synthetic metadata fixture commit\"],text=True,capture_output=True)\n out[\"commit\"]={\"code\":commit.returncode,\"stdout\":commit.stdout,\"stderr\":commit.stderr}\nconfig=subprocess.run(['\"'\"'/Library/Developer/CommandLineTools/usr/bin/git'\"'\"',\"config\",\"--local\",\"delivery.fixture\",\"UNAUTHORIZED\"],text=True,capture_output=True)\nout[\"config\"]={\"code\":config.returncode,\"stdout\":config.stdout,\"stderr\":config.stderr}\nprint(json.dumps(out))'"
+            }
+          ],
+          "aggregatedOutput": "{\"planning\": \"DENIED\", \"hooks\": \"DENIED\", \"add\": {\"code\": 0, \"stdout\": \"\", \"stderr\": \"\"}, \"commit\": {\"code\": 0, \"stdout\": \"[native-fixture 520755f] Synthetic metadata fixture commit\\n 1 file changed, 1 insertion(+)\\n create mode 100644 native-fixture.txt\\n\", \"stderr\": \"error: cannot lock ref 'AUTO_MERGE': Unable to create '/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/worktrees/product/AUTO_MERGE.lock': Operation not permitted\\n\"}, \"config\": {\"code\": 255, \"stdout\": \"\", \"stderr\": \"error: could not lock config file /private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/config: Operation not permitted\\n\"}}\n",
+          "exitCode": 0,
+          "durationMs": 0
+        },
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "completedAtMs": 1792524306054
+      },
+      "emittedAtMs": 1792524306057
+    },
+    {
+      "method": "thread/tokenUsage/updated",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "tokenUsage": {
+          "total": {
+            "totalTokens": 27226,
+            "inputTokens": 26728,
+            "cachedInputTokens": 0,
+            "cacheWriteInputTokens": 0,
+            "outputTokens": 498,
+            "reasoningOutputTokens": 0
+          },
+          "last": {
+            "totalTokens": 27226,
+            "inputTokens": 26728,
+            "cachedInputTokens": 0,
+            "cacheWriteInputTokens": 0,
+            "outputTokens": 498,
+            "reasoningOutputTokens": 0
+          },
+          "modelContextWindow": 475000
+        }
+      },
+      "emittedAtMs": 1792524306063
+    },
+    {
+      "method": "account/rateLimits/updated",
+      "params": {
+        "rateLimits": {
+          "limitId": "codex",
+          "limitName": null,
+          "normalModelSlug": null,
+          "primary": {
+            "usedPercent": 100,
+            "windowDurationMins": 300,
+            "resetsAt": 1792535073
+          },
+          "secondary": {
+            "usedPercent": 38,
+            "windowDurationMins": 10080,
+            "resetsAt": 1793083575
+          },
+          "credits": {
+            "hasCredits": true,
+            "unlimited": false,
+            "balance": null
+          },
+          "individualLimit": null,
+          "spendControlReached": null,
+          "planType": "team",
+          "rateLimitReachedType": null
+        }
+      },
+      "emittedAtMs": 1792524306063
+    },
+    {
+      "method": "item/started",
+      "params": {
+        "item": {
+          "type": "agentMessage",
+          "id": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+          "text": "",
+          "phase": "final_answer",
+          "memoryCitation": null,
+          "delivery": null,
+          "questions": null
+        },
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "startedAtMs": 1792524307899
+      },
+      "emittedAtMs": 1792524307899
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "Exit"
+      },
+      "emittedAtMs": 1792524307905
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " code"
+      },
+      "emittedAtMs": 1792524307905
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": ":"
+      },
+      "emittedAtMs": 1792524307905
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " `"
+      },
+      "emittedAtMs": 1792524307905
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "0"
+      },
+      "emittedAtMs": 1792524307905
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "`."
+      },
+      "emittedAtMs": 1792524307905
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " Actual"
+      },
+      "emittedAtMs": 1792524308411
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " output"
+      },
+      "emittedAtMs": 1792524308411
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": ":\n\n"
+      },
+      "emittedAtMs": 1792524308411
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "```"
+      },
+      "emittedAtMs": 1792524308411
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "json"
+      },
+      "emittedAtMs": 1792524308411
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "\n"
+      },
+      "emittedAtMs": 1792524308411
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "{\""
+      },
+      "emittedAtMs": 1792524308412
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "planning"
+      },
+      "emittedAtMs": 1792524308412
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "\":"
+      },
+      "emittedAtMs": 1792524308412
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " \""
+      },
+      "emittedAtMs": 1792524308412
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "DEN"
+      },
+      "emittedAtMs": 1792524308412
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "IED"
+      },
+      "emittedAtMs": 1792524308412
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "\","
+      },
+      "emittedAtMs": 1792524308412
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " \""
+      },
+      "emittedAtMs": 1792524308412
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "hooks"
+      },
+      "emittedAtMs": 1792524308412
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "\":"
+      },
+      "emittedAtMs": 1792524308412
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " \""
+      },
+      "emittedAtMs": 1792524308412
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "DEN"
+      },
+      "emittedAtMs": 1792524308412
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "IED"
+      },
+      "emittedAtMs": 1792524308412
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "\","
+      },
+      "emittedAtMs": 1792524308412
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " \""
+      },
+      "emittedAtMs": 1792524308412
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "add"
+      },
+      "emittedAtMs": 1792524308412
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "\":"
+      },
+      "emittedAtMs": 1792524308412
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " {\""
+      },
+      "emittedAtMs": 1792524308412
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "code"
+      },
+      "emittedAtMs": 1792524308462
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "\":"
+      },
+      "emittedAtMs": 1792524308463
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " "
+      },
+      "emittedAtMs": 1792524308463
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "0"
+      },
+      "emittedAtMs": 1792524308463
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": ","
+      },
+      "emittedAtMs": 1792524308463
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " \""
+      },
+      "emittedAtMs": 1792524308463
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "stdout"
+      },
+      "emittedAtMs": 1792524308463
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "\":"
+      },
+      "emittedAtMs": 1792524308463
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " \"\","
+      },
+      "emittedAtMs": 1792524308616
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " \""
+      },
+      "emittedAtMs": 1792524308616
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "stderr"
+      },
+      "emittedAtMs": 1792524308616
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "\":"
+      },
+      "emittedAtMs": 1792524308616
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " \"\""
+      },
+      "emittedAtMs": 1792524308616
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "},"
+      },
+      "emittedAtMs": 1792524308616
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " \""
+      },
+      "emittedAtMs": 1792524308616
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "commit"
+      },
+      "emittedAtMs": 1792524308616
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "\":"
+      },
+      "emittedAtMs": 1792524308616
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " {\""
+      },
+      "emittedAtMs": 1792524308616
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "code"
+      },
+      "emittedAtMs": 1792524308616
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "\":"
+      },
+      "emittedAtMs": 1792524308616
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " "
+      },
+      "emittedAtMs": 1792524308616
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "0"
+      },
+      "emittedAtMs": 1792524308616
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": ","
+      },
+      "emittedAtMs": 1792524308616
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " \""
+      },
+      "emittedAtMs": 1792524308616
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "stdout"
+      },
+      "emittedAtMs": 1792524308944
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "\":"
+      },
+      "emittedAtMs": 1792524308944
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " \"["
+      },
+      "emittedAtMs": 1792524308944
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "native"
+      },
+      "emittedAtMs": 1792524308944
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "-fi"
+      },
+      "emittedAtMs": 1792524308944
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "xture"
+      },
+      "emittedAtMs": 1792524308944
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " "
+      },
+      "emittedAtMs": 1792524308944
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "520"
+      },
+      "emittedAtMs": 1792524308944
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "755"
+      },
+      "emittedAtMs": 1792524309007
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "f"
+      },
+      "emittedAtMs": 1792524309007
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "]"
+      },
+      "emittedAtMs": 1792524309007
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " Synthetic"
+      },
+      "emittedAtMs": 1792524309007
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " metadata"
+      },
+      "emittedAtMs": 1792524309007
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " fixture"
+      },
+      "emittedAtMs": 1792524309007
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " commit"
+      },
+      "emittedAtMs": 1792524309007
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "\\n"
+      },
+      "emittedAtMs": 1792524309007
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " "
+      },
+      "emittedAtMs": 1792524309007
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "1"
+      },
+      "emittedAtMs": 1792524309007
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " file"
+      },
+      "emittedAtMs": 1792524309007
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " changed"
+      },
+      "emittedAtMs": 1792524309007
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": ","
+      },
+      "emittedAtMs": 1792524309007
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " "
+      },
+      "emittedAtMs": 1792524309007
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "1"
+      },
+      "emittedAtMs": 1792524309007
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " insertion"
+      },
+      "emittedAtMs": 1792524309007
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "(+"
+      },
+      "emittedAtMs": 1792524309007
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": ")\\"
+      },
+      "emittedAtMs": 1792524309007
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "n"
+      },
+      "emittedAtMs": 1792524309007
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " create"
+      },
+      "emittedAtMs": 1792524309007
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " mode"
+      },
+      "emittedAtMs": 1792524309048
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " "
+      },
+      "emittedAtMs": 1792524309048
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "100"
+      },
+      "emittedAtMs": 1792524309048
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "644"
+      },
+      "emittedAtMs": 1792524309048
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " native"
+      },
+      "emittedAtMs": 1792524309206
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "-fi"
+      },
+      "emittedAtMs": 1792524309206
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "xture"
+      },
+      "emittedAtMs": 1792524309206
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": ".txt"
+      },
+      "emittedAtMs": 1792524309206
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "\\n"
+      },
+      "emittedAtMs": 1792524309206
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "\","
+      },
+      "emittedAtMs": 1792524309206
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " \""
+      },
+      "emittedAtMs": 1792524309206
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "stderr"
+      },
+      "emittedAtMs": 1792524309206
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "\":"
+      },
+      "emittedAtMs": 1792524309313
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " \""
+      },
+      "emittedAtMs": 1792524309313
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "error"
+      },
+      "emittedAtMs": 1792524309313
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": ":"
+      },
+      "emittedAtMs": 1792524309313
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " cannot"
+      },
+      "emittedAtMs": 1792524309313
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " lock"
+      },
+      "emittedAtMs": 1792524309313
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " ref"
+      },
+      "emittedAtMs": 1792524309313
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " '"
+      },
+      "emittedAtMs": 1792524309313
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "AUTO"
+      },
+      "emittedAtMs": 1792524309420
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "_M"
+      },
+      "emittedAtMs": 1792524309421
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "ER"
+      },
+      "emittedAtMs": 1792524309421
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "GE"
+      },
+      "emittedAtMs": 1792524309421
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "':"
+      },
+      "emittedAtMs": 1792524309421
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " Unable"
+      },
+      "emittedAtMs": 1792524309422
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " to"
+      },
+      "emittedAtMs": 1792524309422
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " create"
+      },
+      "emittedAtMs": 1792524309422
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " '/"
+      },
+      "emittedAtMs": 1792524309528
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "private"
+      },
+      "emittedAtMs": 1792524309528
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "/"
+      },
+      "emittedAtMs": 1792524309528
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "var"
+      },
+      "emittedAtMs": 1792524309528
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "/f"
+      },
+      "emittedAtMs": 1792524309528
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "olders"
+      },
+      "emittedAtMs": 1792524309529
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "/"
+      },
+      "emittedAtMs": 1792524309531
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "2"
+      },
+      "emittedAtMs": 1792524309531
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "r"
+      },
+      "emittedAtMs": 1792524309656
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "/"
+      },
+      "emittedAtMs": 1792524309656
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "5"
+      },
+      "emittedAtMs": 1792524309656
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "gv"
+      },
+      "emittedAtMs": 1792524309656
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "kx"
+      },
+      "emittedAtMs": 1792524309656
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "5"
+      },
+      "emittedAtMs": 1792524309656
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "wx"
+      },
+      "emittedAtMs": 1792524309656
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "0"
+      },
+      "emittedAtMs": 1792524309656
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "g"
+      },
+      "emittedAtMs": 1792524309778
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "37"
+      },
+      "emittedAtMs": 1792524309778
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "m"
+      },
+      "emittedAtMs": 1792524309778
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "4"
+      },
+      "emittedAtMs": 1792524309778
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "gr"
+      },
+      "emittedAtMs": 1792524309778
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "v"
+      },
+      "emittedAtMs": 1792524309778
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "jj"
+      },
+      "emittedAtMs": 1792524309778
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "dt"
+      },
+      "emittedAtMs": 1792524309778
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "88"
+      },
+      "emittedAtMs": 1792524309921
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "m"
+      },
+      "emittedAtMs": 1792524309921
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "000"
+      },
+      "emittedAtMs": 1792524309921
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "0"
+      },
+      "emittedAtMs": 1792524309921
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "gn"
+      },
+      "emittedAtMs": 1792524309921
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "/T"
+      },
+      "emittedAtMs": 1792524309921
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "/d"
+      },
+      "emittedAtMs": 1792524309921
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "elivery"
+      },
+      "emittedAtMs": 1792524309921
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "-native"
+      },
+      "emittedAtMs": 1792524309931
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "-g"
+      },
+      "emittedAtMs": 1792524309931
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "it"
+      },
+      "emittedAtMs": 1792524309931
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "-m"
+      },
+      "emittedAtMs": 1792524309931
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "etadata"
+      },
+      "emittedAtMs": 1792524309931
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "-"
+      },
+      "emittedAtMs": 1792524309931
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "98"
+      },
+      "emittedAtMs": 1792524309931
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "h"
+      },
+      "emittedAtMs": 1792524309931
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "0"
+      },
+      "emittedAtMs": 1792524310172
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "hp"
+      },
+      "emittedAtMs": 1792524310172
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "2"
+      },
+      "emittedAtMs": 1792524310172
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "b"
+      },
+      "emittedAtMs": 1792524310172
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "/re"
+      },
+      "emittedAtMs": 1792524310172
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "pository"
+      },
+      "emittedAtMs": 1792524310172
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "/."
+      },
+      "emittedAtMs": 1792524310172
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "git"
+      },
+      "emittedAtMs": 1792524310172
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "/work"
+      },
+      "emittedAtMs": 1792524310373
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "trees"
+      },
+      "emittedAtMs": 1792524310373
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "/product"
+      },
+      "emittedAtMs": 1792524310373
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "/A"
+      },
+      "emittedAtMs": 1792524310373
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "UTO"
+      },
+      "emittedAtMs": 1792524310373
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "_M"
+      },
+      "emittedAtMs": 1792524310373
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "ER"
+      },
+      "emittedAtMs": 1792524310373
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "GE"
+      },
+      "emittedAtMs": 1792524310373
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": ".lock"
+      },
+      "emittedAtMs": 1792524310526
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "':"
+      },
+      "emittedAtMs": 1792524310526
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " Operation"
+      },
+      "emittedAtMs": 1792524310526
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " not"
+      },
+      "emittedAtMs": 1792524310526
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " permitted"
+      },
+      "emittedAtMs": 1792524310526
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "\\n"
+      },
+      "emittedAtMs": 1792524310526
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "\"},"
+      },
+      "emittedAtMs": 1792524310526
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " \""
+      },
+      "emittedAtMs": 1792524310526
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "config"
+      },
+      "emittedAtMs": 1792524310526
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "\":"
+      },
+      "emittedAtMs": 1792524310526
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " {\""
+      },
+      "emittedAtMs": 1792524310526
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "code"
+      },
+      "emittedAtMs": 1792524310526
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "\":"
+      },
+      "emittedAtMs": 1792524310526
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " "
+      },
+      "emittedAtMs": 1792524310526
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "255"
+      },
+      "emittedAtMs": 1792524310526
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": ","
+      },
+      "emittedAtMs": 1792524310526
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " \""
+      },
+      "emittedAtMs": 1792524311080
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "stdout"
+      },
+      "emittedAtMs": 1792524311080
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "\":"
+      },
+      "emittedAtMs": 1792524311080
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " \"\","
+      },
+      "emittedAtMs": 1792524311080
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " \""
+      },
+      "emittedAtMs": 1792524311080
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "stderr"
+      },
+      "emittedAtMs": 1792524311080
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "\":"
+      },
+      "emittedAtMs": 1792524311080
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " \""
+      },
+      "emittedAtMs": 1792524311080
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "error"
+      },
+      "emittedAtMs": 1792524311080
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": ":"
+      },
+      "emittedAtMs": 1792524311080
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " could"
+      },
+      "emittedAtMs": 1792524311080
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " not"
+      },
+      "emittedAtMs": 1792524311080
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " lock"
+      },
+      "emittedAtMs": 1792524311080
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " config"
+      },
+      "emittedAtMs": 1792524311080
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " file"
+      },
+      "emittedAtMs": 1792524311080
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " /"
+      },
+      "emittedAtMs": 1792524311080
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "private"
+      },
+      "emittedAtMs": 1792524311425
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "/"
+      },
+      "emittedAtMs": 1792524311425
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "var"
+      },
+      "emittedAtMs": 1792524311425
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "/f"
+      },
+      "emittedAtMs": 1792524311425
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "olders"
+      },
+      "emittedAtMs": 1792524311425
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "/"
+      },
+      "emittedAtMs": 1792524311425
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "2"
+      },
+      "emittedAtMs": 1792524311425
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "r"
+      },
+      "emittedAtMs": 1792524311425
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "/"
+      },
+      "emittedAtMs": 1792524311425
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "5"
+      },
+      "emittedAtMs": 1792524311425
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "gv"
+      },
+      "emittedAtMs": 1792524311425
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "kx"
+      },
+      "emittedAtMs": 1792524311425
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "5"
+      },
+      "emittedAtMs": 1792524311425
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "wx"
+      },
+      "emittedAtMs": 1792524311425
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "0"
+      },
+      "emittedAtMs": 1792524311425
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "g"
+      },
+      "emittedAtMs": 1792524311425
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "37"
+      },
+      "emittedAtMs": 1792524311425
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "m"
+      },
+      "emittedAtMs": 1792524311425
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "4"
+      },
+      "emittedAtMs": 1792524311425
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "gr"
+      },
+      "emittedAtMs": 1792524311425
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "v"
+      },
+      "emittedAtMs": 1792524311491
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "jj"
+      },
+      "emittedAtMs": 1792524311491
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "dt"
+      },
+      "emittedAtMs": 1792524311491
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "88"
+      },
+      "emittedAtMs": 1792524311491
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "m"
+      },
+      "emittedAtMs": 1792524311546
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "000"
+      },
+      "emittedAtMs": 1792524311546
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "0"
+      },
+      "emittedAtMs": 1792524311546
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "gn"
+      },
+      "emittedAtMs": 1792524311546
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "/T"
+      },
+      "emittedAtMs": 1792524311546
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "/d"
+      },
+      "emittedAtMs": 1792524311546
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "elivery"
+      },
+      "emittedAtMs": 1792524311546
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "-native"
+      },
+      "emittedAtMs": 1792524311547
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "-g"
+      },
+      "emittedAtMs": 1792524311547
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "it"
+      },
+      "emittedAtMs": 1792524311547
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "-m"
+      },
+      "emittedAtMs": 1792524311547
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "etadata"
+      },
+      "emittedAtMs": 1792524311547
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "-"
+      },
+      "emittedAtMs": 1792524311547
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "98"
+      },
+      "emittedAtMs": 1792524311547
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "h"
+      },
+      "emittedAtMs": 1792524311547
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "0"
+      },
+      "emittedAtMs": 1792524311547
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "hp"
+      },
+      "emittedAtMs": 1792524311547
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "2"
+      },
+      "emittedAtMs": 1792524311547
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "b"
+      },
+      "emittedAtMs": 1792524311547
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "/re"
+      },
+      "emittedAtMs": 1792524311547
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "pository"
+      },
+      "emittedAtMs": 1792524311558
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "/."
+      },
+      "emittedAtMs": 1792524311559
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "git"
+      },
+      "emittedAtMs": 1792524311559
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "/config"
+      },
+      "emittedAtMs": 1792524311559
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": ":"
+      },
+      "emittedAtMs": 1792524311559
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " Operation"
+      },
+      "emittedAtMs": 1792524311559
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " not"
+      },
+      "emittedAtMs": 1792524311559
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": " permitted"
+      },
+      "emittedAtMs": 1792524311559
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "\\n"
+      },
+      "emittedAtMs": 1792524311559
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "\"}"
+      },
+      "emittedAtMs": 1792524311559
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "}\n"
+      },
+      "emittedAtMs": 1792524311559
+    },
+    {
+      "method": "item/agentMessage/delta",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "itemId": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+        "delta": "```"
+      },
+      "emittedAtMs": 1792524311559
+    },
+    {
+      "method": "turn/moderationMetadata",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "metadata": {
+          "prompt": {},
+          "generation": {},
+          "tool_call": {},
+          "tool_response": {}
+        }
+      },
+      "emittedAtMs": 1792524311648
+    },
+    {
+      "method": "item/completed",
+      "params": {
+        "item": {
+          "type": "agentMessage",
+          "id": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+          "text": "Exit code: `0`. Actual output:\n\n```json\n{\"planning\": \"DENIED\", \"hooks\": \"DENIED\", \"add\": {\"code\": 0, \"stdout\": \"\", \"stderr\": \"\"}, \"commit\": {\"code\": 0, \"stdout\": \"[native-fixture 520755f] Synthetic metadata fixture commit\\n 1 file changed, 1 insertion(+)\\n create mode 100644 native-fixture.txt\\n\", \"stderr\": \"error: cannot lock ref 'AUTO_MERGE': Unable to create '/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/worktrees/product/AUTO_MERGE.lock': Operation not permitted\\n\"}, \"config\": {\"code\": 255, \"stdout\": \"\", \"stderr\": \"error: could not lock config file /private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/config: Operation not permitted\\n\"}}\n```",
+          "phase": "final_answer",
+          "memoryCitation": null,
+          "delivery": null,
+          "questions": null
+        },
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "completedAtMs": 1792524311648
+      },
+      "emittedAtMs": 1792524311654
+    },
+    {
+      "method": "thread/tokenUsage/updated",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turnId": "01a15ac5-cbc7-7232-a19f-02af91685658",
+        "tokenUsage": {
+          "total": {
+            "totalTokens": 55021,
+            "inputTokens": 54265,
+            "cachedInputTokens": 26496,
+            "cacheWriteInputTokens": 0,
+            "outputTokens": 756,
+            "reasoningOutputTokens": 0
+          },
+          "last": {
+            "totalTokens": 27795,
+            "inputTokens": 27537,
+            "cachedInputTokens": 26496,
+            "cacheWriteInputTokens": 0,
+            "outputTokens": 258,
+            "reasoningOutputTokens": 0
+          },
+          "modelContextWindow": 475000
+        }
+      },
+      "emittedAtMs": 1792524311663
+    },
+    {
+      "method": "account/rateLimits/updated",
+      "params": {
+        "rateLimits": {
+          "limitId": "codex",
+          "limitName": null,
+          "normalModelSlug": null,
+          "primary": {
+            "usedPercent": 100,
+            "windowDurationMins": 300,
+            "resetsAt": 1792535073
+          },
+          "secondary": {
+            "usedPercent": 38,
+            "windowDurationMins": 10080,
+            "resetsAt": 1793083575
+          },
+          "credits": {
+            "hasCredits": true,
+            "unlimited": false,
+            "balance": null
+          },
+          "individualLimit": null,
+          "spendControlReached": null,
+          "planType": "team",
+          "rateLimitReachedType": null
+        }
+      },
+      "emittedAtMs": 1792524311663
+    },
+    {
+      "method": "thread/status/changed",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "status": {
+          "type": "idle"
+        }
+      },
+      "emittedAtMs": 1792524311671
+    },
+    {
+      "method": "turn/completed",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turn": {
+          "id": "01a15ac5-cbc7-7232-a19f-02af91685658",
+          "items": [
+            {
+              "type": "agentMessage",
+              "id": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+              "text": "Exit code: `0`. Actual output:\n\n```json\n{\"planning\": \"DENIED\", \"hooks\": \"DENIED\", \"add\": {\"code\": 0, \"stdout\": \"\", \"stderr\": \"\"}, \"commit\": {\"code\": 0, \"stdout\": \"[native-fixture 520755f] Synthetic metadata fixture commit\\n 1 file changed, 1 insertion(+)\\n create mode 100644 native-fixture.txt\\n\", \"stderr\": \"error: cannot lock ref 'AUTO_MERGE': Unable to create '/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/worktrees/product/AUTO_MERGE.lock': Operation not permitted\\n\"}, \"config\": {\"code\": 255, \"stdout\": \"\", \"stderr\": \"error: could not lock config file /private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/config: Operation not permitted\\n\"}}\n```",
+              "phase": "final_answer",
+              "memoryCitation": null,
+              "delivery": null,
+              "questions": null
+            }
+          ],
+          "itemsView": "summary",
+          "status": "completed",
+          "error": null,
+          "startedAt": 1792524274,
+          "completedAt": 1792524311,
+          "durationMs": 37030
+        }
+      },
+      "emittedAtMs": 1792524311671
+    }
+  ],
+  "before_metadata": {
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/product/.git": {
+      "sha256": "e6bf75e6ca2b41f73bb3deaec44cc29e4799ca129d190f9888bfd1b5b2cc0c9b",
+      "bytes": 137,
+      "mode": "0o644"
+    },
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/worktrees/product/HEAD": {
+      "sha256": "0cdc906a6762a083a23fbb316aa3ee7c4e871de1a67e3add43d5e64b6570bc42",
+      "bytes": 31,
+      "mode": "0o644"
+    },
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/worktrees/product/index": {
+      "sha256": "e21d2d57559494a5863eb302f3f9d42fbd5d971d1eeb202fa1dcc24aa3c9d624",
+      "bytes": 137,
+      "mode": "0o644"
+    },
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/worktrees/product/logs/HEAD": {
+      "sha256": "c2fe00599dc3ada8340a679cec2603d27588a00e814cb592b74a5c521732e711",
+      "bytes": 268,
+      "mode": "0o644"
+    },
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/refs/heads/native-fixture": {
+      "sha256": "48c0cc67be1e3459daf898f4a44b9c484b5f6ad4f56dc753410e9c6404f77cb7",
+      "bytes": 41,
+      "mode": "0o644"
+    },
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/config": {
+      "sha256": "cae33efdb02cf774435c1ff9cb16bcc1014606908530c6e1dc727615fe3e8cda",
+      "bytes": 137,
+      "mode": "0o644"
+    }
+  },
+  "effective": {
+    "sandbox": {
+      "type": "workspaceWrite",
+      "writableRoots": [
+        "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/objects",
+        "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/refs/heads/native-fixture",
+        "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/refs/heads/native-fixture.lock",
+        "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/logs/refs/heads/native-fixture",
+        "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/logs/refs/heads/native-fixture.lock",
+        "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/worktrees/product/index",
+        "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/worktrees/product/index.lock",
+        "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/worktrees/product/COMMIT_EDITMSG",
+        "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/worktrees/product/COMMIT_EDITMSG.lock",
+        "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/worktrees/product/HEAD",
+        "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/worktrees/product/HEAD.lock",
+        "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/worktrees/product/logs/HEAD",
+        "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/worktrees/product/logs/HEAD.lock"
+      ],
+      "networkAccess": false,
+      "excludeTmpdirEnvVar": true,
+      "excludeSlashTmp": true
+    },
+    "activePermissionProfile": null,
+    "approvalPolicy": "on-request",
+    "approvalsReviewer": "user",
+    "cwd": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/product"
+  },
+  "exact_command": "python3 -c 'from pathlib import Path\nimport json,subprocess\nout={}\nfor label,path in [(\"planning\",'\"'\"'/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/planning/guard.txt'\"'\"'),(\"hooks\",'\"'\"'/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/hooks/unauthorized-probe'\"'\"')]:\n try:\n  Path(path).write_text(\"UNAUTHORIZED\")\n  out[label]=\"WRITTEN\"\n except PermissionError:\n  out[label]=\"DENIED\"\nPath(\"native-fixture.txt\").write_text(\"native metadata test\\n\")\nadd=subprocess.run(['\"'\"'/Library/Developer/CommandLineTools/usr/bin/git'\"'\"',\"add\",\"native-fixture.txt\"],text=True,capture_output=True)\nout[\"add\"]={\"code\":add.returncode,\"stdout\":add.stdout,\"stderr\":add.stderr}\nif add.returncode==0:\n commit=subprocess.run(['\"'\"'/Library/Developer/CommandLineTools/usr/bin/git'\"'\"',\"-c\",\"user.name=Delivery Fixture\",\"-c\",\"user.email=fixture@example.invalid\",\"commit\",\"-m\",\"Synthetic metadata fixture commit\"],text=True,capture_output=True)\n out[\"commit\"]={\"code\":commit.returncode,\"stdout\":commit.stdout,\"stderr\":commit.stderr}\nconfig=subprocess.run(['\"'\"'/Library/Developer/CommandLineTools/usr/bin/git'\"'\"',\"config\",\"--local\",\"delivery.fixture\",\"UNAUTHORIZED\"],text=True,capture_output=True)\nout[\"config\"]={\"code\":config.returncode,\"stdout\":config.stdout,\"stderr\":config.stderr}\nprint(json.dumps(out))'",
+  "turn": {
+    "turn": {
+      "id": "01a15ac5-cbc7-7232-a19f-02af91685658",
+      "items": [],
+      "itemsView": "notLoaded",
+      "status": "inProgress",
+      "error": null,
+      "startedAt": null,
+      "completedAt": null,
+      "durationMs": null
+    }
+  },
+  "terminal": [
+    {
+      "method": "turn/completed",
+      "params": {
+        "threadId": "01a15ac5-c9d4-73e1-a12a-bb46a61fda7b",
+        "turn": {
+          "id": "01a15ac5-cbc7-7232-a19f-02af91685658",
+          "items": [
+            {
+              "type": "agentMessage",
+              "id": "msg_0a8ecac46c250e00016ad7c013e2448191a89450aa1e09b1fe",
+              "text": "Exit code: `0`. Actual output:\n\n```json\n{\"planning\": \"DENIED\", \"hooks\": \"DENIED\", \"add\": {\"code\": 0, \"stdout\": \"\", \"stderr\": \"\"}, \"commit\": {\"code\": 0, \"stdout\": \"[native-fixture 520755f] Synthetic metadata fixture commit\\n 1 file changed, 1 insertion(+)\\n create mode 100644 native-fixture.txt\\n\", \"stderr\": \"error: cannot lock ref 'AUTO_MERGE': Unable to create '/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/worktrees/product/AUTO_MERGE.lock': Operation not permitted\\n\"}, \"config\": {\"code\": 255, \"stdout\": \"\", \"stderr\": \"error: could not lock config file /private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/config: Operation not permitted\\n\"}}\n```",
+              "phase": "final_answer",
+              "memoryCitation": null,
+              "delivery": null,
+              "questions": null
+            }
+          ],
+          "itemsView": "summary",
+          "status": "completed",
+          "error": null,
+          "startedAt": 1792524274,
+          "completedAt": 1792524311,
+          "durationMs": 37030
+        }
+      },
+      "emittedAtMs": 1792524311671
+    }
+  ],
+  "after_head": "520755f7103708cda074a2e5b081663203dc916d",
+  "after_metadata": {
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/product/.git": {
+      "sha256": "e6bf75e6ca2b41f73bb3deaec44cc29e4799ca129d190f9888bfd1b5b2cc0c9b",
+      "bytes": 137,
+      "mode": "0o644"
+    },
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/worktrees/product/HEAD": {
+      "sha256": "0cdc906a6762a083a23fbb316aa3ee7c4e871de1a67e3add43d5e64b6570bc42",
+      "bytes": 31,
+      "mode": "0o644"
+    },
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/worktrees/product/index": {
+      "sha256": "69339f648ea7ed8f8c4a1f99499c52dcc456b39e5888bbc6458e8c12e0973c38",
+      "bytes": 225,
+      "mode": "0o644"
+    },
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/worktrees/product/logs/HEAD": {
+      "sha256": "947a0a87305ec19ddd7401f3c3f08e4358a3e1cccc4890a3764be724980476d2",
+      "bytes": 452,
+      "mode": "0o644"
+    },
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/refs/heads/native-fixture": {
+      "sha256": "7c027a43d8d65e8e318d883885c9abdfc4aa8d9592a2f240d6401cf6d8cc770d",
+      "bytes": 41,
+      "mode": "0o644"
+    },
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/config": {
+      "sha256": "cae33efdb02cf774435c1ff9cb16bcc1014606908530c6e1dc727615fe3e8cda",
+      "bytes": 137,
+      "mode": "0o644"
+    }
+  },
+  "git_pointer": "gitdir: /private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-metadata-98h0hp2b/repository/.git/worktrees/product\n",
+  "worktree_HEAD": "ref: refs/heads/native-fixture\n",
+  "branch_ref": "520755f7103708cda074a2e5b081663203dc916d\n",
+  "checks": {
+    "planning_preserved": true,
+    "hooks_preserved": true,
+    "config_preserved": true,
+    "native_commit_created": true
+  }
+}

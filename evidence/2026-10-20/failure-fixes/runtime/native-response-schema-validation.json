@@ -1,0 +1,39 @@
+{
+  "source": "Local Codex app-server generated JSON schemas, CLI0.159.3",
+  "results": [
+    {
+      "schema": "CommandExecutionRequestApprovalResponse",
+      "response": {
+        "decision": "decline"
+      },
+      "valid": true,
+      "schema_sha256": "6d0767113e22f311381809b6b236b0dde2b99b01992879c26bf7b1ea0e003cb7"
+    },
+    {
+      "schema": "CommandExecutionRequestApprovalResponse",
+      "response": {
+        "decision": "cancel"
+      },
+      "valid": true,
+      "schema_sha256": "6d0767113e22f311381809b6b236b0dde2b99b01992879c26bf7b1ea0e003cb7"
+    },
+    {
+      "schema": "FileChangeRequestApprovalResponse",
+      "response": {
+        "decision": "decline"
+      },
+      "valid": true,
+      "schema_sha256": "b95b03ee6be674e25cee2e863cc135a28620e1070addd2f34685aadee27cde08"
+    },
+    {
+      "schema": "FileChangeRequestApprovalResponse",
+      "response": {
+        "decision": "cancel"
+      },
+      "valid": true,
+      "schema_sha256": "b95b03ee6be674e25cee2e863cc135a28620e1070addd2f34685aadee27cde08"
+    }
+  ],
+  "selection_policy": "Offered decline or unspecified choices => decline; otherwise offered cancel; neither => JSON-RPC error, never approve",
+  "cancel_scope": "Native cancellation may interrupt current turn; coordinator waits for native terminal and does not automatically replay"
+}

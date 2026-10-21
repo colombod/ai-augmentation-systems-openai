@@ -1,0 +1,18 @@
+test_completed_turn_is_distinct_from_started_and_unknown_events (test_runtime.RuntimeTests.test_completed_turn_is_distinct_from_started_and_unknown_events) ... ok
+test_crash_recovery_resumes_binding_without_replaying_external_effects (test_runtime.RuntimeTests.test_crash_recovery_resumes_binding_without_replaying_external_effects) ... ok
+test_fast_terminal_notification_before_rpc_reply_is_not_lost (test_runtime.RuntimeTests.test_fast_terminal_notification_before_rpc_reply_is_not_lost) ... ok
+test_native_lane_mismatch_refuses_turn (test_runtime.RuntimeTests.test_native_lane_mismatch_refuses_turn) ... ok
+test_native_request_expiry_disconnect_and_unbound_identity_grant_nothing (test_runtime.RuntimeTests.test_native_request_expiry_disconnect_and_unbound_identity_grant_nothing) ... {"operator_request": "f8914fea-64a1-41bd-b3c6-e572032c6be6", "method": "item/commandExecution/requestApproval", "params": {"threadId": "native-thread", "turnId": "native-turn", "itemId": "item1"}}
+{"operator_request": "c4b89336-add9-434a-a2ff-97bd4d7cd18b", "method": "item/commandExecution/requestApproval", "params": {"threadId": "native-thread", "turnId": "native-turn", "itemId": "item1"}}
+ok
+test_only_bound_unexpired_answer_is_consumed_once (test_runtime.RuntimeTests.test_only_bound_unexpired_answer_is_consumed_once) ... {"operator_request": "bfd0faa8-62ed-47eb-a2c7-3ddd1815a74c", "method": "item/commandExecution/requestApproval", "params": {"threadId": "native-thread", "turnId": "native-turn"}}
+ok
+test_peer_routing_binds_sender_to_native_thread_and_never_human_authority (test_runtime.RuntimeTests.test_peer_routing_binds_sender_to_native_thread_and_never_human_authority) ... ok
+test_status_never_calls_missing_activity_success (test_runtime.RuntimeTests.test_status_never_calls_missing_activity_success) ... ok
+test_team_preparation_rolls_back_conflicting_role_identity (test_runtime.RuntimeTests.test_team_preparation_rolls_back_conflicting_role_identity) ... ok
+test_unknown_effect_on_rpc_timeout_is_not_retried (test_runtime.RuntimeTests.test_unknown_effect_on_rpc_timeout_is_not_retried) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.147s
+
+OK

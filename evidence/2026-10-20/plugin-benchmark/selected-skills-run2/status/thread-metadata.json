@@ -1,0 +1,25 @@
+{
+  "model": "gpt-6.1-sol",
+  "modelProvider": "openai",
+  "serviceTier": "default",
+  "disabledPluginIds": [],
+  "cwd": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-selected-benchmark-ca5uuxrb/project",
+  "runtimeWorkspaceRoots": [
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-selected-benchmark-ca5uuxrb/project"
+  ],
+  "instructionSources": [
+    "/Users/colombod/.codex/AGENTS.md"
+  ],
+  "approvalPolicy": "on-request",
+  "approvalsReviewer": "user",
+  "sandbox": {
+    "type": "workspaceWrite",
+    "writableRoots": [],
+    "networkAccess": false,
+    "excludeTmpdirEnvVar": false,
+    "excludeSlashTmp": false
+  },
+  "activePermissionProfile": null,
+  "reasoningEffort": "medium",
+  "multiAgentMode": "explicitRequestOnly"
+}

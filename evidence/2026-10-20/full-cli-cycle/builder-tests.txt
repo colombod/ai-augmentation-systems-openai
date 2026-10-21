@@ -1,0 +1,55 @@
+Local execution only. No hosted CI is present.
+command: python3 -m unittest -v
+exit: 0
+stdout: ''
+stderr: 'test_empty_and_no_alphanumeric_input (test_slugify.SlugifyCLITests.test_empty_and_no_alphanumeric_input) ... ok\ntest_extra_argument_exits_two (test_slugify.SlugifyCLITests.test_extra_argument_exits_two) ... ok\ntest_missing_argument_exits_two (test_slugify.SlugifyCLITests.test_missing_argument_exits_two) ... ok\ntest_punctuation_case_and_digits (test_slugify.SlugifyCLITests.test_punctuation_case_and_digits) ... ok\ntest_separator_runs_and_trimming (test_slugify.SlugifyCLITests.test_separator_runs_and_trimming) ... ok\ntest_text_starting_with_hyphens (test_slugify.SlugifyCLITests.test_text_starting_with_hyphens) ... ok\ntest_unicode_is_separator_without_transliteration (test_slugify.SlugifyCLITests.test_unicode_is_separator_without_transliteration) ... ok\n\n----------------------------------------------------------------------\nRan 7 tests in 0.222s\n\nOK\n'
+
+command: python3 slugify.py 'Hello, WORLD! Version 42'
+exit: 0
+stdout: 'hello-world-version-42\n'
+stderr: ''
+
+command: python3 slugify.py ' --Alpha__ /	Beta---99!!! '
+exit: 0
+stdout: 'alpha-beta-99\n'
+stderr: ''
+
+command: python3 slugify.py ''
+exit: 0
+stdout: '\n'
+stderr: ''
+
+command: python3 slugify.py '!!!'
+exit: 0
+stdout: '\n'
+stderr: ''
+
+command: python3 slugify.py 'CAFÉ déjà—VU'
+exit: 0
+stdout: 'caf-d-j-vu\n'
+stderr: ''
+
+command: python3 slugify.py
+exit: 2
+stdout: ''
+stderr: 'usage: python3 slugify.py TEXT\n'
+
+All expected local results matched: True
+
+Original commit attempt:
+command: git commit -m "Implement ASCII slugify CLI with unittest coverage" -- slugify.py test_slugify.py
+exit: 128
+output: fatal: Unable to create .git/next-index-14878.lock: Operation not permitted
+No commit was created; observed HEAD remained 0dfa456c259f2b47c50bcf75ccf84a0e37f2ce31.
+Escalated retry: rejected (approval request failed); operator revoked outside-sandbox approval.
+Operator correction: use staged-index git commit -m MESSAGE with no path arguments; no escalation, permission-root changes, or hooks/security changes. Preserve untracked evidence and remove generated untracked Python cache.
+
+Successful staged-index commit:
+command: git commit -m "Implement ASCII slugify CLI with unittest coverage"
+exit: 0
+output: [delivery-slugify 32746b7] Implement ASCII slugify CLI with unittest coverage
+2 files changed, 86 insertions(+); created slugify.py and test_slugify.py
+command: git rev-parse HEAD
+exit: 0
+stdout: 32746b7d72bbbb4263c2ecf8a737c1c1613f9bbe
+Final git status: only ?? .delivery-evidence/; evidence is untracked. Generated Python cache removed.

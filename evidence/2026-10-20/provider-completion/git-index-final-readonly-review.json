@@ -1,0 +1,25 @@
+{
+  "scope": "isolated synthetic repositories; no native sandbox or real task mutation",
+  "earlier_fixture_failure": "Combined update-index flag-clear options did not clear both bits; fixture corrected to separate clear commands, no runtime change.",
+  "flag_regressions": [
+    {
+      "index_flag": "--assume-unchanged",
+      "guard_result": {
+        "guard_rejected": true,
+        "reason": "Product index hides tracked bytes with assume-unchanged/skip-worktree"
+      }
+    },
+    {
+      "index_flag": "--skip-worktree",
+      "guard_result": {
+        "guard_rejected": true,
+        "reason": "Product index hides tracked bytes with assume-unchanged/skip-worktree"
+      }
+    }
+  ],
+  "configured_clean_filter_marker": {
+    "returned_head": "168c67054f270606972d5b25493366e3be60bb02",
+    "guard_error": null,
+    "privileged_filter_executed": false
+  }
+}

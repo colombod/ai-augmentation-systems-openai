@@ -1,0 +1,14 @@
+{
+  "message_id": "ff91efba-aa0d-4428-b46c-4fa938c77472",
+  "intent_event": 213,
+  "native_user_message_event": 215,
+  "terminal_event": 225,
+  "native_turn": "01a15b59-f3ce-76e2-b5a2-e70888dc8002",
+  "prior_native_dm_turns": [
+    "01a15b53-47cb-72c3-b501-44e5b02c17ca"
+  ],
+  "actual_new_turn": true,
+  "same_native_thread": true,
+  "native_status": "completed",
+  "note": "Post-run proof repairs weak initial continuation comparison against absent gate_status.turn; original result/source retained."
+}

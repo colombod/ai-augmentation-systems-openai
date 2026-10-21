@@ -1,0 +1,77 @@
+[
+  {
+    "skill": "architecture",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "skill": "brief",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "skill": "challenge",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "skill": "design",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "skill": "personas",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "skill": "prd",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "skill": "realign",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "skill": "research",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "skill": "roadmap",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "skill": "simulate",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "skill": "sprint",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "skill": "sprint-review",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "skill": "start",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "skill": "status",
+    "exit_code": 0,
+    "stderr": ""
+  },
+  {
+    "skill": "stories",
+    "exit_code": 0,
+    "stderr": ""
+  }
+]

@@ -1,0 +1,7 @@
+{"timestamp":"2026-10-20T19:04:23.612717Z","level":"WARN","fields":{"message":"ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/"},"target":"codex_skills::interface"}
+{"timestamp":"2026-10-20T19:04:23.612786Z","level":"WARN","fields":{"message":"ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/"},"target":"codex_skills::interface"}
+{"timestamp":"2026-10-20T19:04:23.688788Z","level":"WARN","fields":{"message":"MCP server startup failed","server_name":"computer-use","error":"No such file or directory (os error 2)"},"target":"codex_mcp::rmcp_client"}
+{"timestamp":"2026-10-20T19:04:24.082388Z","level":"WARN","fields":{"message":"ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/"},"target":"codex_skills::interface"}
+{"timestamp":"2026-10-20T19:04:24.082428Z","level":"WARN","fields":{"message":"ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/"},"target":"codex_skills::interface"}
+{"timestamp":"2026-10-20T19:04:24.096906Z","level":"WARN","fields":{"message":"MCP server startup failed","server_name":"computer-use","error":"No such file or directory (os error 2)"},"target":"codex_mcp::rmcp_client"}
+{"timestamp":"2026-10-20T19:04:48.566319Z","level":"WARN","fields":{"message":"failed to initialize MCP client during shutdown: MCP startup failed: No such file or directory (os error 2)"},"target":"codex_mcp::rmcp_client"}

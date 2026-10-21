@@ -1,0 +1,22 @@
+{
+  "claim_result": "[\n  {\n    \"id\": \"gateprobe-g09\",\n    \"title\": \"Synthetic gate claim fixture\",\n    \"acceptance_criteria\": \"Criterion A\",\n    \"status\": \"in_progress\",\n    \"priority\": 2,\n    \"issue_type\": \"task\",\n    \"assignee\": \"bound-builder-fixture\",\n    \"owner\": \"colombod@me.com\",\n    \"created_at\": \"2026-10-20T19:10:36Z\",\n    \"created_by\": \"Diego\",\n    \"updated_at\": \"2026-10-20T19:10:41Z\",\n    \"started_at\": \"2026-10-20T19:10:41Z\"\n  }\n]\n",
+  "observed": [
+    {
+      "id": "gateprobe-g09",
+      "title": "Synthetic gate claim fixture",
+      "acceptance_criteria": "Criterion A",
+      "status": "in_progress",
+      "priority": 2,
+      "issue_type": "task",
+      "assignee": "bound-builder-fixture",
+      "owner": "colombod@me.com",
+      "created_at": "2026-10-20T19:10:36Z",
+      "created_by": "Diego",
+      "updated_at": "2026-10-20T19:10:41Z",
+      "started_at": "2026-10-20T19:10:41Z",
+      "dependent_count": 0,
+      "dependency_count": 0,
+      "comment_count": 0
+    }
+  ]
+}

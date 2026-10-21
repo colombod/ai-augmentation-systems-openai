@@ -1,0 +1,1 @@
+Bounded same-session continuity check: using the earlier brief/story context, state the product goal and exact canonical story path. Do not write files, invoke tools or enqueue peers. This does not grant acceptance.

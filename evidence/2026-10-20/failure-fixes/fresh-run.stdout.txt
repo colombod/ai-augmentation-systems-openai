@@ -1,0 +1,11 @@
+{"attempt_evidence": "/Users/colombod/workspaces/delivery-plugin-openai/evidence/2026-10-20/full-cli-cycle/attempts/20261020T222729Z-f07ae57ef33c431694ddb9e16cf5d084"}
+{"stage": "fixture-setup"}
+{"stage": "public-prepare", "roster": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-8frrftqa/planning/.delivery/team.json"}
+{"stage": "coordinator-and-product-manager"}
+{"stage": "supervisor-restart-after-manager"}
+{"stage": "materialize-and-ready"}
+{"stage": "builder-implementation", "issue": "fullcycle-8f7", "product": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-8frrftqa/product"}
+{"stage": "independent-review", "product": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-8frrftqa/product", "head": "b87785b9a8f2f3fc3cd532f683a8228619245b08"}
+{"stage": "operator-acceptance-barrier"}
+{"stage": "finished-through-human-barrier", "checks": {"full_roster": true, "same_pm_thread_after_restart": true, "real_commit": true, "exact_implemented_head": true, "actual_passing_implementation": true, "independent_reviewer_thread": true, "independent_review_approved": true, "surface_head_matches": true, "submissions_complete": true, "canonical_task_still_in_progress": true, "accepted_false": true, "exact_human_capture_barrier": true, "no_extra_operator_messages": true, "no_external_control_interventions": true, "no_unexpected_native_guard_requests": true, "judge_answer_verified_or_explicitly_unavailable": true}}
+{"stage": "finished-through-human-barrier", "error": null, "fixture": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-8frrftqa", "checks": {"full_roster": true, "same_pm_thread_after_restart": true, "real_commit": true, "exact_implemented_head": true, "actual_passing_implementation": true, "independent_reviewer_thread": true, "independent_review_approved": true, "surface_head_matches": true, "submissions_complete": true, "canonical_task_still_in_progress": true, "accepted_false": true, "exact_human_capture_barrier": true, "no_extra_operator_messages": true, "no_external_control_interventions": true, "no_unexpected_native_guard_requests": true, "judge_answer_verified_or_explicitly_unavailable": true}}

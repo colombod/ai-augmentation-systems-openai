@@ -1,0 +1,73 @@
+{
+  "automated_checks": {
+    "all_turns_completed": true,
+    "start_no_placeholder_brief": true,
+    "source_preserved": true,
+    "brief_and_glossary_saved": true,
+    "brief_prose_words": 547,
+    "glossary_prose_words": 119,
+    "brief_word_cap_passed": true,
+    "status_file_hashes_unchanged": true,
+    "no_deleted_files": true
+  },
+  "manual_assessment": {
+    "assessor": "implementation session; not independent",
+    "start": "pass: installed helper invoked; directories created, no placeholder",
+    "brief": "pass: synthetic grounding, Frame, 3 single-session lenses, independence unavailable, unexplored coverage, owned open questions, numeric baselines unknown, output saved",
+    "status": "pass: actual artifacts and unresolved prerequisites read; readiness unestablished, team/judge unimplemented; no changed files",
+    "coverage": "three selected native skills via temporary workspace aliases; not ordinary registered-plugin activation or desktop/ChatGPT acceptance"
+  },
+  "rows": [
+    {
+      "case": "start",
+      "elapsed_seconds": 26.01,
+      "model": "gpt-6.1-sol",
+      "usage": {
+        "totalTokens": 125802,
+        "inputTokens": 125130,
+        "cachedInputTokens": 104064,
+        "cacheWriteInputTokens": 0,
+        "outputTokens": 672,
+        "reasoningOutputTokens": 0
+      },
+      "changed_or_added_files": [],
+      "deleted_files": [],
+      "turn_status": "completed"
+    },
+    {
+      "case": "brief",
+      "elapsed_seconds": 121.36,
+      "model": "gpt-6.1-sol",
+      "usage": {
+        "totalTokens": 232565,
+        "inputTokens": 228158,
+        "cachedInputTokens": 196864,
+        "cacheWriteInputTokens": 0,
+        "outputTokens": 4407,
+        "reasoningOutputTokens": 206
+      },
+      "changed_or_added_files": [
+        ".delivery/glossary.md",
+        ".delivery/initiatives/translator-handover/brief.md"
+      ],
+      "deleted_files": [],
+      "turn_status": "completed"
+    },
+    {
+      "case": "status",
+      "elapsed_seconds": 42.0,
+      "model": "gpt-6.1-sol",
+      "usage": {
+        "totalTokens": 127218,
+        "inputTokens": 126107,
+        "cachedInputTokens": 103040,
+        "cacheWriteInputTokens": 0,
+        "outputTokens": 1111,
+        "reasoningOutputTokens": 17
+      },
+      "changed_or_added_files": [],
+      "deleted_files": [],
+      "turn_status": "completed"
+    }
+  ]
+}

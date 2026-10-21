@@ -1,0 +1,31 @@
+test_catalogue_validation_cannot_pass_a_nonportable_root_manifest (test_package.PackageTests.test_catalogue_validation_cannot_pass_a_nonportable_root_manifest) ... ok
+test_import_provenance_covers_all_derived_material (test_package.PackageTests.test_import_provenance_covers_all_derived_material) ... ok
+test_portable_schema_rejects_legacy_root_and_nested_mistakes (test_package.PackageTests.test_portable_schema_rejects_legacy_root_and_nested_mistakes) ... ok
+test_preview_loads_no_unimplemented_runtime (test_package.PackageTests.test_preview_loads_no_unimplemented_runtime) ... ok
+test_shipped_boundary_excludes_port_assessment_and_retains_lineage (test_package.PackageTests.test_shipped_boundary_excludes_port_assessment_and_retains_lineage) ... ok
+test_skill_resources_are_contained_and_present (test_package.PackageTests.test_skill_resources_are_contained_and_present) ... ok
+test_actual_cli_returns_json_and_failure_code (test_project.ProjectTests.test_actual_cli_returns_json_and_failure_code) ... ok
+test_init_reuses_ancestor_and_preserves_existing_artifact (test_project.ProjectTests.test_init_reuses_ancestor_and_preserves_existing_artifact) ... ok
+test_invalid_slug_and_conflict_leave_workspace_unmodified (test_project.ProjectTests.test_invalid_slug_and_conflict_leave_workspace_unmodified) ... ok
+test_nested_component_workspace_refuses_shadow_root (test_project.ProjectTests.test_nested_component_workspace_refuses_shadow_root) ... ok
+test_prose_count_excludes_template_comment_yaml_code_and_tables (test_project.ProjectTests.test_prose_count_excludes_template_comment_yaml_code_and_tables) ... ok
+test_status_never_creates_workspace_or_changes_content (test_project.ProjectTests.test_status_never_creates_workspace_or_changes_content) ... ok
+test_symlink_directory_or_artifact_is_refused (test_project.ProjectTests.test_symlink_directory_or_artifact_is_refused) ... ok
+test_completed_turn_is_distinct_from_started_and_unknown_events (test_runtime.RuntimeTests.test_completed_turn_is_distinct_from_started_and_unknown_events) ... ok
+test_crash_recovery_resumes_binding_without_replaying_external_effects (test_runtime.RuntimeTests.test_crash_recovery_resumes_binding_without_replaying_external_effects) ... ok
+test_fast_terminal_notification_before_rpc_reply_is_not_lost (test_runtime.RuntimeTests.test_fast_terminal_notification_before_rpc_reply_is_not_lost) ... ok
+test_native_lane_mismatch_refuses_turn (test_runtime.RuntimeTests.test_native_lane_mismatch_refuses_turn) ... ok
+test_native_request_expiry_disconnect_and_unbound_identity_grant_nothing (test_runtime.RuntimeTests.test_native_request_expiry_disconnect_and_unbound_identity_grant_nothing) ... {"operator_request": "6a66d72f-551d-44c6-9cfe-a3c107fc025b", "method": "item/commandExecution/requestApproval", "params": {"threadId": "native-thread", "turnId": "native-turn", "itemId": "item1"}}
+{"operator_request": "bc87a637-4169-46a9-8a49-65f7dd5083de", "method": "item/commandExecution/requestApproval", "params": {"threadId": "native-thread", "turnId": "native-turn", "itemId": "item1"}}
+ok
+test_only_bound_unexpired_answer_is_consumed_once (test_runtime.RuntimeTests.test_only_bound_unexpired_answer_is_consumed_once) ... {"operator_request": "37c738cf-a511-49c0-8aa8-933f6cd3c3be", "method": "item/commandExecution/requestApproval", "params": {"threadId": "native-thread", "turnId": "native-turn"}}
+ok
+test_peer_routing_binds_sender_to_native_thread_and_never_human_authority (test_runtime.RuntimeTests.test_peer_routing_binds_sender_to_native_thread_and_never_human_authority) ... ok
+test_status_never_calls_missing_activity_success (test_runtime.RuntimeTests.test_status_never_calls_missing_activity_success) ... ok
+test_team_preparation_rolls_back_conflicting_role_identity (test_runtime.RuntimeTests.test_team_preparation_rolls_back_conflicting_role_identity) ... ok
+test_unknown_effect_on_rpc_timeout_is_not_retried (test_runtime.RuntimeTests.test_unknown_effect_on_rpc_timeout_is_not_retried) ... ok
+
+----------------------------------------------------------------------
+Ran 23 tests in 0.273s
+
+OK

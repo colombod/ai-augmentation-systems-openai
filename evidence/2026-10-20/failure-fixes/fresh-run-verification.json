@@ -1,0 +1,45 @@
+{
+  "observed_at_utc": "2026-10-20T22:34:37.119048+00:00",
+  "driver_exec_session": 46500,
+  "driver_process_exit_code_observed": 0,
+  "attempt": "evidence/2026-10-20/full-cli-cycle/attempts/20261020T222729Z-f07ae57ef33c431694ddb9e16cf5d084",
+  "stage": "finished-through-human-barrier",
+  "all_semantic_checks": true,
+  "semantic_check_count": 16,
+  "error": null,
+  "wall_seconds": 390.7803819179535,
+  "head": "b87785b9a8f2f3fc3cd532f683a8228619245b08",
+  "black_box_passed": 21,
+  "black_box_total": 21,
+  "black_box_source_matches_commit": true,
+  "production_source_unchanged": true,
+  "changed_files": [],
+  "supervisors": [
+    {
+      "pid": 31465,
+      "started_at": 1792535264.839909,
+      "mode": "normal CLI; no operator terminal or receipt capability",
+      "pre_stop_exit_code": null,
+      "signal_requested": "SIGINT",
+      "exit_code": 0,
+      "forced_cleanup": false,
+      "stopped_at": 1792535347.8971891
+    },
+    {
+      "pid": 33069,
+      "started_at": 1792535347.904552,
+      "mode": "normal CLI; no operator terminal or receipt capability",
+      "pre_stop_exit_code": null,
+      "signal_requested": "SIGINT",
+      "exit_code": 0,
+      "forced_cleanup": false,
+      "stopped_at": 1792535640.547988
+    }
+  ],
+  "human_acceptance": false,
+  "canonical_task_status": "in_progress",
+  "regression_tests": {
+    "python": 121,
+    "passed": 121
+  }
+}

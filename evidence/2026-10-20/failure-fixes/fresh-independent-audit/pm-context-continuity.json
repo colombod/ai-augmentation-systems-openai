@@ -1,0 +1,24 @@
+{
+  "proof": {
+    "role": "product-manager",
+    "message_id": "5f49a73d-d132-44ff-8778-42a232096a12",
+    "native_thread": "01a15b6d-f8f1-7661-b44f-c9c0f9b25ce7",
+    "native_turn": "01a15b6e-cb40-7c83-9c89-2aa7674d6875",
+    "intent_event": 66,
+    "user_message_events": [
+      67
+    ],
+    "terminal_event": 70,
+    "queue_state": "idle"
+  },
+  "assignment": "Bounded same-session continuity check: using the earlier brief/story context, state the product goal and exact canonical story path. Do not write files, invoke tools or enqueue peers. This does not grant acceptance.\n",
+  "native_terminal_event": 70,
+  "native_response": "The product goal is a deterministic Python CLI, `slugify.py`, that converts one text argument into a lowercase ASCII slug, treats runs of non-ASCII-alphanumeric original characters as separators, trims edge hyphens, and prints a newline. All-separator input prints an empty line; missing text exits 2.\n\nCanonical story path: `/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-8frrftqa/planning/.delivery/stories/slugify-cli.md`\n\nThe story remains a draft; no acceptance is implied.",
+  "checks": {
+    "mentions_original_goal": true,
+    "names_original_story": true,
+    "prompt_did_not_repeat_contract_or_story_path": true,
+    "same_native_thread": true,
+    "no_tools_in_followup": true
+  }
+}

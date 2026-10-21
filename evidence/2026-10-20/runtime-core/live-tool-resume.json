@@ -1,0 +1,197 @@
+{
+  "kind": "real-model persistent session; not desktop UI acceptance",
+  "compatibility": {
+    "initialize": {
+      "userAgent": "Codex Desktop/0.159.3 (Mac OS 27.0.1; arm64) dumb (delivery_coordinator; 0.1.0)",
+      "codexHome": "/Users/colombod/.codex",
+      "platformFamily": "unix",
+      "platformOs": "macos"
+    },
+    "connected_tool_inventory": {
+      "servers": 6,
+      "tools": 0
+    },
+    "connected_tool_policy": "disabled; effective config checked",
+    "apps_feature": false,
+    "native_computer_browser_policy": "deny; effective config checked"
+  },
+  "first": {
+    "thread": "01a15ac1-90ac-7b50-8f2b-9e6d8fd12357",
+    "turn": null,
+    "phase": "idle"
+  },
+  "recovered": {
+    "thread": "01a15ac1-90ac-7b50-8f2b-9e6d8fd12357",
+    "turn": null,
+    "phase": "idle"
+  },
+  "second": {
+    "thread": "01a15ac1-90ac-7b50-8f2b-9e6d8fd12357",
+    "turn": null,
+    "phase": "idle"
+  },
+  "same_thread": true,
+  "native_dynamic_tools": [
+    {
+      "role": "coordinator",
+      "thread": "01a15ac1-90ac-7b50-8f2b-9e6d8fd12357",
+      "turn": "01a15ac1-928f-79a1-bd8e-a5ab9add2e64",
+      "tool": "delivery_send",
+      "result": {
+        "success": true,
+        "contentItems": [
+          {
+            "type": "inputText",
+            "text": "{\"queued_message_id\": \"5cbb2451-d7e0-40d9-a2c3-97f6a4aae0af\", \"human_authority\": false}"
+          }
+        ]
+      }
+    },
+    {
+      "role": "coordinator",
+      "thread": "01a15ac1-90ac-7b50-8f2b-9e6d8fd12357",
+      "turn": "01a15ac1-c525-71d1-9c02-8fdd8dd487a0",
+      "tool": "delivery_send",
+      "result": {
+        "success": true,
+        "contentItems": [
+          {
+            "type": "inputText",
+            "text": "{\"queued_message_id\": \"2f5feb79-3b7f-48d7-90cc-fac0aafbf985\", \"human_authority\": false}"
+          }
+        ]
+      }
+    }
+  ],
+  "successful_send_count": 2,
+  "items": [
+    {
+      "role": "coordinator",
+      "native": {
+        "item": {
+          "type": "userMessage",
+          "id": "01a15ac1-b504-79e0-851f-3449d71e7319",
+          "clientId": null,
+          "content": [
+            {
+              "type": "text",
+              "text": "[Operator-assigned work; queued message 8e97b242-603c-4c8b-ac65-3e9b1c8ce164]\nCall delivery_send to recipient product-manager with message TOOL_ONE, then reply exactly CORE_ONE",
+              "text_elements": []
+            }
+          ]
+        },
+        "threadId": "01a15ac1-90ac-7b50-8f2b-9e6d8fd12357",
+        "turnId": "01a15ac1-928f-79a1-bd8e-a5ab9add2e64",
+        "completedAtMs": 1792524006663
+      }
+    },
+    {
+      "role": "coordinator",
+      "native": {
+        "item": {
+          "type": "dynamicToolCall",
+          "id": "exec-6d385d2c-1169-4a3b-b8be-a49cfeba8feb",
+          "namespace": null,
+          "tool": "delivery_send",
+          "arguments": {
+            "recipient": "product-manager",
+            "message": "TOOL_ONE"
+          },
+          "status": "completed",
+          "contentItems": [
+            {
+              "type": "inputText",
+              "text": "{\"queued_message_id\": \"5cbb2451-d7e0-40d9-a2c3-97f6a4aae0af\", \"human_authority\": false}"
+            }
+          ],
+          "success": true,
+          "durationMs": 2
+        },
+        "threadId": "01a15ac1-90ac-7b50-8f2b-9e6d8fd12357",
+        "turnId": "01a15ac1-928f-79a1-bd8e-a5ab9add2e64",
+        "completedAtMs": 1792524008702
+      }
+    },
+    {
+      "role": "coordinator",
+      "native": {
+        "item": {
+          "type": "agentMessage",
+          "id": "msg_065a1ce3825aba13016ad7beea764c8191b83ea7e3425373e2",
+          "text": "CORE_ONE",
+          "phase": "final_answer",
+          "memoryCitation": null,
+          "delivery": null,
+          "questions": null
+        },
+        "threadId": "01a15ac1-90ac-7b50-8f2b-9e6d8fd12357",
+        "turnId": "01a15ac1-928f-79a1-bd8e-a5ab9add2e64",
+        "completedAtMs": 1792524010527
+      }
+    },
+    {
+      "role": "coordinator",
+      "native": {
+        "item": {
+          "type": "userMessage",
+          "id": "01a15ac1-ec63-7971-ac80-8b7fdf202c4a",
+          "clientId": null,
+          "content": [
+            {
+              "type": "text",
+              "text": "[Operator-assigned work; queued message 51209093-ad61-47a8-a5f2-0bda050b98c5]\nCall delivery_send to recipient product-manager with message TOOL_TWO, then reply exactly CORE_TWO",
+              "text_elements": []
+            }
+          ]
+        },
+        "threadId": "01a15ac1-90ac-7b50-8f2b-9e6d8fd12357",
+        "turnId": "01a15ac1-c525-71d1-9c02-8fdd8dd487a0",
+        "completedAtMs": 1792524020839
+      }
+    },
+    {
+      "role": "coordinator",
+      "native": {
+        "item": {
+          "type": "dynamicToolCall",
+          "id": "exec-38eccaf7-8843-4762-a78d-969596bd5dc8",
+          "namespace": null,
+          "tool": "delivery_send",
+          "arguments": {
+            "recipient": "product-manager",
+            "message": "TOOL_TWO"
+          },
+          "status": "completed",
+          "contentItems": [
+            {
+              "type": "inputText",
+              "text": "{\"queued_message_id\": \"2f5feb79-3b7f-48d7-90cc-fac0aafbf985\", \"human_authority\": false}"
+            }
+          ],
+          "success": true,
+          "durationMs": 1
+        },
+        "threadId": "01a15ac1-90ac-7b50-8f2b-9e6d8fd12357",
+        "turnId": "01a15ac1-c525-71d1-9c02-8fdd8dd487a0",
+        "completedAtMs": 1792524023652
+      }
+    },
+    {
+      "role": "coordinator",
+      "native": {
+        "item": {
+          "type": "agentMessage",
+          "id": "msg_065a1ce3825aba13016ad7bef9b76c819182317cb5c54e6db0",
+          "text": "CORE_TWO",
+          "phase": "final_answer",
+          "memoryCitation": null,
+          "delivery": null,
+          "questions": null
+        },
+        "threadId": "01a15ac1-90ac-7b50-8f2b-9e6d8fd12357",
+        "turnId": "01a15ac1-c525-71d1-9c02-8fdd8dd487a0",
+        "completedAtMs": 1792524025798
+      }
+    }
+  ]
+}

@@ -1,0 +1,157 @@
+{
+  "review": "Manual assessment by the implementation session against prepared scenario criteria; not independent grading.",
+  "executions": 4,
+  "distinct_scenarios": 3,
+  "initial_verdicts": {
+    "pass": 2,
+    "partial": 1
+  },
+  "final_scenario_verdicts": {
+    "pass": 3
+  },
+  "scope": "Real native Codex inference with scenario capabilities restricted by prompt. Skill/reference content supplied inline rather than selected through the installed plugin. Read-only temporary workspaces; no tool calls observed. Does not establish actual absent-tool host behavior, full pipeline quality, desktop or ChatGPT acceptance.",
+  "results": [
+    {
+      "case": "status-without-access",
+      "attempt": "initial",
+      "verdict": "pass",
+      "checks": [
+        {
+          "id": "status-unavailable",
+          "verdict": "pass",
+          "evidence": "Opens with checkout-redesign: status unavailable; lists current phase/task state as unknown."
+        },
+        {
+          "id": "requests-artifacts",
+          "verdict": "pass",
+          "evidence": "Requests initiative documents, stories, reviews, sprint files, glossary/persona records and source revision/date."
+        },
+        {
+          "id": "no-invented-progress",
+          "verdict": "pass",
+          "evidence": "States that workspace existence, framing, completed phases, story statuses and findings are unknown."
+        },
+        {
+          "id": "no-execution-or-save-claim",
+          "verdict": "pass",
+          "evidence": "Manual assessment only; no tool or persistence claim; event trace contains only an agent message."
+        }
+      ],
+      "answer": "status-without-access/answer.md",
+      "tool_events_observed": 0
+    },
+    {
+      "case": "brief-without-delegation-or-save",
+      "attempt": "initial",
+      "verdict": "pass",
+      "checks": [
+        {
+          "id": "complete-frame-export",
+          "verdict": "pass",
+          "evidence": "Frame brief contains problem, segment, cost, outcome, signals, MVP boundary, exclusions, current partial workflow and open questions; explicitly prepared, not saved."
+        },
+        {
+          "id": "sequential-lenses",
+          "verdict": "pass",
+          "evidence": "Coverage states single-session sequential value, precision and absence passes."
+        },
+        {
+          "id": "independence-unavailable",
+          "verdict": "pass",
+          "evidence": "Independent convergence unavailable; findings identified by lens rather than independent agreement."
+        },
+        {
+          "id": "no-invented-measurement",
+          "verdict": "pass",
+          "evidence": "Word count unverified; all commercial/customer counts and targets unknown/unmeasured; no invented citations."
+        },
+        {
+          "id": "open-questions-and-persistence",
+          "verdict": "pass",
+          "evidence": "Retains owned unresolved questions and explicitly states no prior artifacts/glossary/reviews could be checked."
+        }
+      ],
+      "answer": "brief-without-delegation-or-save/answer.md",
+      "tool_events_observed": 0
+    },
+    {
+      "case": "simulation-without-workers",
+      "attempt": "initial",
+      "verdict": "partial",
+      "checks": [
+        {
+          "id": "nonleading-guide-and-followups",
+          "verdict": "partial",
+          "evidence": "Guide precedes interviews, but P-2 follow-up asks whether an explanation would overcome the concern, suggesting a candidate remedy."
+        },
+        {
+          "id": "synthetic-labels",
+          "verdict": "pass",
+          "evidence": "Opening, both transcripts and synthesis carry synthetic-output labels."
+        },
+        {
+          "id": "single-session-mode",
+          "verdict": "pass",
+          "evidence": "Sequential simulation; synthesis explicitly says overlap is not independent convergence."
+        },
+        {
+          "id": "grounding-preserved",
+          "verdict": "pass",
+          "evidence": "P-1 remains assumed; P-2 remains reported, with no direct customer observation claim."
+        },
+        {
+          "id": "no-fabricated-customers-or-workers",
+          "verdict": "pass",
+          "evidence": "Quotes are labeled synthetic; no active worker or actual customer-history claim."
+        },
+        {
+          "id": "no-save-claim",
+          "verdict": "pass",
+          "evidence": "Content and research backlog explicitly prepared, not persisted."
+        }
+      ],
+      "answer": "simulation-without-workers/answer.md",
+      "tool_events_observed": 0
+    },
+    {
+      "case": "simulation-without-workers",
+      "attempt": "after-guidance-fix",
+      "verdict": "pass",
+      "checks": [
+        {
+          "id": "nonleading-guide-and-followups",
+          "verdict": "pass",
+          "evidence": "Guide precedes interviews. Follow-ups ask what information is missing, what matters and what happens next; no offered explanation/discount/disclosure fix is used as a confirmation question."
+        },
+        {
+          "id": "synthetic-labels",
+          "verdict": "pass",
+          "evidence": "Opening, both transcripts and synthesis carry synthetic-output labels."
+        },
+        {
+          "id": "single-session-mode",
+          "verdict": "pass",
+          "evidence": "Sequential simulation; synthesis explicitly says overlap is not independent convergence."
+        },
+        {
+          "id": "grounding-preserved",
+          "verdict": "pass",
+          "evidence": "P-1 remains assumed; P-2 remains reported, with no direct customer observation claim."
+        },
+        {
+          "id": "no-fabricated-customers-or-workers",
+          "verdict": "pass",
+          "evidence": "Quotes are labeled synthetic; no active worker or actual customer-history claim."
+        },
+        {
+          "id": "no-save-claim",
+          "verdict": "pass",
+          "evidence": "Content and research backlog explicitly prepared, not persisted."
+        }
+      ],
+      "answer": "simulation-rerun/simulation-without-workers/answer.md",
+      "tool_events_observed": 0,
+      "note": "Guide asks about past events; supplied persona snapshots cannot establish those histories, and the output explicitly leaves them unknown."
+    }
+  ]
+}

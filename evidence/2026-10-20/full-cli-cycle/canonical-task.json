@@ -1,0 +1,29 @@
+{
+  "id": "fullcycle-6m8",
+  "title": "Convert a text argument to an ASCII slug with slugify.py",
+  "description": "# Convert a text argument to an ASCII slug with slugify.py\n\nAs a terminal script author, I want to run `python3 slugify.py TEXT` and capture a deterministic ASCII slug so that my scripts use consistent text labels. Deliver the CLI in the specified product root. Unicode outside ASCII is a separator, not transliteration.\n\n## Acceptance criteria\n\nGiven exactly one text argument, python3 slugify.py TEXT lowercases ASCII A-Z, converts each maximal run of characters outside ASCII [A-Za-z0-9] to one hyphen, trims edge hyphens and prints one newline with exit 0; all-separator input prints an empty line, and missing TEXT exits 2.\n",
+  "acceptance_criteria": "Given exactly one text argument, python3 slugify.py TEXT lowercases ASCII A-Z, converts each maximal run of characters outside ASCII [A-Za-z0-9] to one hyphen, trims edge hyphens and prints one newline with exit 0; all-separator input prints an empty line, and missing TEXT exits 2.",
+  "notes": "delivery-claim-op:83d00aac-cdd6-4188-8b23-5219a66eb8c8",
+  "status": "in_progress",
+  "priority": 2,
+  "issue_type": "task",
+  "assignee": "builder",
+  "owner": "fixture@example.invalid",
+  "created_at": "2026-10-20T21:59:34Z",
+  "created_by": "delivery-manager",
+  "updated_at": "2026-10-20T22:00:20Z",
+  "started_at": "2026-10-20T22:00:20Z",
+  "external_ref": "delivery-story:5ea63a10dfa270a1b0e9772486596720a78fbf6ab0c49cedaea7245760c2d6a1",
+  "metadata": {
+    "delivery_operation": "4f27956c-e358-48fa-b936-39aa79a76543",
+    "delivery_source_key": "5ea63a10dfa270a1b0e9772486596720a78fbf6ab0c49cedaea7245760c2d6a1",
+    "delivery_source_path": "stories/slugify-cli.md",
+    "delivery_source_sha256": "5248e97daf1fc5c2af0919c09f3eb9abcbf2ef20b58af4065ef53ee5b2a3f3eb"
+  },
+  "labels": [
+    "delivery-draft"
+  ],
+  "dependent_count": 0,
+  "dependency_count": 0,
+  "comment_count": 0
+}

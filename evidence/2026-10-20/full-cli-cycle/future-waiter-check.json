@@ -1,0 +1,7 @@
+{
+  "kind": "post-run corrected waiter function check; full future harness not rerun",
+  "actual_completed_fixture_queue_proof_passed": true,
+  "synthetic_idle_role_with_queued_new_message_refused": true,
+  "source_sha256": "cf5d513dbbe2c1c466b22f3604e5e6b585e692a8e778e52987775b9ae9de0d14",
+  "accepted": false
+}

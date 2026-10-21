@@ -1,0 +1,8 @@
+{
+  "plugins/delivery/scripts/codex_rpc.py": "8169cc20b77c9d9a34639c7205e1963ad4a7767fcc8b5f364a4bde0891a1555b",
+  "plugins/delivery/scripts/judge.js": "da2054e0390f4ce5a55453afafd48a218db20614c5f8c4703126034387faf751",
+  "plugins/delivery/scripts/lib/judge.js": "080adfeb433a92a42f74622991b93d11dd1795ca83d6fa853ecc6f9971523043",
+  "plugins/delivery/scripts/lib/openai-judge.js": "ded004a155f8a2d33f7be32e8166db70f2905f67f6175e09e1d7b9ded50edd61",
+  "plugins/delivery/scripts/project.py": "37f9a85bab6aca8c824fbd6704b204ba535ce6010936c623f7aa7280ad88da72",
+  "plugins/delivery/scripts/runtime.py": "df986b790b6208a7f28acc3b16124d2779d34a38a4a7c7cfcb4ed5b9ae4f9e06"
+}

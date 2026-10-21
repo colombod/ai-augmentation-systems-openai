@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "git",
+    "-C",
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/seed",
+    "config",
+    "user.email",
+    "fixture@example.invalid"
+  ],
+  "cwd": null,
+  "code": 0,
+  "stdout": "",
+  "stderr": ""
+}

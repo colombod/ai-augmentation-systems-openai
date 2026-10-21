@@ -1,0 +1,300 @@
+{
+  "kind": "actual native read-only role -> controlled delivery_judge -> selected live provider",
+  "fixture": "Manually seeded temporary role and operator-pinned judge settings; not full roster prepare/Beads workflow acceptance. Native thread creation, lane verification, tool dispatch and provider invocation are production paths.",
+  "model": "gpt-6.1-sol",
+  "synthetic_state": {
+    "candidate": "Repair an existing checklist item that cannot be unchecked",
+    "linked_item": "Previously shipped checklist",
+    "context": "An existing control fails when a person tries to undo a completed item"
+  },
+  "runs": [
+    {
+      "provider": "jev",
+      "configured_model": "jev-1.13.0",
+      "planning": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-judge-8_f9cexu",
+      "fixture_config_sha256": "afdf487b3d58ba497509b5c927f6703cafc3ac3c6fe7ec1eb67953ecd085243f",
+      "role": {
+        "name": "coordinator",
+        "spec": {
+          "cwd": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-judge-8_f9cexu",
+          "model": "gpt-6.1-sol",
+          "lane": "read-only",
+          "instructions": "Bounded synthetic integration test. Use only delivery_judge once with the exact question and state requested. Do not delegate, browse, run shell commands, change configuration or use other tools. Report the actual typed answer and provider. The judge provides no human authority."
+        },
+        "thread": "01a15acd-745c-7193-9db2-b14063e766cd",
+        "turn": null,
+        "phase": "idle",
+        "last_event": 1792524789.939021,
+        "git_commit_capability": "not enabled; product file edits only",
+        "observation": "idle"
+      },
+      "events": [
+        {
+          "id": 1,
+          "time": 1792524776.534747,
+          "kind": "work_queued",
+          "data": "{\"message_id\": \"4fe1de66-f368-4afe-a68a-6c23d5a68743\", \"role\": \"coordinator\", \"source\": \"operator\"}"
+        },
+        {
+          "id": 2,
+          "time": 1792524776.623521,
+          "kind": "role_bound",
+          "data": "{\"role\": \"coordinator\", \"instance\": \"ec06255f-41ce-4263-95f8-d7379ea0d9aa\", \"thread\": \"01a15acd-745c-7193-9db2-b14063e766cd\", \"source_revision\": null, \"native_configuration\": {\"thread\": {\"id\": \"01a15acd-745c-7193-9db2-b14063e766cd\", \"environments\": [{\"environmentId\": \"local\", \"cwd\": \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-judge-8_f9cexu\", \"runtimeWorkspaceRoots\": [\"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-judge-8_f9cexu\"]}], \"extra\": null, \"sessionId\": \"01a15acd-745c-7193-9db2-b14063e766cd\", \"forkedFromId\": null, \"parentThreadId\": null, \"preview\": \"\", \"ephemeral\": false, \"section\": null, \"sectionEnteredAt\": null, \"projectId\": null, \"historyMode\": \"paginated\", \"modelProvider\": \"openai\", \"model\": \"gpt-6.1-sol\", \"reasoningEffort\": \"medium\", \"createdAt\": 1792524776, \"updatedAt\": 1792524776, \"recencyAt\": 1792524776, \"status\": {\"type\": \"idle\"}, \"path\": \"/Users/colombod/.codex/sessions/2026/10/20/rollout-2026-10-20T20-32-56-01a15acd-745c-7193-9db2-b14063e766cd.jsonl\", \"cwd\": \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-judge-8_f9cexu\", \"cliVersion\": \"0.159.3\", \"originator\": \"Codex Desktop\", \"source\": \"vscode\", \"canAcceptDirectInput\": true, \"threadSource\": null, \"agentNickname\": null, \"agentRole\": null, \"gitInfo\": null, \"name\": null, \"daybreakEnabled\": null, \"turns\": []}, \"model\": \"gpt-6.1-sol\", \"modelProvider\": \"openai\", \"serviceTier\": \"default\", \"disabledPluginIds\": [], \"cwd\": \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-judge-8_f9cexu\", \"runtimeWorkspaceRoots\": [\"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-judge-8_f9cexu\"], \"instructionSources\": [\"/Users/colombod/.codex/AGENTS.md\"], \"approvalPolicy\": \"on-request\", \"approvalsReviewer\": \"user\", \"sandbox\": {\"type\": \"readOnly\", \"networkAccess\": false}, \"activePermissionProfile\": null, \"reasoningEffort\": \"medium\", \"multiAgentMode\": \"explicitRequestOnly\"}}"
+        },
+        {
+          "id": 3,
+          "time": 1792524776.624313,
+          "kind": "turn_intent",
+          "data": "{\"role\": \"coordinator\", \"message_id\": \"4fe1de66-f368-4afe-a68a-6c23d5a68743\"}"
+        },
+        {
+          "id": 4,
+          "time": 1792524784.439094,
+          "kind": "item/completed",
+          "data": "{\"role\": \"coordinator\", \"native\": {\"item\": {\"type\": \"userMessage\", \"id\": \"01a15acd-9330-7c32-a87a-d48773b8f4d4\", \"clientId\": null, \"content\": [{\"type\": \"text\", \"text\": \"[Operator-assigned work; queued message 4fe1de66-f368-4afe-a68a-6c23d5a68743]\\nCall delivery_judge exactly once with this exact JSON argument: {\\\"question\\\": \\\"is_fix\\\", \\\"state\\\": {\\\"candidate\\\": \\\"Repair an existing checklist item that cannot be unchecked\\\", \\\"linked_item\\\": \\\"Previously shipped checklist\\\", \\\"context\\\": \\\"An existing control fails when a person tries to undo a completed item\\\"}, \\\"protected\\\": false}. Do not call any other tool. Then report actual answer, provider and human_authority.\", \"text_elements\": []}]}, \"threadId\": \"01a15acd-745c-7193-9db2-b14063e766cd\", \"turnId\": \"01a15acd-74b1-7b30-8ecf-0c972158dcc4\", \"completedAtMs\": 1792524784435}}"
+        },
+        {
+          "id": 5,
+          "time": 1792524786.160906,
+          "kind": "item/completed",
+          "data": "{\"role\": \"coordinator\", \"native\": {\"item\": {\"type\": \"agentMessage\", \"id\": \"msg_0aa3e3d238481011016ad7c1f1cae48191aaa3b0630ca05775\", \"text\": \"I\\u2019ll call the judge once with the exact argument and report its returned fields.\", \"phase\": \"commentary\", \"memoryCitation\": null, \"delivery\": null, \"questions\": null}, \"threadId\": \"01a15acd-745c-7193-9db2-b14063e766cd\", \"turnId\": \"01a15acd-74b1-7b30-8ecf-0c972158dcc4\", \"completedAtMs\": 1792524786155}}"
+        },
+        {
+          "id": 6,
+          "time": 1792524787.464467,
+          "kind": "controlled_tool_result",
+          "data": "{\"role\": \"coordinator\", \"thread\": \"01a15acd-745c-7193-9db2-b14063e766cd\", \"turn\": \"01a15acd-74b1-7b30-8ecf-0c972158dcc4\", \"tool\": \"delivery_judge\", \"result\": {\"success\": true, \"contentItems\": [{\"type\": \"inputText\", \"text\": \"{\\\"question\\\": \\\"is_fix\\\", \\\"version\\\": \\\"1\\\", \\\"provider\\\": \\\"jev\\\", \\\"mode\\\": \\\"advisory\\\", \\\"advisory\\\": true, \\\"human_authority\\\": false, \\\"type\\\": \\\"noul\\\", \\\"model\\\": \\\"jev-1.13.0\\\", \\\"answer\\\": \\\"yes\\\", \\\"p\\\": 0.95, \\\"latencyMs\\\": 271.3, \\\"inputTokens\\\": 335, \\\"outputTokens\\\": 21, \\\"policy\\\": {\\\"status\\\": \\\"advisory\\\", \\\"protected\\\": false, \\\"gate_allowed\\\": true, \\\"blocking_eligible\\\": false, \\\"reason\\\": \\\"advisory_question\\\"}}\"}]}}"
+        },
+        {
+          "id": 7,
+          "time": 1792524787.468905,
+          "kind": "item/completed",
+          "data": "{\"role\": \"coordinator\", \"native\": {\"item\": {\"type\": \"dynamicToolCall\", \"id\": \"exec-4ec121ad-10dc-48e4-baab-95c19dc5567f\", \"namespace\": null, \"tool\": \"delivery_judge\", \"arguments\": {\"question\": \"is_fix\", \"state\": {\"candidate\": \"Repair an existing checklist item that cannot be unchecked\", \"linked_item\": \"Previously shipped checklist\", \"context\": \"An existing control fails when a person tries to undo a completed item\"}, \"protected\": false}, \"status\": \"completed\", \"contentItems\": [{\"type\": \"inputText\", \"text\": \"{\\\"question\\\": \\\"is_fix\\\", \\\"version\\\": \\\"1\\\", \\\"provider\\\": \\\"jev\\\", \\\"mode\\\": \\\"advisory\\\", \\\"advisory\\\": true, \\\"human_authority\\\": false, \\\"type\\\": \\\"noul\\\", \\\"model\\\": \\\"jev-1.13.0\\\", \\\"answer\\\": \\\"yes\\\", \\\"p\\\": 0.95, \\\"latencyMs\\\": 271.3, \\\"inputTokens\\\": 335, \\\"outputTokens\\\": 21, \\\"policy\\\": {\\\"status\\\": \\\"advisory\\\", \\\"protected\\\": false, \\\"gate_allowed\\\": true, \\\"blocking_eligible\\\": false, \\\"reason\\\": \\\"advisory_question\\\"}}\"}], \"success\": true, \"durationMs\": 337}, \"threadId\": \"01a15acd-745c-7193-9db2-b14063e766cd\", \"turnId\": \"01a15acd-74b1-7b30-8ecf-0c972158dcc4\", \"completedAtMs\": 1792524787465}}"
+        },
+        {
+          "id": 8,
+          "time": 1792524787.4752939,
+          "kind": "thread/tokenUsage/updated",
+          "data": "{\"role\": \"coordinator\", \"native\": {\"threadId\": \"01a15acd-745c-7193-9db2-b14063e766cd\", \"turnId\": \"01a15acd-74b1-7b30-8ecf-0c972158dcc4\", \"tokenUsage\": {\"total\": {\"totalTokens\": 21362, \"inputTokens\": 21270, \"cachedInputTokens\": 0, \"cacheWriteInputTokens\": 0, \"outputTokens\": 92, \"reasoningOutputTokens\": 0}, \"last\": {\"totalTokens\": 21362, \"inputTokens\": 21270, \"cachedInputTokens\": 0, \"cacheWriteInputTokens\": 0, \"outputTokens\": 92, \"reasoningOutputTokens\": 0}, \"modelContextWindow\": 475000}}}"
+        },
+        {
+          "id": 9,
+          "time": 1792524789.9149408,
+          "kind": "item/completed",
+          "data": "{\"role\": \"coordinator\", \"native\": {\"item\": {\"type\": \"agentMessage\", \"id\": \"msg_0aa3e3d238481011016ad7c1f575488191a623843cd061cef1\", \"text\": \"answer: `\\\"yes\\\"` (type: `\\\"noul\\\"`)\\nprovider: `\\\"jev\\\"`\\nhuman_authority: `false`\", \"phase\": \"final_answer\", \"memoryCitation\": null, \"delivery\": null, \"questions\": null}, \"threadId\": \"01a15acd-745c-7193-9db2-b14063e766cd\", \"turnId\": \"01a15acd-74b1-7b30-8ecf-0c972158dcc4\", \"completedAtMs\": 1792524789911}}"
+        },
+        {
+          "id": 10,
+          "time": 1792524789.929302,
+          "kind": "thread/tokenUsage/updated",
+          "data": "{\"role\": \"coordinator\", \"native\": {\"threadId\": \"01a15acd-745c-7193-9db2-b14063e766cd\", \"turnId\": \"01a15acd-74b1-7b30-8ecf-0c972158dcc4\", \"tokenUsage\": {\"total\": {\"totalTokens\": 42912, \"inputTokens\": 42791, \"cachedInputTokens\": 21120, \"cacheWriteInputTokens\": 0, \"outputTokens\": 121, \"reasoningOutputTokens\": 0}, \"last\": {\"totalTokens\": 21550, \"inputTokens\": 21521, \"cachedInputTokens\": 21120, \"cacheWriteInputTokens\": 0, \"outputTokens\": 29, \"reasoningOutputTokens\": 0}, \"modelContextWindow\": 475000}}}"
+        },
+        {
+          "id": 11,
+          "time": 1792524789.940185,
+          "kind": "turn_terminal",
+          "data": "{\"role\": \"coordinator\", \"native\": {\"threadId\": \"01a15acd-745c-7193-9db2-b14063e766cd\", \"turn\": {\"id\": \"01a15acd-74b1-7b30-8ecf-0c972158dcc4\", \"items\": [{\"type\": \"agentMessage\", \"id\": \"msg_0aa3e3d238481011016ad7c1f575488191a623843cd061cef1\", \"text\": \"answer: `\\\"yes\\\"` (type: `\\\"noul\\\"`)\\nprovider: `\\\"jev\\\"`\\nhuman_authority: `false`\", \"phase\": \"final_answer\", \"memoryCitation\": null, \"delivery\": null, \"questions\": null}], \"itemsView\": \"summary\", \"status\": \"completed\", \"error\": null, \"startedAt\": 1792524776, \"completedAt\": 1792524789, \"durationMs\": 13303}}}"
+        }
+      ],
+      "judge_tool_results": [
+        {
+          "success": true,
+          "payload": {
+            "question": "is_fix",
+            "version": "1",
+            "provider": "jev",
+            "mode": "advisory",
+            "advisory": true,
+            "human_authority": false,
+            "type": "noul",
+            "model": "jev-1.13.0",
+            "answer": "yes",
+            "p": 0.95,
+            "latencyMs": 271.3,
+            "inputTokens": 335,
+            "outputTokens": 21,
+            "policy": {
+              "status": "advisory",
+              "protected": false,
+              "gate_allowed": true,
+              "blocking_eligible": false,
+              "reason": "advisory_question"
+            }
+          }
+        }
+      ],
+      "checks": {
+        "native_turn_completed": true,
+        "exactly_one_successful_judge_call": true,
+        "selected_provider": true,
+        "pinned_model": true,
+        "real_typed_yes": true,
+        "human_authority_false": true,
+        "advisory_true": true,
+        "source_config_unchanged": true,
+        "snapshot_matches_operator_selection": true,
+        "not_fallback": true
+      },
+      "compatibility": {
+        "initialize": {
+          "userAgent": "Codex Desktop/0.159.3 (Mac OS 27.0.1; arm64) dumb (delivery_coordinator; 0.1.0)",
+          "codexHome": "/Users/colombod/.codex",
+          "platformFamily": "unix",
+          "platformOs": "macos"
+        },
+        "connected_tool_inventory": {
+          "servers": 6,
+          "tools": 0
+        },
+        "connected_tool_policy": "disabled; effective config checked",
+        "apps_feature": false,
+        "native_computer_browser_policy": "deny; effective config checked"
+      }
+    },
+    {
+      "provider": "openai",
+      "configured_model": "gpt-6-luna",
+      "planning": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-judge-3kfzznae",
+      "fixture_config_sha256": "7dacf31d61a4e3f38af1a3a0a6792a639199f24dce5cc474dc4a717ba85302ab",
+      "role": {
+        "name": "coordinator",
+        "spec": {
+          "cwd": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-judge-3kfzznae",
+          "model": "gpt-6.1-sol",
+          "lane": "read-only",
+          "instructions": "Bounded synthetic integration test. Use only delivery_judge once with the exact question and state requested. Do not delegate, browse, run shell commands, change configuration or use other tools. Report the actual typed answer and provider. The judge provides no human authority."
+        },
+        "thread": "01a15acd-a95b-7320-8bfd-2965497714fd",
+        "turn": null,
+        "phase": "idle",
+        "last_event": 1792524804.862963,
+        "git_commit_capability": "not enabled; product file edits only",
+        "observation": "idle"
+      },
+      "events": [
+        {
+          "id": 1,
+          "time": 1792524790.103935,
+          "kind": "work_queued",
+          "data": "{\"message_id\": \"1d5d2c15-eb68-48e0-806c-45da855c2f29\", \"role\": \"coordinator\", \"source\": \"operator\"}"
+        },
+        {
+          "id": 2,
+          "time": 1792524790.1883368,
+          "kind": "role_bound",
+          "data": "{\"role\": \"coordinator\", \"instance\": \"4bf2698e-d6b7-4f91-aa3b-ee661a358ad6\", \"thread\": \"01a15acd-a95b-7320-8bfd-2965497714fd\", \"source_revision\": null, \"native_configuration\": {\"thread\": {\"id\": \"01a15acd-a95b-7320-8bfd-2965497714fd\", \"environments\": [{\"environmentId\": \"local\", \"cwd\": \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-judge-3kfzznae\", \"runtimeWorkspaceRoots\": [\"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-judge-3kfzznae\"]}], \"extra\": null, \"sessionId\": \"01a15acd-a95b-7320-8bfd-2965497714fd\", \"forkedFromId\": null, \"parentThreadId\": null, \"preview\": \"\", \"ephemeral\": false, \"section\": null, \"sectionEnteredAt\": null, \"projectId\": null, \"historyMode\": \"paginated\", \"modelProvider\": \"openai\", \"model\": \"gpt-6.1-sol\", \"reasoningEffort\": \"medium\", \"createdAt\": 1792524790, \"updatedAt\": 1792524790, \"recencyAt\": 1792524790, \"status\": {\"type\": \"idle\"}, \"path\": \"/Users/colombod/.codex/sessions/2026/10/20/rollout-2026-10-20T20-33-10-01a15acd-a95b-7320-8bfd-2965497714fd.jsonl\", \"cwd\": \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-judge-3kfzznae\", \"cliVersion\": \"0.159.3\", \"originator\": \"Codex Desktop\", \"source\": \"vscode\", \"canAcceptDirectInput\": true, \"threadSource\": null, \"agentNickname\": null, \"agentRole\": null, \"gitInfo\": null, \"name\": null, \"daybreakEnabled\": null, \"turns\": []}, \"model\": \"gpt-6.1-sol\", \"modelProvider\": \"openai\", \"serviceTier\": \"default\", \"disabledPluginIds\": [], \"cwd\": \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-judge-3kfzznae\", \"runtimeWorkspaceRoots\": [\"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-judge-3kfzznae\"], \"instructionSources\": [\"/Users/colombod/.codex/AGENTS.md\"], \"approvalPolicy\": \"on-request\", \"approvalsReviewer\": \"user\", \"sandbox\": {\"type\": \"readOnly\", \"networkAccess\": false}, \"activePermissionProfile\": null, \"reasoningEffort\": \"medium\", \"multiAgentMode\": \"explicitRequestOnly\"}}"
+        },
+        {
+          "id": 3,
+          "time": 1792524790.189172,
+          "kind": "turn_intent",
+          "data": "{\"role\": \"coordinator\", \"message_id\": \"1d5d2c15-eb68-48e0-806c-45da855c2f29\"}"
+        },
+        {
+          "id": 4,
+          "time": 1792524799.6191099,
+          "kind": "item/completed",
+          "data": "{\"role\": \"coordinator\", \"native\": {\"item\": {\"type\": \"userMessage\", \"id\": \"01a15acd-ce74-7040-a485-8191a0f74aac\", \"clientId\": null, \"content\": [{\"type\": \"text\", \"text\": \"[Operator-assigned work; queued message 1d5d2c15-eb68-48e0-806c-45da855c2f29]\\nCall delivery_judge exactly once with this exact JSON argument: {\\\"question\\\": \\\"is_fix\\\", \\\"state\\\": {\\\"candidate\\\": \\\"Repair an existing checklist item that cannot be unchecked\\\", \\\"linked_item\\\": \\\"Previously shipped checklist\\\", \\\"context\\\": \\\"An existing control fails when a person tries to undo a completed item\\\"}, \\\"protected\\\": false}. Do not call any other tool. Then report actual answer, provider and human_authority.\", \"text_elements\": []}]}, \"threadId\": \"01a15acd-a95b-7320-8bfd-2965497714fd\", \"turnId\": \"01a15acd-a9ad-7bf1-ae2d-900f7a88c603\", \"completedAtMs\": 1792524799611}}"
+        },
+        {
+          "id": 5,
+          "time": 1792524802.005205,
+          "kind": "item/completed",
+          "data": "{\"role\": \"coordinator\", \"native\": {\"item\": {\"type\": \"agentMessage\", \"id\": \"msg_0b12e92276763316016ad7c2016c708191a04f72208c2aa9a6\", \"text\": \"I\\u2019ll call the judge once with the exact argument and report its returned fields.\", \"phase\": \"commentary\", \"memoryCitation\": null, \"delivery\": null, \"questions\": null}, \"threadId\": \"01a15acd-a95b-7320-8bfd-2965497714fd\", \"turnId\": \"01a15acd-a9ad-7bf1-ae2d-900f7a88c603\", \"completedAtMs\": 1792524801997}}"
+        },
+        {
+          "id": 6,
+          "time": 1792524802.9193869,
+          "kind": "controlled_tool_result",
+          "data": "{\"role\": \"coordinator\", \"thread\": \"01a15acd-a95b-7320-8bfd-2965497714fd\", \"turn\": \"01a15acd-a9ad-7bf1-ae2d-900f7a88c603\", \"tool\": \"delivery_judge\", \"result\": {\"success\": true, \"contentItems\": [{\"type\": \"inputText\", \"text\": \"{\\\"question\\\": \\\"is_fix\\\", \\\"version\\\": \\\"1\\\", \\\"provider\\\": \\\"openai\\\", \\\"mode\\\": \\\"advisory\\\", \\\"advisory\\\": true, \\\"human_authority\\\": false, \\\"type\\\": \\\"noul\\\", \\\"model\\\": \\\"gpt-6-luna\\\", \\\"answer\\\": \\\"yes\\\", \\\"p\\\": 1, \\\"latencyMs\\\": 310.6, \\\"inputTokens\\\": 207, \\\"outputTokens\\\": 0, \\\"policy\\\": {\\\"status\\\": \\\"advisory\\\", \\\"protected\\\": false, \\\"gate_allowed\\\": true, \\\"blocking_eligible\\\": false, \\\"reason\\\": \\\"advisory_question\\\"}}\"}]}}"
+        },
+        {
+          "id": 7,
+          "time": 1792524802.924256,
+          "kind": "item/completed",
+          "data": "{\"role\": \"coordinator\", \"native\": {\"item\": {\"type\": \"dynamicToolCall\", \"id\": \"exec-b1acff01-9897-44a0-9ab1-24ffa7c26d09\", \"namespace\": null, \"tool\": \"delivery_judge\", \"arguments\": {\"question\": \"is_fix\", \"state\": {\"candidate\": \"Repair an existing checklist item that cannot be unchecked\", \"linked_item\": \"Previously shipped checklist\", \"context\": \"An existing control fails when a person tries to undo a completed item\"}, \"protected\": false}, \"status\": \"completed\", \"contentItems\": [{\"type\": \"inputText\", \"text\": \"{\\\"question\\\": \\\"is_fix\\\", \\\"version\\\": \\\"1\\\", \\\"provider\\\": \\\"openai\\\", \\\"mode\\\": \\\"advisory\\\", \\\"advisory\\\": true, \\\"human_authority\\\": false, \\\"type\\\": \\\"noul\\\", \\\"model\\\": \\\"gpt-6-luna\\\", \\\"answer\\\": \\\"yes\\\", \\\"p\\\": 1, \\\"latencyMs\\\": 310.6, \\\"inputTokens\\\": 207, \\\"outputTokens\\\": 0, \\\"policy\\\": {\\\"status\\\": \\\"advisory\\\", \\\"protected\\\": false, \\\"gate_allowed\\\": true, \\\"blocking_eligible\\\": false, \\\"reason\\\": \\\"advisory_question\\\"}}\"}], \"success\": true, \"durationMs\": 362}, \"threadId\": \"01a15acd-a95b-7320-8bfd-2965497714fd\", \"turnId\": \"01a15acd-a9ad-7bf1-ae2d-900f7a88c603\", \"completedAtMs\": 1792524802920}}"
+        },
+        {
+          "id": 8,
+          "time": 1792524802.929853,
+          "kind": "thread/tokenUsage/updated",
+          "data": "{\"role\": \"coordinator\", \"native\": {\"threadId\": \"01a15acd-a95b-7320-8bfd-2965497714fd\", \"turnId\": \"01a15acd-a9ad-7bf1-ae2d-900f7a88c603\", \"tokenUsage\": {\"total\": {\"totalTokens\": 21361, \"inputTokens\": 21269, \"cachedInputTokens\": 0, \"cacheWriteInputTokens\": 0, \"outputTokens\": 92, \"reasoningOutputTokens\": 0}, \"last\": {\"totalTokens\": 21361, \"inputTokens\": 21269, \"cachedInputTokens\": 0, \"cacheWriteInputTokens\": 0, \"outputTokens\": 92, \"reasoningOutputTokens\": 0}, \"modelContextWindow\": 475000}}}"
+        },
+        {
+          "id": 9,
+          "time": 1792524804.8406699,
+          "kind": "item/completed",
+          "data": "{\"role\": \"coordinator\", \"native\": {\"item\": {\"type\": \"agentMessage\", \"id\": \"msg_0b12e92276763316016ad7c20486148191a953af41e5677f0f\", \"text\": \"- answer: `\\\"yes\\\"` (type: `\\\"noul\\\"`)\\n- provider: `\\\"openai\\\"`\\n- human_authority: `false`\", \"phase\": \"final_answer\", \"memoryCitation\": null, \"delivery\": null, \"questions\": null}, \"threadId\": \"01a15acd-a95b-7320-8bfd-2965497714fd\", \"turnId\": \"01a15acd-a9ad-7bf1-ae2d-900f7a88c603\", \"completedAtMs\": 1792524804836}}"
+        },
+        {
+          "id": 10,
+          "time": 1792524804.853009,
+          "kind": "thread/tokenUsage/updated",
+          "data": "{\"role\": \"coordinator\", \"native\": {\"threadId\": \"01a15acd-a95b-7320-8bfd-2965497714fd\", \"turnId\": \"01a15acd-a9ad-7bf1-ae2d-900f7a88c603\", \"tokenUsage\": {\"total\": {\"totalTokens\": 42912, \"inputTokens\": 42787, \"cachedInputTokens\": 21120, \"cacheWriteInputTokens\": 0, \"outputTokens\": 125, \"reasoningOutputTokens\": 0}, \"last\": {\"totalTokens\": 21551, \"inputTokens\": 21518, \"cachedInputTokens\": 21120, \"cacheWriteInputTokens\": 0, \"outputTokens\": 33, \"reasoningOutputTokens\": 0}, \"modelContextWindow\": 475000}}}"
+        },
+        {
+          "id": 11,
+          "time": 1792524804.864028,
+          "kind": "turn_terminal",
+          "data": "{\"role\": \"coordinator\", \"native\": {\"threadId\": \"01a15acd-a95b-7320-8bfd-2965497714fd\", \"turn\": {\"id\": \"01a15acd-a9ad-7bf1-ae2d-900f7a88c603\", \"items\": [{\"type\": \"agentMessage\", \"id\": \"msg_0b12e92276763316016ad7c20486148191a953af41e5677f0f\", \"text\": \"- answer: `\\\"yes\\\"` (type: `\\\"noul\\\"`)\\n- provider: `\\\"openai\\\"`\\n- human_authority: `false`\", \"phase\": \"final_answer\", \"memoryCitation\": null, \"delivery\": null, \"questions\": null}], \"itemsView\": \"summary\", \"status\": \"completed\", \"error\": null, \"startedAt\": 1792524790, \"completedAt\": 1792524804, \"durationMs\": 14662}}}"
+        }
+      ],
+      "judge_tool_results": [
+        {
+          "success": true,
+          "payload": {
+            "question": "is_fix",
+            "version": "1",
+            "provider": "openai",
+            "mode": "advisory",
+            "advisory": true,
+            "human_authority": false,
+            "type": "noul",
+            "model": "gpt-6-luna",
+            "answer": "yes",
+            "p": 1,
+            "latencyMs": 310.6,
+            "inputTokens": 207,
+            "outputTokens": 0,
+            "policy": {
+              "status": "advisory",
+              "protected": false,
+              "gate_allowed": true,
+              "blocking_eligible": false,
+              "reason": "advisory_question"
+            }
+          }
+        }
+      ],
+      "checks": {
+        "native_turn_completed": true,
+        "exactly_one_successful_judge_call": true,
+        "selected_provider": true,
+        "pinned_model": true,
+        "real_typed_yes": true,
+        "human_authority_false": true,
+        "advisory_true": true,
+        "source_config_unchanged": true,
+        "snapshot_matches_operator_selection": true,
+        "not_fallback": true
+      },
+      "compatibility": {
+        "initialize": {
+          "userAgent": "Codex Desktop/0.159.3 (Mac OS 27.0.1; arm64) dumb (delivery_coordinator; 0.1.0)",
+          "codexHome": "/Users/colombod/.codex",
+          "platformFamily": "unix",
+          "platformOs": "macos"
+        },
+        "connected_tool_inventory": {
+          "servers": 6,
+          "tools": 0
+        },
+        "connected_tool_policy": "disabled; effective config checked",
+        "apps_feature": false,
+        "native_computer_browser_policy": "deny; effective config checked"
+      }
+    }
+  ],
+  "started": 1792524776.376395,
+  "finished": 1792524804.885987
+}

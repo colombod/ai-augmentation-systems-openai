@@ -1,0 +1,11 @@
+{
+  "name": "hook-event-log",
+  "version": "0.1.0-preview.3",
+  "description": "Observe Codex lifecycle events and follow subagent identifiers and transcript links without storing prompts or tool content.",
+  "author": {
+    "name": "Diego Colombo"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/colombod/ai-augmentation-systems-openai",
+  "hooks": "./hooks/hooks.json"
+}

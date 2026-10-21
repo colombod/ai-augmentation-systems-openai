@@ -1,0 +1,6 @@
+
+> codex-hook-event-log@0.1.0-preview.3 build
+> node scripts/build.mjs
+
+    Finished `release` profile [optimized] target(s) in 0.02s
+Built dist/hook.js and bin/darwin-arm64/event-log-core

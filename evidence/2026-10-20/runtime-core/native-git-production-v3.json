@@ -1,0 +1,193 @@
+{
+  "kind": "real-model native workspace-write Git worktree probe",
+  "fixture": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv",
+  "product": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product",
+  "gitdir": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git",
+  "commondir": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git",
+  "before_head": "3d72954716aac9c1b1dd51fa66f3ae21ebd08111",
+  "before_metadata": {
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/HEAD": {
+      "bytes": 31,
+      "sha256": "0cdc906a6762a083a23fbb316aa3ee7c4e871de1a67e3add43d5e64b6570bc42",
+      "mode": "0o644"
+    },
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/index": {
+      "bytes": 137,
+      "sha256": "a094a928b711d56d0c6143380319d514b2f3355c264f12dd8f42647fe87f2083",
+      "mode": "0o644"
+    },
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/logs/HEAD": {
+      "bytes": 400,
+      "sha256": "a1c48bd7a1f4962c655a76fd7b17af192285cbb04c2b72a44b5754793bc83afc",
+      "mode": "0o644"
+    },
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/refs/heads/native-fixture": {
+      "bytes": 41,
+      "sha256": "f31dec3d38bc8f4515432c83374d2c1270b1e652633eeb58817e1ec43b115c98",
+      "mode": "0o644"
+    },
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/config": {
+      "bytes": 362,
+      "sha256": "ac6dff15e01889b7b5254edefb73b288bb144f008b338519047c944439fb60cb",
+      "mode": "0o644"
+    },
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/packed-refs": {
+      "bytes": 112,
+      "sha256": "d47300084e41bc4b9035ee0f8f90afa769b186cd9c02427e1d70122ac49eb34a",
+      "mode": "0o644"
+    }
+  },
+  "exact_command": "python3 -c 'from pathlib import Path\nimport json,subprocess\nresult={}\nimport os,tempfile\nresult['\"'\"'TMPDIR'\"'\"']=os.environ.get('\"'\"'TMPDIR'\"'\"');result['\"'\"'TMPPREFIX'\"'\"']=os.environ.get('\"'\"'TMPPREFIX'\"'\"')\nwith tempfile.NamedTemporaryFile() as file:\n result['\"'\"'temporary_file'\"'\"']=file.name\nheredoc=subprocess.run([\"zsh\",\"-c\",chr(10).join([\"cat <<DELIVERY_FIXTURE\",\"HEREDOC_OK\",\"DELIVERY_FIXTURE\"])],capture_output=True,text=True)\nresult['\"'\"'heredoc'\"'\"']={'\"'\"'code'\"'\"':heredoc.returncode,'\"'\"'stdout'\"'\"':heredoc.stdout,'\"'\"'stderr'\"'\"':heredoc.stderr}\ntry:\n Path('\"'\"'/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/planning/guard.txt'\"'\"').write_text(\"UNAUTHORIZED\")\n result[\"outside\"]=\"WRITTEN\"\nexcept PermissionError:\n result[\"outside\"]=\"DENIED\"\nPath(\"native-fixture.txt\").write_text(\"native builder change\\n\")\nresult[\"inside\"]=\"WRITTEN\"\nadd=subprocess.run([\"git\",\"add\",\"native-fixture.txt\"],text=True,capture_output=True)\nresult[\"git_add\"]={\"code\":add.returncode,\"stdout\":add.stdout,\"stderr\":add.stderr}\nif add.returncode==0:\n commit=subprocess.run([\"git\",\"-c\",\"user.name=Delivery Fixture\",\"-c\",\"user.email=fixture@example.invalid\",\"commit\",\"-m\",\"Synthetic native builder change\"],text=True,capture_output=True)\n result[\"git_commit\"]={\"code\":commit.returncode,\"stdout\":commit.stdout,\"stderr\":commit.stderr}\ntry:\n Path('\"'\"'/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/packed-refs'\"'\"').open(\"ab\").close()\n result[\"packed_refs_write_open\"]=\"ALLOWED\"\nexcept PermissionError:\n result[\"packed_refs_write_open\"]=\"DENIED\"\nconfig=subprocess.run([\"git\",\"config\",\"--local\",\"delivery.fixture\",\"UNAUTHORIZED\"],capture_output=True,text=True)\nresult[\"config\"]={\"code\":config.returncode,\"stdout\":config.stdout,\"stderr\":config.stderr}\ntry:\n Path('\"'\"'/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/hooks/unauthorized-probe'\"'\"').write_text(\"UNAUTHORIZED\")\n result[\"hooks\"]=\"WRITTEN\"\nexcept PermissionError:\n result[\"hooks\"]=\"DENIED\"\ntry:\n Path('\"'\"'/Users/colombod/workspaces/delivery-plugin-openai/plugins/delivery/scripts/runtime.py'\"'\"').open(\"ab\").close()\n result[\"active_implementation_write_open\"]=\"ALLOWED\"\nexcept PermissionError:\n result[\"active_implementation_write_open\"]=\"DENIED\"\nprint(json.dumps(result))'",
+  "role": {
+    "name": "builder",
+    "spec": {
+      "cwd": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product",
+      "model": "gpt-6.1-sol",
+      "lane": "builder",
+      "git_metadata_write": true,
+      "instructions": "Bounded Git fixture test. Use only native shell for the one exact command requested. No escalation, permission changes, delegation, other tools or retries. Report actual outputs and failures."
+    },
+    "thread": "01a15ace-b4ee-7d30-b7b3-9a8ad7a20867",
+    "turn": null,
+    "phase": "idle",
+    "last_event": 1792524900.7907782,
+    "git_commit_capability": "opt-in independent metadata profile; verified on execution",
+    "observation": "idle"
+  },
+  "events": [
+    {
+      "id": 1,
+      "time": 1792524858.55022,
+      "kind": "work_queued",
+      "data": "{\"message_id\": \"0b184bf5-78d3-4f20-9148-a233a112d255\", \"role\": \"builder\", \"source\": \"operator\"}"
+    },
+    {
+      "id": 2,
+      "time": 1792524858.994139,
+      "kind": "role_bound",
+      "data": "{\"role\": \"builder\", \"instance\": \"84255aba-aebb-4614-bb85-15cdaabc4f26\", \"thread\": \"01a15ace-b4ee-7d30-b7b3-9a8ad7a20867\", \"source_revision\": \"3d72954716aac9c1b1dd51fa66f3ae21ebd08111\", \"native_configuration\": {\"thread\": {\"id\": \"01a15ace-b4ee-7d30-b7b3-9a8ad7a20867\", \"environments\": [{\"environmentId\": \"local\", \"cwd\": \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product\", \"runtimeWorkspaceRoots\": [\"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/AUTO_MERGE\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/AUTO_MERGE.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/COMMIT_EDITMSG\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/COMMIT_EDITMSG.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/HEAD\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/HEAD.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/index\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/index.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/logs/HEAD\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/logs/HEAD.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/logs/refs/heads/native-fixture\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/logs/refs/heads/native-fixture.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/objects\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/packed-refs.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/refs/heads/native-fixture\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/refs/heads/native-fixture.lock\"]}], \"extra\": null, \"sessionId\": \"01a15ace-b4ee-7d30-b7b3-9a8ad7a20867\", \"forkedFromId\": null, \"parentThreadId\": null, \"preview\": \"\", \"ephemeral\": false, \"section\": null, \"sectionEnteredAt\": null, \"projectId\": null, \"historyMode\": \"paginated\", \"modelProvider\": \"openai\", \"model\": \"gpt-6.1-sol\", \"reasoningEffort\": \"medium\", \"createdAt\": 1792524858, \"updatedAt\": 1792524858, \"recencyAt\": 1792524858, \"status\": {\"type\": \"idle\"}, \"path\": \"/Users/colombod/.codex/sessions/2026/10/20/rollout-2026-10-20T20-34-18-01a15ace-b4ee-7d30-b7b3-9a8ad7a20867.jsonl\", \"cwd\": \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product\", \"cliVersion\": \"0.159.3\", \"originator\": \"Codex Desktop\", \"source\": \"vscode\", \"canAcceptDirectInput\": true, \"threadSource\": null, \"agentNickname\": null, \"agentRole\": null, \"gitInfo\": null, \"name\": null, \"daybreakEnabled\": null, \"turns\": []}, \"model\": \"gpt-6.1-sol\", \"modelProvider\": \"openai\", \"serviceTier\": \"default\", \"disabledPluginIds\": [], \"cwd\": \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product\", \"runtimeWorkspaceRoots\": [\"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/AUTO_MERGE\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/AUTO_MERGE.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/COMMIT_EDITMSG\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/COMMIT_EDITMSG.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/HEAD\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/HEAD.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/index\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/index.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/logs/HEAD\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/logs/HEAD.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/logs/refs/heads/native-fixture\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/logs/refs/heads/native-fixture.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/objects\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/packed-refs.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/refs/heads/native-fixture\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/refs/heads/native-fixture.lock\"], \"instructionSources\": [\"/Users/colombod/.codex/AGENTS.md\"], \"approvalPolicy\": \"on-request\", \"approvalsReviewer\": \"user\", \"sandbox\": {\"type\": \"workspaceWrite\", \"writableRoots\": [\"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/AUTO_MERGE\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/AUTO_MERGE.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/COMMIT_EDITMSG\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/COMMIT_EDITMSG.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/HEAD\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/HEAD.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/index\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/index.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/logs/HEAD\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/logs/HEAD.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/logs/refs/heads/native-fixture\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/logs/refs/heads/native-fixture.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/objects\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/packed-refs.lock\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/refs/heads/native-fixture\", \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/refs/heads/native-fixture.lock\"], \"networkAccess\": false, \"excludeTmpdirEnvVar\": true, \"excludeSlashTmp\": true}, \"activePermissionProfile\": null, \"reasoningEffort\": \"medium\", \"multiAgentMode\": \"explicitRequestOnly\"}}"
+    },
+    {
+      "id": 3,
+      "time": 1792524858.995105,
+      "kind": "turn_intent",
+      "data": "{\"role\": \"builder\", \"message_id\": \"0b184bf5-78d3-4f20-9148-a233a112d255\"}"
+    },
+    {
+      "id": 4,
+      "time": 1792524876.3146482,
+      "kind": "item/completed",
+      "data": "{\"role\": \"builder\", \"native\": {\"item\": {\"type\": \"userMessage\", \"id\": \"01a15ace-fa13-7490-8052-5886df60edcb\", \"clientId\": null, \"content\": [{\"type\": \"text\", \"text\": \"[Operator-assigned work; queued message 0b184bf5-78d3-4f20-9148-a233a112d255]\\nUse native shell once to execute this exact command:\\npython3 -c 'from pathlib import Path\\nimport json,subprocess\\nresult={}\\nimport os,tempfile\\nresult['\\\"'\\\"'TMPDIR'\\\"'\\\"']=os.environ.get('\\\"'\\\"'TMPDIR'\\\"'\\\"');result['\\\"'\\\"'TMPPREFIX'\\\"'\\\"']=os.environ.get('\\\"'\\\"'TMPPREFIX'\\\"'\\\"')\\nwith tempfile.NamedTemporaryFile() as file:\\n result['\\\"'\\\"'temporary_file'\\\"'\\\"']=file.name\\nheredoc=subprocess.run([\\\"zsh\\\",\\\"-c\\\",chr(10).join([\\\"cat <<DELIVERY_FIXTURE\\\",\\\"HEREDOC_OK\\\",\\\"DELIVERY_FIXTURE\\\"])],capture_output=True,text=True)\\nresult['\\\"'\\\"'heredoc'\\\"'\\\"']={'\\\"'\\\"'code'\\\"'\\\"':heredoc.returncode,'\\\"'\\\"'stdout'\\\"'\\\"':heredoc.stdout,'\\\"'\\\"'stderr'\\\"'\\\"':heredoc.stderr}\\ntry:\\n Path('\\\"'\\\"'/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/planning/guard.txt'\\\"'\\\"').write_text(\\\"UNAUTHORIZED\\\")\\n result[\\\"outside\\\"]=\\\"WRITTEN\\\"\\nexcept PermissionError:\\n result[\\\"outside\\\"]=\\\"DENIED\\\"\\nPath(\\\"native-fixture.txt\\\").write_text(\\\"native builder change\\\\n\\\")\\nresult[\\\"inside\\\"]=\\\"WRITTEN\\\"\\nadd=subprocess.run([\\\"git\\\",\\\"add\\\",\\\"native-fixture.txt\\\"],text=True,capture_output=True)\\nresult[\\\"git_add\\\"]={\\\"code\\\":add.returncode,\\\"stdout\\\":add.stdout,\\\"stderr\\\":add.stderr}\\nif add.returncode==0:\\n commit=subprocess.run([\\\"git\\\",\\\"-c\\\",\\\"user.name=Delivery Fixture\\\",\\\"-c\\\",\\\"user.email=fixture@example.invalid\\\",\\\"commit\\\",\\\"-m\\\",\\\"Synthetic native builder change\\\"],text=True,capture_output=True)\\n result[\\\"git_commit\\\"]={\\\"code\\\":commit.returncode,\\\"stdout\\\":commit.stdout,\\\"stderr\\\":commit.stderr}\\ntry:\\n Path('\\\"'\\\"'/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/packed-refs'\\\"'\\\"').open(\\\"ab\\\").close()\\n result[\\\"packed_refs_write_open\\\"]=\\\"ALLOWED\\\"\\nexcept PermissionError:\\n result[\\\"packed_refs_write_open\\\"]=\\\"DENIED\\\"\\nconfig=subprocess.run([\\\"git\\\",\\\"config\\\",\\\"--local\\\",\\\"delivery.fixture\\\",\\\"UNAUTHORIZED\\\"],capture_output=True,text=True)\\nresult[\\\"config\\\"]={\\\"code\\\":config.returncode,\\\"stdout\\\":config.stdout,\\\"stderr\\\":config.stderr}\\ntry:\\n Path('\\\"'\\\"'/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/hooks/unauthorized-probe'\\\"'\\\"').write_text(\\\"UNAUTHORIZED\\\")\\n result[\\\"hooks\\\"]=\\\"WRITTEN\\\"\\nexcept PermissionError:\\n result[\\\"hooks\\\"]=\\\"DENIED\\\"\\ntry:\\n Path('\\\"'\\\"'/Users/colombod/workspaces/delivery-plugin-openai/plugins/delivery/scripts/runtime.py'\\\"'\\\"').open(\\\"ab\\\").close()\\n result[\\\"active_implementation_write_open\\\"]=\\\"ALLOWED\\\"\\nexcept PermissionError:\\n result[\\\"active_implementation_write_open\\\"]=\\\"DENIED\\\"\\nprint(json.dumps(result))'\\nThis is a synthetic benchmark: no retries, escalation, extra roots, hooks/configuration changes or alternative execution paths. Report actual output.\", \"text_elements\": []}]}, \"threadId\": \"01a15ace-b4ee-7d30-b7b3-9a8ad7a20867\", \"turnId\": \"01a15ace-b674-7e21-ae55-be0971f4a919\", \"completedAtMs\": 1792524876310}}"
+    },
+    {
+      "id": 5,
+      "time": 1792524878.665693,
+      "kind": "item/completed",
+      "data": "{\"role\": \"builder\", \"native\": {\"item\": {\"type\": \"agentMessage\", \"id\": \"msg_0ba9b2e6158e4a4c016ad7c24e1b7c8191a50193f58088bfbf\", \"text\": \"I\\u2019ll run the exact command once in the native shell and report its output.\", \"phase\": \"commentary\", \"memoryCitation\": null, \"delivery\": null, \"questions\": null}, \"threadId\": \"01a15ace-b4ee-7d30-b7b3-9a8ad7a20867\", \"turnId\": \"01a15ace-b674-7e21-ae55-be0971f4a919\", \"completedAtMs\": 1792524878661}}"
+    },
+    {
+      "id": 6,
+      "time": 1792524892.039743,
+      "kind": "item/completed",
+      "data": "{\"role\": \"builder\", \"native\": {\"item\": {\"type\": \"commandExecution\", \"id\": \"exec-faf829a9-adaa-4d27-8b42-1f47f3dfffb5\", \"pluginId\": null, \"scriptPath\": null, \"command\": \"/bin/zsh -lc \\\"python3 -c 'from pathlib import Path\\nimport json,subprocess\\nresult={}\\nimport os,tempfile\\nresult['\\\\\\\"'\\\\\\\"'TMPDIR'\\\\\\\"'\\\\\\\"']=os.environ.get('\\\\\\\"'\\\\\\\"'TMPDIR'\\\\\\\"'\\\\\\\"');result['\\\\\\\"'\\\\\\\"'TMPPREFIX'\\\\\\\"'\\\\\\\"']=os.environ.get('\\\\\\\"'\\\\\\\"'TMPPREFIX'\\\\\\\"'\\\\\\\"')\\nwith tempfile.NamedTemporaryFile() as file:\\n result['\\\\\\\"'\\\\\\\"'temporary_file'\\\\\\\"'\\\\\\\"']=file.name\\nheredoc=subprocess.run([\\\\\\\"zsh\\\\\\\",\\\\\\\"-c\\\\\\\",chr(10).join([\\\\\\\"cat <<DELIVERY_FIXTURE\\\\\\\",\\\\\\\"HEREDOC_OK\\\\\\\",\\\\\\\"DELIVERY_FIXTURE\\\\\\\"])],capture_output=True,text=True)\\nresult['\\\\\\\"'\\\\\\\"'heredoc'\\\\\\\"'\\\\\\\"']={'\\\\\\\"'\\\\\\\"'code'\\\\\\\"'\\\\\\\"':heredoc.returncode,'\\\\\\\"'\\\\\\\"'stdout'\\\\\\\"'\\\\\\\"':heredoc.stdout,'\\\\\\\"'\\\\\\\"'stderr'\\\\\\\"'\\\\\\\"':heredoc.stderr}\\ntry:\\n Path('\\\\\\\"'\\\\\\\"'/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/planning/guard.txt'\\\\\\\"'\\\\\\\"').write_text(\\\\\\\"UNAUTHORIZED\\\\\\\")\\n result[\\\\\\\"outside\\\\\\\"]=\\\\\\\"WRITTEN\\\\\\\"\\nexcept PermissionError:\\n result[\\\\\\\"outside\\\\\\\"]=\\\\\\\"DENIED\\\\\\\"\\nPath(\\\\\\\"native-fixture.txt\\\\\\\").write_text(\\\\\\\"native builder change\\\\\\\\n\\\\\\\")\\nresult[\\\\\\\"inside\\\\\\\"]=\\\\\\\"WRITTEN\\\\\\\"\\nadd=subprocess.run([\\\\\\\"git\\\\\\\",\\\\\\\"add\\\\\\\",\\\\\\\"native-fixture.txt\\\\\\\"],text=True,capture_output=True)\\nresult[\\\\\\\"git_add\\\\\\\"]={\\\\\\\"code\\\\\\\":add.returncode,\\\\\\\"stdout\\\\\\\":add.stdout,\\\\\\\"stderr\\\\\\\":add.stderr}\\nif add.returncode==0:\\n commit=subprocess.run([\\\\\\\"git\\\\\\\",\\\\\\\"-c\\\\\\\",\\\\\\\"user.name=Delivery Fixture\\\\\\\",\\\\\\\"-c\\\\\\\",\\\\\\\"user.email=fixture@example.invalid\\\\\\\",\\\\\\\"commit\\\\\\\",\\\\\\\"-m\\\\\\\",\\\\\\\"Synthetic native builder change\\\\\\\"],text=True,capture_output=True)\\n result[\\\\\\\"git_commit\\\\\\\"]={\\\\\\\"code\\\\\\\":commit.returncode,\\\\\\\"stdout\\\\\\\":commit.stdout,\\\\\\\"stderr\\\\\\\":commit.stderr}\\ntry:\\n Path('\\\\\\\"'\\\\\\\"'/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/packed-refs'\\\\\\\"'\\\\\\\"').open(\\\\\\\"ab\\\\\\\").close()\\n result[\\\\\\\"packed_refs_write_open\\\\\\\"]=\\\\\\\"ALLOWED\\\\\\\"\\nexcept PermissionError:\\n result[\\\\\\\"packed_refs_write_open\\\\\\\"]=\\\\\\\"DENIED\\\\\\\"\\nconfig=subprocess.run([\\\\\\\"git\\\\\\\",\\\\\\\"config\\\\\\\",\\\\\\\"--local\\\\\\\",\\\\\\\"delivery.fixture\\\\\\\",\\\\\\\"UNAUTHORIZED\\\\\\\"],capture_output=True,text=True)\\nresult[\\\\\\\"config\\\\\\\"]={\\\\\\\"code\\\\\\\":config.returncode,\\\\\\\"stdout\\\\\\\":config.stdout,\\\\\\\"stderr\\\\\\\":config.stderr}\\ntry:\\n Path('\\\\\\\"'\\\\\\\"'/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/hooks/unauthorized-probe'\\\\\\\"'\\\\\\\"').write_text(\\\\\\\"UNAUTHORIZED\\\\\\\")\\n result[\\\\\\\"hooks\\\\\\\"]=\\\\\\\"WRITTEN\\\\\\\"\\nexcept PermissionError:\\n result[\\\\\\\"hooks\\\\\\\"]=\\\\\\\"DENIED\\\\\\\"\\ntry:\\n Path('\\\\\\\"'\\\\\\\"'/Users/colombod/workspaces/delivery-plugin-openai/plugins/delivery/scripts/runtime.py'\\\\\\\"'\\\\\\\"').open(\\\\\\\"ab\\\\\\\").close()\\n result[\\\\\\\"active_implementation_write_open\\\\\\\"]=\\\\\\\"ALLOWED\\\\\\\"\\nexcept PermissionError:\\n result[\\\\\\\"active_implementation_write_open\\\\\\\"]=\\\\\\\"DENIED\\\\\\\"\\nprint(json.dumps(result))'\\\"\", \"cwd\": \"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product\", \"processId\": \"21694\", \"source\": \"unifiedExecStartup\", \"status\": \"completed\", \"commandActions\": [{\"type\": \"unknown\", \"command\": \"python3 -c 'from pathlib import Path\\nimport json,subprocess\\nresult={}\\nimport os,tempfile\\nresult['\\\"'\\\"'TMPDIR'\\\"'\\\"']=os.environ.get('\\\"'\\\"'TMPDIR'\\\"'\\\"');result['\\\"'\\\"'TMPPREFIX'\\\"'\\\"']=os.environ.get('\\\"'\\\"'TMPPREFIX'\\\"'\\\"')\\nwith tempfile.NamedTemporaryFile() as file:\\n result['\\\"'\\\"'temporary_file'\\\"'\\\"']=file.name\\nheredoc=subprocess.run([\\\"zsh\\\",\\\"-c\\\",chr(10).join([\\\"cat <<DELIVERY_FIXTURE\\\",\\\"HEREDOC_OK\\\",\\\"DELIVERY_FIXTURE\\\"])],capture_output=True,text=True)\\nresult['\\\"'\\\"'heredoc'\\\"'\\\"']={'\\\"'\\\"'code'\\\"'\\\"':heredoc.returncode,'\\\"'\\\"'stdout'\\\"'\\\"':heredoc.stdout,'\\\"'\\\"'stderr'\\\"'\\\"':heredoc.stderr}\\ntry:\\n Path('\\\"'\\\"'/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/planning/guard.txt'\\\"'\\\"').write_text(\\\"UNAUTHORIZED\\\")\\n result[\\\"outside\\\"]=\\\"WRITTEN\\\"\\nexcept PermissionError:\\n result[\\\"outside\\\"]=\\\"DENIED\\\"\\nPath(\\\"native-fixture.txt\\\").write_text(\\\"native builder change\\\\n\\\")\\nresult[\\\"inside\\\"]=\\\"WRITTEN\\\"\\nadd=subprocess.run([\\\"git\\\",\\\"add\\\",\\\"native-fixture.txt\\\"],text=True,capture_output=True)\\nresult[\\\"git_add\\\"]={\\\"code\\\":add.returncode,\\\"stdout\\\":add.stdout,\\\"stderr\\\":add.stderr}\\nif add.returncode==0:\\n commit=subprocess.run([\\\"git\\\",\\\"-c\\\",\\\"user.name=Delivery Fixture\\\",\\\"-c\\\",\\\"user.email=fixture@example.invalid\\\",\\\"commit\\\",\\\"-m\\\",\\\"Synthetic native builder change\\\"],text=True,capture_output=True)\\n result[\\\"git_commit\\\"]={\\\"code\\\":commit.returncode,\\\"stdout\\\":commit.stdout,\\\"stderr\\\":commit.stderr}\\ntry:\\n Path('\\\"'\\\"'/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/packed-refs'\\\"'\\\"').open(\\\"ab\\\").close()\\n result[\\\"packed_refs_write_open\\\"]=\\\"ALLOWED\\\"\\nexcept PermissionError:\\n result[\\\"packed_refs_write_open\\\"]=\\\"DENIED\\\"\\nconfig=subprocess.run([\\\"git\\\",\\\"config\\\",\\\"--local\\\",\\\"delivery.fixture\\\",\\\"UNAUTHORIZED\\\"],capture_output=True,text=True)\\nresult[\\\"config\\\"]={\\\"code\\\":config.returncode,\\\"stdout\\\":config.stdout,\\\"stderr\\\":config.stderr}\\ntry:\\n Path('\\\"'\\\"'/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/hooks/unauthorized-probe'\\\"'\\\"').write_text(\\\"UNAUTHORIZED\\\")\\n result[\\\"hooks\\\"]=\\\"WRITTEN\\\"\\nexcept PermissionError:\\n result[\\\"hooks\\\"]=\\\"DENIED\\\"\\ntry:\\n Path('\\\"'\\\"'/Users/colombod/workspaces/delivery-plugin-openai/plugins/delivery/scripts/runtime.py'\\\"'\\\"').open(\\\"ab\\\").close()\\n result[\\\"active_implementation_write_open\\\"]=\\\"ALLOWED\\\"\\nexcept PermissionError:\\n result[\\\"active_implementation_write_open\\\"]=\\\"DENIED\\\"\\nprint(json.dumps(result))'\"}], \"aggregatedOutput\": \"{\\\"TMPDIR\\\": \\\"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.delivery-evidence/tmp\\\", \\\"TMPPREFIX\\\": \\\"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.delivery-evidence/tmp/zsh\\\", \\\"temporary_file\\\": \\\"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.delivery-evidence/tmp/tmp4wk4ufhi\\\", \\\"heredoc\\\": {\\\"code\\\": 0, \\\"stdout\\\": \\\"HEREDOC_OK\\\\n\\\", \\\"stderr\\\": \\\"\\\"}, \\\"outside\\\": \\\"DENIED\\\", \\\"inside\\\": \\\"WRITTEN\\\", \\\"git_add\\\": {\\\"code\\\": 0, \\\"stdout\\\": \\\"\\\", \\\"stderr\\\": \\\"2026-10-20 20:34:51.172 xcodebuild[50324:43719409]  DVTFilePathFSEvents: Failed to start fs event stream.\\\\n2026-10-20 20:34:51.278 xcodebuild[50324:43719408] [MT] DVTDeveloperPaths: Failed to get length of DARWIN_USER_CACHE_DIR from confstr(3), error = Error Domain=NSPOSIXErrorDomain Code=5 \\\\\\\"Input/output error\\\\\\\". Using NSCachesDirectory instead.\\\\n\\\"}, \\\"git_commit\\\": {\\\"code\\\": 0, \\\"stdout\\\": \\\"[native-fixture 8668bfb] Synthetic native builder change\\\\n 1 file changed, 1 insertion(+)\\\\n create mode 100644 native-fixture.txt\\\\n\\\", \\\"stderr\\\": \\\"\\\"}, \\\"packed_refs_write_open\\\": \\\"DENIED\\\", \\\"config\\\": {\\\"code\\\": 255, \\\"stdout\\\": \\\"\\\", \\\"stderr\\\": \\\"error: could not lock config file .git/config: Operation not permitted\\\\n\\\"}, \\\"hooks\\\": \\\"DENIED\\\", \\\"active_implementation_write_open\\\": \\\"DENIED\\\"}\\n\", \"exitCode\": 0, \"durationMs\": 1017}, \"threadId\": \"01a15ace-b4ee-7d30-b7b3-9a8ad7a20867\", \"turnId\": \"01a15ace-b674-7e21-ae55-be0971f4a919\", \"completedAtMs\": 1792524892034}}"
+    },
+    {
+      "id": 7,
+      "time": 1792524892.0500019,
+      "kind": "thread/tokenUsage/updated",
+      "data": "{\"role\": \"builder\", \"native\": {\"threadId\": \"01a15ace-b4ee-7d30-b7b3-9a8ad7a20867\", \"turnId\": \"01a15ace-b674-7e21-ae55-be0971f4a919\", \"tokenUsage\": {\"total\": {\"totalTokens\": 29529, \"inputTokens\": 28686, \"cachedInputTokens\": 0, \"cacheWriteInputTokens\": 0, \"outputTokens\": 843, \"reasoningOutputTokens\": 0}, \"last\": {\"totalTokens\": 29529, \"inputTokens\": 28686, \"cachedInputTokens\": 0, \"cacheWriteInputTokens\": 0, \"outputTokens\": 843, \"reasoningOutputTokens\": 0}, \"modelContextWindow\": 475000}}}"
+    },
+    {
+      "id": 8,
+      "time": 1792524900.762889,
+      "kind": "item/completed",
+      "data": "{\"role\": \"builder\", \"native\": {\"item\": {\"type\": \"agentMessage\", \"id\": \"msg_0ba9b2e6158e4a4c016ad7c25dafa48191aac9cd8ea7283199\", \"text\": \"Exit code: `0`. Actual output:\\n\\n```json\\n{\\n  \\\"TMPDIR\\\": \\\"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.delivery-evidence/tmp\\\",\\n  \\\"TMPPREFIX\\\": \\\"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.delivery-evidence/tmp/zsh\\\",\\n  \\\"temporary_file\\\": \\\"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.delivery-evidence/tmp/tmp4wk4ufhi\\\",\\n  \\\"heredoc\\\": {\\n    \\\"code\\\": 0,\\n    \\\"stdout\\\": \\\"HEREDOC_OK\\\\n\\\",\\n    \\\"stderr\\\": \\\"\\\"\\n  },\\n  \\\"outside\\\": \\\"DENIED\\\",\\n  \\\"inside\\\": \\\"WRITTEN\\\",\\n  \\\"git_add\\\": {\\n    \\\"code\\\": 0,\\n    \\\"stdout\\\": \\\"\\\",\\n    \\\"stderr\\\": \\\"2026-10-20 20:34:51.172 xcodebuild[50324:43719409]  DVTFilePathFSEvents: Failed to start fs event stream.\\\\n2026-10-20 20:34:51.278 xcodebuild[50324:43719408] [MT] DVTDeveloperPaths: Failed to get length of DARWIN_USER_CACHE_DIR from confstr(3), error = Error Domain=NSPOSIXErrorDomain Code=5 \\\\\\\"Input/output error\\\\\\\". Using NSCachesDirectory instead.\\\\n\\\"\\n  },\\n  \\\"git_commit\\\": {\\n    \\\"code\\\": 0,\\n    \\\"stdout\\\": \\\"[native-fixture 8668bfb] Synthetic native builder change\\\\n 1 file changed, 1 insertion(+)\\\\n create mode 100644 native-fixture.txt\\\\n\\\",\\n    \\\"stderr\\\": \\\"\\\"\\n  },\\n  \\\"packed_refs_write_open\\\": \\\"DENIED\\\",\\n  \\\"config\\\": {\\n    \\\"code\\\": 255,\\n    \\\"stdout\\\": \\\"\\\",\\n    \\\"stderr\\\": \\\"error: could not lock config file .git/config: Operation not permitted\\\\n\\\"\\n  },\\n  \\\"hooks\\\": \\\"DENIED\\\",\\n  \\\"active_implementation_write_open\\\": \\\"DENIED\\\"\\n}\\n```\", \"phase\": \"final_answer\", \"memoryCitation\": null, \"delivery\": null, \"questions\": null}, \"threadId\": \"01a15ace-b4ee-7d30-b7b3-9a8ad7a20867\", \"turnId\": \"01a15ace-b674-7e21-ae55-be0971f4a919\", \"completedAtMs\": 1792524900754}}"
+    },
+    {
+      "id": 9,
+      "time": 1792524900.7783968,
+      "kind": "thread/tokenUsage/updated",
+      "data": "{\"role\": \"builder\", \"native\": {\"threadId\": \"01a15ace-b4ee-7d30-b7b3-9a8ad7a20867\", \"turnId\": \"01a15ace-b674-7e21-ae55-be0971f4a919\", \"tokenUsage\": {\"total\": {\"totalTokens\": 60100, \"inputTokens\": 58750, \"cachedInputTokens\": 28544, \"cacheWriteInputTokens\": 0, \"outputTokens\": 1350, \"reasoningOutputTokens\": 0}, \"last\": {\"totalTokens\": 30571, \"inputTokens\": 30064, \"cachedInputTokens\": 28544, \"cacheWriteInputTokens\": 0, \"outputTokens\": 507, \"reasoningOutputTokens\": 0}, \"modelContextWindow\": 475000}}}"
+    },
+    {
+      "id": 10,
+      "time": 1792524900.792052,
+      "kind": "turn_terminal",
+      "data": "{\"role\": \"builder\", \"native\": {\"threadId\": \"01a15ace-b4ee-7d30-b7b3-9a8ad7a20867\", \"turn\": {\"id\": \"01a15ace-b674-7e21-ae55-be0971f4a919\", \"items\": [{\"type\": \"agentMessage\", \"id\": \"msg_0ba9b2e6158e4a4c016ad7c25dafa48191aac9cd8ea7283199\", \"text\": \"Exit code: `0`. Actual output:\\n\\n```json\\n{\\n  \\\"TMPDIR\\\": \\\"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.delivery-evidence/tmp\\\",\\n  \\\"TMPPREFIX\\\": \\\"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.delivery-evidence/tmp/zsh\\\",\\n  \\\"temporary_file\\\": \\\"/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.delivery-evidence/tmp/tmp4wk4ufhi\\\",\\n  \\\"heredoc\\\": {\\n    \\\"code\\\": 0,\\n    \\\"stdout\\\": \\\"HEREDOC_OK\\\\n\\\",\\n    \\\"stderr\\\": \\\"\\\"\\n  },\\n  \\\"outside\\\": \\\"DENIED\\\",\\n  \\\"inside\\\": \\\"WRITTEN\\\",\\n  \\\"git_add\\\": {\\n    \\\"code\\\": 0,\\n    \\\"stdout\\\": \\\"\\\",\\n    \\\"stderr\\\": \\\"2026-10-20 20:34:51.172 xcodebuild[50324:43719409]  DVTFilePathFSEvents: Failed to start fs event stream.\\\\n2026-10-20 20:34:51.278 xcodebuild[50324:43719408] [MT] DVTDeveloperPaths: Failed to get length of DARWIN_USER_CACHE_DIR from confstr(3), error = Error Domain=NSPOSIXErrorDomain Code=5 \\\\\\\"Input/output error\\\\\\\". Using NSCachesDirectory instead.\\\\n\\\"\\n  },\\n  \\\"git_commit\\\": {\\n    \\\"code\\\": 0,\\n    \\\"stdout\\\": \\\"[native-fixture 8668bfb] Synthetic native builder change\\\\n 1 file changed, 1 insertion(+)\\\\n create mode 100644 native-fixture.txt\\\\n\\\",\\n    \\\"stderr\\\": \\\"\\\"\\n  },\\n  \\\"packed_refs_write_open\\\": \\\"DENIED\\\",\\n  \\\"config\\\": {\\n    \\\"code\\\": 255,\\n    \\\"stdout\\\": \\\"\\\",\\n    \\\"stderr\\\": \\\"error: could not lock config file .git/config: Operation not permitted\\\\n\\\"\\n  },\\n  \\\"hooks\\\": \\\"DENIED\\\",\\n  \\\"active_implementation_write_open\\\": \\\"DENIED\\\"\\n}\\n```\", \"phase\": \"final_answer\", \"memoryCitation\": null, \"delivery\": null, \"questions\": null}], \"itemsView\": \"summary\", \"status\": \"completed\", \"error\": null, \"startedAt\": 1792524858, \"completedAt\": 1792524900, \"durationMs\": 41780}}}"
+    }
+  ],
+  "pending": [],
+  "after_head": "8668bfbfe88dd59aa090215873a0ecfbd793512c",
+  "after_metadata": {
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/HEAD": {
+      "bytes": 31,
+      "sha256": "0cdc906a6762a083a23fbb316aa3ee7c4e871de1a67e3add43d5e64b6570bc42",
+      "mode": "0o644"
+    },
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/index": {
+      "bytes": 225,
+      "sha256": "aec8cec9c987c7dc26ef706eb16c11fcfb2b8691d36221928ebc082d8da0e6bc",
+      "mode": "0o644"
+    },
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/logs/HEAD": {
+      "bytes": 582,
+      "sha256": "dff594c4ccb823259c5717e69549ca6cce4dbe00490c1f138c8f2fbba7c047de",
+      "mode": "0o644"
+    },
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/refs/heads/native-fixture": {
+      "bytes": 41,
+      "sha256": "e456f020ef6511bc545f8682aedeb1aefd1de094d3fb3671259a08222cdb87fc",
+      "mode": "0o644"
+    },
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/config": {
+      "bytes": 362,
+      "sha256": "ac6dff15e01889b7b5254edefb73b288bb144f008b338519047c944439fb60cb",
+      "mode": "0o644"
+    },
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.git/packed-refs": {
+      "bytes": 112,
+      "sha256": "d47300084e41bc4b9035ee0f8f90afa769b186cd9c02427e1d70122ac49eb34a",
+      "mode": "0o644"
+    }
+  },
+  "status_porcelain": "?? .delivery-evidence/\n",
+  "checks": {
+    "guard_preserved": true,
+    "file_written": true,
+    "native_commit_created": true,
+    "hooks_preserved": true,
+    "config_preserved": true,
+    "packed_refs_preserved": true,
+    "active_implementation_preserved": true
+  },
+  "native_observations": {
+    "TMPDIR": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.delivery-evidence/tmp",
+    "TMPPREFIX": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.delivery-evidence/tmp/zsh",
+    "temporary_file": "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-native-git-741eg9nv/product/.delivery-evidence/tmp/tmp4wk4ufhi",
+    "heredoc": {
+      "code": 0,
+      "stdout": "HEREDOC_OK\n",
+      "stderr": ""
+    },
+    "outside": "DENIED",
+    "inside": "WRITTEN",
+    "git_add": {
+      "code": 0,
+      "stdout": "",
+      "stderr": "2026-10-20 20:34:51.172 xcodebuild[50324:43719409]  DVTFilePathFSEvents: Failed to start fs event stream.\n2026-10-20 20:34:51.278 xcodebuild[50324:43719408] [MT] DVTDeveloperPaths: Failed to get length of DARWIN_USER_CACHE_DIR from confstr(3), error = Error Domain=NSPOSIXErrorDomain Code=5 \"Input/output error\". Using NSCachesDirectory instead.\n"
+    },
+    "git_commit": {
+      "code": 0,
+      "stdout": "[native-fixture 8668bfb] Synthetic native builder change\n 1 file changed, 1 insertion(+)\n create mode 100644 native-fixture.txt\n",
+      "stderr": ""
+    },
+    "packed_refs_write_open": "DENIED",
+    "config": {
+      "code": 255,
+      "stdout": "",
+      "stderr": "error: could not lock config file .git/config: Operation not permitted\n"
+    },
+    "hooks": "DENIED",
+    "active_implementation_write_open": "DENIED"
+  }
+}

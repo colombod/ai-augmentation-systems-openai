@@ -1,0 +1,12 @@
+{
+  "issue": "gatelive-h3l",
+  "canonical_status": "closed",
+  "accepted": {
+    "issue": "gatelive-h3l",
+    "status": "closed",
+    "accepted": true,
+    "authority": "explicit operator-terminal attestation",
+    "merge_authorized": false,
+    "external_mutation_guarantee": false
+  }
+}

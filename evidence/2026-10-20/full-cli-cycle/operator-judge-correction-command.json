@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "plugins/delivery/scripts/runtime.py",
+    "--project",
+    "/private/var/folders/2r/5gvkx5wx0g37m4grvjjdt88m0000gn/T/delivery-full-cli-3b8pu1g_/planning",
+    "send",
+    "--role",
+    "coordinator",
+    "--message-file",
+    "/Users/colombod/workspaces/delivery-plugin-openai/evidence/2026-10-20/full-cli-cycle/operator-judge-correction.txt"
+  ],
+  "code": 0,
+  "stdout": "{\"message_id\": \"ac3b9dbd-c113-4e79-98b6-209e1281860d\"}\n",
+  "stderr": "",
+  "time": 1792533528.134957
+}

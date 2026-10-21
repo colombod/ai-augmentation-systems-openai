@@ -1,0 +1,23 @@
+✔ judgeConfig: off without a block, with provider none, or without the key; on with both (0.674416ms)
+✔ the key variable is pinned to TYPESAFE_*, and the endpoint comes only from a loopback DELIVERY_JUDGE_ENDPOINT (4.6255ms)
+✔ under node --test a real provider is never called (3.176667ms)
+✔ ask: a noul answer is typed, the key goes only in the header, and the log line has no state (8.979208ms)
+✔ ask: a choice answer carries confidence and probabilities (2.811792ms)
+✔ ask fails open: timeout, 401, 429, a closed port and a bad body give a reason, never a throw (117.143875ms)
+✔ ask rejects malformed answers as bad_response and does not follow a redirect (14.135625ms)
+✔ ask refuses locally: off, unknown question, sensitive or missing fields; nothing is sent (180.024208ms)
+✔ stats: calls, latency percentiles, tokens and the share at the thresholds per question (0.150166ms)
+✔ the catalogue: every question has a version, a type, declared state and instructions; divergence is warn-only (0.145208ms)
+✔ Copilot round 5: redaction replaces the whole path, not a prefix of it (1.690917ms)
+✔ selection is explicit, isolated to each provider key, and does not fall back (0.776333ms)
+✔ OpenAI predicate wire shape, declared state filtering and no human authority (11.161083ms)
+✔ OpenAI choice maps declared options and retains warn-only mode (2.272625ms)
+✔ refusals and malformed probabilities never become an answer (2.561791ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 566.738334

@@ -1,0 +1,19 @@
+{
+  "observation": "After user reported desktop installation, current chat emitted native lifecycle events into the real plugin data directory. No hook trust or config mutation by assistant.",
+  "source_log": "/Users/colombod/.codex/plugins/data/hook-event-log-ai-augmentation-systems-openai/event-types/e5b32fbfe51474fd30987776d80d377a8fec7f7da8fa8859e3563570ec9bfd53.jsonl",
+  "sha256": "452e7597b89795078c851b8b7c648ba54dd127fa7cffdff67b7bcda5739ae76e",
+  "line_count": 62,
+  "probe_baseline_lines": 13,
+  "new_event_type_counts": {
+    "PostToolUse": 22,
+    "PreToolUse": 22,
+    "SubagentStart": 1,
+    "SubagentStop": 1,
+    "PermissionRequest": 1,
+    "UserPromptSubmit": 2
+  },
+  "subagent_start_and_stop_observed": true,
+  "visual_installation_ui": "not inspected; CUA access still prohibited",
+  "upstream_main_sha": "b2155d78f0362ed0a648ec8cad1bec258ae1c0f6",
+  "upstream_hook_plugin_pushed": false
+}

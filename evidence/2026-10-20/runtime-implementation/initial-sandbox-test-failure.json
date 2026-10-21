@@ -1,0 +1,6 @@
+{
+  "command": "node --test tests/delivery/judge.test.js tests/delivery/openai-judge.test.js",
+  "result": "6 passed, 9 failed before loopback tests could run",
+  "reason": "listen EPERM: operation not permitted 127.0.0.1",
+  "resolution": "Reran local stub-backed tests with approved loopback access; did not disable any production network guard"
+}
