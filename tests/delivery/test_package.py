@@ -17,7 +17,7 @@ PACKAGE = Path(__file__).resolve().parents[2] / 'plugins/delivery'
 class PackageTests(unittest.TestCase):
     def test_skill_resources_are_contained_and_present(self):
         skills = list((PACKAGE / 'skills').glob('*/SKILL.md'))
-        self.assertEqual(len(skills), 15)
+        self.assertEqual(len(skills), 16)
         for path in skills:
             text = path.read_text()
             self.assertTrue(text.startswith('---\nname: ' + path.parent.name + '\n'))
@@ -44,6 +44,8 @@ class PackageTests(unittest.TestCase):
             targets.add(item['target'])
         for folder in ('templates', 'references/reviewers'):
             for path in (PACKAGE / folder).iterdir():
+                if path.name == 'product-input.json':
+                    continue  # New native contract, not a claimed Claude import.
                 self.assertIn(str(path.relative_to(PACKAGE)), targets)
 
     def test_preview_loads_no_unimplemented_runtime(self):

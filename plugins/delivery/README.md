@@ -5,8 +5,10 @@ brief, supporting research, customer personas, requirements, design, architectur
 roadmap, stories and a scoped implementation handoff. After implementation, it
 helps review the evidence and update the plan with what was learned.
 
-**Version `0.1.0-preview.6` — local runtime preview.** Fifteen planning skills use
-20 templates and 10 review lenses. The local coordinator adds persistent Codex
+**Version `0.1.0-preview.7` — product and local runtime preview.** Sixteen skills use
+21 templates and 10 review lenses. Greenfield ideas and brownfield projects share
+one product contract: owner intent, customer promise, usefulness and planned or
+observed features. The local coordinator adds persistent Codex
 roles, canonical artifact saves, controlled Beads workflow, independent review
 submissions and explicit operator acceptance. Jev/OpenAI judging is explicitly
 selected. Desktop and ChatGPT workflow acceptance remain pending.
@@ -37,8 +39,9 @@ controlled Beads operation. Follow any task-tracking rules of the project you ar
 
 ## Install in Codex CLI
 
-Use a checkout containing `plugins/delivery/`. The current implementation has
-not been pushed; a clone of the remote alone may not contain it yet.
+Use a checkout containing `plugins/delivery/`. Repository source and an installed
+snapshot are separate: inspect the installed version before assuming it includes
+the product skill and helper shown here.
 
 From the **marketplace repository root**, run in a terminal:
 
@@ -66,6 +69,38 @@ initiative and artifact names with your project's own.
 
 ### Start a planning effort
 
+For either a new idea or an existing product, start with the customer outcome:
+
+```text
+$delivery:product Frame this new idea for one primary customer. Preserve my intent, make the first useful journey and explicit cuts clear, and keep missing evidence unknown. There is no code repository yet.
+```
+
+```text
+$delivery:product Onboard this existing repository. Read its instructions, current features and unfinished work. Map the code and evidence at the current commit, then show which features a change to scripts/project.py could affect. Preserve existing artifacts.
+```
+
+The skill curates the record; its read-only census does not infer features or
+import remote backlogs automatically. It carries one primary customer/proposition,
+the owner's reasons and what must survive, six separate usefulness judgements and
+the smallest sufficient work form into the next planning step. Proposed choices
+remain proposed. No repository is required for a greenfield record.
+
+The [product contract](references/product.md) gives complete local commands and
+the input format. With an initialized planning project, the helper supports:
+
+```sh
+python3 <package>/scripts/product.py --project <planning> --repo <git-root> inspect
+python3 <package>/scripts/product.py --project <planning> --repo <git-root> impact --path scripts/project.py
+python3 <package>/scripts/product.py --project <planning> handoff
+```
+
+The impact command requires a previously curated brownfield record. For its
+handoff, also supply `--repo <git-root>`; omit it for a greenfield idea. Maps check
+full commit and raw file bytes, reveal shared mapped code and keep unknown coverage
+visible. They are file-level links, not a complete dependency graph or deployment
+proof. `retire-plan` prepares subtraction with shared-code protection; it never
+deletes code or supplies a human decision.
+
 ```text
 $delivery:start Use the current project and initiative checkout-redesign.
 ```
@@ -91,6 +126,7 @@ Invoke a table entry as `$delivery:<skill-name>`.
 | Skill | What it produces or assesses |
 |---|---|
 | `start` | Planning workspace and initiative context |
+| `product` | Equal greenfield/brownfield product framing, feature/code evidence, freshness, impact, usefulness and safe retirement proposals |
 | `brief` | New feature framing or assessment of an existing product |
 | `research` | Prior art, domain constraints, technical options and sourced gaps |
 | `personas` | Shared customer personas with observed/reported/assumed grounding |

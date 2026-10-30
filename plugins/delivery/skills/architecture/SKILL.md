@@ -31,6 +31,14 @@ Corrections log it writes. Never silently overwrite.
 
 ## Run
 
+If a product record exists, read the [product contract](../../references/product.md).
+Use the smallest sufficient work form, autonomy and engine; do not assume that a
+plugin needs a new service or persistent agent. Before changing mapped files,
+run `product.py --project <planning> --repo <git-root> impact --path <file>` and
+inspect stale/unknown coverage. Preserve shared consumers and the owner's stated
+intent. Greenfield may start with planned features and no source repository;
+label proposed file paths as new and link them only after actual code exists.
+
 **1. Read the codebase before designing.** This is not optional and it comes first. Identify the modules the change touches, the existing patterns and conventions, and the interfaces already in place. A design that has not been checked against the real code is a guess.
 
 **2. Solution Architect produces the design.** Use the `solution-architect` lens. It must deliver:
