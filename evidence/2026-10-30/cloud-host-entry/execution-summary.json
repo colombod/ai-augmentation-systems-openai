@@ -1,0 +1,317 @@
+{
+  "qualification": "Normalized execution summary, not raw tool transcripts. Absolute workspace/install paths and product/owner content omitted. Original transcripts, artifact bytes and history retained locally. Source pins and digest observations are historical, not automatically fresh at later evidence commits.",
+  "source_base": "95e1b1a64220e92e0fd7f55887ee3254b5f84b39",
+  "reviewed_source": "575cac54d3e26b3253239b9acac6def239d1179e",
+  "candidate_version": "0.1.0-preview.13",
+  "host": "Existing platform cloud agent/model with authorized shell/filesystem tools; model ID not exposed. No nested CLI/API inference, alternate endpoint, credentials or security-policy changes.",
+  "entry": {
+    "initial_package": "actually installed preview12 from base into isolated cloud home",
+    "initial_loaded_resource_sha256": {
+      "skills/product/SKILL.md": "2d7c12a6a1472d33d6363d9bedee4627d503b3027ab1b37acb02135edc970fad",
+      "skills/start/SKILL.md": "ad194911fa42ea9a785379d3165a9bc1047ed17abbd118f4994d6bd7067ace0b",
+      "skills/stories/SKILL.md": "18e94f1f76b175ab58dd04323f9fd9d8138bfdbdbd1204e143322c4486ea4cec",
+      "skills/sprint/SKILL.md": "de3441f9b6877c2ced50846ed24ae25f81b6f58f515705a97af84443c41beefe",
+      "references/core.md": "66358700af4a623c71ed9f078c65adb59b674dd1c84d0f58a760e582c90e4159",
+      "references/product.md": "29ec137705dd7b1002e14a25e7d6b551cfe4d62b4420fa19f54c0a05dfe4ed87",
+      "references/runtime.md": "23fda07aebba0b51a7f00aaa5514b56e74655cc8b82c22e9baed6f90c65fcef5",
+      "references/conventions.md": "86d4491c4bc76c5d1baedd51919144256a0f5a7458edc7327ef4a06020ac419b",
+      "references/bounded-change.md": "410374f11c314668e1316452c6fb8bcb4f1e43c992b77d95075fd29c5f62a1b3",
+      "references/reviewer-context.md": "b17f83cc0b6bc684e9e83229ab6312cccf7f724f8bf1cb3691af49a3f63dadd5",
+      "references/reviewers/delivery-lead.md": "ba20d35dd8074667701c847dbc04631bcaf73fcde6850d99c1d82d5edddab45b",
+      "templates/story.md": "8a8a6deca0bed5581288ce347a9a6e05ef7425a2266fecd6f949737d4f48e648",
+      "templates/sprint.md": "5a3218925c91864321a0a98930c2cc314e6415c4462d12f80b6c5330a3103a1b",
+      "scripts/product.py": "607a865a7a97a95becff9acce48ea6212064ff3b558906edaf68109847045026",
+      "scripts/project.py": "b712eac0ae2daacb6d67125415c2e0be9be55d58930db30df8795aefacd6f986"
+    },
+    "candidate_package": "separately installed preview13 from reviewed source",
+    "candidate_loaded_resource_sha256": {
+      "skills/product/SKILL.md": "2d7c12a6a1472d33d6363d9bedee4627d503b3027ab1b37acb02135edc970fad",
+      "skills/start/SKILL.md": "7dfabb22908609acd3a403d5c8560f57dd857e9c510957f6956cec749fea81cf",
+      "skills/stories/SKILL.md": "18e94f1f76b175ab58dd04323f9fd9d8138bfdbdbd1204e143322c4486ea4cec",
+      "skills/sprint/SKILL.md": "de3441f9b6877c2ced50846ed24ae25f81b6f58f515705a97af84443c41beefe",
+      "references/core.md": "66358700af4a623c71ed9f078c65adb59b674dd1c84d0f58a760e582c90e4159",
+      "references/product.md": "29ec137705dd7b1002e14a25e7d6b551cfe4d62b4420fa19f54c0a05dfe4ed87",
+      "references/runtime.md": "23fda07aebba0b51a7f00aaa5514b56e74655cc8b82c22e9baed6f90c65fcef5",
+      "references/conventions.md": "86d4491c4bc76c5d1baedd51919144256a0f5a7458edc7327ef4a06020ac419b",
+      "references/bounded-change.md": "410374f11c314668e1316452c6fb8bcb4f1e43c992b77d95075fd29c5f62a1b3",
+      "references/reviewer-context.md": "b17f83cc0b6bc684e9e83229ab6312cccf7f724f8bf1cb3691af49a3f63dadd5",
+      "references/reviewers/delivery-lead.md": "ba20d35dd8074667701c847dbc04631bcaf73fcde6850d99c1d82d5edddab45b",
+      "templates/story.md": "8a8a6deca0bed5581288ce347a9a6e05ef7425a2266fecd6f949737d4f48e648",
+      "templates/sprint.md": "5a3218925c91864321a0a98930c2cc314e6415c4462d12f80b6c5330a3103a1b",
+      "scripts/product.py": "607a865a7a97a95becff9acce48ea6212064ff3b558906edaf68109847045026",
+      "scripts/project.py": "b712eac0ae2daacb6d67125415c2e0be9be55d58930db30df8795aefacd6f986",
+      "README.md": "a606bd635b020181b4588e5d90d141acf634634d800ac3b618de61672b363b82"
+    },
+    "all_candidate_files_byte_equal_to_source": true,
+    "candidate_file_sha256": {
+      "CHANGELOG.md": "a18e7c3d5030e384ff9c2aa5e2abbe96ec8d42c2a582015b03ce5325bead431a",
+      "README.md": "a606bd635b020181b4588e5d90d141acf634634d800ac3b618de61672b363b82",
+      "upstream.json": "df357017821b948dd8f65c182107492f9d2a1706aeb9d0cfa08925fdd25d3700",
+      "NOTICE": "7ac05c663fdb5ee807a565e624ed1a2dbca41973ec15897c15f8458c0a196d92",
+      "LICENSE": "4fd2efd9faf00d0adbea920a93d4bc03f01e6a188bb402f25f05f5b1d1e4c61d",
+      "plugin.json": "08043ddabbebb06cd9cc85a5804db5fe09275478439a8236ec4afb7823249a21",
+      "scripts/operator_capture.py": "87578a6af946229772047b3a46b468c9ad6441fc3f7dbc065a9fefb2b8bb27a1",
+      "scripts/verification.py": "649ffff90998c116e1ef87dd05d292938e47778bdd972eeb9519c53278dfcbb2",
+      "scripts/runtime.py": "5d09085eac8a3c2340c818850f3a9d939dd2bc0d4af69fcfc76039090f2aebc5",
+      "scripts/project.py": "b712eac0ae2daacb6d67125415c2e0be9be55d58930db30df8795aefacd6f986",
+      "scripts/supervision.py": "439ab9a5990f5785eed8a50a73ca20720150dce2eb23f9071fc45fda9acc751b",
+      "scripts/product.py": "607a865a7a97a95becff9acce48ea6212064ff3b558906edaf68109847045026",
+      "scripts/codex_rpc.py": "f28c46c75fbf15ab43c7a14746582963496e7e83ad9fe109cf38ecd6b79e6dd6",
+      "scripts/judge.js": "206e56589e5ed9cbe50cb0f1b56323fa028c1e7b475927ad2e45c1b254ae9a9f",
+      "scripts/delivery_gates.py": "0a3959a5b301c22068a2d229d69b795bdd171acfd76b11fcaf44f4e74332b74c",
+      "scripts/artifacts.py": "31f5558e1f33e15bad21c1c70b17f78cebd59879f5cbff994cbe6921de33e12f",
+      "references/reviewer-context.md": "b17f83cc0b6bc684e9e83229ab6312cccf7f724f8bf1cb3691af49a3f63dadd5",
+      "references/supervision.md": "ece786657bd79347102ae3a0def8480475fde2d136127fc3f12e697989a1612d",
+      "references/runners.md": "43fe50b46d96f2ad0358a93afc7b1d36a091ff7ecc7c7d2105b2afae7a728c39",
+      "references/verification.md": "4894a92c4a5977442e31f20ec2f19df7ffa27f0b20a17d3ffe7d8dc510503706",
+      "references/team-runtime.md": "4f598b818403b51cf0c3509a85e626dd94a6f67ee28b9062ebf6db1220fb7c52",
+      "references/core.md": "66358700af4a623c71ed9f078c65adb59b674dd1c84d0f58a760e582c90e4159",
+      "references/runtime.md": "23fda07aebba0b51a7f00aaa5514b56e74655cc8b82c22e9baed6f90c65fcef5",
+      "references/conventions.md": "86d4491c4bc76c5d1baedd51919144256a0f5a7458edc7327ef4a06020ac419b",
+      "references/product.md": "29ec137705dd7b1002e14a25e7d6b551cfe4d62b4420fa19f54c0a05dfe4ed87",
+      "references/bounded-change.md": "410374f11c314668e1316452c6fb8bcb4f1e43c992b77d95075fd29c5f62a1b3",
+      "templates/prd.md": "63b38248560fec955e3e6ef42c2cd71c505eef998942e20ecbf20cbdb72065af",
+      "templates/interview.md": "7a1234e3169509b6fb885a183e860dc68d699631257f59715b0642671ef1a50e",
+      "templates/assumptions.md": "72bd8938d0fffa1e8cd126f77a62dd954a8aabb4b683e8305b18420e087e9f02",
+      "templates/simulation.md": "f2e0e52e8a733e78da490045770ed3e16a7e4a67f544d6c2ccbd31ba6d3742f7",
+      "templates/research.md": "703b2634a691a18b68ecfb396ea7bdf38ab60d5ab362cdd0650bb9c2610a7315",
+      "templates/writing-standard.md": "eaca48384279103b1143aadabb74adb6a82569f0fc66854c93329c4529ae6fe1",
+      "templates/brief.md": "d003c9f268275be1eeac199822970f56924f272210864973ad708ad6a791a05a",
+      "templates/persona.md": "19c89fec6c20b10304589a34a61d5c96f3504505ccc4e818e0bb8ab3e5afaa04",
+      "templates/findings.md": "6042e30b00c15acbcea25800385e6a9d9ad71bb09bb7166895149e8018880767",
+      "templates/adr.md": "a888fd5765ec71a632d026db53aa89bef0093ce72241c880619bc65fe5326fe4",
+      "templates/prioritization.md": "b3f234b0e1213ef8e2d49d74a0313901ad735e08f5f274fe09bc8c2e1c84816c",
+      "templates/sprint-review.md": "1117201e5b1a5eb7398d09b117c2f31c0d19a6c4cde356c4b7cc46838f9df80c",
+      "templates/version-history.md": "3149db6b1dec677ae0079ca6f62f9a6e43200b97fb028bc3094fec9a8d723dae",
+      "templates/architecture.md": "2fd81dddc888d7a6fdd7ef394132156546c37c862d5814caaacae4610e383ef1",
+      "templates/design-system.md": "5120aa12883582bf24894e401da194aa0a83dfe6ead99127a497ca98fc9c1dc0",
+      "templates/surface.json": "9d18c1474fae9d1ccd808a33eb7f74f8647448743a93a4c10218bc8fec424735",
+      "templates/glossary.md": "83a0119269962d79887980ae53e68a088af9b75a7df77a7c92bea05882a496a3",
+      "templates/sprint.md": "5a3218925c91864321a0a98930c2cc314e6415c4462d12f80b6c5330a3103a1b",
+      "templates/roadmap.md": "58e3578792457d4587d8d87dae0cddd4f52b0da7da7892a90d97bad0b541f5ff",
+      "templates/product-input.json": "3e20ef6ba3221ba2b4cf9a95892e6f9ef5f24268783484e0f52f3a8de98a79df",
+      "templates/story.md": "8a8a6deca0bed5581288ce347a9a6e05ef7425a2266fecd6f949737d4f48e648",
+      "judge/questions.json": "b875ac5c53190647ebfd6761de4b6fb0970b03807c3e125a2914c6691e0a383c",
+      "scripts/lib/openai-judge.js": "ded004a155f8a2d33f7be32e8166db70f2905f67f6175e09e1d7b9ded50edd61",
+      "scripts/lib/judge.js": "9826613af1fc6c5f78af00e3e0a65e2016a77633db9d9c400dad20b1eac67d9a",
+      "references/reviewers/product-owner.md": "dec8098add44df1e6a45498e8ba27c6354b5808226f47f7664fdd38902e75c5b",
+      "references/reviewers/user-researcher.md": "511a434bd3ba3c49304b707471af32f9e1a756e9cf4d05d0781b0300f2a58755",
+      "references/reviewers/qa-strategist.md": "c8ce107bda92cd9bdb289c2dacb53200c2311f5ad0d7758c76dae0b5ee738f0c",
+      "references/reviewers/feature-critic.md": "57cce9ece9d68adaa1c0e4c4b319e564ff2b87f246f54c0afa9e43d046818a15",
+      "references/reviewers/persona-simulator.md": "8affe092ad09131829268b9a058dafb9fef227e4cd46bd63c0eced4c7e77a21a",
+      "references/reviewers/design-lead.md": "034c317b224ae93de1b532a500056f8fb2cf7a26eb261821b8266070e212abe2",
+      "references/reviewers/delivery-lead.md": "ba20d35dd8074667701c847dbc04631bcaf73fcde6850d99c1d82d5edddab45b",
+      "references/reviewers/business-analyst.md": "e72549150eba9d7130ee50f9a639c6c21707a349e168a576437448f108bee26b",
+      "references/reviewers/solution-architect.md": "da78b5443753ef7917ca2fa927e92f4357ed443aa8cf05bf7685a6a4a7ff4b12",
+      "references/reviewers/program-manager.md": "76c061ccce29be501734828eb9644e3896812b37e716389fc8f87e8344ce0aa7",
+      "references/sources/taste-LICENSE": "1ac929f8d2816d4dd54496fed6d7d1768ff12fc8a81979eab483968f3c6c437e",
+      "references/sources/decisioncraft-LICENSE": "796cbf506f10532448250f56c2ca6df74799c4b97551a120874287c7edb4883a",
+      "references/sources/worth-using-LICENSE": "449dfff7faa2de4bf5f8947f065f2fb58e76e0bf3316470e7fc22bb7aa264f96",
+      "references/sources/right-shape-LICENSE": "bc1b05ccacf08df0e949afcd9d221780d73725d4921c182aefc7935ecd641714",
+      "references/sources/trail-code-LICENSE": "d671f52607b002fad21b4a09cf3a7bd6c507e95abfd90040c775fdd4d83e3d7c",
+      "references/sources/market-fit-LICENSE": "449dfff7faa2de4bf5f8947f065f2fb58e76e0bf3316470e7fc22bb7aa264f96",
+      "references/sources/sizzle-LICENSE": "2be4b50f02e0eecdac70c09d2cea04bc8986e85f64a9aa10dbd8366f96276a2c",
+      "skills/product/SKILL.md": "2d7c12a6a1472d33d6363d9bedee4627d503b3027ab1b37acb02135edc970fad",
+      "skills/sprint/SKILL.md": "de3441f9b6877c2ced50846ed24ae25f81b6f58f515705a97af84443c41beefe",
+      "skills/stories/SKILL.md": "18e94f1f76b175ab58dd04323f9fd9d8138bfdbdbd1204e143322c4486ea4cec",
+      "skills/realign/SKILL.md": "a7713e96bba157ed9d940a671b4500e831797b158bd359c37f2555cded2a3c44",
+      "skills/personas/SKILL.md": "84cf04493ece74b151bd66d09d10fc1581b16e0284585ee5067805d6ca413005",
+      "skills/design/SKILL.md": "8cec8abf2cdaf164d5bd52da65e25e83f7dbfa80e34cd004a928ffa937a38c65",
+      "skills/challenge/SKILL.md": "4056a34b2ffb9746159d8358b473ae02330c28d780eab146e460c1305b743a59",
+      "skills/simulate/SKILL.md": "b5be55f39310601e797c228d6fc375e6b9536753d1112d721cc2eb8592f42307",
+      "skills/sprint-review/SKILL.md": "bec33aee5c957e23846ea2c4b4ff55fea26688a183ace44172c7edf8d97a4664",
+      "skills/brief/SKILL.md": "068210b5ab7acab4fdfc32e4bf49a4aba274d3509492fe425c74c8e71b95e548",
+      "skills/roadmap/SKILL.md": "0df1593721fa43d66a81dab70e989cded81207d9e54b84de9293d2fe4472923d",
+      "skills/architecture/SKILL.md": "221415b43e6c75585868c12c0b659f42a57516ea562979d7d2216aeb869474c8",
+      "skills/prd/SKILL.md": "d9edec9ceed70ea0a1ae12c665d0d393b0887558859a70e84fdd261153a47e8d",
+      "skills/start/SKILL.md": "7dfabb22908609acd3a403d5c8560f57dd857e9c510957f6956cec749fea81cf",
+      "skills/research/SKILL.md": "553be000afdc411be4e748fc655015c8fe51d32b3d70a9aa712d42496e6eaf24",
+      "skills/status/SKILL.md": "5c56605ca5e9714fe1a5c438cacb939538dda8761328d7196625c62d23904632"
+    }
+  },
+  "workflow": {
+    "canonical_store": "one existing Delivery planning store; no parallel map",
+    "story": "feature-conversation-03",
+    "sprint": "feature-conversation-3-cloud-entry",
+    "selected_gap": "gap-cloud-entry, linked to feature-conversation/planning",
+    "selection_evidence": "Missing explicit existing-cloud entry and start misrouting ordinary shipping to persistent local runtime. Confirmed by installed-resource reading and independent source review.",
+    "alternatives": [
+      "leave observed friction",
+      "new launcher/adapter",
+      "expand persistent runtime host support"
+    ],
+    "chosen": "Small README/start guidance repair; no new runtime/service. Story and sprint written before four-file implementation.",
+    "canonical_feature_ids": 14,
+    "history_preserved": true,
+    "usefulness_cards_unchanged": true,
+    "proposed_choices_remain_unconfirmed": true
+  },
+  "observed_helper_receipts": [
+    {
+      "receipt": "inspect",
+      "exit_code": 0,
+      "stderr_empty": true
+    },
+    {
+      "receipt": "status-before",
+      "exit_code": 0,
+      "stderr_empty": true,
+      "freshness": {
+        "fresh": true,
+        "snapshot_commit": "95e1b1a64220e92e0fd7f55887ee3254b5f84b39",
+        "current_commit": "95e1b1a64220e92e0fd7f55887ee3254b5f84b39",
+        "commit_matches": true
+      },
+      "map_sha256": "45adce91eb342da3c9d27590fc7a7f7992dc3333d95e9b241297f1d7e3865370"
+    },
+    {
+      "receipt": "handoff-before",
+      "exit_code": 1,
+      "stderr_empty": true,
+      "freshness": {
+        "fresh": true,
+        "snapshot_commit": "95e1b1a64220e92e0fd7f55887ee3254b5f84b39",
+        "current_commit": "95e1b1a64220e92e0fd7f55887ee3254b5f84b39",
+        "commit_matches": true
+      },
+      "unconfirmed_choices": [
+        "proposition",
+        "next_slice",
+        "cuts"
+      ],
+      "map_sha256": "45adce91eb342da3c9d27590fc7a7f7992dc3333d95e9b241297f1d7e3865370",
+      "selection": {
+        "feature_id": "feature-conversation",
+        "qualification": "Other features remain in the canonical record; product context and freshness remain global. No execution or retirement permission is granted.",
+        "scope": "display/context only"
+      }
+    },
+    {
+      "receipt": "impact-before",
+      "exit_code": 0,
+      "stderr_empty": true,
+      "freshness": {
+        "fresh": true,
+        "snapshot_commit": "95e1b1a64220e92e0fd7f55887ee3254b5f84b39",
+        "current_commit": "95e1b1a64220e92e0fd7f55887ee3254b5f84b39",
+        "commit_matches": true
+      },
+      "map_sha256": "45adce91eb342da3c9d27590fc7a7f7992dc3333d95e9b241297f1d7e3865370"
+    },
+    {
+      "receipt": "record-selection",
+      "exit_code": 0,
+      "stderr_empty": true,
+      "saved_sha256": "6ebf229b11d61bb6433c7431c19be399f858d385eff576edae7f255eb36d63b1"
+    },
+    {
+      "receipt": "status-after-edit",
+      "exit_code": 1,
+      "stderr_empty": true,
+      "freshness": {
+        "fresh": false,
+        "snapshot_commit": "95e1b1a64220e92e0fd7f55887ee3254b5f84b39",
+        "current_commit": "95e1b1a64220e92e0fd7f55887ee3254b5f84b39",
+        "commit_matches": true
+      },
+      "map_sha256": "6ebf229b11d61bb6433c7431c19be399f858d385eff576edae7f255eb36d63b1"
+    },
+    {
+      "receipt": "record-branch",
+      "exit_code": 0,
+      "stderr_empty": true,
+      "saved_sha256": "b63b141d852c331cec15fbe433bba92ec00258ee42c36e599ce9c98b0d431694"
+    },
+    {
+      "receipt": "status-branch",
+      "exit_code": 0,
+      "stderr_empty": true,
+      "freshness": {
+        "fresh": true,
+        "snapshot_commit": "575cac54d3e26b3253239b9acac6def239d1179e",
+        "current_commit": "575cac54d3e26b3253239b9acac6def239d1179e",
+        "commit_matches": true
+      },
+      "map_sha256": "b63b141d852c331cec15fbe433bba92ec00258ee42c36e599ce9c98b0d431694"
+    },
+    {
+      "receipt": "handoff-branch",
+      "exit_code": 1,
+      "stderr_empty": true,
+      "freshness": {
+        "fresh": true,
+        "snapshot_commit": "575cac54d3e26b3253239b9acac6def239d1179e",
+        "current_commit": "575cac54d3e26b3253239b9acac6def239d1179e",
+        "commit_matches": true
+      },
+      "unconfirmed_choices": [
+        "proposition",
+        "next_slice",
+        "cuts"
+      ],
+      "map_sha256": "b63b141d852c331cec15fbe433bba92ec00258ee42c36e599ce9c98b0d431694",
+      "selection": {
+        "feature_id": "feature-conversation",
+        "qualification": "Other features remain in the canonical record; product context and freshness remain global. No execution or retirement permission is granted.",
+        "scope": "display/context only"
+      }
+    },
+    {
+      "receipt": "candidate13-inspect",
+      "exit_code": 0,
+      "stderr_empty": true
+    },
+    {
+      "receipt": "candidate13-status",
+      "exit_code": 0,
+      "stderr_empty": true,
+      "freshness": {
+        "fresh": true,
+        "snapshot_commit": "575cac54d3e26b3253239b9acac6def239d1179e",
+        "current_commit": "575cac54d3e26b3253239b9acac6def239d1179e",
+        "commit_matches": true
+      },
+      "map_sha256": "b63b141d852c331cec15fbe433bba92ec00258ee42c36e599ce9c98b0d431694"
+    },
+    {
+      "receipt": "candidate13-handoff",
+      "exit_code": 1,
+      "stderr_empty": true,
+      "freshness": {
+        "fresh": true,
+        "snapshot_commit": "575cac54d3e26b3253239b9acac6def239d1179e",
+        "current_commit": "575cac54d3e26b3253239b9acac6def239d1179e",
+        "commit_matches": true
+      },
+      "unconfirmed_choices": [
+        "proposition",
+        "next_slice",
+        "cuts"
+      ],
+      "map_sha256": "b63b141d852c331cec15fbe433bba92ec00258ee42c36e599ce9c98b0d431694",
+      "selection": {
+        "feature_id": "feature-conversation",
+        "qualification": "Other features remain in the canonical record; product context and freshness remain global. No execution or retirement permission is granted.",
+        "scope": "display/context only"
+      }
+    }
+  ],
+  "independent_review": {
+    "source": "575cac54d3e26b3253239b9acac6def239d1179e",
+    "verdict": "PASS FR-C1 through FR-C3 within cloud file-resource scope",
+    "observations": [
+      "All83installed files match candidate source",
+      "15initial installed-resource hashes match baseline",
+      "Actual stale/unconfirmed warnings retained",
+      "8package tests, catalogue and diff checks passed"
+    ]
+  },
+  "package_test_output": "test_bounded_route_is_reachable_across_delivery_and_shipping (test_package.PackageTests.test_bounded_route_is_reachable_across_delivery_and_shipping) ... ok\ntest_catalogue_validation_cannot_pass_a_nonportable_root_manifest (test_package.PackageTests.test_catalogue_validation_cannot_pass_a_nonportable_root_manifest) ... ok\ntest_import_provenance_covers_all_derived_material (test_package.PackageTests.test_import_provenance_covers_all_derived_material) ... ok\ntest_portable_schema_rejects_legacy_root_and_nested_mistakes (test_package.PackageTests.test_portable_schema_rejects_legacy_root_and_nested_mistakes) ... ok\ntest_preview_loads_no_unimplemented_runtime (test_package.PackageTests.test_preview_loads_no_unimplemented_runtime) ... ok\ntest_product_methods_retain_source_pins_and_full_license_notices (test_package.PackageTests.test_product_methods_retain_source_pins_and_full_license_notices) ... ok\ntest_shipped_boundary_excludes_port_assessment_and_retains_lineage (test_package.PackageTests.test_shipped_boundary_excludes_port_assessment_and_retains_lineage) ... ok\ntest_skill_resources_are_contained_and_present (test_package.PackageTests.test_skill_resources_are_contained_and_present) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.010s\n\nOK\n",
+  "limits": [
+    "No automatic current-cloud catalogue/picker registration proved",
+    "No persistent coordinator/authenticated-dot adapter proved",
+    "No desktop or outside-user adoption/token benefit claim",
+    "Candidate branch not shipped by this receipt",
+    "Beads executable unavailable; repository global Beads skill unreadable; existing canonical planning continued under explicit authorization, no substitute tracker"
+  ]
+}
