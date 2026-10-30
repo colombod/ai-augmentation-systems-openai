@@ -1,0 +1,172 @@
+{
+  "commit": null,
+  "features": [
+    {
+      "code": [],
+      "evidence": [
+        {
+          "note": "Starter only: no implementation or user evidence.",
+          "path": null
+        }
+      ],
+      "id": "first-customer-outcome",
+      "name": "Illustrative first useful local check",
+      "state": "planned",
+      "summary": "Planned concept, not an implementation or a real customer claim.",
+      "unknowns": [
+        "The customer, job and return behaviour need evidence."
+      ],
+      "usefulness": {
+        "First value": {
+          "evidence": "No outside-user evidence recorded.",
+          "grade": "Unknown",
+          "next_check": "Name who to observe, when, and the task/outcome.",
+          "rating": "Unknown"
+        },
+        "Fit": {
+          "evidence": "No outside-user evidence recorded.",
+          "grade": "Unknown",
+          "next_check": "Name who to observe, when, and the task/outcome.",
+          "rating": "Unknown"
+        },
+        "Job": {
+          "evidence": "No outside-user evidence recorded.",
+          "grade": "Unknown",
+          "next_check": "Name who to observe, when, and the task/outcome.",
+          "rating": "Unknown"
+        },
+        "Outcome": {
+          "evidence": "No outside-user evidence recorded.",
+          "grade": "Unknown",
+          "next_check": "Name who to observe, when, and the task/outcome.",
+          "rating": "Unknown"
+        },
+        "Return": {
+          "evidence": "No outside-user evidence recorded.",
+          "grade": "Unknown",
+          "next_check": "Name who to observe, when, and the task/outcome.",
+          "rating": "Unknown"
+        },
+        "Trust": {
+          "evidence": "No outside-user evidence recorded.",
+          "grade": "Unknown",
+          "next_check": "Name who to observe, when, and the task/outcome.",
+          "rating": "Unknown"
+        }
+      }
+    }
+  ],
+  "method": "curated file-level feature links; no inferred calls or complete dependency graph",
+  "mode": "greenfield",
+  "product": {
+    "before_after": {
+      "basis": "proposed",
+      "revisit": "Revisit when the owner corrects the choice or real-use evidence contradicts it.",
+      "source": "Maintainer proposal; not an owner confirmation.",
+      "text": "Before: guess what matters. After: inspect promises, evidence, cuts and the next observable result."
+    },
+    "current_cost": {
+      "basis": "unknown",
+      "revisit": "Revisit when the owner corrects the choice or real-use evidence contradicts it.",
+      "source": "Maintainer proposal; not an owner confirmation.",
+      "text": "Unknown: the owner reports wasted effort but no measured time/cost was supplied."
+    },
+    "customer": {
+      "basis": "proposed",
+      "revisit": "Revisit when the owner corrects the choice or real-use evidence contradicts it.",
+      "source": "Maintainer proposal; not an owner confirmation.",
+      "text": "Illustrative: maintainer designing a new local plugin capability."
+    },
+    "cuts": [
+      {
+        "basis": "proposed",
+        "revisit": "Revisit when the owner corrects the choice or real-use evidence contradicts it.",
+        "source": "Maintainer proposal; not an owner confirmation.",
+        "text": "No new service, automatic code deletion, film production or model dependency in this slice."
+      }
+    ],
+    "must_survive": [
+      {
+        "basis": "owner-stated",
+        "revisit": "Revisit when the owner corrects the choice or real-use evidence contradicts it.",
+        "source": "User, 2026-10-30: \"Brown field and green field are equally important\"",
+        "text": "Greenfield and brownfield are equally important."
+      },
+      {
+        "basis": "owner-stated",
+        "revisit": "Revisit when the owner corrects the choice or real-use evidence contradicts it.",
+        "source": "User: \"Do not do such mistake and drive this to completion and value\"",
+        "text": "Drive to completion and value; preserve agency, value and priorities."
+      }
+    ],
+    "next_slice": {
+      "basis": "proposed",
+      "revisit": "Revisit when the owner corrects the choice or real-use evidence contradicts it.",
+      "source": "Maintainer proposal; not an owner confirmation.",
+      "text": "A maintainer can frame a new idea or inspect an existing feature, then obtain a source-bound impact answer and one next done-when check."
+    },
+    "problem": {
+      "basis": "proposed",
+      "revisit": "Revisit when the owner corrects the choice or real-use evidence contradicts it.",
+      "source": "Maintainer proposal; not an owner confirmation.",
+      "text": "Planning can expand before the first useful customer outcome is established."
+    },
+    "proposition": {
+      "basis": "proposed",
+      "revisit": "Revisit when the owner corrects the choice or real-use evidence contradicts it.",
+      "source": "Maintainer proposal; not an owner confirmation.",
+      "text": "Illustrative: get one useful result with existing local tools before adding an autonomous agent."
+    },
+    "right_shape": {
+      "alternatives": [
+        "Just prose: lacks repeatable freshness and shared-file checks.",
+        "A graph service or persistent agent: unnecessary for this bounded file-level first outcome."
+      ],
+      "autonomy_rung": 2,
+      "benchmark": "This actual-repository command run plus a labelled idea, stale/unknown/share traps in tests, a leave-alone check and no adoption claim. Stop after recording one next slice.",
+      "engine": "LLM",
+      "form": "skill",
+      "gates": {
+        "G1": {
+          "reason": "Not yet verified in the intended host.",
+          "status": "unknown"
+        },
+        "G2": {
+          "reason": "Not yet verified in the intended host.",
+          "status": "unknown"
+        },
+        "G3": {
+          "reason": "Not yet verified in the intended host.",
+          "status": "unknown"
+        },
+        "G4": {
+          "reason": "Not yet verified in the intended host.",
+          "status": "unknown"
+        },
+        "G5": {
+          "reason": "Not yet verified in the intended host.",
+          "status": "unknown"
+        },
+        "G6": {
+          "reason": "Not yet verified in the intended host.",
+          "status": "unknown"
+        }
+      },
+      "need": {
+        "N1": 1,
+        "N2": 1,
+        "N3": 1,
+        "N4": 0
+      },
+      "reason": "The host curates customer promises and choices; deterministic local commands check paths, bytes and impact. No separate model or agent loop."
+    },
+    "riskiest_assumption": {
+      "basis": "unknown",
+      "revisit": "Revisit when the owner corrects the choice or real-use evidence contradicts it.",
+      "source": "Maintainer proposal; not an owner confirmation.",
+      "text": "A stranger can get a useful first result from the packaged skill without its author."
+    }
+  },
+  "schema_version": 1,
+  "snapshot": {}
+}
