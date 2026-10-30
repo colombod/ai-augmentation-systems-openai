@@ -1,5 +1,19 @@
 # Changelog
 
+## Unreleased — 0.1.0-preview.10
+
+- Add optional `--transitive` to existing product impact and retirement proposals:
+  possible Python import reach at the recorded commit, shortest file/line evidence
+  chains, shared consumers and raw dependency freshness. Direct coverage remains
+  unchanged. No graph service, second registry or project-code execution.
+- Report unresolved/ambiguous imports, unsupported languages/package contexts,
+  dynamic loaders and parse limits. Greenfield remains code-free; unavailable
+  optional reach is informational and does not gate story readiness.
+- Derived exclusive retirement reach remains candidate-only and never permits
+  deletion or replaces owner/migration/rollback/usage review. Retain source pins
+  and MIT attribution for the selectively adapted upstream traversal design.
+
+
 ## Unreleased — 0.1.0-preview.7
 
 - Add `$delivery:product` for equally first-class greenfield and brownfield work,

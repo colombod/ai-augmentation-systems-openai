@@ -18,9 +18,9 @@ required for brownfield code mapping and unnecessary for a greenfield idea.
 | `inspect` | Read-only candidate docs/manifests/tests and current source commit, or existing concept artifacts without a repo |
 | `record --input FILE --expected-sha256 new` | Validate curated JSON and save a new product record; use the reported digest for later updates |
 | `status` | Feature states, exact source revision and raw-byte/mode freshness |
-| `impact --path FILE [--path FILE]` | Features directly linked to the proposed paths, shared files and unmapped uncertainty |
+| `impact --path FILE [--path FILE] [--transitive]` | Direct curated links; optional possible Python import reach, shortest file/line chains and coverage limits |
 | `handoff` | Product choices, separate usefulness cards, shape calculation and unconfirmed choices for next work |
-| `retire-plan --feature ID` | Read-only proposal: shared code to preserve, exclusive candidates, unknown human decision and migration checks |
+| `retire-plan --feature ID [--transitive]` | Read-only proposal: shared code to preserve, exclusive candidates, unknown human decision and migration checks |
 
 `project.py init` creates directories first. Record updates use a local file lock,
 expected digest and atomic replacement. Prior complete bytes are retained in
@@ -51,6 +51,37 @@ and size/mtime shortcuts. Commit mismatch stays visible even if mapped bytes did
 not change. Unmapped files, dynamic wiring and external consumers remain unknown;
 a fresh curated map is not a complete graph. Impact is direct file-level coverage,
 not transitive blast radius. Query results never authorize edits or removal.
+
+## Optional dependency-side impact
+
+Add `--transitive` to `impact` or `retire-plan`; no registry migration, extra
+service or package is required. Direct fields keep their existing meaning. The
+separate `transitive` result follows possible Python imports from the same curated
+feature `code` anchors at the **recorded full commit**, using a shortest breadth-
+first chain with `from`, `to`, `line` and `kind`. Multiple features reaching a file
+are shared consumers. It reads Git blobs without importing/executing project code.
+
+This first slice supports Python AST imports in conventional sibling/repository/
+`src` roots and regular package initializers. It does not resolve installed
+packages, namespace/custom import contexts, custom `sys.path`, dynamic loaders,
+other languages or semantic calls. Conditional/function-local imports are possible
+reach, not proof that a runtime path executes. Ambiguous paths, unresolved/external
+imports, unsupported source/initializer modes, parse/size failures and recognized
+dynamic loaders are reported even inside otherwise analyzed files. Files outside
+anchor reach are uninspected. A smaller unresolved list never proves completeness.
+
+Graph freshness also checks raw bytes/modes of reached dependencies, including
+files not directly anchored. Its commit and stale result remain separate from the
+existing direct-map freshness. Stale graph results return exit 1; unavailable
+optional analysis reports `available: false` and a reason while retaining direct
+results. Greenfield planned code has no dependency graph. This is informational
+reach: neither missing analysis nor a graph verdict sets or blocks story readiness.
+
+Derived retirement exclusivity means **candidate only**, never deletable or proof
+of no unknown consumers. Preserve shared reach, inspect unresolved/external and
+unsupported consumers, retain history, and obtain the exact owner decision plus
+replacement/migration/rollback review already required below. No command deletes
+code, changes a feature's state or widens execution authority.
 
 ## Owner choice before expansion
 

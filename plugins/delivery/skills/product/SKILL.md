@@ -74,14 +74,17 @@ For brownfield add `--repo <product-git-root>` before the subcommand. Use the
 reported SHA for updates. `record` preserves previous versions and feature IDs.
 Read `status` before relying on the map and `impact --path <file>` before edits.
 Report unknown/unmapped coverage, changed raw bytes and stale commits prominently.
-Never describe this curated file index as a transitive dependency graph.
+The default is direct curated coverage. For optional dependency evidence use
+`impact --path <file> --transitive`: its separate result follows possible Python
+imports at the recorded commit, with shortest file/line chains and explicit
+unresolved/unsupported coverage. Never call it a complete semantic graph.
 
 Keep Job, First value, Fit, Outcome, Trust and Return separate, each with rating,
 evidence grade, source and next check. Never average them. Source inspection,
 tests and our own walkthrough remain Claimed, not Seen outside-user evidence.
 Unknown Return is a validation gap, never a retirement recommendation.
 
-For subtraction run `retire-plan --feature <id>`. Inspect its shared-code warnings,
+For subtraction run `retire-plan --feature <id>` (optionally `--transitive`). Inspect its shared-code warnings,
 usage uncertainty and migration/rollback needs. Take the concrete proposal to the
 user. No helper performs retirement or deletion; a proposal grants no authority.
 

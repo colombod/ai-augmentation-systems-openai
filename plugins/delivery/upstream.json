@@ -345,5 +345,27 @@
       "sha256": "891f7810083c56a04d68785ae1e7f811160f38705f66802f35b5e1c88cf9332a",
       "adaptation": "Preserve question instructions/versions and historical upstream Jev measurement labels; make implicit relay blocking intent explicit; historical measurements are not OpenAI or port calibration"
     }
-  ]
+  ],
+  "codemap_port": {
+    "repository": "https://github.com/colombod/ai-augmentation-systems",
+    "revision": "369ecaffc564fc4ece470eb229d3034e81912f75",
+    "plugin_version": "0.40.2",
+    "license": "MIT",
+    "notice": "LICENSE",
+    "files": [
+      {
+        "path": "plugins/delivery/scripts/lib/codemap.js",
+        "sha256": "f64ee19c81a4d8b522ded8c533fcde0948e3437a385b89f45892bbcf2f05b4c1"
+      },
+      {
+        "path": "plugins/delivery/scripts/lib/features.js",
+        "sha256": "79a5211de2e798555059f6a4cb9fd39c39ecc949f8c7955c4e4654ffae96ec36"
+      },
+      {
+        "path": "plugins/delivery/scripts/map.test.js",
+        "sha256": "13019f3ebab66251411dbff5b7a573f2424ab56981c2d1d8f7f90962abd070b3"
+      }
+    ],
+    "adaptation": "Selective traversal design/BFS and shortest file-line chain adaptation in native product.py. Existing OpenAI record retained; Python AST parser replaces upstream regex; unresolved/unsupported cases explicit. No upstream executable, discovery registry, hooks, permissions, other-language or deployment claims copied."
+  }
 }
