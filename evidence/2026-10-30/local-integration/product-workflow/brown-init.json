@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "/workspace/delivery-integration/plugins/delivery/scripts/project.py",
+    "init",
+    "--project",
+    "/tmp/delivery-integration-evidence/product-workflow/brownfield",
+    "--initiative",
+    "delivery-product"
+  ],
+  "exit_code": 0,
+  "stdout": "{\n  \"delivery_root\": \"/tmp/delivery-integration-evidence/product-workflow/brownfield/.delivery\",\n  \"initiative\": \"delivery-product\",\n  \"created\": [\n    \"/tmp/delivery-integration-evidence/product-workflow/brownfield/.delivery\",\n    \"/tmp/delivery-integration-evidence/product-workflow/brownfield/.delivery/initiatives\",\n    \"/tmp/delivery-integration-evidence/product-workflow/brownfield/.delivery/initiatives/delivery-product\",\n    \"/tmp/delivery-integration-evidence/product-workflow/brownfield/.delivery/personas\",\n    \"/tmp/delivery-integration-evidence/product-workflow/brownfield/.delivery/interviews\",\n    \"/tmp/delivery-integration-evidence/product-workflow/brownfield/.delivery/simulations\",\n    \"/tmp/delivery-integration-evidence/product-workflow/brownfield/.delivery/decisions\",\n    \"/tmp/delivery-integration-evidence/product-workflow/brownfield/.delivery/stories\",\n    \"/tmp/delivery-integration-evidence/product-workflow/brownfield/.delivery/reviews\",\n    \"/tmp/delivery-integration-evidence/product-workflow/brownfield/.delivery/sprints\"\n  ],\n  \"capability\": \"planning-preview\",\n  \"artifacts_overwritten\": 0\n}\n",
+  "stderr": ""
+}

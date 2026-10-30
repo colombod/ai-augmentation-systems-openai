@@ -1,0 +1,16 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "/workspace/delivery-integration/plugins/delivery/scripts/product.py",
+    "--project",
+    "/tmp/delivery-integration-evidence/product-workflow/brownfield",
+    "--repo",
+    "/workspace/delivery-integration",
+    "impact",
+    "--path",
+    "plugins/delivery/scripts/project.py"
+  ],
+  "exit_code": 0,
+  "stdout": "{\n  \"coverage\": \"curated file-level feature links; no inferred calls or complete dependency graph\",\n  \"features\": [\n    {\n      \"id\": \"workspace\",\n      \"links\": [\n        \"plugins/delivery/scripts/project.py\"\n      ],\n      \"name\": \"Planning workspace initialization and inventory\",\n      \"state\": \"preview\"\n    },\n    {\n      \"id\": \"planning\",\n      \"links\": [\n        \"plugins/delivery/scripts/project.py\"\n      ],\n      \"name\": \"Existing planning and review skill workflows\",\n      \"state\": \"preview\"\n    },\n    {\n      \"id\": \"product-baseline\",\n      \"links\": [\n        \"plugins/delivery/scripts/project.py\"\n      ],\n      \"name\": \"Greenfield and brownfield product records, feature impact and handoff\",\n      \"state\": \"preview\"\n    },\n    {\n      \"id\": \"native-team\",\n      \"links\": [\n        \"plugins/delivery/scripts/project.py\"\n      ],\n      \"name\": \"Persistent local Codex role coordination\",\n      \"state\": \"preview\"\n    },\n    {\n      \"id\": \"canonical-artifacts\",\n      \"links\": [\n        \"plugins/delivery/scripts/project.py\"\n      ],\n      \"name\": \"Controlled canonical planning and review saves\",\n      \"state\": \"preview\"\n    },\n    {\n      \"id\": \"controlled-review\",\n      \"links\": [\n        \"plugins/delivery/scripts/project.py\"\n      ],\n      \"name\": \"Identity-bound Beads workflow and human acceptance\",\n      \"state\": \"preview\"\n    }\n  ],\n  \"freshness\": {\n    \"changed_mapped_files\": [],\n    \"commit_matches\": true,\n    \"current_commit\": \"edd036fbd96b60f58a3936766a2e712cbf18f502\",\n    \"fresh\": true,\n    \"limitation\": \"Fresh means snapshot commit and linked raw bytes/modes match; unmapped code and runtime wiring are not proven complete\",\n    \"snapshot_commit\": \"edd036fbd96b60f58a3936766a2e712cbf18f502\",\n    \"staged_changes\": [],\n    \"unmapped_committed_changes\": [],\n    \"unmapped_working_changes\": [],\n    \"untracked_not_analyzed\": []\n  },\n  \"map_sha256\": \"83a564539233ecc705382c5b32d0df54bc29549b660c00b3a7ad1dc60c1fa8a1\",\n  \"question_paths\": [\n    \"plugins/delivery/scripts/project.py\"\n  ],\n  \"shared_files\": {\n    \"plugins/delivery/scripts/project.py\": [\n      \"workspace\",\n      \"planning\",\n      \"product-baseline\",\n      \"native-team\",\n      \"canonical-artifacts\",\n      \"controlled-review\"\n    ]\n  },\n  \"unmapped_paths\": [],\n  \"warning\": \"Unmapped means unknown, never safe to delete; transitive and dynamic dependencies require inspection\"\n}\n",
+  "stderr": ""
+}

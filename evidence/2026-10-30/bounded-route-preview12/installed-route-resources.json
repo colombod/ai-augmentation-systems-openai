@@ -1,0 +1,53 @@
+{
+  "codex": "codex-cli 0.163.0",
+  "package_version": "0.1.0-preview.12",
+  "installed_loading_resources": {
+    "skills/product/SKILL.md": "2d7c12a6a1472d33d6363d9bedee4627d503b3027ab1b37acb02135edc970fad",
+    "references/core.md": "66358700af4a623c71ed9f078c65adb59b674dd1c84d0f58a760e582c90e4159",
+    "references/product.md": "29ec137705dd7b1002e14a25e7d6b551cfe4d62b4420fa19f54c0a05dfe4ed87",
+    "references/reviewer-context.md": "b17f83cc0b6bc684e9e83229ab6312cccf7f724f8bf1cb3691af49a3f63dadd5",
+    "references/bounded-change.md": "1af13399d7d17228df3ef38185fd0691eaf65f85657ce288ce081627867a1360",
+    "skills/stories/SKILL.md": "24fd1acb63bcafa97d8b7c97d1ead905ea5a46e3409eccb35eabab56fb9cbc57",
+    "skills/sprint/SKILL.md": "de3441f9b6877c2ced50846ed24ae25f81b6f58f515705a97af84443c41beefe",
+    "skills/sprint-review/SKILL.md": "bec33aee5c957e23846ea2c4b4ff55fea26688a183ace44172c7edf8d97a4664",
+    "skills/realign/SKILL.md": "f0a1d4ba3648a6bccdc5680441f89af7abce8ae9c37c3485f96b73d34b5a31ca"
+  },
+  "installation": "passed",
+  "skills_discovered": [
+    "delivery:architecture",
+    "delivery:brief",
+    "delivery:challenge",
+    "delivery:design",
+    "delivery:personas",
+    "delivery:prd",
+    "delivery:product",
+    "delivery:realign",
+    "delivery:research",
+    "delivery:roadmap",
+    "delivery:simulate",
+    "delivery:sprint",
+    "delivery:sprint-review",
+    "delivery:start",
+    "delivery:status",
+    "delivery:stories"
+  ],
+  "installed_helper": "passed",
+  "model_calls": 0,
+  "installed_product_helper": {
+    "draft": "passed",
+    "record": "passed",
+    "handoff": "passed",
+    "greenfield_optional_impact": "passed",
+    "qualification": "illustrative greenfield template; unconfirmed choices retained; no model or customer-use claim"
+  },
+  "package_boundary": {
+    "port_assessment": "excluded",
+    "release_lineage": "present"
+  },
+  "acceptance": {
+    "cli_install_and_discovery": "passed",
+    "real_model_workflow": "not-tested",
+    "desktop_ui": "not-tested",
+    "chatgpt": "not-tested"
+  }
+}

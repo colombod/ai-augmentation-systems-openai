@@ -1,0 +1,19 @@
+Auto-merging README.md
+CONFLICT (content): Merge conflict in README.md
+Auto-merging plugins/delivery/CHANGELOG.md
+CONFLICT (content): Merge conflict in plugins/delivery/CHANGELOG.md
+Auto-merging plugins/delivery/NOTICE
+CONFLICT (content): Merge conflict in plugins/delivery/NOTICE
+Auto-merging plugins/delivery/README.md
+CONFLICT (content): Merge conflict in plugins/delivery/README.md
+Auto-merging plugins/delivery/plugin.json
+CONFLICT (content): Merge conflict in plugins/delivery/plugin.json
+Auto-merging plugins/delivery/references/product.md
+Auto-merging plugins/delivery/scripts/product.py
+Auto-merging plugins/delivery/skills/product/SKILL.md
+CONFLICT (content): Merge conflict in plugins/delivery/skills/product/SKILL.md
+Auto-merging plugins/delivery/upstream.json
+CONFLICT (content): Merge conflict in plugins/delivery/upstream.json
+Auto-merging scripts/probe_delivery_install.py
+CONFLICT (content): Merge conflict in scripts/probe_delivery_install.py
+Automatic merge failed; fix conflicts and then commit the result.

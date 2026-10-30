@@ -5,6 +5,8 @@ Curated file links are not a call graph, deployment proof or deletion authority.
 No model, service, hooks, Git writes or automatic code deletion are used here.
 """
 import argparse
+import ast
+from collections import deque
 import fcntl
 import hashlib
 import json
@@ -195,6 +197,69 @@ def validate(value, repo):
             'snapshot':{p:files[p] for p in sorted(linked)},'method':METHOD}
 
 
+def draft(outline, repo):
+    """Expand compact notes, without inventing observations or saving a record."""
+    if not isinstance(outline,dict) or set(outline)-{'product','features'} or 'features' not in outline:
+        fail('Outline requires features and optional product notes')
+    value=json.loads((Path(__file__).resolve().parent.parent/'templates/product-input.json').read_text())
+    value.update(mode='brownfield' if repo else 'greenfield',
+        commit=git(repo,'rev-parse','HEAD').decode().strip() if repo else None)
+    notes=outline.get('product',{})
+    if not isinstance(notes,dict) or set(notes)-set(value['product']):
+        fail('Unknown product note field; use the documented product keys')
+    def proposed(note):
+        if isinstance(note,str):
+            text(note,'Product note')
+            return {'text':note,'basis':'proposed','source':'Compact drafting notes; owner confirmation not established.',
+                    'revisit':'Confirm or revise with the owner before relying on this choice.'}
+        decision(note)
+        return note
+    for key,note in notes.items():
+        if key=='right_shape':
+            placement(note);value['product'][key]=note
+        elif key in ('must_survive','cuts'):
+            if not isinstance(note,list) or not note:fail('Use a nonempty list for '+key)
+            value['product'][key]=[proposed(item) for item in note]
+        else:
+            value['product'][key]=proposed(note)
+    if 'right_shape' not in notes:
+        value['product']['right_shape'].update(need={'N1':0,'N2':0,'N3':0,'N4':0},
+            autonomy_rung=0,form='tool',engine='None',
+            reason='Unassessed placeholder: no autonomy or model dependency is established by drafting notes.',
+            alternatives=['Assess the smallest sufficient form with the owner; do not assume an agent is needed.'])
+    features=outline['features']
+    if not isinstance(features,list) or not features:fail('Name at least one feature promise to draft')
+    starter=value['features'][0]
+    value['features']=[]
+    for item in features:
+        allowed={'id','name','summary','state','code','evidence','unknowns'}
+        if not isinstance(item,dict) or not {'id','name'}<=set(item) or set(item)-allowed:
+            fail('Feature notes require id/name; optional summary/state/code/evidence/unknowns')
+        feature=json.loads(json.dumps(starter))
+        feature.update(id=item['id'],name=item['name'],state=item.get('state','planned'),
+            summary=item.get('summary','Proposed promise: '+str(item['name'])+'; behaviour and availability not yet established.'),
+            code=item.get('code',[]),unknowns=item.get('unknowns',[
+                'Curated draft only: confirm the promise, behaviour, coverage and availability.',
+                'Outside-user usefulness and unprompted return are not established.']))
+        evidence=item.get('evidence',[])
+        if not isinstance(evidence,list):fail('Feature evidence must be a list')
+        feature['evidence']=[]
+        for entry in evidence:
+            if isinstance(entry,str):
+                feature['evidence'].append({'path':entry,'note':'Supplied evidence route; its contents and meaning still require review. File existence is not a passing test or ship verdict.'})
+            else:
+                feature['evidence'].append(entry)
+        if not evidence:
+            feature['evidence']=[{'path':None,'note':'Compact notes only; no implementation, release or outside-user evidence supplied.'}]
+        # All six judgements remain Unknown even when code/evidence paths exist.
+        # The source method requires actual evidence, not drafting confidence.
+        value['features'].append(feature)
+    validated=validate(value,repo)
+    if len((json.dumps(validated,indent=2,sort_keys=True,allow_nan=False)+'\n').encode())>MAX_RECORD:
+        fail('Expanded draft exceeds four megabytes; reduce the feature scope')
+    return value
+
+
 def map_path(project):
     root = delivery_root(project)
     if not root.is_dir():
@@ -312,19 +377,240 @@ def freshness(value, repo):
         'limitation':'Fresh means snapshot commit and linked raw bytes/modes match; unmapped code and runtime wiring are not proven complete'}
 
 
-def impact(value, repo, paths):
+
+def dependency_reach(value, repo, include_retired=()):
+    """Possible Python import reach at the registry commit, never executable code.
+
+    Adapted from the pinned upstream codemap/features BFS design (upstream.json).
+    Conventional local roots only; no sys.path execution, installed package lookup,
+    semantic call graph, inferred features or persistent graph registry.
+    """
+    if value['mode']=='greenfield':
+        return None, {'available':False,'reason':'Planned greenfield features have no observed code or dependency graph',
+                      'snapshot_commit':None}
+    commit = value['commit']
+    files = tree(repo,commit)
+    features = [f for f in value['features'] if f['state']!='retired' or f['id'] in include_retired]
+    edges, analyzed, skipped, unresolved, dynamic = {}, set(), [], [], []
+
+    def resolve(source, module, level):
+        parent = PurePosixPath(source).parent
+        if level:
+            # A relative import requires a known regular package. Namespace or
+            # custom package contexts cannot be established from these rules.
+            boundary = parent
+            while str(boundary) not in ('.','src'):
+                init = str(boundary/'__init__.py')
+                if init not in files:
+                    break
+                if files[init]['mode'] not in ('100644','100755'):
+                    return [], 'unsupported package initializer mode', [init]
+                boundary = boundary.parent
+            if boundary==parent:
+                return [], 'relative package context unknown (namespace/custom roots unsupported)', []
+            base = parent
+            for _ in range(level-1):
+                base = base.parent
+                if base==boundary:
+                    return [], 'relative import escapes known top-level package', []
+            roots = [(base,boundary)]
+        else:
+            roots = [(root,root) for root in dict.fromkeys([parent,PurePosixPath('.'),PurePosixPath('src')])]
+        hits = {}
+        for root, boundary in roots:
+            stem = root.joinpath(*module.split('.')) if module else root
+            candidates = [str(stem)+'.py',str(stem/'__init__.py')] if module else [str(stem/'__init__.py')]
+            for candidate in candidates:
+                if candidate in files:
+                    hits[candidate] = boundary
+        if len(hits)>1:
+            return [], 'ambiguous conventional roots/module paths', sorted(hits)
+        if not hits:
+            return [], 'outside repository or unresolved in conventional roots', []
+        target, boundary = next(iter(hits.items()))
+        if files[target]['mode'] not in ('100644','100755') or files[target]['kind']!='blob':
+            return [], 'unsupported target mode (symlink/submodule)', [target]
+        inits = []
+        directory = PurePosixPath(target).parent
+        while directory!=boundary:
+            init = str(directory/'__init__.py')
+            if init not in files:
+                return [], 'namespace/missing intermediate package initializer unsupported: '+init, [target]
+            if files[init]['mode'] not in ('100644','100755'):
+                return [], 'unsupported package initializer mode', [init]
+            inits.append(init)
+            directory = directory.parent
+        return sorted(set([target]+inits)), None, []
+
+    def outgoing(path):
+        if path in edges:
+            return edges[path]
+        edges[path] = []
+        item = files[path]
+        if not path.endswith('.py'):
+            skipped.append({'path':path,'reason':'unsupported language/file type; only Python imports inferred'})
+            return []
+        size = int(git(repo,'cat-file','-s',item['blob']))
+        if size>1_000_000:
+            skipped.append({'path':path,'reason':'source exceeds one megabyte parser limit'})
+            return []
+        try:
+            module = ast.parse(git(repo,'cat-file','blob',item['blob']),filename=path)
+        except (SyntaxError,ValueError,RecursionError) as error:
+            skipped.append({'path':path,'reason':'Python parse unavailable: '+str(error)[:200]})
+            return []
+        analyzed.add(path)
+        refs = []
+        for node in ast.walk(module):
+            if isinstance(node,ast.Import):
+                refs.extend((alias.name,0,node.lineno) for alias in node.names)
+            elif isinstance(node,ast.ImportFrom):
+                base = node.module or ''
+                # A from-name can be a symbol or submodule. A resolvable base plus
+                # locally present submodules are possible edges, never symbol proof.
+                base_hits, reason, candidates = resolve(path,base,node.level)
+                if reason and candidates:
+                    unresolved.append({'from':path,'line':node.lineno,'reference':'.'*node.level+base,
+                                       'reason':reason,'candidates':candidates})
+                    continue
+                child_hits = []
+                for alias in node.names:
+                    if alias.name!='*':
+                        child = '.'.join(filter(None,[base,alias.name]))
+                        hits, child_reason, child_candidates = resolve(path,child,node.level)
+                        child_hits += hits
+                        if child_candidates and child_reason:
+                            unresolved.append({'from':path,'line':node.lineno,'reference':'.'*node.level+child,
+                                               'reason':child_reason,'candidates':child_candidates})
+                if base_hits or child_hits:
+                    for target in sorted(set(base_hits+child_hits)):
+                        edges[path].append({'from':path,'to':target,'line':node.lineno,'kind':'python-import'})
+                else:
+                    unresolved.append({'from':path,'line':node.lineno,'reference':'.'*node.level+base,
+                                       'reason':reason,'candidates':candidates})
+            elif isinstance(node,ast.Call) and (isinstance(node.func,ast.Name) and node.func.id=='__import__'
+                    or isinstance(node.func,ast.Attribute) and node.func.attr=='import_module'):
+                dynamic.append({'from':path,'line':node.lineno,'reason':'dynamic loader call not inferred'})
+        for spec, level, line in refs:
+            hits, reason, candidates = resolve(path,spec,level)
+            if reason:
+                unresolved.append({'from':path,'line':line,'reference':spec,'reason':reason,'candidates':candidates})
+            for target in hits:
+                edges[path].append({'from':path,'to':target,'line':line,'kind':'python-import'})
+        edges[path] = sorted((e for e in edges[path] if e['to']!=path),key=lambda e:(e['to'],e['line']))
+        return edges[path]
+
+    # Curated anchors have no guaranteed invocation mode. In a package-import
+    # context, enclosing regular initializers may run even when the module has
+    # no explicit imports. Seed these possible edges per feature, not globally
+    # on imported dependencies whose lookup roots were already resolved above.
+    anchor_context_unknown, anchor_initializer_cache = [], {}
+
+    def anchor_initializers(path):
+        if path in anchor_initializer_cache:
+            return anchor_initializer_cache[path]
+        result = []
+        anchor_initializer_cache[path] = result
+        if not path.endswith('.py'):
+            return result
+        directory = PurePosixPath(path).parent
+        while str(directory) not in ('.','src'):
+            init = str(directory/'__init__.py')
+            if init not in files or files[init]['mode'] not in ('100644','100755'):
+                anchor_context_unknown.append({'path':path,'package_initializer':init,
+                    'reason':'Anchor may be a script or namespace/custom package; enclosing initializer missing or unsupported. No further package reach inferred.'})
+                break
+            if init!=path:
+                result.append({'from':path,'to':init,'line':None,'kind':'python-package-initializer'})
+            directory = directory.parent
+        return result
+
+    reached = {}
+    for feature in features:
+        previous = {p:None for p in sorted(feature['code'])}
+        queue = deque(previous)
+        for anchor in sorted(feature['code']):
+            for edge in anchor_initializers(anchor):
+                if edge['to'] not in previous:
+                    previous[edge['to']] = edge
+                    queue.append(edge['to'])
+        while queue:
+            source = queue.popleft()
+            for edge in outgoing(source):
+                if edge['to'] not in previous:
+                    previous[edge['to']] = edge
+                    queue.append(edge['to'])
+        reached[feature['id']] = previous
+    reached_paths = sorted(set().union(*(set(paths) for paths in reached.values())))
+    changed = [p for p in reached_paths if raw_changed(repo,p,files[p])]
+    current = git(repo,'rev-parse','HEAD').decode().strip()
+    return reached, {'available':True,'snapshot_commit':commit,
+        'freshness':{'snapshot_commit':commit,'current_commit':current,'changed_reached_files':changed,
+                     'fresh':current==commit and not changed},
+        'coverage':{'scope':'Reachable from curated anchors, at recorded commit only; possible Python imports, not runtime calls',
+                    'features_without_code':[f['id'] for f in features if not f['code']],
+                    'anchor_package_context_unknown':sorted(anchor_context_unknown,key=lambda x:x['path']),
+                    'initializer_edge_context':'python-package-initializer edges are possible package-import reach; standalone script execution may not run them. line:null means implicit ancestry, not an invented import location.',
+                    'analyzed_files':sorted(analyzed),'unsupported_or_unparsed':sorted(skipped,key=lambda x:x['path']),
+                    'unresolved_references':sorted(unresolved,key=lambda x:(x['from'],x['line'],x['reference'])),
+                    'dynamic_loaders_not_inferred':sorted(dynamic,key=lambda x:(x['from'],x['line'])),
+                    'limits':'Conventional sibling/repository/src roots only; no execution, installed packages, namespace packages, custom sys.path, aliases of dynamic loaders, or other languages. Unreached is unknown, never safe.'}}
+
+
+def optional_dependency_reach(value, repo, include_retired=()):
+    try:
+        return dependency_reach(value,repo,include_retired)
+    except (ValueError,OSError,subprocess.TimeoutExpired) as error:
+        return None, {'available':False,'snapshot_commit':value['commit'],
+                      'reason':'Optional dependency analysis unavailable: '+str(error)[:400]}
+
+
+def dependency_chain(reached, path):
+    chain = []
+    while reached.get(path) is not None:
+        edge = reached[path]
+        chain.append(edge)
+        path = edge['from']
+    return list(reversed(chain))
+
+
+def transitive_impact(value, repo, paths):
+    reached, report = optional_dependency_reach(value,repo)
+    if reached is None:
+        return report
+    report['features'] = []
+    for feature in value['features']:
+        if feature['id'] not in reached:
+            continue
+        via = []
+        for path in paths:
+            if path in reached[feature['id']]:
+                chain = dependency_chain(reached[feature['id']],path)
+                via.append({'path':path,'hops':len(chain),'chain':chain})
+        if via:
+            report['features'].append({'id':feature['id'],'name':feature['name'],'state':feature['state'],'via':via})
+    report['shared_files'] = {p:[f['id'] for f in report['features'] if any(v['path']==p for v in f['via'])]
+                              for p in paths if sum(p in reach for reach in reached.values())>1}
+    report['unreached_paths'] = [p for p in paths if not any(p in reach for reach in reached.values())]
+    return report
+
+def impact(value, repo, paths, transitive=False):
     paths = sorted({relative(p) for p in paths})
     features = [f for f in value['features'] if f['state']!='retired']
     affected = [{'id':f['id'],'name':f['name'],'state':f['state'],
         'links':sorted(set(paths)&set(f['code']))} for f in features if set(paths)&set(f['code'])]
-    return {'question_paths':paths,'features':affected,
+    result = {'question_paths':paths,'features':affected,
         'shared_files':{p:[f['id'] for f in features if p in f['code']] for p in paths if sum(p in f['code'] for f in features)>1},
         'unmapped_paths':[p for p in paths if not any(p in f['code'] for f in features)],
         'freshness':freshness(value,repo),'coverage':METHOD,
         'warning':'Unmapped means unknown, never safe to delete; transitive and dynamic dependencies require inspection'}
+    if transitive:
+        result['transitive'] = transitive_impact(value,repo,paths)
+        result['transitive']['direct_unmapped_paths_meaning'] = 'Top-level unmapped_paths means no direct curated anchor; consult optional reach separately, with its unknowns.'
+    return result
 
 
-def retirement(value, repo, feature_id):
+def retirement(value, repo, feature_id, transitive=False):
     feature = next((f for f in value['features'] if f['id']==feature_id),None)
     if not feature:
         fail('Unknown feature ID')
@@ -332,7 +618,7 @@ def retirement(value, repo, feature_id):
     shared = {p:[f['id'] for f in value['features'] if f['id']!=feature_id and f['state']!='retired' and p in f['code']]
               for p in feature['code']}
     shared = {p:ids for p,ids in shared.items() if ids}
-    return {'feature':feature_id,'proposal_only':True,'shared_code_to_preserve':shared,
+    result = {'feature':feature_id,'proposal_only':True,'shared_code_to_preserve':shared,
         'exclusive_candidates_not_deletion_permission':sorted(set(feature['code'])-shared.keys()),
         'decision_context':{k:feature[k] for k in ('name','state','summary','evidence','usefulness','unknowns')},
         'owner_intent_to_preserve':value['product']['must_survive'],
@@ -343,16 +629,38 @@ def retirement(value, repo, feature_id):
             'usage_review':'Inspect actual use and unknowns; missing Return is not permission to retire.',
             'reason':'Retirement requires an explicit user decision, consumer/migration review and rollback; no action is performed'},
         'impact':report}
+    if transitive:
+        reached, derived = optional_dependency_reach(value,repo,include_retired=(feature_id,))
+        if reached is not None:
+            mine = reached[feature_id]
+            shared_reach = {p:[f for f,reach in reached.items() if f!=feature_id and p in reach] for p in mine}
+            shared_reach = {p:ids for p,ids in shared_reach.items() if ids}
+            derived.update(shared_code_to_preserve=shared_reach,
+                exclusive_candidates_not_deletion_permission=sorted(set(mine)-shared_reach.keys()),
+                warning='Derived exclusive reach is a candidate only: unknown external, dynamic and unsupported consumers still require review. No deletion or readiness permission.')
+        result['transitive'] = derived
+    return result
 
 
-def handoff(value, repo):
+def handoff(value, repo, feature_id=None):
+    features = value['features']
+    if feature_id is not None:
+        if not isinstance(feature_id,str) or not feature_id.strip():
+            fail('Feature ID must be non-empty')
+        features = [f for f in features if f['id']==feature_id]
+        if not features:
+            fail('Unknown feature ID: '+feature_id)
     product = value['product']
     unresolved = [k for k in ('customer','proposition','next_slice') if product[k]['basis']!='owner-stated']
     unresolved += [k for k in ('must_survive','cuts') if any(d['basis']!='owner-stated' for d in product[k])]
-    return {'product':product,'placement':placement(product['right_shape']),
+    result = {'product':product,'placement':placement(product['right_shape']),
         'unconfirmed_choices':unresolved,'freshness':freshness(value,repo),
-        'features':[{k:f[k] for k in ('id','name','state','summary','code','evidence','usefulness','unknowns')} for f in value['features']],
+        'features':[{k:f[k] for k in ('id','name','state','summary','code','evidence','usefulness','unknowns')} for f in features],
         'authority':'Recorded choices are attributed submissions, not authenticated approvals; proposals never authorize execution or retirement'}
+    if feature_id is not None:
+        result['selection'] = {'feature_id':feature_id,'scope':'display/context only',
+            'qualification':'Other features remain in the canonical record; product context and freshness remain global. No execution or retirement permission is granted.'}
+    return result
 
 
 def main():
@@ -361,10 +669,12 @@ def main():
     parser.add_argument('--project',required=True,help='Canonical planning project, independent of product code')
     sub = parser.add_subparsers(dest='command',required=True)
     sub.add_parser('inspect')
+    drafting=sub.add_parser('draft');drafting.add_argument('--outline',required=True)
     record = sub.add_parser('record');record.add_argument('--input',required=True);record.add_argument('--expected-sha256',required=True)
-    sub.add_parser('status');sub.add_parser('handoff')
-    change = sub.add_parser('impact');change.add_argument('--path',action='append',required=True)
-    retire = sub.add_parser('retire-plan');retire.add_argument('--feature',required=True)
+    sub.add_parser('status')
+    handing_off = sub.add_parser('handoff');handing_off.add_argument('--feature',help='Exact feature ID; display/context scope only, with global context and freshness')
+    change = sub.add_parser('impact');change.add_argument('--path',action='append',required=True);change.add_argument('--transitive',action='store_true',help='Optional possible Python import reach at the recorded commit')
+    retire = sub.add_parser('retire-plan');retire.add_argument('--feature',required=True);retire.add_argument('--transitive',action='store_true')
     args = parser.parse_args()
     repo = repository(args.repo) if args.repo else None
     project = checked_path(args.project)
@@ -372,6 +682,11 @@ def main():
         result = inspect(repo) if repo else {'mode':'greenfield','project':str(project),
             'code':'not supplied; start with the customer, job, promise and cuts',
             'planning_artifacts':__import__('project').inventory(project)}
+    elif args.command=='draft':
+        with Path(args.outline).open('rb') as stream:
+            data=stream.read(MAX_RECORD+1)
+        if len(data)>MAX_RECORD:fail('Outline exceeds four megabytes')
+        result=draft(json.loads(data),repo)
     elif args.command=='record':
         with Path(args.input).open('rb') as stream:
             data = stream.read(MAX_RECORD+1)
@@ -381,17 +696,18 @@ def main():
     else:
         value, sha = read_map(project,repo)
         if args.command=='impact':
-            result = impact(value,repo,args.path)
+            result = impact(value,repo,args.path,args.transitive)
         elif args.command=='retire-plan':
-            result = retirement(value,repo,args.feature)
+            result = retirement(value,repo,args.feature,args.transitive)
         elif args.command=='handoff':
-            result = handoff(value,repo)
+            result = handoff(value,repo,args.feature)
         else:
             result = {'freshness':freshness(value,repo),'features':[{k:f[k] for k in ('id','name','state','summary','code','evidence','unknowns')} for f in value['features']]}
         result['map_sha256'] = sha
     print(json.dumps(result,indent=2,sort_keys=True,allow_nan=False))
     observed = result.get('freshness') or result.get('impact',{}).get('freshness')
-    return 1 if (observed and observed['fresh'] is False) or result.get('unconfirmed_choices') else 0
+    graph_freshness = result.get('transitive',{}).get('freshness')
+    return 1 if (observed and observed['fresh'] is False) or (graph_freshness and graph_freshness['fresh'] is False) or result.get('unconfirmed_choices') else 0
 
 
 if __name__=='__main__':

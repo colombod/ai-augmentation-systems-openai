@@ -1,0 +1,10 @@
+test_counts_are_actual_utf8_bytes_and_whitespace_words (test_loading.LoadingTests.test_counts_are_actual_utf8_bytes_and_whitespace_words) ... ok
+test_focused_route_retains_constraints_without_authoring_payload (test_loading.LoadingTests.test_focused_route_retains_constraints_without_authoring_payload) ... ok
+test_measurement_does_not_count_unread_refs_as_free_or_invent_tokens (test_loading.LoadingTests.test_measurement_does_not_count_unread_refs_as_free_or_invent_tokens) ... ok
+test_relevant_lenses_use_common_context_and_allow_absent_code (test_loading.LoadingTests.test_relevant_lenses_use_common_context_and_allow_absent_code) ... ok
+test_resources_survive_packaging_and_link_resolution (test_loading.LoadingTests.test_resources_survive_packaging_and_link_resolution) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.002s
+
+OK

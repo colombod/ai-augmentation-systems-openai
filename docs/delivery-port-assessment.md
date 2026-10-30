@@ -1,6 +1,183 @@
 # Delivery port assessment
 
-## Current design: OpenAI capabilities first
+## Release checklist — 30 October 2026
+
+**Verdict: a scoped product/feature preview candidate is locally viable; full original-goal coverage is partial, not complete. Publication of `delivery/integrated-preview` and merge after independent review and passing CI are now authorized. Customer-host installation remains unapproved/unverified.**
+This is the single current release checkpoint; the older design, observations and
+contracts below remain history/context, not a newer readiness claim. The user
+explicitly requested a repo-based checklist. Beads is unavailable here; this
+updates the existing assessment rather than creating another task database.
+Owners below are roles: **Maintainer** = implementing assistant; **QA** = independent
+goal/scenario reviewer; **Owner** = user/release owner. No new service or remote action is commissioned by listing a next action.
+
+**Priority and product unit.** Delivery is a top-priority enabling product for the
+user to work with dot delivering projects. Start with customer, capability, current
+versus planned state, value/evidence, owner intent and build/change/retire choices.
+Code, tasks, skills and agents are supporting implementation detail. The preview
+is an increment toward that full loop, not permission to stop at a skill collection.
+
+**Delivery state.** Main remains preview.7. Branch-only drafting/loading/impact
+and PR1 are combined locally, not delivered on main. The frozen unreleased
+`0.1.0-preview.11` candidate is `f84a502fd57389b4c01bd4a20175d8448733c9ef`, before the reviewed feature-handoff change at `1c691c886e6c542f2c76bb87cd79a7e44d0b471b`.
+The consolidated publication branch is `delivery/integrated-preview`; repository visibility is preserved.
+The original integration at `edd036fbd96b60f58a3936766a2e712cbf18f502` passed
+**185 Python / 22 Node / 16 discovered skills / 33 public helper commands**; this
+is unshipped integration evidence, attributed to the implementation session.
+[Input pins and raw integration checks](../evidence/2026-10-30/local-integration/README.md).
+[Candidate instruction/resource smoke](../evidence/2026-10-30/preview11-smoke/summary.json)
+adds 5 loading + 7 package checks, conditional greenfield reviewer/architecture/
+story clauses, 16 installed skills, 12 resource hashes, version/provenance checks
+and zero model calls. Old unconditional existing-file reviewer language is removed
+in the selected integrated resources. No manager write permission was widened.
+
+**Independent QA, separately attributed.** Parent supplied completed QA findings
+at QA-local commit `db428b3e1f24a583110cd97f72f47f077e602c42` (not an object available
+in this checkout). Both disposable greenfield/brownfield builds traversed product
+framing → PRD/design → story/sprint → fresh-context implementation → independent
+verification → realignment. Owner clarifications reached code; **8 green tests,
+22 brown tests and 29 captured processes** passed. These are source-driven
+builds, not delivered main features or native runtime acceptance. QA did **not**
+independently access this combined artifact; its results do not substitute for
+integrated installed-host qualification or measured token/latency evidence.
+
+| Original goal | Main source versus branch-only | Local evidence / remaining gap | Owner → next useful action |
+|---|---|---|---|
+| Equal greenfield and brownfield entry | Main: shared product record and planned/no-code mode; compact drafting and remaining reviewer corrections branch-only. | Separate QA completed both source-driven journeys and fresh handoffs/resumption; combined helper paths pass. Not native autonomy. | Maintainer → preserve both paths in the self-development milestone and qualified preview. |
+| Feature promises connected to code; freshness and pre-edit impact | Main: curated full-commit file anchors/raw-byte checks. Branch: optional Python import/initializer reach and shortest evidence chains. | Actual operator_capture.py change: zero direct matches, two dependency matches. Curated anchors, unresolved imports and unsupported consumers remain explicit; no complete semantic/deployed inventory. | Maintainer → consolidate tested direct/optional reach with honest coverage; do not promise automatic discovery. |
+| Owner taste and what must survive | Main: attributed owner/proposed/unknown choices and preservation intent. | **Partial:** clarifications reached QA code, but historical baseline attribution failed and an architecture contradiction needed correction during that journey. Integrated conditional reviewer text now passes targeted smoke. | Maintainer + Owner → preserve exact statements versus interpretations in the Delivery-on-Delivery decision/handoff. |
+| One customer, one proposition and explicit cuts before expansion | Main: product framing/brief/PRD contract; branch draft reduces repetitive input. | QA traversed framing to implementation; contract is not universal runtime enforcement. Draft cannot confirm choices or infer shipping. | Maintainer → make one customer/capability/value choice explicit before implementation, rather than completing documents for their own sake. |
+| Job, First value, Fit, Outcome, Trust, Return; no total | Main: separate grade/evidence/next-check cards; draft preserves Unknown. | Grade/learning mechanics work; customer **Fit/Outcome/Return remain unknown**, and disposable builds are not outside-user adoption. | Owner + Maintainer → record a real first-use outcome and dated return check; no aggregate or promoted demo evidence. |
+| Deliberate retirement; shared-code protection and user decision | Main: proposal-only direct analysis; branch adds partial dependency/initializer reach. | Proposals/shared retention work. Helper rejects active → retired: **complete retirement lifecycle is not implemented**. No absent-consumer or deletion proof. | Maintainer → advertise proposal-only scope; Owner decides a concrete retirement. A safe authorized transition is later work, not a bypass of the current guard. |
+| Right Shape: smallest sufficient form, autonomy and engine | Main: separate form/engine/need/gates with conservative unknown caps. | Deterministic Right Shape worked locally in QA; no autonomous-agent or measured token-efficiency proof. | Maintainer → justify the smallest form for one real feature outcome; no new agent framework. |
+| Guarded execution, evidence and durable handoff/recovery | Main: native mechanisms/gates; PR1: durable request receipts and exact-SHA command evidence. | Fresh-context handoffs/resumption worked in source-driven QA. **Persistent native coordinated execution remains unproved** on this candidate; fake transport is not human acceptance. | Maintainer + QA → qualify real bounded native execution only before advertising it; never infer merge/deploy authority. |
+| Dot as optional chief of staff, retaining Delivery execution/state and human acceptance | Main: native runtime/gates. PR1 only: trusted in-process supervision, durable requests/receipts and verification helpers. | Combined regressions and exact-SHA scratch review pass, but no authenticated dot adapter or real dot completion. Native managers cannot write product-map.json; authorized host save remains required. | Maintainer + Owner → later choose one supported authenticated host boundary and prove one bounded handoff/receipt; do not block core preview on an unbuilt adapter. |
+| Quality-preserving efficiency and reliable review | Branch: focused loading/common source rules; PR1 exact-SHA verification. | Combined deterministic checks pass. **Native-host acceptance and measured token efficiency are blocked/unproved**; no quality/performance win claimed from bytes. | QA + Maintainer → require actual host/usage receipts before those claims; source-driven success is not installed native execution. |
+| One usable installable OpenAI Delivery version | Frozen local preview.11; original source branches/main unchanged. | Manifest/resources/provenance and targeted installed CLI smoke pass. No customer-host update, desktop/ChatGPT acceptance or delivered unified release. | Maintainer + Owner → complete the self-development milestone, then publish the authorized consolidated PR after CI/review. |
+
+### Preview gate and shortest shipping route
+
+A useful **explicitly scoped preview** can deliver both product journeys, owner/
+customer/cut context, curated mapping with optional Python reach, separate usefulness
+and safe retirement proposals. Optional native/dot features stay off/experimental
+unless independently accepted. Dot completion, a complete graph and long-term Return
+are **full-vision gaps**, not automatic blockers for that honestly scoped preview.
+
+| Gate | Current state | Accountable owner / done when |
+|---|---|---|
+| Independent goal/scenario review | Complete with the partial/blocked findings above; did not inspect the combined RC. | Maintainer retains attribution and limitations; source-driven tests do not become native/model usage proof. |
+| One reviewable combined candidate | Frozen local preview.11 at f84a502; version/resources/instructions/provenance smoke passed. | Maintainer preserves this identity for dogfooding; code/functions remain those tested at edd036f. Any subsequent feature gets its own source/review. |
+| Delivery develops Delivery | Source-driven helper milestone completed at 1c691c8; installed native workflow remains unproved. | Maintainer onboards this actual candidate, chooses one feature-level gap, then traces owner intent → criteria → pre-edit impact → fresh implementation → independent verification → map/learning/resumption. |
+| Quality before optimization | Static/source checks pass; model quality/resource benefit unproven. | QA checks the combined body on equal greenfield/brownfield tasks. If loading changes lose quality, retain conservative guidance; do not call smaller byte counts a win. |
+| Exact candidate publication and checks | User explicitly authorized this consolidated normal PR and merge after independent review and passing CI; prior separate publication attempts are superseded. | Owner resolves applicable publication/merge authorization for the concrete diff. Maintainer opens a normal review PR only when allowed, runs/reviews exact-head CI and fixes confirmed failures; no automatic merge/release. |
+| Supported installation and first useful journey | Isolated CLI discovery passed; customer-host acceptance pending. | Owner supplies/authorizes an available supported host and writable test project. Verify fresh installed invocation and a useful result. CLI-scoped preview needs explicit restricted scope; full CLI/desktop/ChatGPT claims need their separate acceptance. |
+| Value follow-up | Unknown outside-user usefulness/Return, retained honestly. | Owner + Maintainer record one pilot's actual outcome and next return check after preview; this does not require an analytics platform or fabricated adoption score. |
+
+**External prerequisites/decisions:** preview surface/scope accepted by Owner; applicable permission for the concrete PR/merge and later
+user-host update; an available authorized model host for missing behavior tests.
+Basic planning needs no new server or provider key. Beads/Dolt are absent here,
+so real Beads-backed runtime qualification needs an already authorized suitable
+environment. No credentials, network policy or host permissions are changed to
+make a test pass. Authenticated dot access needs an actual adapter/host trust proof,
+not an agent-supplied role string or a model response.
+
+**Authorized product-map save path.** Dot/native managers may prepare/read feature
+context; an actually authorized writable host runs `product.py --project <canonical>
+[--repo <product-root>] record --input <reviewed-input> --expected-sha256 <new-or-current-digest>`.
+The host returns the actual path, saved digest and source commit. Preserve IDs/history,
+owner-stated versus proposed choices and CAS conflicts. Without writes return
+prepared/unsaved. Protected managers still cannot write product-map.json; an input
+field is not human consent. Active → retired remains refused, not silently edited.
+
+**Next supported-host product proof.** Prove a focused **feature decision/resumption
+loop**: user + dot discuss one capability/customer, current/planned state, evidence,
+what must survive, and build/change/retire options; retain the decision and one
+bounded handoff against the canonical product revision; resume fresh, verify the
+outcome and return learning. The reviewed helper now supports exact feature-scoped context, but the
+user+dot conversation quality and installed model workflow remain unproved.
+Reuse the record/initiative artifacts; no second ledger, autonomous agent platform
+or new authentication service. Return the chosen gap/evidence before large changes.
+
+**Exact first-proof setup.** Use the frozen installed CLI package on an already
+working signed-in Codex host with writable normal host state, Python 3.10+, Git and
+an explicitly authorized Delivery checkout/planning directory. Select Delivery as
+the component and one canonical store outside the installable plugin. Fresh skill
+invocation must load actual candidate files. This proves a supported assistant/
+helper loop, not authenticated ChatGPT-dot runtime access. For actual dot work,
+use an existing authorized private-repo connection plus that execution host; an
+explicit artifact-assisted host-save handoff is acceptable if labelled manual.
+If either is unavailable, prepare the packet and report the missing boundary.
+Seamless dot execution still needs a supported authenticated adapter and its own
+one-assignment/receipt proof. No credentials or new service are prerequisites for
+basic local planning; no Beads requirement is imposed on this narrow preview.
+
+**Publication gate resolved.** User authorized `delivery/integrated-preview` in
+`colombod/ai-augmentation-systems-openai`, one normal PR into main, and merge after
+independent review and successful CI. This includes the reviewed integrated sources
+and self-development change. Repository visibility remains unchanged. Device
+installation and credential/security changes are not authorized.
+
+**Do not build yet:** a graph service/database or second registry; a new agent/
+authentication framework; broad language/semantic-graph parity; Amplifier runtime/
+mandatory storyboard machinery; automatic retirement/merge/approval; or another
+large roadmap/token-cache system. Consolidate existing value, resolve the actual
+QA blockers, prove installation and one useful journey, then extend from observed
+need. Keep this checkpoint current after each accepted result; do not add parallel
+release lists.
+
+Current normal review PR: [#3](https://github.com/colombod/ai-augmentation-systems-openai/pull/3).
+Publication is complete; merge awaits independent combined-diff review and exact-head CI.
+
+### Independent product rejection and corrected preview12 follow-up
+
+Independent product QA rejected the full workflow at8340a051: an unconditional
+roadmap prerequisite contradicted the small-change promise, and accepted work had
+no packaged authorized shipping path. Source/unit/installer success did not close
+those product defects. Earlier evidence and conclusions remain historical.
+
+Preview12 adds one explicit bounded-change contract across product/stories/sprint/
+review/realignment, with route-aware templates and absent-artifact handling. It
+also owns gap disposition/next-choice reasoning and authorized normal-PR/exact-head
+product+code review/CI/merge/state-refresh instructions, without runtime permission
+changes. A NEW feature-conversation follow-up used that route to improve the actual
+installed-resource probe (nine resource hashes,16 skills,zero native model calls).
+The prior roadmap/open-gap/history artifacts are now included, not reconstructed.
+[Corrected route evidence and remaining gates](../evidence/2026-10-30/bounded-route-preview12/README.md).
+Independent product recheck and exact-head CI are required before merge; no full
+installed/native or customer-use acceptance is claimed.
+
+### What self-development actually demonstrated
+
+The implementing assistant manually curated the fourteen-feature map, supplied
+product judgments and drafted the story/sprint. `inspect` supplied a source census,
+not automatic feature discovery. Missing `feature-conversation` and
+`authenticated-dot` capabilities were manually recorded as planned IDs; other
+limitations were not automatically converted into a backlog or Beads tasks.
+The assistant selected a small feature-scoped handoff after the existing command
+rejected `--feature` and the whole-product result contained all fourteen features.
+Alternatives were manual filtering and a new service/agent; owner confirmation of
+this particular design remains unclaimed.
+
+Delivery's actual helpers validated and CAS-saved the record, checked exact source
+freshness, computed pre-edit impact, produced context, preserved history and
+supported post-review realignment/resumption. A fresh source-driven builder added
+`handoff --feature <exact-id>`; an independent reviewer verified exact commit
+`1c691c886e6c542f2c76bb87cd79a7e44d0b471b`: 190 Python tests, 22 Node tests,
+marketplace validation and 22 CLI processes passed. Default output stays unchanged;
+selection retains global freshness/owner context and grants no authority.
+
+Disposable CLI installation/discovery and installed helper invocations passed,
+with zero native model calls. **No installed native skill-driven onboarding,
+autonomous prioritization, authenticated dot execution, customer adoption or
+shipping success was demonstrated.** This is a reviewed local helper improvement,
+not completion of the user's full product goal. The next required product proof is
+an actual user+dot feature conversation on a supported host after publication.
+The historical map is pinned to 1c691c8; later documentation commits require normal
+refresh and must not be silently treated as the same snapshot.
+
+[Actual curated map, story, commands and verification](../evidence/2026-10-30/self-development/README.md)
+retain the distinction between assistant-supplied judgment and deterministic work.
+
+## Design contract: OpenAI capabilities first
 
 The delivery outcomes are the product: a grounded plan, traceable requirements,
 review findings, an implementation handoff and an honest acceptance record.

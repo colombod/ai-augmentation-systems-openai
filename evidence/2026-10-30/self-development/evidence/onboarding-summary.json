@@ -1,0 +1,34 @@
+{
+  "product": "Actual Delivery candidate, explicitly selected component; hook-event-log excluded",
+  "source_commit": "9ed005a1ab1da54ad7f944622e347b0d28847284",
+  "canonical_store": "/workspace/delivery-self-plan/.delivery",
+  "features": 14,
+  "current_source_features": 12,
+  "planned_features": [
+    "feature-conversation",
+    "authenticated-dot"
+  ],
+  "freshness": {
+    "changed_mapped_files": [],
+    "commit_matches": true,
+    "current_commit": "9ed005a1ab1da54ad7f944622e347b0d28847284",
+    "fresh": true,
+    "limitation": "Fresh means snapshot commit and linked raw bytes/modes match; unmapped code and runtime wiring are not proven complete",
+    "snapshot_commit": "9ed005a1ab1da54ad7f944622e347b0d28847284",
+    "staged_changes": [],
+    "unmapped_committed_changes": [],
+    "unmapped_working_changes": [],
+    "untracked_not_analyzed": []
+  },
+  "baseline_map_sha256": "b8eb451a3e819a6aa83c46797b6305819ba598e432e1a17b288a612bfe7a5b5c",
+  "whole_product_handoff_bytes": 43791,
+  "gap": "handoff --feature feature-conversation exits2: no feature-scoped handoff contract; full output includes all14 capabilities.",
+  "next_feature": "Read-only feature-scoped handoff retaining all product/owner context, value unknowns, canonical revision and global freshness. Proposal, not fabricated human acceptance.",
+  "pre_edit_affected_features": [
+    "product-baseline",
+    "compact-framing",
+    "dependency-impact",
+    "retirement-proposal"
+  ],
+  "qualification": "Actual source/helper onboarding, reusing prior valid feature IDs/evidence; source-driven agents and local commands, not installed native autonomy, user adoption or measured token benefit."
+}

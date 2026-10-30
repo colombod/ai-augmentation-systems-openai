@@ -67,7 +67,8 @@ delivered nothing usable.** State that plainly if it is the case.
 
 ## Stage promise vs. delivered
 
-What `prioritization.md` promised this stage would deliver and serve.
+What existing `prioritization.md`, or the bounded story/sprint contract, promised
+to deliver and serve. List missing full-pipeline documents without inventing them.
 
 | Promised | Delivered | Gap |
 | :-- | :-- | :-- |

@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-B",
+    "/workspace/delivery-product-drafting/plugins/delivery/scripts/product.py",
+    "--project",
+    "/workspace/compact-product-drafting-proof/brownfield",
+    "--repo",
+    "/workspace/delivery-product-drafting",
+    "impact",
+    "--path",
+    "plugins/delivery/scripts/project.py"
+  ],
+  "exit_code": 0,
+  "stdout": "{\n  \"coverage\": \"curated file-level feature links; no inferred calls or complete dependency graph\",\n  \"features\": [\n    {\n      \"id\": \"workspace\",\n      \"links\": [\n        \"plugins/delivery/scripts/project.py\"\n      ],\n      \"name\": \"Initialize the planning workspace\",\n      \"state\": \"planned\"\n    },\n    {\n      \"id\": \"product-record\",\n      \"links\": [\n        \"plugins/delivery/scripts/project.py\"\n      ],\n      \"name\": \"Draft and inspect a product baseline\",\n      \"state\": \"planned\"\n    }\n  ],\n  \"freshness\": {\n    \"changed_mapped_files\": [],\n    \"commit_matches\": true,\n    \"current_commit\": \"8e01b536b2ba7ebf47f4c61a3cc42a8904b94aec\",\n    \"fresh\": true,\n    \"limitation\": \"Fresh means snapshot commit and linked raw bytes/modes match; unmapped code and runtime wiring are not proven complete\",\n    \"snapshot_commit\": \"8e01b536b2ba7ebf47f4c61a3cc42a8904b94aec\",\n    \"staged_changes\": [],\n    \"unmapped_committed_changes\": [],\n    \"unmapped_working_changes\": [],\n    \"untracked_not_analyzed\": [\n      \"evidence/2026-10-30/compact-product-drafting/brownfield-draft.json\",\n      \"evidence/2026-10-30/compact-product-drafting/brownfield-handoff.json\",\n      \"evidence/2026-10-30/compact-product-drafting/brownfield-input.json\",\n      \"evidence/2026-10-30/compact-product-drafting/brownfield-outline.json\",\n      \"evidence/2026-10-30/compact-product-drafting/brownfield-record.json\"\n    ]\n  },\n  \"map_sha256\": \"440eee3434006e1379e03872aa8f7c49a461ff9d576d5c11b2b1d875ec2613ee\",\n  \"question_paths\": [\n    \"plugins/delivery/scripts/project.py\"\n  ],\n  \"shared_files\": {\n    \"plugins/delivery/scripts/project.py\": [\n      \"workspace\",\n      \"product-record\"\n    ]\n  },\n  \"unmapped_paths\": [],\n  \"warning\": \"Unmapped means unknown, never safe to delete; transitive and dynamic dependencies require inspection\"\n}\n",
+  "stderr": ""
+}

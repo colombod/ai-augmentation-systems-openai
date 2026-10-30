@@ -470,6 +470,15 @@ class DeliveryGatesTests(unittest.TestCase):
         with self.assertRaisesRegex(GateError, 'raw bytes differ'):
             self.service.head(str(self.product))
 
+    def test_replacement_tree_cannot_hide_changed_product_bytes(self):
+        original = self.git('rev-parse', 'HEAD^{tree}')
+        (self.product/'code').write_text('other')
+        self.git('add', 'code')
+        replacement = self.git('write-tree')
+        self.git('replace', original, replacement)
+        with self.assertRaisesRegex(GateError, 'raw bytes differ'):
+            self.service.head(str(self.product))
+
     def test_raw_hash_inspection_never_executes_repository_clean_filter(self):
         marker = self.root/'filter-safe-marker'
         helper = self.product/'clean-helper'

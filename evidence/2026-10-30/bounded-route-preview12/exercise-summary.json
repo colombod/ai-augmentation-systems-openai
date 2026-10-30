@@ -1,0 +1,14 @@
+{
+  "source": "4a11c76f70aa530b49374e88ac3a8371ff8ae9d0",
+  "version": "0.1.0-preview.12",
+  "route": "bounded-change",
+  "actual_feature": "feature-conversation",
+  "historical_map_sha256": "27d26ab2a7a387e1ecdc1cbc232e216fedbc675c7b9ae780ae8857e720b55b65",
+  "candidate_map_sha256": "aaabb5355b044dadedb613938372537b4ef6efdde7990caa1deec0321f8ac843",
+  "history_bytes_preserved": true,
+  "model_native_workflow": false,
+  "new_round_not_reconstructed_history": true,
+  "product_review": "pending",
+  "merge": "held",
+  "owner_choices": "unchanged/proposed choices remain unconfirmed"
+}

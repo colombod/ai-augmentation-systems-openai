@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Install and discover delivery in an isolated Codex home. No model calls."""
 import argparse
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -100,6 +101,17 @@ def probe():
                 lineage_files = ('CHANGELOG.md', 'NOTICE', 'LICENSE', 'upstream.json')
                 if not all((installed_root / name).is_file() for name in lineage_files):
                     raise AssertionError('Installed package is missing release lineage or attribution')
+                loading_resources = {}
+                for relative in ('skills/product/SKILL.md', 'references/core.md',
+                                 'references/product.md',
+                                 'references/reviewer-context.md',
+                                 'references/bounded-change.md', 'skills/stories/SKILL.md',
+                                 'skills/sprint/SKILL.md', 'skills/sprint-review/SKILL.md',
+                                 'skills/realign/SKILL.md'):
+                    data = (installed_root / relative).read_bytes()
+                    if data != (ROOT / 'plugins/delivery' / relative).read_bytes():
+                        raise AssertionError(f'Installed loading resource differs: {relative}')
+                    loading_resources[relative] = hashlib.sha256(data).hexdigest()
                 helper = installed_root / 'scripts/project.py'
                 init = subprocess.run(['python3', str(helper), 'init', '--project', str(project),
                                        '--initiative', 'probe'], text=True, capture_output=True, timeout=10)
@@ -110,8 +122,15 @@ def probe():
                 product_helper = installed_root / 'scripts/product.py'
                 if not product_helper.is_file():
                     raise AssertionError('Installed package is missing product.py')
+                outline = project/'outline.json'
+                outline.write_text(json.dumps({'features':[{'id':'first-result','name':'Illustrative first result'}]}))
+                drafted = subprocess.run(['python3','-B',str(product_helper),'--project',str(project),
+                    'draft','--outline',str(outline)],text=True,capture_output=True,timeout=10)
+                if drafted.returncode:
+                    raise RuntimeError('Installed product draft failed: '+drafted.stderr)
+                draft_input = project/'draft-input.json';draft_input.write_text(drafted.stdout)
                 product_record = subprocess.run(['python3', '-B', str(product_helper), '--project', str(project),
-                    'record', '--input', str(installed_root/'templates/product-input.json'),
+                    'record', '--input', str(draft_input),
                     '--expected-sha256', 'new'], text=True, capture_output=True, timeout=10)
                 if product_record.returncode:
                     raise RuntimeError('Installed product record failed: '+product_record.stderr)
@@ -120,10 +139,15 @@ def probe():
                 product = json.loads(handoff.stdout)
                 if handoff.returncode != 1 or not product.get('unconfirmed_choices') or product['freshness']['snapshot_commit'] is not None:
                     raise AssertionError('Installed greenfield helper hid unknown choices or invented source')
+                reach = subprocess.run(['python3', '-B', str(product_helper), '--project', str(project),
+                    'impact', '--path', 'future.py', '--transitive'], text=True, capture_output=True, timeout=10)
+                if reach.returncode or json.loads(reach.stdout)['transitive']['available'] is not False:
+                    raise AssertionError('Installed optional impact invented greenfield code or failed')
                 return {'codex': version, 'package_version': json.loads((installed_root / 'plugin.json').read_text())['version'],
+                        'installed_loading_resources': loading_resources,
                         'installation': 'passed', 'skills_discovered': sorted(s['name'] for s in skills),
                         'installed_helper': 'passed', 'model_calls': 0,
-                        'installed_product_helper': {'record':'passed', 'handoff':'passed',
+                        'installed_product_helper': {'draft':'passed','record':'passed','handoff':'passed','greenfield_optional_impact':'passed',
                             'qualification':'illustrative greenfield template; unconfirmed choices retained; no model or customer-use claim'},
                         'package_boundary': {'port_assessment': 'excluded', 'release_lineage': 'present'},
                         'acceptance': {'cli_install_and_discovery': 'passed', 'real_model_workflow': 'not-tested',

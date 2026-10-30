@@ -1,0 +1,56 @@
+{
+  "codex": "codex-cli 0.163.0",
+  "package_version": "0.1.0-integration.20261030",
+  "installed_loading_resources": {
+    "skills/product/SKILL.md": "a70e8f635cddd9cb808ff65bace2178246627a944a44150897743ff7aa26121b",
+    "references/core.md": "66358700af4a623c71ed9f078c65adb59b674dd1c84d0f58a760e582c90e4159",
+    "references/product.md": "baba1869a3aa14840237d307425dde55ce6596a221ef090c81d8f62cdbdb25fa",
+    "references/reviewer-context.md": "b17f83cc0b6bc684e9e83229ab6312cccf7f724f8bf1cb3691af49a3f63dadd5",
+    "scripts/product.py": "b8d0fa29456d77d43149aca8d32e93f2777edc838c54d7a235bb3dad1544fa22",
+    "scripts/project.py": "b712eac0ae2daacb6d67125415c2e0be9be55d58930db30df8795aefacd6f986",
+    "scripts/runtime.py": "5d09085eac8a3c2340c818850f3a9d939dd2bc0d4af69fcfc76039090f2aebc5",
+    "scripts/supervision.py": "439ab9a5990f5785eed8a50a73ca20720150dce2eb23f9071fc45fda9acc751b",
+    "scripts/verification.py": "9fab97d0fa4b225ff1dddfe547fd7b84ef87472e089e4f18ae905e8e5cfae2c9",
+    "scripts/artifacts.py": "31f5558e1f33e15bad21c1c70b17f78cebd59879f5cbff994cbe6921de33e12f",
+    "scripts/delivery_gates.py": "52184a0a235d52c10fd933ed892caff7b3d4887f4458d594fa9dec18e9ea134f",
+    "scripts/codex_rpc.py": "f28c46c75fbf15ab43c7a14746582963496e7e83ad9fe109cf38ecd6b79e6dd6"
+  },
+  "installation": "passed",
+  "skills_discovered": [
+    "delivery:architecture",
+    "delivery:brief",
+    "delivery:challenge",
+    "delivery:design",
+    "delivery:personas",
+    "delivery:prd",
+    "delivery:product",
+    "delivery:realign",
+    "delivery:research",
+    "delivery:roadmap",
+    "delivery:simulate",
+    "delivery:sprint",
+    "delivery:sprint-review",
+    "delivery:start",
+    "delivery:status",
+    "delivery:stories"
+  ],
+  "installed_helper": "passed",
+  "model_calls": 0,
+  "installed_product_helper": {
+    "draft": "passed",
+    "record": "passed",
+    "handoff": "passed",
+    "greenfield_optional_impact": "passed",
+    "qualification": "illustrative greenfield template; unconfirmed choices retained; no model or customer-use claim"
+  },
+  "package_boundary": {
+    "port_assessment": "excluded",
+    "release_lineage": "present"
+  },
+  "acceptance": {
+    "cli_install_and_discovery": "passed",
+    "real_model_workflow": "not-tested",
+    "desktop_ui": "not-tested",
+    "chatgpt": "not-tested"
+  }
+}

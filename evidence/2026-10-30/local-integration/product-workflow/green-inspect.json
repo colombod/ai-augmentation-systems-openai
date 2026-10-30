@@ -1,0 +1,12 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "/workspace/delivery-integration/plugins/delivery/scripts/product.py",
+    "--project",
+    "/tmp/delivery-integration-evidence/product-workflow/greenfield",
+    "inspect"
+  ],
+  "exit_code": 0,
+  "stdout": "{\n  \"code\": \"not supplied; start with the customer, job, promise and cuts\",\n  \"mode\": \"greenfield\",\n  \"planning_artifacts\": {\n    \"capability\": \"planning-preview\",\n    \"delivery_root\": \"/tmp/delivery-integration-evidence/product-workflow/greenfield/.delivery\",\n    \"exists\": true,\n    \"files\": [],\n    \"initiatives\": [\n      \"new-plugin-idea\"\n    ],\n    \"judge_provider\": \"not-inspected; explicitly selected in runtime configuration\",\n    \"team_runtime\": \"not-inspected; use runtime.py status\",\n    \"verification\": \"inventory-only; read artifacts and evidence before assessing readiness\"\n  },\n  \"project\": \"/tmp/delivery-integration-evidence/product-workflow/greenfield\"\n}\n",
+  "stderr": ""
+}

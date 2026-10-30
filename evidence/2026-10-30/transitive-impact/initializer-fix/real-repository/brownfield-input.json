@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "mode": "brownfield",
+  "commit": "30159c0ac4c2617c9672bc8ad84b9185ea66be6f",
+  "product": {
+    "customer": {
+      "text": "Unknown: discuss the specific choice with the owner.",
+      "basis": "unknown",
+      "source": "No owner decision supplied.",
+      "revisit": "When the next consequential step requires this choice."
+    },
+    "problem": {
+      "text": "Unknown: discuss the specific choice with the owner.",
+      "basis": "unknown",
+      "source": "No owner decision supplied.",
+      "revisit": "When the next consequential step requires this choice."
+    },
+    "current_cost": {
+      "text": "Unknown: discuss the specific choice with the owner.",
+      "basis": "unknown",
+      "source": "No owner decision supplied.",
+      "revisit": "When the next consequential step requires this choice."
+    },
+    "proposition": {
+      "text": "Unknown: discuss the specific choice with the owner.",
+      "basis": "unknown",
+      "source": "No owner decision supplied.",
+      "revisit": "When the next consequential step requires this choice."
+    },
+    "before_after": {
+      "text": "Unknown: discuss the specific choice with the owner.",
+      "basis": "unknown",
+      "source": "No owner decision supplied.",
+      "revisit": "When the next consequential step requires this choice."
+    },
+    "riskiest_assumption": {
+      "text": "Unknown: discuss the specific choice with the owner.",
+      "basis": "unknown",
+      "source": "No owner decision supplied.",
+      "revisit": "When the next consequential step requires this choice."
+    },
+    "must_survive": [
+      {
+        "text": "Unknown: discuss the specific choice with the owner.",
+        "basis": "unknown",
+        "source": "No owner decision supplied.",
+        "revisit": "When the next consequential step requires this choice."
+      }
+    ],
+    "cuts": [
+      {
+        "text": "Unknown: discuss the specific choice with the owner.",
+        "basis": "unknown",
+        "source": "No owner decision supplied.",
+        "revisit": "When the next consequential step requires this choice."
+      }
+    ],
+    "next_slice": {
+      "text": "Unknown: discuss the specific choice with the owner.",
+      "basis": "unknown",
+      "source": "No owner decision supplied.",
+      "revisit": "When the next consequential step requires this choice."
+    },
+    "right_shape": {
+      "need": {
+        "N1": 1,
+        "N2": 1,
+        "N3": 0,
+        "N4": 0
+      },
+      "gates": {
+        "G1": {
+          "status": "unknown",
+          "reason": "Not yet verified in the intended host."
+        },
+        "G2": {
+          "status": "unknown",
+          "reason": "Not yet verified in the intended host."
+        },
+        "G3": {
+          "status": "unknown",
+          "reason": "Not yet verified in the intended host."
+        },
+        "G4": {
+          "status": "unknown",
+          "reason": "Not yet verified in the intended host."
+        },
+        "G5": {
+          "status": "unknown",
+          "reason": "Not yet verified in the intended host."
+        },
+        "G6": {
+          "status": "unknown",
+          "reason": "Not yet verified in the intended host."
+        }
+      },
+      "form": "skill",
+      "autonomy_rung": 2,
+      "engine": "LLM",
+      "reason": "Proposed: expertise belongs in the caller context; verify for the actual job.",
+      "alternatives": [
+        "One direct answer with no persistent infrastructure; assess whether it suffices."
+      ],
+      "benchmark": "Proposed, not run: real first-value task, planted trap, leave-alone case and stopping rule."
+    }
+  },
+  "features": [
+    {
+      "id": "native-coordination",
+      "name": "Native coordination source",
+      "state": "preview",
+      "summary": "Persist native roles and route controlled work; source preview, no new host proof.",
+      "code": [
+        "plugins/delivery/scripts/runtime.py"
+      ],
+      "evidence": [
+        {
+          "path": "plugins/delivery/scripts/runtime.py",
+          "note": "Curated source anchor at exact commit; possible imports, not deployment or user evidence."
+        }
+      ],
+      "unknowns": [
+        "The customer, job and return behaviour need evidence."
+      ],
+      "usefulness": {
+        "Job": {
+          "rating": "Unknown",
+          "grade": "Unknown",
+          "evidence": "No outside-user evidence recorded.",
+          "next_check": "Name who to observe, when, and the task/outcome."
+        },
+        "First value": {
+          "rating": "Unknown",
+          "grade": "Unknown",
+          "evidence": "No outside-user evidence recorded.",
+          "next_check": "Name who to observe, when, and the task/outcome."
+        },
+        "Fit": {
+          "rating": "Unknown",
+          "grade": "Unknown",
+          "evidence": "No outside-user evidence recorded.",
+          "next_check": "Name who to observe, when, and the task/outcome."
+        },
+        "Outcome": {
+          "rating": "Unknown",
+          "grade": "Unknown",
+          "evidence": "No outside-user evidence recorded.",
+          "next_check": "Name who to observe, when, and the task/outcome."
+        },
+        "Trust": {
+          "rating": "Unknown",
+          "grade": "Unknown",
+          "evidence": "No outside-user evidence recorded.",
+          "next_check": "Name who to observe, when, and the task/outcome."
+        },
+        "Return": {
+          "rating": "Unknown",
+          "grade": "Unknown",
+          "evidence": "No outside-user evidence recorded.",
+          "next_check": "Name who to observe, when, and the task/outcome."
+        }
+      }
+    },
+    {
+      "id": "controlled-work",
+      "name": "Controlled task workflow source",
+      "state": "preview",
+      "summary": "Control task review/acceptance evidence; source preview, no inferred human authority.",
+      "code": [
+        "plugins/delivery/scripts/delivery_gates.py"
+      ],
+      "evidence": [
+        {
+          "path": "plugins/delivery/scripts/delivery_gates.py",
+          "note": "Curated source anchor at exact commit; possible imports, not deployment or user evidence."
+        }
+      ],
+      "unknowns": [
+        "The customer, job and return behaviour need evidence."
+      ],
+      "usefulness": {
+        "Job": {
+          "rating": "Unknown",
+          "grade": "Unknown",
+          "evidence": "No outside-user evidence recorded.",
+          "next_check": "Name who to observe, when, and the task/outcome."
+        },
+        "First value": {
+          "rating": "Unknown",
+          "grade": "Unknown",
+          "evidence": "No outside-user evidence recorded.",
+          "next_check": "Name who to observe, when, and the task/outcome."
+        },
+        "Fit": {
+          "rating": "Unknown",
+          "grade": "Unknown",
+          "evidence": "No outside-user evidence recorded.",
+          "next_check": "Name who to observe, when, and the task/outcome."
+        },
+        "Outcome": {
+          "rating": "Unknown",
+          "grade": "Unknown",
+          "evidence": "No outside-user evidence recorded.",
+          "next_check": "Name who to observe, when, and the task/outcome."
+        },
+        "Trust": {
+          "rating": "Unknown",
+          "grade": "Unknown",
+          "evidence": "No outside-user evidence recorded.",
+          "next_check": "Name who to observe, when, and the task/outcome."
+        },
+        "Return": {
+          "rating": "Unknown",
+          "grade": "Unknown",
+          "evidence": "No outside-user evidence recorded.",
+          "next_check": "Name who to observe, when, and the task/outcome."
+        }
+      }
+    }
+  ]
+}

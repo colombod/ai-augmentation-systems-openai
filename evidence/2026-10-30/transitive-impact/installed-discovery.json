@@ -1,0 +1,41 @@
+{
+  "codex": "codex-cli 0.163.0",
+  "package_version": "0.1.0-preview.10",
+  "installation": "passed",
+  "skills_discovered": [
+    "delivery:architecture",
+    "delivery:brief",
+    "delivery:challenge",
+    "delivery:design",
+    "delivery:personas",
+    "delivery:prd",
+    "delivery:product",
+    "delivery:realign",
+    "delivery:research",
+    "delivery:roadmap",
+    "delivery:simulate",
+    "delivery:sprint",
+    "delivery:sprint-review",
+    "delivery:start",
+    "delivery:status",
+    "delivery:stories"
+  ],
+  "installed_helper": "passed",
+  "model_calls": 0,
+  "installed_product_helper": {
+    "record": "passed",
+    "handoff": "passed",
+    "greenfield_optional_impact": "passed",
+    "qualification": "illustrative greenfield template; unconfirmed choices retained; no model or customer-use claim"
+  },
+  "package_boundary": {
+    "port_assessment": "excluded",
+    "release_lineage": "present"
+  },
+  "acceptance": {
+    "cli_install_and_discovery": "passed",
+    "real_model_workflow": "not-tested",
+    "desktop_ui": "not-tested",
+    "chatgpt": "not-tested"
+  }
+}

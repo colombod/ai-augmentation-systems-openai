@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-B",
+    "/workspace/delivery-product-drafting/plugins/delivery/scripts/product.py",
+    "--project",
+    "/workspace/compact-product-drafting-proof/greenfield",
+    "record",
+    "--input",
+    "/workspace/delivery-product-drafting/evidence/2026-10-30/compact-product-drafting/greenfield-input.json",
+    "--expected-sha256",
+    "new"
+  ],
+  "exit_code": 0,
+  "stdout": "{\n  \"commit\": null,\n  \"features\": 1,\n  \"path\": \"/workspace/compact-product-drafting-proof/greenfield/.delivery/product-map.json\",\n  \"sha256\": \"28d5df29ba004918a67c15d046b8764249e44cfa0ac378627e79083185bb2b5d\"\n}\n",
+  "stderr": ""
+}

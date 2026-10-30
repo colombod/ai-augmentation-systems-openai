@@ -1,0 +1,107 @@
+diff --cc plugins/delivery/CHANGELOG.md
+index 5ff330d,cd3c445..0000000
+--- a/plugins/delivery/CHANGELOG.md
++++ b/plugins/delivery/CHANGELOG.md
+@@@ -1,22 -1,19 +1,36 @@@
+  # Changelog
+  
+ +## Unreleased — 0.1.0-preview.7
+ +
+ +- Add `$delivery:product` for equally first-class greenfield and brownfield work,
+ +  with one shared record, an optional Git code snapshot and six separate
+ +  usefulness/evidence judgements. Carry owner intent, explicit cuts and the
+ +  smallest sufficient work form into existing planning/review skills.
+ +- Add a standard-library product helper for source census, curated file maps,
+ +  full-commit/raw-byte freshness, direct feature impact, revision-safe history,
+ +  product handoffs and read-only retirement proposals that preserve shared code.
+ +- Keep architecture/story paths explicitly proposed for no-code greenfield work;
+ +  verify existing paths only when source exists. Preserve feature promises in
+ +  handoffs and include usefulness, evidence and pending replacement/migration/
+ +  rollback context in retirement proposals.
+ +- Retain named method provenance and original MIT notices. No external runtime,
+ +  provider, hook, graph service, code deletion or authenticated owner decision is
+ +  introduced. Greenfield can proceed without a repository; planned code stays absent.
+ +
++ ## Unreleased
++ 
++ - Correct status and installation guidance to distinguish available repository
++   source, installed snapshots, local runtime observations and pending host acceptance.
++ - Add an optional trusted in-process supervision boundary with explicit binding
++   generations, task scope, caller request identity, stale-state checks and durable
++   assignment receipts. Native dispatch and operator acceptance stay authoritative.
++   This is fake-transport-tested; no authenticated dot integration is installed.
++ - Add explicit local exact-SHA scratch review and revision-bound command evidence
++   helpers. Retain real outputs and failed results; reuse raw-byte checks from the
++   existing gates. These are evidence submissions, not automatic acceptance.
++ - Preserve uncertain assignment outcomes across recovery and reconcile known
++   native failures without presenting them as successful task acceptance.
++ 
+  ## Unreleased — 0.1.0-preview.6
+  
+  - Refuse forbidden native command/file escalation immediately using the offered
+diff --cc plugins/delivery/NOTICE
+index 0bea878,aeb1c3a..0000000
+--- a/plugins/delivery/NOTICE
++++ b/plugins/delivery/NOTICE
+@@@ -7,10 -7,7 +7,15 @@@ Native Codex instructions and Python he
+  include the upstream Claude hooks, role launcher, permissions or judge runtime.
+  Imported content has been adapted; it does not establish feature parity.
+  
+ +The shared product contract adapts methods from Michael Jabbour's Worth Using,
+ +Market Fit, Taste × Elegance, Sizzle, Decisioncraft and Right Shape, with file-map
+ +freshness concepts informed by Trail-Code. Exact revisions and adaptation scope
+ +are recorded in upstream.json and references/product.md. Full original MIT
+ +notices are retained in references/sources/*-LICENSE. No external product,
+ +Amplifier runtime, film-production tools or symbol-graph implementation is installed
+ +or bundled by this adaptation.
+++
++ The command-evidence behavior was also informed by upstream review-run.js and
++ verify-run.js at revision 3d7c69416dc7524130105c9bfe308aa01b2a26f0 (Delivery
++ 0.37.9). The Python implementation reuses this port's existing raw-byte gates;
++ it does not import upstream hooks, permissions or role-local mailbox machinery.
+diff --cc plugins/delivery/README.md
+index ef06589,6e44aae..0000000
+--- a/plugins/delivery/README.md
++++ b/plugins/delivery/README.md
+@@@ -39,9 -37,9 +39,9 @@@ controlled Beads operation. Follow any 
+  
+  ## Install in Codex CLI
+  
+- Use a checkout containing `plugins/delivery/`. Repository source and an installed
+- snapshot are separate: inspect the installed version before assuming it includes
+- the product skill and helper shown here.
+ -Use a checkout containing `plugins/delivery/`. The implementation is available
+ -in this repository. An installed package is a separate snapshot: check its
+ -version and files before assuming it contains the runtime in your checkout.
+++Use a checkout containing `plugins/delivery/`. Source is available in this
+++repository; installed packages are separate snapshots. Check the installed
+++version and files before assuming they include product tools or the local runtime.
+  
+  From the **marketplace repository root**, run in a terminal:
+  
+diff --cc plugins/delivery/upstream.json
+index 1679e31,1397ef1..0000000
+--- a/plugins/delivery/upstream.json
++++ b/plugins/delivery/upstream.json
+@@@ -345,5 -289,5 +345,20 @@@
+        "sha256": "891f7810083c56a04d68785ae1e7f811160f38705f66802f35b5e1c88cf9332a",
+        "adaptation": "Preserve question instructions/versions and historical upstream Jev measurement labels; make implicit relay blocking intent explicit; historical measurements are not OpenAI or port calibration"
+      }
+--  ]
+++  ],
+++  "reviewed_alignment": {
+++    "revision": "3d7c69416dc7524130105c9bfe308aa01b2a26f0",
+++    "plugin_version": "0.37.9",
+++    "sources": [
+++      {
+++        "source": "scripts/review-run.js",
+++        "git_blob": "b46ef525f5f134a05c22314a7dd1347bee50a411"
+++      },
+++      {
+++        "source": "scripts/verify-run.js",
+++        "git_blob": "b939a27ef99210d484fdc8a78f3105f97c9663a7"
+++      }
+++    ],
+++    "adaptation": "Independent Python command-evidence implementation in scripts/verification.py, informed by exact-SHA review and computed surface-check behavior; reuses the OpenAI port raw-byte gates. No upstream runtime, hooks or permission profiles copied. Original imported baseline remains unchanged."
+++  }
+  }

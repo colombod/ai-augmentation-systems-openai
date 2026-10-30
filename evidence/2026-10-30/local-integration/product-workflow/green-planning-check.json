@@ -1,0 +1,18 @@
+{
+  "mode": "illustrative artifact conformance, not native model invocation",
+  "stages": [
+    "product",
+    "supplied draft PRD",
+    "architecture",
+    "roadmap",
+    "stories"
+  ],
+  "proposed_paths": [
+    "src/change_check.py",
+    "tests/test_change_check.py"
+  ],
+  "observed_code_paths": [],
+  "git_repository_created": false,
+  "test_command_executed": false,
+  "story_state": "draft; setup/command availability unverified"
+}

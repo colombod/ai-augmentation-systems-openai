@@ -25,11 +25,15 @@ Read [host capability guidance](../../references/runtime.md) and
 Read `.delivery/initiatives/<initiative>/roadmap.md`, `.delivery/initiatives/<initiative>/prioritization.md` if present,
 `.delivery/initiatives/<initiative>/design-system.md` if present, and all stories in `.delivery/stories/`.
 
+For a story explicitly using [the bounded-change route](../../references/bounded-change.md),
+read its embedded goal/scope/design/acceptance contract instead of requiring absent
+full-pipeline documents. Record the route in the sprint; all checks below remain.
+
 Resolve the scope, then refuse to package in these cases — each one ships a known
 defect into the implementation run, where it is far more expensive:
 
 - **No stories are `ready`** — report what each `draft` story is missing and stop. Run `$delivery:stories`.
-- **Open blocking findings** against the artifacts this scope depends on (check `.delivery/reviews/`) — handing over a spec with an unresolved blocking finding builds the known problem into the code. Report them and ask before proceeding.
+- **Open blocking findings** against the artifacts this scope depends on (check `.delivery/reviews/`) — handing over a spec with an unresolved blocking finding builds the known problem into the code. Report them and ask before proceeding. A finding explicitly assigned to this repair wave may proceed only with its repair criterion and required independent recheck; it still blocks acceptance/shipping until resolved.
 - **A story in scope depends on a story outside it** that is not `done` — report it, and either widen the scope or drop that story.
 - **Acceptance criteria that are not falsifiable** — the external runner cannot self-verify against prose. Send it back to `$delivery:stories`.
 

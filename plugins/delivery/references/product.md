@@ -16,11 +16,12 @@ required for brownfield code mapping and unnecessary for a greenfield idea.
 | Command | Result |
 |---|---|
 | `inspect` | Read-only candidate docs/manifests/tests and current source commit, or existing concept artifacts without a repo |
+| `draft --outline FILE` | Expand compact notes into complete input JSON on stdout; no canonical write or evidence upgrade |
 | `record --input FILE --expected-sha256 new` | Validate curated JSON and save a new product record; use the reported digest for later updates |
 | `status` | Feature states, exact source revision and raw-byte/mode freshness |
-| `impact --path FILE [--path FILE]` | Features directly linked to the proposed paths, shared files and unmapped uncertainty |
-| `handoff` | Product choices, separate usefulness cards, shape calculation and unconfirmed choices for next work |
-| `retire-plan --feature ID` | Read-only proposal: shared code to preserve, exclusive candidates, unknown human decision and migration checks |
+| `impact --path FILE [--path FILE] [--transitive]` | Direct curated links; optional possible Python import reach, shortest file/line chains and coverage limits |
+| `handoff [--feature ID]` | Product choices, separate usefulness cards, shape calculation and unconfirmed choices; optionally display one exact feature ID |
+| `retire-plan --feature ID [--transitive]` | Read-only proposal: shared code to preserve, exclusive candidates, unknown human decision and migration checks |
 
 `project.py init` creates directories first. Record updates use a local file lock,
 expected digest and atomic replacement. Prior complete bytes are retained in
@@ -29,6 +30,63 @@ not a distributed transaction. Helpers never edit source, reset Git, install
 hooks, select a model, contact a service or delete features. Exit codes: 0 for a
 valid command, 1 for stale source or unconfirmed handoff choices, 2 for invalid
 input/conflict. A concept has no code freshness verdict (`fresh: null`).
+
+`handoff --feature ID` resumes one current or planned capability with its complete
+feature context. Selection is display/context scope only: other features and their
+history remain in the canonical record. Whole-product owner/customer choices,
+preservation constraints, cuts, shape, authority, unconfirmed choices and freshness
+remain unchanged, including stale evidence from unselected features. The CLI
+retains the actual whole-map `map_sha256`. Empty or unknown IDs fail with exit 2;
+there is no fallback to all features. Omit `--feature` for the unchanged full
+handoff. Both forms are read-only and grant no implementation, approval,
+retirement or native write rights; greenfield selection needs no Git repository.
+
+## Start with compact notes
+
+You need not fill the full starter by hand. For a no-code idea, an outline can be:
+
+```json
+{
+  "product": {
+    "customer": "Maintainer considering a local change check",
+    "proposition": "Get one useful result before adding an agent"
+  },
+  "features": [{"id": "first-result", "name": "One local result"}]
+}
+```
+
+Run `product.py --project <planning> draft --outline notes.json` and save stdout
+as a draft input file. For brownfield, add `--repo <git-root>` and supplied feature
+`code` paths and `evidence` paths; the helper checks them at HEAD. For example:
+
+```json
+{"features": [
+  {"id": "workspace", "name": "Initialize the planning workspace",
+   "code": ["plugins/delivery/scripts/project.py"],
+   "evidence": ["tests/delivery/test_project.py"]}
+]}
+```
+
+Outline features require `id` and `name`; optional keys are `summary`, `state`,
+`code`, `evidence` and `unknowns`. Evidence may be a path or a full path/note object.
+Feature state defaults to planned even when code exists. All six usefulness
+ratings and grades start Unknown. These conservative defaults are deliberate:
+the author/agent must still inspect behaviour, releases and outside-user evidence.
+Unknown keys are rejected rather than silently dropping a misspelled code field.
+
+Optional `product` notes use the full contract's keys. Plain strings become
+proposed decisions; attribution is not fabricated. Existing full decision objects
+and a fully assessed `right_shape` may be supplied explicitly. Without a shape
+assessment, draft uses an explicitly unassessed tool/None-engine placeholder at
+autonomy zero, with unknown gates. This is not a recommendation for the eventual
+product. Review it before architecture or execution.
+
+Draft only prints a complete, recordable input. It never overwrites the map,
+confirms an owner or bypasses expected-hash recording. Review and save that input
+using `record`; previous product choices should be carried forward explicitly
+when updating rather than replaced by a new sparse outline. The agent still
+discovers feature promises and selects routes; draft removes repetitive JSON,
+not the need to understand the project. No symbol graph or model service is added.
 
 Saving requires an actually authorized writable host session. Native Delivery
 manager roles remain read-only; they can read a prepared product record but do
@@ -51,6 +109,44 @@ and size/mtime shortcuts. Commit mismatch stays visible even if mapped bytes did
 not change. Unmapped files, dynamic wiring and external consumers remain unknown;
 a fresh curated map is not a complete graph. Impact is direct file-level coverage,
 not transitive blast radius. Query results never authorize edits or removal.
+
+## Optional dependency-side impact
+
+Add `--transitive` to `impact` or `retire-plan`; no registry migration, extra
+service or package is required. Direct fields keep their existing meaning. The
+separate `transitive` result follows possible Python imports from the same curated
+feature `code` anchors at the **recorded full commit**, using a shortest breadth-
+first chain with `from`, `to`, `line` and `kind`. Multiple features reaching a file
+are shared consumers. It reads Git blobs without importing/executing project code.
+
+This first slice supports Python AST imports in conventional sibling/repository/
+`src` roots and regular package initializers. It does not resolve installed
+packages, namespace/custom import contexts, custom `sys.path`, dynamic loaders,
+other languages or semantic calls. Conditional/function-local imports are possible
+reach, not proof that a runtime path executes. Curated Python module anchors also
+include possible enclosing regular-package initializer reach, even with no import
+statements in the anchor. These `python-package-initializer` edges use `line: null`:
+tracked ancestry is the evidence, not a fabricated import location. This assumes
+a possible package-import context; standalone script execution may not run those
+initializers. Missing/unsupported enclosing package context stays explicit in
+`anchor_package_context_unknown`; namespace/custom contexts remain unsupported.
+Ambiguous paths, unresolved/external
+imports, unsupported source/initializer modes, parse/size failures and recognized
+dynamic loaders are reported even inside otherwise analyzed files. Files outside
+anchor reach are uninspected. A smaller unresolved list never proves completeness.
+
+Graph freshness also checks raw bytes/modes of reached dependencies, including
+files not directly anchored. Its commit and stale result remain separate from the
+existing direct-map freshness. Stale graph results return exit 1; unavailable
+optional analysis reports `available: false` and a reason while retaining direct
+results. Greenfield planned code has no dependency graph. This is informational
+reach: neither missing analysis nor a graph verdict sets or blocks story readiness.
+
+Derived retirement exclusivity means **candidate only**, never deletable or proof
+of no unknown consumers. Preserve shared reach, inspect unresolved/external and
+unsupported consumers, retain history, and obtain the exact owner decision plus
+replacement/migration/rollback review already required below. No command deletes
+code, changes a feature's state or widens execution authority.
 
 ## Owner choice before expansion
 

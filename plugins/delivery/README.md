@@ -1,17 +1,46 @@
 # Delivery
 
+**Product/feature preview.** This combines the previously separate source
+into one installable version. Installation on your devices is a separate step.
+The working unit is a product or feature outcome: who it serves, current versus
+planned capability, value/evidence, owner intent and whether to build/change/retire.
+The candidate supports owner-led framing, authorized host-saved product records,
+curated direct/optional Python impact, handoffs and read-only retirement proposals.
+Code, tasks and agents support those decisions; the preview is an increment toward
+the full user-and-dot delivery loop, not its completion.
+Native coordination remains experimental and separately configured; authenticated
+dot access, desktop/ChatGPT acceptance and measured token benefit are not established.
+An active feature cannot yet transition to retired through the helper.
+
 Delivery helps turn a product idea into a plan someone can implement: a problem
 brief, supporting research, customer personas, requirements, design, architecture,
 roadmap, stories and a scoped implementation handoff. After implementation, it
 helps review the evidence and update the plan with what was learned.
 
-**Version `0.1.0-preview.7` — product and local runtime preview.** Sixteen skills use
+**Version `0.1.0-preview.12` — product and local runtime preview.** Sixteen skills use
 21 templates and 10 review lenses. Greenfield ideas and brownfield projects share
 one product contract: owner intent, customer promise, usefulness and planned or
 observed features. The local coordinator adds persistent Codex
 roles, canonical artifact saves, controlled Beads workflow, independent review
 submissions and explicit operator acceptance. Jev/OpenAI judging is explicitly
 selected. Desktop and ChatGPT workflow acceptance remain pending.
+
+For an existing feature-map question, invoke `$delivery:product` with the question
+and selected project/component. Its focused route reads the core contract and runs
+`status` or `impact --path`, without loading the full authoring workflow or emitting
+an owner-context handoff. Authoring, changing owner choices and retirement still
+load the full product contract. The [common contract](references/core.md) owns
+source reuse, including mutable-checkout content verification and compaction rules.
+This is instruction routing; improvement remains unproven until model evaluation
+shows quality is preserved alongside actual resource use.
+
+For dependency-side impact, the existing helper accepts
+`impact --path <file> --transitive`. Direct matches remain separate; optional
+Python import reach adds shortest file/line chains, shared consumers, exact commit
+and unresolved/unsupported coverage. It executes no project code and adds no
+service or registry. Other languages retain direct coverage. Planned greenfield
+features have no observed dependency graph; unavailable reach is informational,
+not a story-readiness gate. See [the product contract](references/product.md).
 
 ## Dependencies
 
@@ -39,9 +68,9 @@ controlled Beads operation. Follow any task-tracking rules of the project you ar
 
 ## Install in Codex CLI
 
-Use a checkout containing `plugins/delivery/`. Repository source and an installed
-snapshot are separate: inspect the installed version before assuming it includes
-the product skill and helper shown here.
+Use a checkout containing `plugins/delivery/`. Source is available in this
+repository; installed packages are separate snapshots. Check the installed
+version and files before assuming they include product tools or the local runtime.
 
 From the **marketplace repository root**, run in a terminal:
 
@@ -86,12 +115,16 @@ the smallest sufficient work form into the next planning step. Proposed choices
 remain proposed. No repository is required for a greenfield record.
 
 The [product contract](references/product.md) gives complete local commands and
-the input format. With an initialized planning project, the helper supports:
+the input format. Its `draft --outline notes.json` command expands a few feature
+names and optional code/evidence routes into full record input, with choices
+proposed and usefulness Unknown. It does not save or infer shipped status. With
+an initialized planning project, the helper supports:
 
 ```sh
 python3 <package>/scripts/product.py --project <planning> --repo <git-root> inspect
 python3 <package>/scripts/product.py --project <planning> --repo <git-root> impact --path scripts/project.py
 python3 <package>/scripts/product.py --project <planning> handoff
+python3 <package>/scripts/product.py --project <planning> handoff --feature <exact-feature-id>
 ```
 
 The impact command requires a previously curated brownfield record. For its
@@ -118,6 +151,13 @@ The brief identifies the problem, affected segment, success signals, scope,
 assumptions and unanswered questions. Existing artifacts are read before revision
 and their history is preserved. You can invoke any phase whose inputs already
 exist; you do not have to restart the pipeline.
+
+For a small outcome, ask `$delivery:product` to choose one evidence-backed next
+change, then `$delivery:stories` using `route: bounded-change`. The packaged
+[bounded-change route](references/bounded-change.md) carries the compact contract
+through sprint/review/realignment and an explicitly authorized shipping handoff.
+It does not require boilerplate PRD/architecture/roadmap documents or grant runtime
+actors publishing permissions.
 
 ### Choose a workflow
 
@@ -223,6 +263,12 @@ operator-attested, not advertised as automatic external verification.
 
 See [local runtime setup](references/team-runtime.md) for roster, dependencies,
 operator terminal, recovery controls, explicit judge configuration and boundaries.
+An optional [external supervision seam](references/supervision.md) lets a trusted
+host submit scoped agent assignments to that same dispatcher. Its fake-transport
+tests do not establish a supported dot/ChatGPT integration; host authentication
+and actual host qualification remain prerequisites.
+The [command evidence helper](references/verification.md) records exact-commit
+review and revision-bound surface checks without granting task acceptance.
 A bare JSON file cannot provide human approval. Protected judging needs matching
 provider-specific calibration; sample evaluations are not installed as defaults.
 

@@ -1,0 +1,51 @@
+Auto-merging plugins/delivery/CHANGELOG.md
+Auto-merging plugins/delivery/README.md
+Merge made by the 'ort' strategy.
+ README.md                                          |   2 +-
+ .../2026-10-30/compact-product-drafting/README.md  |  46 ++++
+ .../compact-product-drafting/brownfield-draft.json |  17 ++
+ .../brownfield-handoff.json                        |  15 ++
+ .../brownfield-impact.json                         |  17 ++
+ .../compact-product-drafting/brownfield-input.json | 224 +++++++++++++++++++
+ .../brownfield-outline.json                        |  29 +++
+ .../brownfield-record-snapshot.json                | 247 +++++++++++++++++++++
+ .../brownfield-record.json                         |  19 ++
+ .../compact-product-drafting/checks/install.json   |  41 ++++
+ .../checks/marketplace.txt                         |   1 +
+ .../compact-product-drafting/checks/node-tests.txt |  30 +++
+ .../checks/python-tests.txt                        | 157 +++++++++++++
+ .../compact-product-drafting/greenfield-draft.json |  15 ++
+ .../greenfield-handoff.json                        |  13 ++
+ .../compact-product-drafting/greenfield-input.json | 164 ++++++++++++++
+ .../greenfield-outline.json                        |  12 +
+ .../greenfield-record-snapshot.json                | 166 ++++++++++++++
+ .../greenfield-record.json                         |  17 ++
+ .../compact-product-drafting/summary.json          |  29 +++
+ plugins/delivery/CHANGELOG.md                      |   9 +
+ plugins/delivery/README.md                         |   7 +-
+ plugins/delivery/plugin.json                       |   2 +-
+ plugins/delivery/references/product.md             |  48 ++++
+ plugins/delivery/scripts/product.py                |  69 ++++++
+ plugins/delivery/skills/product/SKILL.md           |  10 +-
+ scripts/probe_delivery_install.py                  |  11 +-
+ tests/delivery/test_product.py                     |  53 +++++
+ 28 files changed, 1462 insertions(+), 8 deletions(-)
+ create mode 100644 evidence/2026-10-30/compact-product-drafting/README.md
+ create mode 100644 evidence/2026-10-30/compact-product-drafting/brownfield-draft.json
+ create mode 100644 evidence/2026-10-30/compact-product-drafting/brownfield-handoff.json
+ create mode 100644 evidence/2026-10-30/compact-product-drafting/brownfield-impact.json
+ create mode 100644 evidence/2026-10-30/compact-product-drafting/brownfield-input.json
+ create mode 100644 evidence/2026-10-30/compact-product-drafting/brownfield-outline.json
+ create mode 100644 evidence/2026-10-30/compact-product-drafting/brownfield-record-snapshot.json
+ create mode 100644 evidence/2026-10-30/compact-product-drafting/brownfield-record.json
+ create mode 100644 evidence/2026-10-30/compact-product-drafting/checks/install.json
+ create mode 100644 evidence/2026-10-30/compact-product-drafting/checks/marketplace.txt
+ create mode 100644 evidence/2026-10-30/compact-product-drafting/checks/node-tests.txt
+ create mode 100644 evidence/2026-10-30/compact-product-drafting/checks/python-tests.txt
+ create mode 100644 evidence/2026-10-30/compact-product-drafting/greenfield-draft.json
+ create mode 100644 evidence/2026-10-30/compact-product-drafting/greenfield-handoff.json
+ create mode 100644 evidence/2026-10-30/compact-product-drafting/greenfield-input.json
+ create mode 100644 evidence/2026-10-30/compact-product-drafting/greenfield-outline.json
+ create mode 100644 evidence/2026-10-30/compact-product-drafting/greenfield-record-snapshot.json
+ create mode 100644 evidence/2026-10-30/compact-product-drafting/greenfield-record.json
+ create mode 100644 evidence/2026-10-30/compact-product-drafting/summary.json

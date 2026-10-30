@@ -18,6 +18,11 @@ Read [host capability guidance](../../references/runtime.md) and
 
 Read the sprint log in `.delivery/sprints/`, the stories it covered, `.delivery/initiatives/<initiative>/prd.md`, `.delivery/initiatives/<initiative>/prioritization.md`, `.delivery/initiatives/<initiative>/design-system.md` and `.delivery/personas/` where they exist.
 
+For `route: bounded-change`, review the embedded story/sprint contract and
+[bounded-change route](../../references/bounded-change.md); list unavailable full-pipeline
+artifacts rather than requiring or inventing them. Repair findings stay open until
+independently rechecked.
+
 If no sprint log exists, stop — there is nothing to review.
 
 ## The rule this skill exists under
@@ -75,7 +80,7 @@ criteria, not the builder's report" rule this whole review runs under:
 
 A sprint where every story passed but no persona can complete a journey has delivered nothing usable, and only this check will tell you.
 
-**6. Reconcile against the stage promise.** `prioritization.md` said what this stage would deliver and which personas it would serve. Compare what was promised to what is now true. Name any silent scope drop.
+**6. Reconcile against the stage promise.** For bounded changes use the embedded customer promise/scope; otherwise `prioritization.md` said what this stage would deliver and which personas it would serve. Compare what was promised to what is now true. Name any silent scope drop.
 
 **7. Challenge the result.** Use the `feature-critic` lens (read-only) with the question: *what would make this acceptance verdict wrong?* Missing evidence, criteria passing on a technicality, tests asserting implementation rather than behavior.
 
@@ -110,4 +115,8 @@ Write to `.delivery/sprints/<initiative>-<n>-<slug>-review.md` using `../../temp
 
 Lead with the verdict and the persona-journey result. Then state what must be updated before the next sprint — invalidated assumptions in the PRD or architecture, stories that need rewriting, estimates that need recalibrating.
 
-Next step: `$delivery:sprint` for the next wave if accepted, or the specific repair the verdict named.
+Next step: the specific repair if not accepted; otherwise choose another wave
+or the [authorized shipping handoff](../../references/bounded-change.md#authorized-shipping-handoff).
+Acceptance alone grants no publication/merge authority. Follow the handoff through
+exact-head independent product/code review and CI, authorized merge, receipts and
+canonical product-state refresh; report partial/unshipped states honestly.

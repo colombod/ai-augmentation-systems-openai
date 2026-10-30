@@ -1,0 +1,494 @@
+{
+  "qualification": "Declared source bytes/whitespace words; not observed model context, tokens, latency, cost or quality. No tokenizer or model run.",
+  "before_revision": "a46dc827826c9d641f5e745101f4cc14fcf1a21b",
+  "after_revision": "0ab84d132c5c5d4a1b2555aab08003a66fefa1a1",
+  "exclusions": "Project inputs, tool I/O, model output, templates, catalogue metadata and reviewer lenses. Authoring uses full references as a conservative bound.",
+  "reuse_condition": "Exact text remains visible and unchanged source revision/hash is established. Compaction, lost text or changes require rereads.",
+  "focused_product_query": {
+    "before": {
+      "bytes": 30146,
+      "whitespace_words": 4234,
+      "loads": 4,
+      "resources": [
+        {
+          "path": "skills/product/SKILL.md",
+          "bytes": 5224,
+          "whitespace_words": 709,
+          "sha256": "991f58a142569518beac70950d7f5f5a13289230618f234255120999eb35d4ed"
+        },
+        {
+          "path": "references/runtime.md",
+          "bytes": 5166,
+          "whitespace_words": 734,
+          "sha256": "b24b2a7aadbf8d2299899445e2ca5b2c428b6d540fff1726e7c5700d125a1ec3"
+        },
+        {
+          "path": "references/conventions.md",
+          "bytes": 10029,
+          "whitespace_words": 1536,
+          "sha256": "1fe40963a4b0c9f5f4b4e653502f9dc5373a8bb334595e018b6ad073c8162ff5"
+        },
+        {
+          "path": "references/product.md",
+          "bytes": 9727,
+          "whitespace_words": 1255,
+          "sha256": "d1556aa4be6ca8443764727d165ead7b967a578589ed2e01cf1355a60ea2ee89"
+        }
+      ]
+    },
+    "after": {
+      "bytes": 7508,
+      "whitespace_words": 1015,
+      "loads": 2,
+      "resources": [
+        {
+          "path": "skills/product/SKILL.md",
+          "bytes": 3445,
+          "whitespace_words": 452,
+          "sha256": "aa52a8d60cc23d60184bb7a07a65a0bddf995a61d09cf9d482ae6239928f4a8c"
+        },
+        {
+          "path": "references/core.md",
+          "bytes": 4063,
+          "whitespace_words": 563,
+          "sha256": "2aa1cec7c9ac0a373c2f38f916489d2ea47c8259ea82db434a35d060c589f3c1"
+        }
+      ]
+    }
+  },
+  "cold_product_authoring": {
+    "before": {
+      "bytes": 30146,
+      "whitespace_words": 4234,
+      "loads": 4,
+      "resources": [
+        {
+          "path": "skills/product/SKILL.md",
+          "bytes": 5224,
+          "whitespace_words": 709,
+          "sha256": "991f58a142569518beac70950d7f5f5a13289230618f234255120999eb35d4ed"
+        },
+        {
+          "path": "references/runtime.md",
+          "bytes": 5166,
+          "whitespace_words": 734,
+          "sha256": "b24b2a7aadbf8d2299899445e2ca5b2c428b6d540fff1726e7c5700d125a1ec3"
+        },
+        {
+          "path": "references/conventions.md",
+          "bytes": 10029,
+          "whitespace_words": 1536,
+          "sha256": "1fe40963a4b0c9f5f4b4e653502f9dc5373a8bb334595e018b6ad073c8162ff5"
+        },
+        {
+          "path": "references/product.md",
+          "bytes": 9727,
+          "whitespace_words": 1255,
+          "sha256": "d1556aa4be6ca8443764727d165ead7b967a578589ed2e01cf1355a60ea2ee89"
+        }
+      ]
+    },
+    "after": {
+      "bytes": 38240,
+      "whitespace_words": 5328,
+      "loads": 6,
+      "resources": [
+        {
+          "path": "skills/product/SKILL.md",
+          "bytes": 3445,
+          "whitespace_words": 452,
+          "sha256": "aa52a8d60cc23d60184bb7a07a65a0bddf995a61d09cf9d482ae6239928f4a8c"
+        },
+        {
+          "path": "references/core.md",
+          "bytes": 4063,
+          "whitespace_words": 563,
+          "sha256": "2aa1cec7c9ac0a373c2f38f916489d2ea47c8259ea82db434a35d060c589f3c1"
+        },
+        {
+          "path": "references/product-workflow.md",
+          "bytes": 4961,
+          "whitespace_words": 679,
+          "sha256": "b02739fc0e9c19b17b2e9fb29d519bbf68c0699eef430f5eb238c1385c4d8bb6"
+        },
+        {
+          "path": "references/runtime.md",
+          "bytes": 5528,
+          "whitespace_words": 783,
+          "sha256": "0875da027392ccff20212ffa3a6b324f9dbb9fef2928509e4522207d99b5d842"
+        },
+        {
+          "path": "references/conventions.md",
+          "bytes": 10516,
+          "whitespace_words": 1596,
+          "sha256": "6b2e458e761bbd947813e3d348f393df6ae16c0a439c94a63a3c437460daff30"
+        },
+        {
+          "path": "references/product.md",
+          "bytes": 9727,
+          "whitespace_words": 1255,
+          "sha256": "d1556aa4be6ca8443764727d165ead7b967a578589ed2e01cf1355a60ea2ee89"
+        }
+      ]
+    }
+  },
+  "product_architecture_stories": {
+    "before_repeated_shared_reads": {
+      "bytes": 96634,
+      "whitespace_words": 13713,
+      "loads": 12,
+      "resources": [
+        {
+          "path": "skills/product/SKILL.md",
+          "bytes": 5224,
+          "whitespace_words": 709,
+          "sha256": "991f58a142569518beac70950d7f5f5a13289230618f234255120999eb35d4ed"
+        },
+        {
+          "path": "references/runtime.md",
+          "bytes": 5166,
+          "whitespace_words": 734,
+          "sha256": "b24b2a7aadbf8d2299899445e2ca5b2c428b6d540fff1726e7c5700d125a1ec3"
+        },
+        {
+          "path": "references/conventions.md",
+          "bytes": 10029,
+          "whitespace_words": 1536,
+          "sha256": "1fe40963a4b0c9f5f4b4e653502f9dc5373a8bb334595e018b6ad073c8162ff5"
+        },
+        {
+          "path": "references/product.md",
+          "bytes": 9727,
+          "whitespace_words": 1255,
+          "sha256": "d1556aa4be6ca8443764727d165ead7b967a578589ed2e01cf1355a60ea2ee89"
+        },
+        {
+          "path": "skills/architecture/SKILL.md",
+          "bytes": 7176,
+          "whitespace_words": 1000,
+          "sha256": "221415b43e6c75585868c12c0b659f42a57516ea562979d7d2216aeb869474c8"
+        },
+        {
+          "path": "references/runtime.md",
+          "bytes": 5166,
+          "whitespace_words": 734,
+          "sha256": "b24b2a7aadbf8d2299899445e2ca5b2c428b6d540fff1726e7c5700d125a1ec3"
+        },
+        {
+          "path": "references/conventions.md",
+          "bytes": 10029,
+          "whitespace_words": 1536,
+          "sha256": "1fe40963a4b0c9f5f4b4e653502f9dc5373a8bb334595e018b6ad073c8162ff5"
+        },
+        {
+          "path": "references/product.md",
+          "bytes": 9727,
+          "whitespace_words": 1255,
+          "sha256": "d1556aa4be6ca8443764727d165ead7b967a578589ed2e01cf1355a60ea2ee89"
+        },
+        {
+          "path": "skills/stories/SKILL.md",
+          "bytes": 9468,
+          "whitespace_words": 1429,
+          "sha256": "1a12abff09cccaa4cfd0a346de33e1bde151b374ebf9e864c6a2563b9e4f00c7"
+        },
+        {
+          "path": "references/runtime.md",
+          "bytes": 5166,
+          "whitespace_words": 734,
+          "sha256": "b24b2a7aadbf8d2299899445e2ca5b2c428b6d540fff1726e7c5700d125a1ec3"
+        },
+        {
+          "path": "references/conventions.md",
+          "bytes": 10029,
+          "whitespace_words": 1536,
+          "sha256": "1fe40963a4b0c9f5f4b4e653502f9dc5373a8bb334595e018b6ad073c8162ff5"
+        },
+        {
+          "path": "references/product.md",
+          "bytes": 9727,
+          "whitespace_words": 1255,
+          "sha256": "d1556aa4be6ca8443764727d165ead7b967a578589ed2e01cf1355a60ea2ee89"
+        }
+      ]
+    },
+    "before_unique_source_floor": {
+      "bytes": 46790,
+      "whitespace_words": 6663,
+      "loads": 6,
+      "resources": [
+        {
+          "path": "skills/product/SKILL.md",
+          "bytes": 5224,
+          "whitespace_words": 709,
+          "sha256": "991f58a142569518beac70950d7f5f5a13289230618f234255120999eb35d4ed"
+        },
+        {
+          "path": "references/runtime.md",
+          "bytes": 5166,
+          "whitespace_words": 734,
+          "sha256": "b24b2a7aadbf8d2299899445e2ca5b2c428b6d540fff1726e7c5700d125a1ec3"
+        },
+        {
+          "path": "references/conventions.md",
+          "bytes": 10029,
+          "whitespace_words": 1536,
+          "sha256": "1fe40963a4b0c9f5f4b4e653502f9dc5373a8bb334595e018b6ad073c8162ff5"
+        },
+        {
+          "path": "references/product.md",
+          "bytes": 9727,
+          "whitespace_words": 1255,
+          "sha256": "d1556aa4be6ca8443764727d165ead7b967a578589ed2e01cf1355a60ea2ee89"
+        },
+        {
+          "path": "skills/architecture/SKILL.md",
+          "bytes": 7176,
+          "whitespace_words": 1000,
+          "sha256": "221415b43e6c75585868c12c0b659f42a57516ea562979d7d2216aeb869474c8"
+        },
+        {
+          "path": "skills/stories/SKILL.md",
+          "bytes": 9468,
+          "whitespace_words": 1429,
+          "sha256": "1a12abff09cccaa4cfd0a346de33e1bde151b374ebf9e864c6a2563b9e4f00c7"
+        }
+      ]
+    },
+    "after_reuse_eligible_shared_reads": {
+      "bytes": 54884,
+      "whitespace_words": 7757,
+      "loads": 8,
+      "resources": [
+        {
+          "path": "skills/product/SKILL.md",
+          "bytes": 3445,
+          "whitespace_words": 452,
+          "sha256": "aa52a8d60cc23d60184bb7a07a65a0bddf995a61d09cf9d482ae6239928f4a8c"
+        },
+        {
+          "path": "references/core.md",
+          "bytes": 4063,
+          "whitespace_words": 563,
+          "sha256": "2aa1cec7c9ac0a373c2f38f916489d2ea47c8259ea82db434a35d060c589f3c1"
+        },
+        {
+          "path": "references/product-workflow.md",
+          "bytes": 4961,
+          "whitespace_words": 679,
+          "sha256": "b02739fc0e9c19b17b2e9fb29d519bbf68c0699eef430f5eb238c1385c4d8bb6"
+        },
+        {
+          "path": "references/runtime.md",
+          "bytes": 5528,
+          "whitespace_words": 783,
+          "sha256": "0875da027392ccff20212ffa3a6b324f9dbb9fef2928509e4522207d99b5d842"
+        },
+        {
+          "path": "references/conventions.md",
+          "bytes": 10516,
+          "whitespace_words": 1596,
+          "sha256": "6b2e458e761bbd947813e3d348f393df6ae16c0a439c94a63a3c437460daff30"
+        },
+        {
+          "path": "references/product.md",
+          "bytes": 9727,
+          "whitespace_words": 1255,
+          "sha256": "d1556aa4be6ca8443764727d165ead7b967a578589ed2e01cf1355a60ea2ee89"
+        },
+        {
+          "path": "skills/architecture/SKILL.md",
+          "bytes": 7176,
+          "whitespace_words": 1000,
+          "sha256": "221415b43e6c75585868c12c0b659f42a57516ea562979d7d2216aeb869474c8"
+        },
+        {
+          "path": "skills/stories/SKILL.md",
+          "bytes": 9468,
+          "whitespace_words": 1429,
+          "sha256": "1a12abff09cccaa4cfd0a346de33e1bde151b374ebf9e864c6a2563b9e4f00c7"
+        }
+      ]
+    },
+    "after_rereads_if_context_lost": {
+      "bytes": 114552,
+      "whitespace_words": 16151,
+      "loads": 16,
+      "resources": [
+        {
+          "path": "skills/product/SKILL.md",
+          "bytes": 3445,
+          "whitespace_words": 452,
+          "sha256": "aa52a8d60cc23d60184bb7a07a65a0bddf995a61d09cf9d482ae6239928f4a8c"
+        },
+        {
+          "path": "references/core.md",
+          "bytes": 4063,
+          "whitespace_words": 563,
+          "sha256": "2aa1cec7c9ac0a373c2f38f916489d2ea47c8259ea82db434a35d060c589f3c1"
+        },
+        {
+          "path": "references/product-workflow.md",
+          "bytes": 4961,
+          "whitespace_words": 679,
+          "sha256": "b02739fc0e9c19b17b2e9fb29d519bbf68c0699eef430f5eb238c1385c4d8bb6"
+        },
+        {
+          "path": "references/runtime.md",
+          "bytes": 5528,
+          "whitespace_words": 783,
+          "sha256": "0875da027392ccff20212ffa3a6b324f9dbb9fef2928509e4522207d99b5d842"
+        },
+        {
+          "path": "references/conventions.md",
+          "bytes": 10516,
+          "whitespace_words": 1596,
+          "sha256": "6b2e458e761bbd947813e3d348f393df6ae16c0a439c94a63a3c437460daff30"
+        },
+        {
+          "path": "references/product.md",
+          "bytes": 9727,
+          "whitespace_words": 1255,
+          "sha256": "d1556aa4be6ca8443764727d165ead7b967a578589ed2e01cf1355a60ea2ee89"
+        },
+        {
+          "path": "skills/architecture/SKILL.md",
+          "bytes": 7176,
+          "whitespace_words": 1000,
+          "sha256": "221415b43e6c75585868c12c0b659f42a57516ea562979d7d2216aeb869474c8"
+        },
+        {
+          "path": "references/runtime.md",
+          "bytes": 5528,
+          "whitespace_words": 783,
+          "sha256": "0875da027392ccff20212ffa3a6b324f9dbb9fef2928509e4522207d99b5d842"
+        },
+        {
+          "path": "references/conventions.md",
+          "bytes": 10516,
+          "whitespace_words": 1596,
+          "sha256": "6b2e458e761bbd947813e3d348f393df6ae16c0a439c94a63a3c437460daff30"
+        },
+        {
+          "path": "references/core.md",
+          "bytes": 4063,
+          "whitespace_words": 563,
+          "sha256": "2aa1cec7c9ac0a373c2f38f916489d2ea47c8259ea82db434a35d060c589f3c1"
+        },
+        {
+          "path": "references/product.md",
+          "bytes": 9727,
+          "whitespace_words": 1255,
+          "sha256": "d1556aa4be6ca8443764727d165ead7b967a578589ed2e01cf1355a60ea2ee89"
+        },
+        {
+          "path": "skills/stories/SKILL.md",
+          "bytes": 9468,
+          "whitespace_words": 1429,
+          "sha256": "1a12abff09cccaa4cfd0a346de33e1bde151b374ebf9e864c6a2563b9e4f00c7"
+        },
+        {
+          "path": "references/runtime.md",
+          "bytes": 5528,
+          "whitespace_words": 783,
+          "sha256": "0875da027392ccff20212ffa3a6b324f9dbb9fef2928509e4522207d99b5d842"
+        },
+        {
+          "path": "references/conventions.md",
+          "bytes": 10516,
+          "whitespace_words": 1596,
+          "sha256": "6b2e458e761bbd947813e3d348f393df6ae16c0a439c94a63a3c437460daff30"
+        },
+        {
+          "path": "references/core.md",
+          "bytes": 4063,
+          "whitespace_words": 563,
+          "sha256": "2aa1cec7c9ac0a373c2f38f916489d2ea47c8259ea82db434a35d060c589f3c1"
+        },
+        {
+          "path": "references/product.md",
+          "bytes": 9727,
+          "whitespace_words": 1255,
+          "sha256": "d1556aa4be6ca8443764727d165ead7b967a578589ed2e01cf1355a60ea2ee89"
+        }
+      ]
+    }
+  },
+  "four_reviewer_lenses_unique_source": {
+    "qualification": "Lens bodies plus new shared context/core; excludes artifacts and writing conventions in both snapshots. Not a total review prompt.",
+    "before": {
+      "bytes": 25378,
+      "whitespace_words": 4133,
+      "loads": 4,
+      "resources": [
+        {
+          "path": "references/reviewers/solution-architect.md",
+          "bytes": 5962,
+          "whitespace_words": 966,
+          "sha256": "f72f5fcf6fb25b64607a5cdbd9eade75e2922bc279f17b7ee0589c31f7a770a2"
+        },
+        {
+          "path": "references/reviewers/delivery-lead.md",
+          "bytes": 5704,
+          "whitespace_words": 926,
+          "sha256": "d11d715270d8b0ed9ac9d326305640b39f94f5a0560752f0f159886ef79591c1"
+        },
+        {
+          "path": "references/reviewers/qa-strategist.md",
+          "bytes": 8777,
+          "whitespace_words": 1414,
+          "sha256": "e24c377baaf1423fbd08cc0b5b636ff270d5458d43fd61fc8770a45f8a2ba4ac"
+        },
+        {
+          "path": "references/reviewers/feature-critic.md",
+          "bytes": 4935,
+          "whitespace_words": 827,
+          "sha256": "1520c14bbedceb08149386007413077e8ee1bf975e0ae93bf3b0d5b1e1c429a6"
+        }
+      ]
+    },
+    "after": {
+      "bytes": 25765,
+      "whitespace_words": 3893,
+      "loads": 6,
+      "resources": [
+        {
+          "path": "references/reviewers/solution-architect.md",
+          "bytes": 4506,
+          "whitespace_words": 677,
+          "sha256": "da78b5443753ef7917ca2fa927e92f4357ed443aa8cf05bf7685a6a4a7ff4b12"
+        },
+        {
+          "path": "references/reviewers/delivery-lead.md",
+          "bytes": 4463,
+          "whitespace_words": 672,
+          "sha256": "c46ae6e82b07298294f9a8d6cfebd66213eaac603ca9da0b48124e19752b36a4"
+        },
+        {
+          "path": "references/reviewers/qa-strategist.md",
+          "bytes": 7292,
+          "whitespace_words": 1142,
+          "sha256": "c8ce107bda92cd9bdb289c2dacb53200c2311f5ad0d7758c76dae0b5ee738f0c"
+        },
+        {
+          "path": "references/reviewers/feature-critic.md",
+          "bytes": 3465,
+          "whitespace_words": 556,
+          "sha256": "57cce9ece9d68adaa1c0e4c4b319e564ff2b87f246f54c0afa9e43d046818a15"
+        },
+        {
+          "path": "references/reviewer-context.md",
+          "bytes": 1976,
+          "whitespace_words": 283,
+          "sha256": "ba530c8c352e946de3122a69f257700f624992353878d755d3c09d3dea06607e"
+        },
+        {
+          "path": "references/core.md",
+          "bytes": 4063,
+          "whitespace_words": 563,
+          "sha256": "2aa1cec7c9ac0a373c2f38f916489d2ea47c8259ea82db434a35d060c589f3c1"
+        }
+      ]
+    }
+  }
+}

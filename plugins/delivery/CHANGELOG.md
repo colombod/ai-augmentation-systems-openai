@@ -1,5 +1,76 @@
 # Changelog
 
+## 0.1.0-preview.12 — 2026-10-30
+
+- Add an explicit bounded-change route shared by product, stories, sprint, review
+  and realignment. Embedded goal/scope/design/criteria replace full-pipeline
+  document prerequisites; evidence, independent review and authority gates remain.
+- Make onboarding classify observed capabilities, planned/deferred gaps and next
+  useful work with stable IDs, evidence, alternatives, reasons and next checks.
+- Carry accepted work through an authorized normal-PR/exact-head-review/CI/merge
+  shipping handoff and canonical state refresh, without widening runtime lanes.
+- Preserve historical self-development evidence; the corrected route is a new
+  follow-up, not a claim that missing earlier planning documents existed.
+
+## Earlier local candidate — 0.1.0-preview.11
+
+- Ignore Git replacement objects during exact-commit review and acceptance-gate
+  inspection, preventing replacement trees from masking altered tracked bytes.
+- Add read-only `handoff --feature ID` to resume one exact capability while
+  preserving whole-product owner, shape, authority, unconfirmed choices and global
+  freshness context. Default handoff stays unchanged; invalid IDs fail explicitly.
+- Consolidate the existing product/drafting, greenfield reviewer/loading, optional
+  Python impact and supervision/verification source into one versioned preview.
+  No new runtime feature is introduced by consolidation. Product records are saved
+  by an authorized host; protected native-manager write lanes stay unchanged.
+- Scope the preview to product/feature decisions, planning and read-only retirement proposals.
+  Full retirement lifecycle, native/dot acceptance and token benefit remain unproved
+  or incomplete; prior branch and local-test history below is not a release record.
+
+## Local test only — 0.1.0-integration.20261030
+
+- Combine existing supervision, drafting, selective loading and optional impact
+  increments in a disposable worktree. Not published, released or approved.
+
+## Unreleased — 0.1.0-preview.10
+
+- Add optional `--transitive` to existing product impact and retirement proposals:
+  possible Python import reach at the recorded commit, shortest file/line evidence
+  chains, shared consumers and raw dependency freshness. Direct coverage remains
+  unchanged. No graph service, second registry or project-code execution.
+- Report unresolved/ambiguous imports, unsupported languages/package contexts,
+  dynamic loaders and parse limits. Greenfield remains code-free; unavailable
+  optional reach is informational and does not gate story readiness.
+- Include possible enclosing regular-package initializer reach for Python module
+  anchors with no explicit imports; label implicit edges with null source line
+  and retain unknown package context. Preserve initializer-only shared consumers
+  and detect raw initializer/dependency changes.
+- Derived exclusive retirement reach remains candidate-only and never permits
+  deletion or replaces owner/migration/rollback/usage review. Retain source pins
+  and MIT attribution for the selectively adapted upstream traversal design.
+
+## Unreleased — 0.1.0-preview.9
+
+- Keep no-code greenfield architecture/story review grounded in proposed paths
+  and explicit setup/test unknowns instead of demanding an existing repository.
+- Route focused feature-map queries through a short core contract, retaining
+  workspace, owner, evidence and preservation rules. Load full product/writing
+  guidance for authoring and retirement work. Extract common rules from the
+  existing references instead of layering duplicate authoring instructions. The
+  common contract owns reuse; unchanged HEAD in a mutable checkout is insufficient.
+  Resource/quality improvement requires model evaluation; bytes alone do not prove it.
+- Consolidate the shared language/context rules for the architecture/story
+  reviewers. This changes instructions, not host loading machinery or authority.
+
+## Unreleased — 0.1.0-preview.8
+
+- Add compact product drafting for ideas and existing code. Feature names and
+  supplied routes expand to complete record input without repetitive JSON work.
+  Code/evidence routes are checked at a full commit; their presence never promotes
+  availability, usefulness evidence or owner confirmation. Draft does not save.
+- Reject outline typos and oversized expansion; preserve explicit attributed
+  choices while defaulting missing judgements and source coverage to unknown.
+
 ## Unreleased — 0.1.0-preview.7
 
 - Add `$delivery:product` for equally first-class greenfield and brownfield work,
@@ -16,6 +87,20 @@
 - Retain named method provenance and original MIT notices. No external runtime,
   provider, hook, graph service, code deletion or authenticated owner decision is
   introduced. Greenfield can proceed without a repository; planned code stays absent.
+
+## Unreleased
+
+- Correct status and installation guidance to distinguish available repository
+  source, installed snapshots, local runtime observations and pending host acceptance.
+- Add an optional trusted in-process supervision boundary with explicit binding
+  generations, task scope, caller request identity, stale-state checks and durable
+  assignment receipts. Native dispatch and operator acceptance stay authoritative.
+  This is fake-transport-tested; no authenticated dot integration is installed.
+- Add explicit local exact-SHA scratch review and revision-bound command evidence
+  helpers. Retain real outputs and failed results; reuse raw-byte checks from the
+  existing gates. These are evidence submissions, not automatic acceptance.
+- Preserve uncertain assignment outcomes across recovery and reconcile known
+  native failures without presenting them as successful task acceptance.
 
 ## Unreleased — 0.1.0-preview.6
 

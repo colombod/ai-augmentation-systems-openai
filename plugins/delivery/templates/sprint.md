@@ -9,7 +9,8 @@ IDs a later phase reads. Over the cap? Say so in the document, and why.
 ---
 sprint: <n>
 slug: <kebab-case>
-scope: <roadmap phase or MVP stage>
+route: full-pipeline | bounded-change
+scope: <roadmap phase, MVP stage or bounded outcome>
 status: scoped | handed-off | returned | reviewed
 runner: <who or what will implement — external to this plugin>
 branch: <branch the run should use>
@@ -25,8 +26,9 @@ branch: <branch the run should use>
 
 ## Scope
 
-**Stage promise:** what `prioritization.md` says this stage delivers, and which personas
-it serves. `$delivery:sprint-review` checks the result against exactly this.
+**Stage promise:** what existing `prioritization.md` says this stage delivers, or
+the embedded customer promise/scope on the bounded-change route; name the customer.
+List absent full-pipeline artifacts rather than requiring or inventing them. `$delivery:sprint-review` checks the result against exactly this.
 
 | Order | Story | Path | Depends on | Size |
 | :-- | :-- | :-- | :-- | :-- |
@@ -41,9 +43,11 @@ it serves. `$delivery:sprint-review` checks the result against exactly this.
 
 - [ ] Every story in scope is `ready`
 - [ ] Every acceptance criterion is falsifiable
-- [ ] No open **blocking** findings against the specs this scope depends on
+- [ ] No unassigned open **blocking** findings; findings this wave explicitly repairs
+      have criteria and required independent rechecks before acceptance/shipping
 - [ ] No story depends on unfinished work outside the scope
-- [ ] Story file paths verified to exist
+- [ ] Story documents exist; product paths inside them are verified existing or
+      explicitly proposed new, with setup/command availability recorded
 
 ## Design constraints
 
@@ -60,7 +64,7 @@ Where a design system exists. **Raw values are not acceptable where a token exis
 What the runner self-checks against, and what the review will re-check while
 reporting its actual independence from the implementation.
 
-**Test command:** `<exact command>`
+**Test command:** `<verified exact command, or proposed command with setup prerequisite>`
 **Must pass:** `<which suites>`
 
 | Story | FR | Acceptance criterion | How verified |
