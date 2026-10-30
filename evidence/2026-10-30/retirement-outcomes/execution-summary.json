@@ -1,0 +1,181 @@
+{
+  "qualification": "Normalized synthetic-fixture execution summary. Absolute workspace paths and full fixture maps omitted; original commands/stdout/stderr/history/failing runs retained locally. No real feature retired or actual owner approval represented.",
+  "base": "95e1b1a64220e92e0fd7f55887ee3254b5f84b39",
+  "reviewed_implementation": "788463c365b7345f2e57b1a164cc9b30d21ac641",
+  "version": "0.1.0-preview.14 unreleased candidate",
+  "plugin_guided_choice": {
+    "gap": "gap-retirement-lifecycle",
+    "existing_feature_id": "retirement-proposal",
+    "story": "feature-conversation-04",
+    "route": "bounded-change",
+    "selection": "Agent-proposed from actual canonical gaps; parent authorized this bounded development, not actual retirement.",
+    "reason": "Installed baseline rejects completed retirement recording. This closes a concrete build/change/retire outcome; authenticated-dot needs an external boundary, adoption needs outside use, and broader discovery/graph work is larger.",
+    "handoff": "Complete story/sprint written before fresh implementation. Existing canonical record preserved; no second tracker.",
+    "initial_reproduction": "Synthetic public CLI initial save0; preview-to-retired flip2 with unchanged map."
+  },
+  "independent_review": {
+    "source": "788463c365b7345f2e57b1a164cc9b30d21ac641",
+    "verdict": "FR-R1 through FR-R4 pass within fixture/submitted-claims scope",
+    "checks": [
+      "200 Python tests",
+      "marketplace validation",
+      "source whitespace",
+      "additional public CLI review of stale raw proof/history/query/refresh"
+    ],
+    "fixed_findings": [
+      "Removed contradictory old README retirement limit",
+      "Allowed current evidence archival while preserving immutable original outcome proof"
+    ]
+  },
+  "builder_checks": {
+    "python_tests": 200,
+    "node_tests": 22,
+    "focused_retirement_tests": 7,
+    "marketplace": "valid2plugins",
+    "public_cli_commands": 11
+  },
+  "installed_cloud_check": {
+    "package_files_match": 83,
+    "package_hash_algorithm": "SHA256 of UTF-8 json.dumps(file_sha256_map,sort_keys=True,separators=(comma,colon)); map includes regular package files excluding __pycache__ and .pyc",
+    "package_file_map_sha256": "eb98ce7e89fc7ff9d41f150f58fed1d06e1cda262ef9f5623c77bfe7b5eb8aac",
+    "public_cli_calls": 13,
+    "actual_product_features_retired": 0,
+    "prior_history_bytes_preserved": true,
+    "archived_outcome_history_preserved": true,
+    "immutable_outcome_context_preserved": true,
+    "survivor_impact_preserved": "feature-b",
+    "commands": [
+      {
+        "case": "initial-record",
+        "exit_code": 0,
+        "sha256": "deb1be102eaa05f30d70e001947d015a54cfcccdcf11dc39d6c48032865ecb09"
+      },
+      {
+        "case": "proposal",
+        "exit_code": 0,
+        "map_sha256": "deb1be102eaa05f30d70e001947d015a54cfcccdcf11dc39d6c48032865ecb09"
+      },
+      {
+        "case": "bare-flip-refused",
+        "exit_code": 2,
+        "error": "Bare retirement transitions are refused; use retire-record with completion evidence"
+      },
+      {
+        "case": "missing-review-refused",
+        "exit_code": 2,
+        "error": "Retirement outcome requires exactly: commit, decision_ref, usage_review, replacement, migration, rollback, consumer_review, evidence"
+      },
+      {
+        "case": "dirty-proof-refused",
+        "exit_code": 2,
+        "error": "Retirement outcome source/evidence is stale; reconcile raw bytes and staged changes"
+      },
+      {
+        "case": "completed-outcome-recorded",
+        "exit_code": 0,
+        "sha256": "19e450c997081e2b65ed1b230800f24eaa71991bcf4f4d62d4d0c2fd72f36582",
+        "qualification": "Submitted completion claims only; no authentication, independent verification or retirement performed. Unknown consumers remain unknown."
+      },
+      {
+        "case": "retired-status",
+        "exit_code": 0,
+        "map_sha256": "19e450c997081e2b65ed1b230800f24eaa71991bcf4f4d62d4d0c2fd72f36582",
+        "fresh": true,
+        "features": [
+          {
+            "id": "feature-a",
+            "state": "retired",
+            "historical_outcome_present": true
+          },
+          {
+            "id": "feature-b",
+            "state": "preview",
+            "historical_outcome_present": false
+          }
+        ]
+      },
+      {
+        "case": "retired-selected-handoff",
+        "exit_code": 1,
+        "map_sha256": "19e450c997081e2b65ed1b230800f24eaa71991bcf4f4d62d4d0c2fd72f36582",
+        "unconfirmed_choices": [
+          "customer",
+          "proposition",
+          "next_slice",
+          "must_survive",
+          "cuts"
+        ],
+        "fresh": true,
+        "features": [
+          {
+            "id": "feature-a",
+            "state": "retired",
+            "historical_outcome_present": true
+          }
+        ]
+      },
+      {
+        "case": "surviving-feature-impact",
+        "exit_code": 0,
+        "map_sha256": "19e450c997081e2b65ed1b230800f24eaa71991bcf4f4d62d4d0c2fd72f36582",
+        "fresh": true
+      },
+      {
+        "case": "later-evidence-archive-refresh",
+        "exit_code": 0,
+        "sha256": "5da67d01e1584223533e0af90326ad1d76ca918e90a076e8ac20e01be3486439"
+      },
+      {
+        "case": "later-fresh-status",
+        "exit_code": 0,
+        "map_sha256": "5da67d01e1584223533e0af90326ad1d76ca918e90a076e8ac20e01be3486439",
+        "fresh": true,
+        "features": [
+          {
+            "id": "feature-a",
+            "state": "retired",
+            "historical_outcome_present": true
+          },
+          {
+            "id": "feature-b",
+            "state": "preview",
+            "historical_outcome_present": false
+          }
+        ]
+      },
+      {
+        "case": "later-resumed-retirement",
+        "exit_code": 1,
+        "map_sha256": "5da67d01e1584223533e0af90326ad1d76ca918e90a076e8ac20e01be3486439",
+        "unconfirmed_choices": [
+          "customer",
+          "proposition",
+          "next_slice",
+          "must_survive",
+          "cuts"
+        ],
+        "fresh": true,
+        "features": [
+          {
+            "id": "feature-a",
+            "state": "retired",
+            "historical_outcome_present": true
+          }
+        ]
+      },
+      {
+        "case": "old-map-replay-refused",
+        "exit_code": 2,
+        "error": "Map changed; read current state before writing (expected SHA mismatch)"
+      }
+    ]
+  },
+  "claim_limits": [
+    "Host authorization and independent verification remain external prerequisites; text references authenticate nobody",
+    "Helper only records submitted completion; no code deletion, Git writes, new service, approval framework or runtime lane",
+    "Known direct and optional Python shared reach checked; unknown external/dynamic/unsupported consumers remain unknown",
+    "Existing schema1/historical-retired imports/no-code greenfield compatible; current context stays distinct from immutable historical outcome",
+    "No live product retirement, adoption, deployment, authenticated-dot or efficiency claim",
+    "Normal review publication only; no merge authorized; separate PR4 kept unchanged"
+  ]
+}
