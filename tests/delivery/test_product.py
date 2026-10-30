@@ -236,6 +236,89 @@ class ProductTests(unittest.TestCase):
         result=P.handoff(value,self.repo)
         self.assertEqual(result['features'][0]['summary'],value['features'][0]['summary'])
 
+    def test_default_handoff_keeps_existing_output_contract(self):
+        saved=self.record();value,_=P.read_map(self.project,self.repo)
+        expected={'product':value['product'],'placement':P.placement(value['product']['right_shape']),
+            'unconfirmed_choices':['customer','proposition','next_slice','must_survive','cuts'],
+            'freshness':P.freshness(value,self.repo),'features':value['features'],
+            'authority':'Recorded choices are attributed submissions, not authenticated approvals; proposals never authorize execution or retirement'}
+        self.assertEqual(P.handoff(value,self.repo),expected)
+        expected['map_sha256']=saved['sha256']
+        result=self.run_cli('handoff')
+        self.assertEqual(result.returncode,1,result.stderr)
+        self.assertEqual(result.stdout,json.dumps(expected,indent=2,sort_keys=True,allow_nan=False)+'\n')
+
+    def test_selected_handoff_preserves_full_feature_global_context_and_history(self):
+        saved=self.record();data=self.data()
+        data['features'][1]['state']='planned'
+        data['features'][0]['usefulness']['Job'].update(rating='Partial',grade='Claimed',evidence='Synthetic source review')
+        P.save(self.project,self.repo,data,saved['sha256'])
+        value,_=P.read_map(self.project,self.repo);original=copy.deepcopy(value)
+        before={str(p.relative_to(self.project)):p.read_bytes() for p in self.project.rglob('*') if p.is_file()}
+        full=json.loads(self.run_cli('handoff').stdout)
+        for feature in value['features']:
+            with self.subTest(state=feature['state']):
+                selected=P.handoff(value,self.repo,feature['id'])
+                process=self.run_cli('handoff','--feature',feature['id'])
+                self.assertEqual(process.returncode,1,process.stderr)
+                result=json.loads(process.stdout)
+                self.assertEqual(result['features'],[feature])
+                self.assertEqual(set(result['features'][0]['usefulness']),set(P.CRITERIA))
+                self.assertEqual(result['selection']['feature_id'],feature['id'])
+                self.assertEqual(result['selection']['scope'],'display/context only')
+                self.assertIn('canonical',result['selection']['qualification'])
+                self.assertEqual({k:v for k,v in result.items() if k not in ('selection','features')},
+                                 {k:v for k,v in full.items() if k!='features'})
+                self.assertEqual(selected,{k:v for k,v in result.items() if k!='map_sha256'})
+        self.assertEqual(value,original)
+        self.assertEqual(before,{str(p.relative_to(self.project)):p.read_bytes() for p in self.project.rglob('*') if p.is_file()})
+
+    def test_handoff_rejects_empty_unknown_and_nonexact_ids(self):
+        self.record();value,_=P.read_map(self.project,self.repo)
+        for feature_id in ('',' ','missing','feature','Feature-a',' feature-a','Customer outcome A'):
+            with self.subTest(feature_id=feature_id):
+                with self.assertRaisesRegex(ValueError,'[Ff]eature ID'):
+                    P.handoff(value,self.repo,feature_id)
+                result=self.run_cli('handoff','--feature',feature_id)
+                self.assertEqual(result.returncode,2,result.stderr)
+                self.assertEqual(result.stdout,'')
+                self.assertRegex(json.loads(result.stderr)['error'],'[Ff]eature ID')
+
+    def test_selected_greenfield_handoff_needs_no_git_or_code(self):
+        data=copy.deepcopy(self.starter)
+        other=copy.deepcopy(data['features'][0]);other['id']='another-plan'
+        data['features'].append(other)
+        saved=P.save(self.project,None,data,'new')
+        result=self.run_cli('handoff','--feature','another-plan',repo=False)
+        self.assertEqual(result.returncode,1,result.stderr)
+        selected=json.loads(result.stdout)
+        self.assertEqual(selected['features'],[other])
+        self.assertIsNone(selected['freshness']['fresh'])
+        self.assertEqual(selected['map_sha256'],saved['sha256'])
+        self.assertIn('customer',selected['unconfirmed_choices'])
+
+    def test_unselected_stale_evidence_remains_global_and_returns_stale_exit(self):
+        data=self.data()
+        # Synthetic owner choices isolate the stale-source exit from confirmation.
+        for key in ('customer','proposition','next_slice'):
+            data['product'][key].update(basis='owner-stated',source='Synthetic fixture owner')
+        for key in ('must_survive','cuts'):
+            for decision in data['product'][key]:
+                decision.update(basis='owner-stated',source='Synthetic fixture owner')
+        data['features'][0]['evidence']=[{'path':'a.py','note':'Synthetic source evidence'}]
+        P.save(self.project,self.repo,data,'new')
+        fresh=self.run_cli('handoff','--feature','feature-a')
+        self.assertEqual(fresh.returncode,0,fresh.stderr)
+        (self.repo/'README.md').write_text('Changed evidence belonging only to feature-b\n')
+        result=self.run_cli('handoff','--feature','feature-a')
+        self.assertEqual(result.returncode,1,result.stderr)
+        selected=json.loads(result.stdout)
+        self.assertEqual([f['id'] for f in selected['features']],['feature-a'])
+        self.assertEqual(selected['unconfirmed_choices'],[])
+        self.assertFalse(selected['freshness']['fresh'])
+        self.assertIn('README.md',selected['freshness']['changed_mapped_files'])
+        self.assertEqual(selected['freshness'],json.loads(self.run_cli('handoff').stdout)['freshness'])
+
     def test_greenfield_planning_contract_labels_paths_without_requiring_implementation(self):
         # Regression for the independently reproduced instruction contradiction:
         # the old imperative prevented no-repo designs and new-file stories.

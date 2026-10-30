@@ -642,14 +642,25 @@ def retirement(value, repo, feature_id, transitive=False):
     return result
 
 
-def handoff(value, repo):
+def handoff(value, repo, feature_id=None):
+    features = value['features']
+    if feature_id is not None:
+        if not isinstance(feature_id,str) or not feature_id.strip():
+            fail('Feature ID must be non-empty')
+        features = [f for f in features if f['id']==feature_id]
+        if not features:
+            fail('Unknown feature ID: '+feature_id)
     product = value['product']
     unresolved = [k for k in ('customer','proposition','next_slice') if product[k]['basis']!='owner-stated']
     unresolved += [k for k in ('must_survive','cuts') if any(d['basis']!='owner-stated' for d in product[k])]
-    return {'product':product,'placement':placement(product['right_shape']),
+    result = {'product':product,'placement':placement(product['right_shape']),
         'unconfirmed_choices':unresolved,'freshness':freshness(value,repo),
-        'features':[{k:f[k] for k in ('id','name','state','summary','code','evidence','usefulness','unknowns')} for f in value['features']],
+        'features':[{k:f[k] for k in ('id','name','state','summary','code','evidence','usefulness','unknowns')} for f in features],
         'authority':'Recorded choices are attributed submissions, not authenticated approvals; proposals never authorize execution or retirement'}
+    if feature_id is not None:
+        result['selection'] = {'feature_id':feature_id,'scope':'display/context only',
+            'qualification':'Other features remain in the canonical record; product context and freshness remain global. No execution or retirement permission is granted.'}
+    return result
 
 
 def main():
@@ -660,7 +671,8 @@ def main():
     sub.add_parser('inspect')
     drafting=sub.add_parser('draft');drafting.add_argument('--outline',required=True)
     record = sub.add_parser('record');record.add_argument('--input',required=True);record.add_argument('--expected-sha256',required=True)
-    sub.add_parser('status');sub.add_parser('handoff')
+    sub.add_parser('status')
+    handing_off = sub.add_parser('handoff');handing_off.add_argument('--feature',help='Exact feature ID; display/context scope only, with global context and freshness')
     change = sub.add_parser('impact');change.add_argument('--path',action='append',required=True);change.add_argument('--transitive',action='store_true',help='Optional possible Python import reach at the recorded commit')
     retire = sub.add_parser('retire-plan');retire.add_argument('--feature',required=True);retire.add_argument('--transitive',action='store_true')
     args = parser.parse_args()
@@ -688,7 +700,7 @@ def main():
         elif args.command=='retire-plan':
             result = retirement(value,repo,args.feature,args.transitive)
         elif args.command=='handoff':
-            result = handoff(value,repo)
+            result = handoff(value,repo,args.feature)
         else:
             result = {'freshness':freshness(value,repo),'features':[{k:f[k] for k in ('id','name','state','summary','code','evidence','unknowns')} for f in value['features']]}
         result['map_sha256'] = sha

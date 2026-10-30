@@ -61,8 +61,15 @@ writing sections needed by the artifact. Expanded guidance is action-dependent.
    is needed. `record --input <file> --expected-sha256 new` creates it; use the returned
    digest for updates. Add `--repo` before the command for brownfield. Inspect
    `status` or `impact` before relying on code; do not hide stale/unknown coverage.
-4. Use full `handoff` when passing planning/owner context: saved revision, observed
-   versus proposed states, owner choices, usefulness gaps, shape/authority and one
-   bounded next result. Carry it into the next relevant phase without forcing a
-   full pipeline. For `retire-plan --feature <id>` (optionally `--transitive`), use the contract's shared-code,
-   usage, replacement/migration/rollback and explicit-human-decision checks.
+4. Use `handoff --feature <id>` to resume one exact capability with its full
+   feature context and all global owner/product, shape, authority, unconfirmed
+   choices and freshness context. Selection scopes display only; other features
+   remain canonical and stale unselected evidence stays visible. Empty/unknown
+   IDs fail; no permissions or confirmations are inferred. Omit `--repo` for a
+   no-code greenfield selection. Use full `handoff` when passing all feature
+   context: saved revision, observed versus proposed states, owner choices,
+   usefulness gaps, shape/authority and one bounded next result. Carry it into the
+   next relevant phase without forcing a full pipeline. For
+   `retire-plan --feature <id>` (optionally `--transitive`), use the contract's
+   shared-code, usage, replacement/migration/rollback and explicit-human-decision
+   checks.

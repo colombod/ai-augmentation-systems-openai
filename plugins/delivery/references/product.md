@@ -20,7 +20,7 @@ required for brownfield code mapping and unnecessary for a greenfield idea.
 | `record --input FILE --expected-sha256 new` | Validate curated JSON and save a new product record; use the reported digest for later updates |
 | `status` | Feature states, exact source revision and raw-byte/mode freshness |
 | `impact --path FILE [--path FILE] [--transitive]` | Direct curated links; optional possible Python import reach, shortest file/line chains and coverage limits |
-| `handoff` | Product choices, separate usefulness cards, shape calculation and unconfirmed choices for next work |
+| `handoff [--feature ID]` | Product choices, separate usefulness cards, shape calculation and unconfirmed choices; optionally display one exact feature ID |
 | `retire-plan --feature ID [--transitive]` | Read-only proposal: shared code to preserve, exclusive candidates, unknown human decision and migration checks |
 
 `project.py init` creates directories first. Record updates use a local file lock,
@@ -30,6 +30,16 @@ not a distributed transaction. Helpers never edit source, reset Git, install
 hooks, select a model, contact a service or delete features. Exit codes: 0 for a
 valid command, 1 for stale source or unconfirmed handoff choices, 2 for invalid
 input/conflict. A concept has no code freshness verdict (`fresh: null`).
+
+`handoff --feature ID` resumes one current or planned capability with its complete
+feature context. Selection is display/context scope only: other features and their
+history remain in the canonical record. Whole-product owner/customer choices,
+preservation constraints, cuts, shape, authority, unconfirmed choices and freshness
+remain unchanged, including stale evidence from unselected features. The CLI
+retains the actual whole-map `map_sha256`. Empty or unknown IDs fail with exit 2;
+there is no fallback to all features. Omit `--feature` for the unchanged full
+handoff. Both forms are read-only and grant no implementation, approval,
+retirement or native write rights; greenfield selection needs no Git repository.
 
 ## Start with compact notes
 

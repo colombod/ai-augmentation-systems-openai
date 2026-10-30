@@ -2,6 +2,9 @@
 
 ## Unreleased candidate — 0.1.0-preview.11
 
+- Add read-only `handoff --feature ID` to resume one exact capability while
+  preserving whole-product owner, shape, authority, unconfirmed choices and global
+  freshness context. Default handoff stays unchanged; invalid IDs fail explicitly.
 - Consolidate the existing product/drafting, greenfield reviewer/loading, optional
   Python impact and supervision/verification source into one local review artifact.
   No new runtime feature is introduced by consolidation. Product records are saved
