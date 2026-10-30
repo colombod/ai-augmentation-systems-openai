@@ -5,7 +5,7 @@ brief, supporting research, customer personas, requirements, design, architectur
 roadmap, stories and a scoped implementation handoff. After implementation, it
 helps review the evidence and update the plan with what was learned.
 
-**Version `0.1.0-preview.7` — product and local runtime preview.** Sixteen skills use
+**Version `0.1.0-preview.8` — product and local runtime preview.** Sixteen skills use
 21 templates and 10 review lenses. Greenfield ideas and brownfield projects share
 one product contract: owner intent, customer promise, usefulness and planned or
 observed features. The local coordinator adds persistent Codex
@@ -86,7 +86,10 @@ the smallest sufficient work form into the next planning step. Proposed choices
 remain proposed. No repository is required for a greenfield record.
 
 The [product contract](references/product.md) gives complete local commands and
-the input format. With an initialized planning project, the helper supports:
+the input format. Its `draft --outline notes.json` command expands a few feature
+names and optional code/evidence routes into full record input, with choices
+proposed and usefulness Unknown. It does not save or infer shipped status. With
+an initialized planning project, the helper supports:
 
 ```sh
 python3 <package>/scripts/product.py --project <planning> --repo <git-root> inspect

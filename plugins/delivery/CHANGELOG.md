@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased — 0.1.0-preview.8
+
+- Add compact product drafting for ideas and existing code. Feature names and
+  supplied routes expand to complete record input without repetitive JSON work.
+  Code/evidence routes are checked at a full commit; their presence never promotes
+  availability, usefulness evidence or owner confirmation. Draft does not save.
+- Reject outline typos and oversized expansion; preserve explicit attributed
+  choices while defaulting missing judgements and source coverage to unknown.
+
 ## Unreleased — 0.1.0-preview.7
 
 - Add `$delivery:product` for equally first-class greenfield and brownfield work,

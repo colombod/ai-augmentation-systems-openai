@@ -250,6 +250,59 @@ class ProductTests(unittest.TestCase):
         self.assertIn('Source absence is a starting',architecture)
         self.assertIn('Do not\nrequire a file that the story is meant to create',stories)
 
+    def test_compact_greenfield_draft_needs_no_repository_or_full_template(self):
+        outline={'product':{'customer':'Maintainer considering a new local check','proposition':'See one useful result before adding an agent'},
+                 'features':[{'id':'first-result','name':'One local result'}]}
+        value=P.draft(outline,None)
+        self.assertEqual(value['mode'],'greenfield');self.assertIsNone(value['commit'])
+        self.assertEqual(value['features'][0]['code'],[])
+        self.assertEqual(value['product']['customer']['basis'],'proposed')
+        self.assertEqual(value['product']['right_shape']['autonomy_rung'],0)
+        for card in value['features'][0]['usefulness'].values():
+            self.assertEqual((card['rating'],card['grade']),('Unknown','Unknown'))
+        self.assertFalse(P.map_path(self.project).exists())
+        P.save(self.project,None,value,'new')
+
+    def test_compact_brownfield_routes_are_checked_without_promoting_availability(self):
+        outline={'features':[{'id':'a','name':'A promise','code':['a.py','shared.py'],'evidence':['README.md']},
+                             {'id':'b','name':'B promise','code':['b.py','shared.py']}]}
+        value=P.draft(outline,self.repo)
+        self.assertEqual(value['commit'],self.head)
+        self.assertEqual(value['features'][0]['state'],'planned')
+        self.assertEqual(value['features'][0]['usefulness']['Job']['grade'],'Unknown')
+        P.save(self.project,self.repo,value,'new')
+        saved,_=P.read_map(self.project,self.repo)
+        report=P.impact(saved,self.repo,['shared.py'])
+        self.assertEqual(report['shared_files']['shared.py'],['a','b'])
+        outline['features'][0]['code']=['missing.py']
+        with self.assertRaisesRegex(ValueError,'regular tracked'):
+            P.draft(outline,self.repo)
+
+    def test_draft_preserves_attributed_choices_and_refuses_silent_typos(self):
+        stated={'text':'Both paths matter','basis':'owner-stated','source':'Actual supplied user statement','revisit':'On owner correction'}
+        outline={'product':{'must_survive':[stated]},'features':[{'id':'a','name':'A'}]}
+        result=P.draft(outline,None)
+        self.assertEqual(result['product']['must_survive'],[stated])
+        for bad in ({'featuers':[]},{'features':[{'id':'a','name':'A','codes':['x']}]},
+                    {'features':[{'id':'a','name':'A'}],'product':{'customers':'x'}}):
+            with self.subTest(bad=bad),self.assertRaises(ValueError):P.draft(bad,None)
+
+    def test_public_draft_output_is_directly_recordable_and_does_not_save(self):
+        outline=self.root/'outline.json'
+        outline.write_text(json.dumps({'features':[{'id':'idea','name':'Illustrative idea'}]}))
+        result=self.run_cli('draft','--outline',str(outline),repo=False)
+        self.assertEqual(result.returncode,0,result.stderr)
+        value=json.loads(result.stdout);P.validate(value,None)
+        self.assertFalse(P.map_path(self.project).exists())
+        input_file=self.root/'input.json';input_file.write_text(result.stdout)
+        result=self.run_cli('record','--input',str(input_file),'--expected-sha256','new',repo=False)
+        self.assertEqual(result.returncode,0,result.stderr)
+
+    def test_compact_expansion_cannot_emit_a_record_larger_than_the_reader_accepts(self):
+        outline={'features':[{'id':'idea-'+str(i),'name':'An illustrative promise'} for i in range(3000)]}
+        with self.assertRaisesRegex(ValueError,'Expanded draft exceeds'):
+            P.draft(outline,None)
+
 
 if __name__=='__main__':
     unittest.main()

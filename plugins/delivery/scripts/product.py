@@ -195,6 +195,69 @@ def validate(value, repo):
             'snapshot':{p:files[p] for p in sorted(linked)},'method':METHOD}
 
 
+def draft(outline, repo):
+    """Expand compact notes, without inventing observations or saving a record."""
+    if not isinstance(outline,dict) or set(outline)-{'product','features'} or 'features' not in outline:
+        fail('Outline requires features and optional product notes')
+    value=json.loads((Path(__file__).resolve().parent.parent/'templates/product-input.json').read_text())
+    value.update(mode='brownfield' if repo else 'greenfield',
+        commit=git(repo,'rev-parse','HEAD').decode().strip() if repo else None)
+    notes=outline.get('product',{})
+    if not isinstance(notes,dict) or set(notes)-set(value['product']):
+        fail('Unknown product note field; use the documented product keys')
+    def proposed(note):
+        if isinstance(note,str):
+            text(note,'Product note')
+            return {'text':note,'basis':'proposed','source':'Compact drafting notes; owner confirmation not established.',
+                    'revisit':'Confirm or revise with the owner before relying on this choice.'}
+        decision(note)
+        return note
+    for key,note in notes.items():
+        if key=='right_shape':
+            placement(note);value['product'][key]=note
+        elif key in ('must_survive','cuts'):
+            if not isinstance(note,list) or not note:fail('Use a nonempty list for '+key)
+            value['product'][key]=[proposed(item) for item in note]
+        else:
+            value['product'][key]=proposed(note)
+    if 'right_shape' not in notes:
+        value['product']['right_shape'].update(need={'N1':0,'N2':0,'N3':0,'N4':0},
+            autonomy_rung=0,form='tool',engine='None',
+            reason='Unassessed placeholder: no autonomy or model dependency is established by drafting notes.',
+            alternatives=['Assess the smallest sufficient form with the owner; do not assume an agent is needed.'])
+    features=outline['features']
+    if not isinstance(features,list) or not features:fail('Name at least one feature promise to draft')
+    starter=value['features'][0]
+    value['features']=[]
+    for item in features:
+        allowed={'id','name','summary','state','code','evidence','unknowns'}
+        if not isinstance(item,dict) or not {'id','name'}<=set(item) or set(item)-allowed:
+            fail('Feature notes require id/name; optional summary/state/code/evidence/unknowns')
+        feature=json.loads(json.dumps(starter))
+        feature.update(id=item['id'],name=item['name'],state=item.get('state','planned'),
+            summary=item.get('summary','Proposed promise: '+str(item['name'])+'; behaviour and availability not yet established.'),
+            code=item.get('code',[]),unknowns=item.get('unknowns',[
+                'Curated draft only: confirm the promise, behaviour, coverage and availability.',
+                'Outside-user usefulness and unprompted return are not established.']))
+        evidence=item.get('evidence',[])
+        if not isinstance(evidence,list):fail('Feature evidence must be a list')
+        feature['evidence']=[]
+        for entry in evidence:
+            if isinstance(entry,str):
+                feature['evidence'].append({'path':entry,'note':'Supplied evidence route; its contents and meaning still require review. File existence is not a passing test or ship verdict.'})
+            else:
+                feature['evidence'].append(entry)
+        if not evidence:
+            feature['evidence']=[{'path':None,'note':'Compact notes only; no implementation, release or outside-user evidence supplied.'}]
+        # All six judgements remain Unknown even when code/evidence paths exist.
+        # The source method requires actual evidence, not drafting confidence.
+        value['features'].append(feature)
+    validated=validate(value,repo)
+    if len((json.dumps(validated,indent=2,sort_keys=True,allow_nan=False)+'\n').encode())>MAX_RECORD:
+        fail('Expanded draft exceeds four megabytes; reduce the feature scope')
+    return value
+
+
 def map_path(project):
     root = delivery_root(project)
     if not root.is_dir():
@@ -361,6 +424,7 @@ def main():
     parser.add_argument('--project',required=True,help='Canonical planning project, independent of product code')
     sub = parser.add_subparsers(dest='command',required=True)
     sub.add_parser('inspect')
+    drafting=sub.add_parser('draft');drafting.add_argument('--outline',required=True)
     record = sub.add_parser('record');record.add_argument('--input',required=True);record.add_argument('--expected-sha256',required=True)
     sub.add_parser('status');sub.add_parser('handoff')
     change = sub.add_parser('impact');change.add_argument('--path',action='append',required=True)
@@ -372,6 +436,11 @@ def main():
         result = inspect(repo) if repo else {'mode':'greenfield','project':str(project),
             'code':'not supplied; start with the customer, job, promise and cuts',
             'planning_artifacts':__import__('project').inventory(project)}
+    elif args.command=='draft':
+        with Path(args.outline).open('rb') as stream:
+            data=stream.read(MAX_RECORD+1)
+        if len(data)>MAX_RECORD:fail('Outline exceeds four megabytes')
+        result=draft(json.loads(data),repo)
     elif args.command=='record':
         with Path(args.input).open('rb') as stream:
             data = stream.read(MAX_RECORD+1)

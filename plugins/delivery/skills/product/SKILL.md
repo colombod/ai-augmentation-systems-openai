@@ -60,8 +60,14 @@ files may support several features. State what was not inspected.
 
 ## Record, use and hand over
 
-Draft the input from [the packaged starter](../../templates/product-input.json).
-The starter is schema guidance, not an observation or a task to build. Fill its
+Start with compact notes and `draft --outline <notes.json>` using the
+[product contract](../../references/product.md). This expands feature names,
+optional code/evidence routes and product notes into a complete input. It does
+not save, confirm choices, rate usefulness or infer shipped status. Missing
+judgements remain Unknown; plain choice notes remain proposed. Inspect the
+expanded record, then record it with the expected digest. Use
+[the full starter](../../templates/product-input.json) when detailed control is
+needed. The starter is schema guidance, not an observation or a task to build. Fill its
 customer choices, paths, six usefulness judgements and shape reasons from actual
 inputs. Save with an expected hash, then query:
 
