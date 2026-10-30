@@ -1,0 +1,134 @@
+{
+  "qualification": "Normalized actual-repository installed-helper proof; absolute workspace paths/full raw stdout omitted. Raw commands and planning history retained locally. Counts/bytes are not model-token, latency, adoption or model-quality measurements.",
+  "base": "4b77bdb0aead613255d12d8ff160bf0dc3d3d9e7",
+  "reviewed_implementation": "f65eaa130c31111c3ab9ad089112b1f042941ac6",
+  "version": "0.1.0-preview.15 unreleased candidate",
+  "plugin_guided_choice": {
+    "gap": "gap-component-census, subgap of partial inventory coverage",
+    "feature": "product-baseline",
+    "story": "feature-conversation-05",
+    "route": "bounded-change",
+    "basis": "Agent-proposed from actual main14 census:41docs/5manifests/27tests include3other-component manifests and7historical fixture tests. Story/sprint preceded implementation.",
+    "alternatives": [
+      "full census plus manual filtering",
+      "filename-derived automatic promises, rejected as ungrounded",
+      "deeper semantic graph, larger scope",
+      "authenticated-dot integration, missing external boundary"
+    ],
+    "chosen": "Optional explicit tracked component/test scopes, preserving ancestor instructions and global repository warnings; agent still curates features."
+  },
+  "checks": {
+    "python_tests": 205,
+    "node_tests": 22,
+    "focused_tests": 5,
+    "marketplace": "valid",
+    "independent_source_product_review": "PASS atf65eaa130c31111c3ab9ad089112b1f042941ac6",
+    "independent_default_comparison": "Full public CLI output byte-for-byte matches base helper at same current source",
+    "installed_skills": 16,
+    "installed_package_files_equal_to_source": 83,
+    "actual_helper_calls": 5
+  },
+  "actual_delivery_repository": {
+    "default_output_byte_equal_to_previous_helper": true,
+    "global_identity_and_changes_equal": true,
+    "canonical_map_unchanged": true,
+    "full_counts": {
+      "instructions_and_docs": 41,
+      "manifests": 5,
+      "test_paths": 28
+    },
+    "scoped_counts": {
+      "instructions_and_docs": 1,
+      "manifests": 1,
+      "test_paths": 17
+    },
+    "ancestor_context": [
+      "AGENTS.md",
+      "README.md"
+    ],
+    "selected_tracked_files": 100,
+    "full_stdout_utf8_bytes": 4236,
+    "scoped_stdout_utf8_bytes": 1594
+  },
+  "commands": [
+    {
+      "case": "previous-default",
+      "exit_code": 0,
+      "source": "f65eaa130c31111c3ab9ad089112b1f042941ac6",
+      "counts": {
+        "instructions_and_docs": 41,
+        "manifests": 5,
+        "test_paths": 28
+      }
+    },
+    {
+      "case": "candidate-default",
+      "exit_code": 0,
+      "source": "f65eaa130c31111c3ab9ad089112b1f042941ac6",
+      "counts": {
+        "instructions_and_docs": 41,
+        "manifests": 5,
+        "test_paths": 28
+      }
+    },
+    {
+      "case": "selected-component-and-tests",
+      "exit_code": 0,
+      "source": "f65eaa130c31111c3ab9ad089112b1f042941ac6",
+      "counts": {
+        "instructions_and_docs": 1,
+        "manifests": 1,
+        "test_paths": 17
+      },
+      "scope": {
+        "qualification": "Only candidate lists are scoped; repository identity and staged/working/untracked state remain global. Outside-scope support is unknown, not absent; no features inferred.",
+        "repository_context": [
+          "AGENTS.md",
+          "README.md"
+        ],
+        "requested": [
+          "plugins/delivery",
+          "tests/delivery"
+        ],
+        "selected_tracked_files": 100
+      }
+    },
+    {
+      "case": "selected-file",
+      "exit_code": 0,
+      "source": "f65eaa130c31111c3ab9ad089112b1f042941ac6",
+      "counts": {
+        "instructions_and_docs": 0,
+        "manifests": 0,
+        "test_paths": 0
+      },
+      "scope": {
+        "qualification": "Only candidate lists are scoped; repository identity and staged/working/untracked state remain global. Outside-scope support is unknown, not absent; no features inferred.",
+        "repository_context": [
+          "AGENTS.md",
+          "README.md",
+          "plugins/delivery/README.md"
+        ],
+        "requested": [
+          "plugins/delivery/scripts/product.py"
+        ],
+        "selected_tracked_files": 1
+      }
+    },
+    {
+      "case": "bad-scope-refused",
+      "exit_code": 2,
+      "error": "Source scope has no tracked files at HEAD: plugins/missing"
+    }
+  ],
+  "limits": [
+    "Candidates only, no inferred features/tickets or complete code map",
+    "Scopes do not imply outside consumers/support absent",
+    "Dirty/staged/untracked warnings and repository identity remain global",
+    "No-code greenfield uses inspect without source scope; unsupported source scopes fail explicitly",
+    "No canonical map/Git writes by inspection",
+    "No measured model-token, latency or quality win claimed",
+    "No automatic cloud catalogue, authenticated-dot or outside-user evidence inferred",
+    "Normal review preparation; this candidate is not merged"
+  ]
+}
