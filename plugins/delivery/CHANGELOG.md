@@ -4,6 +4,8 @@
 
 - Add explicit completed retirement recording with current outcome evidence,
   prior feature/anchor context, existing CAS/history and known shared survivors.
+- Allow later current-evidence refresh while retaining immutable outcome evidence
+  at its historical commit, including after the outcome file is archived.
 - Preserve optional retirement context in status and selected/full handoffs;
   existing schema-1, historical retired and no-code records need no migration.
 - Decision and review references remain submitted claims, not authenticated

@@ -5,12 +5,14 @@ into one installable version. Installation on your devices is a separate step.
 The working unit is a product or feature outcome: who it serves, current versus
 planned capability, value/evidence, owner intent and whether to build/change/retire.
 The candidate supports owner-led framing, authorized host-saved product records,
-curated direct/optional Python impact, handoffs and read-only retirement proposals.
+curated direct/optional Python impact, handoffs, retirement proposals and completed
+retirement records.
 Code, tasks and agents support those decisions; the preview is an increment toward
 the full user-and-dot delivery loop, not its completion.
 Native coordination remains experimental and separately configured; authenticated
 dot access, desktop/ChatGPT acceptance and measured token benefit are not established.
-An active feature cannot yet transition to retired through the helper.
+An authorized host can record a completed retirement with current evidence; the
+helper performs no retirement and authenticates no approval.
 
 Delivery helps turn a product idea into a plan someone can implement: a problem
 brief, supporting research, customer personas, requirements, design, architecture,

@@ -266,7 +266,11 @@ remain in the existing history directory. `status` and selected/full `handoff`
 retain this optional context; active impact still follows surviving features.
 Resume from that selected handoff and realign the existing product/backlog based
 on actual shipment and evidence. Generic `record` refuses bare retirement flips
-and changes/removal of saved completion context. Existing schema-1 maps and
+and changes/removal of saved completion context. Later `record` updates may refresh
+current feature evidence, including a `path: null` explanatory note if an outcome
+file is archived. The immutable `retirement.outcome` keeps that file evidence
+bound to its original outcome commit; it is not a perpetual current code anchor.
+Existing schema-1 maps and
 historical retired imports need no migration or invented completion proof;
 no-code greenfield behavior is unchanged. No helper deletes code or creates an
 approval framework, provider, credential or runtime lane.

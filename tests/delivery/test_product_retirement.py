@@ -68,6 +68,33 @@ class RetirementTests(unittest.TestCase):
         self.assertIn('a.py',context['prior_snapshot'])
         self.assertNotIn('a.py',value['snapshot'])
 
+    def test_future_evidence_refresh_preserves_historical_outcome_after_file_removal(self):
+        saved=self.record();self.complete_source()
+        P.record_retirement(self.project,self.repo,'feature-a',self.outcome(),saved['sha256'])
+        value,sha=P.read_map(self.project,self.repo)
+        context=copy.deepcopy(value['features'][0]['retirement'])
+        prior_bytes=P.map_path(self.project).read_bytes()
+        (self.repo/'outcome.md').unlink()
+        self.git('add','-A');self.git('commit','-qm','Synthetic historical outcome archived')
+        data={k:value[k] for k in ('schema_version','mode','commit','features','product')}
+        data['commit']=self.git('rev-parse','HEAD').strip()
+        data['features'][0]['evidence']=[dict(path=None,
+            note='Synthetic outcome archived; historical proof retained at retirement.outcome.commit.')]
+        source=self.root/'refresh.json';source.write_text(json.dumps(data))
+        updated=self.run_cli('record','--input',str(source),'--expected-sha256',sha)
+        self.assertEqual(updated.returncode,0,updated.stderr)
+        refreshed,_=P.read_map(self.project,self.repo)
+        self.assertEqual(refreshed['features'][0]['retirement'],context)
+        self.assertIsNone(refreshed['features'][0]['evidence'][0]['path'])
+        self.assertNotIn('outcome.md',refreshed['snapshot'])
+        self.assertTrue(P.freshness(refreshed,self.repo)['fresh'])
+        self.assertEqual((P.map_path(self.project).parent/'product-map-history'/(sha+'.json')).read_bytes(),prior_bytes)
+        historical=P.git(self.repo,'show',context['outcome']['commit']+':outcome.md').decode()
+        self.assertIn('Synthetic retirement outcome',historical)
+        for args in [('status',),('handoff','--feature','feature-a')]:
+            query=self.run_cli(*args);self.assertIn(query.returncode,(0,1),query.stderr)
+            self.assertEqual(json.loads(query.stdout)['features'][0]['retirement'],context)
+
     def test_bad_completion_inputs_never_mutate_map(self):
         saved=self.record();before=P.map_path(self.project).read_bytes();self.complete_source()
         good=self.outcome()

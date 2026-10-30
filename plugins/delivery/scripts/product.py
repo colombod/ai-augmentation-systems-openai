@@ -234,8 +234,8 @@ def validate_retirement(feature, value, repo):
     if context['prior_snapshot'] != baseline['snapshot']:
         fail('Retirement prior anchors do not match prior commit')
     validate_outcome(context['outcome'], repo)
-    if feature['state']!='retired' or feature['code'] or feature['evidence']!=context['outcome']['evidence']:
-        fail('Completed retirement retains outcome evidence and no current code routes')
+    if feature['state']!='retired' or feature['code']:
+        fail('Completed retirement remains retired with no current code routes')
 
 
 def record_retirement(project, repo, feature_id, outcome, expected_sha):
