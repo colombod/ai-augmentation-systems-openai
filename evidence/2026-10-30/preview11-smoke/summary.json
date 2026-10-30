@@ -1,0 +1,13 @@
+{
+  "candidate_source": "f84a502fd57389b4c01bd4a20175d8448733c9ef",
+  "package_version": "0.1.0-preview.11",
+  "instruction_checks": "conditional greenfield existing/proposed paths and commands pass; no stale unconditional reviewer rule found in selected resources",
+  "package_tests": 7,
+  "loading_tests": 5,
+  "installed_skills": 16,
+  "installed_resource_hashes": 12,
+  "model_calls": 0,
+  "provenance": "original baseline, seven method notices, review alignment and codemap pins present",
+  "native_write_lane": "unchanged; authorized host product.py save required",
+  "qualification": "Targeted source/resource smoke, not model-driven or native coordinated execution."
+}

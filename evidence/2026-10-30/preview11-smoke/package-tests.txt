@@ -1,0 +1,12 @@
+test_catalogue_validation_cannot_pass_a_nonportable_root_manifest (test_package.PackageTests.test_catalogue_validation_cannot_pass_a_nonportable_root_manifest) ... ok
+test_import_provenance_covers_all_derived_material (test_package.PackageTests.test_import_provenance_covers_all_derived_material) ... ok
+test_portable_schema_rejects_legacy_root_and_nested_mistakes (test_package.PackageTests.test_portable_schema_rejects_legacy_root_and_nested_mistakes) ... ok
+test_preview_loads_no_unimplemented_runtime (test_package.PackageTests.test_preview_loads_no_unimplemented_runtime) ... ok
+test_product_methods_retain_source_pins_and_full_license_notices (test_package.PackageTests.test_product_methods_retain_source_pins_and_full_license_notices) ... ok
+test_shipped_boundary_excludes_port_assessment_and_retains_lineage (test_package.PackageTests.test_shipped_boundary_excludes_port_assessment_and_retains_lineage) ... ok
+test_skill_resources_are_contained_and_present (test_package.PackageTests.test_skill_resources_are_contained_and_present) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.010s
+
+OK

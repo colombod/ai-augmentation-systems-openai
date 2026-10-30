@@ -1,0 +1,5 @@
+The first parallel installed-resource probe did not start: shell output redirection
+raced creation of its new evidence directory and returned exit 1:
+/bin/bash: line 1: /tmp/delivery-preview11-smoke/installed-resources.stdout: No such file or directory
+The directory was then confirmed present; the same resource-only probe was rerun.
+This is a test-harness ordering failure, not a product/host inference result.
