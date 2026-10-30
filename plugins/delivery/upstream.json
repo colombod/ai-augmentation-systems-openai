@@ -345,5 +345,20 @@
       "sha256": "891f7810083c56a04d68785ae1e7f811160f38705f66802f35b5e1c88cf9332a",
       "adaptation": "Preserve question instructions/versions and historical upstream Jev measurement labels; make implicit relay blocking intent explicit; historical measurements are not OpenAI or port calibration"
     }
-  ]
+  ],
+  "reviewed_alignment": {
+    "revision": "3d7c69416dc7524130105c9bfe308aa01b2a26f0",
+    "plugin_version": "0.37.9",
+    "sources": [
+      {
+        "source": "scripts/review-run.js",
+        "git_blob": "b46ef525f5f134a05c22314a7dd1347bee50a411"
+      },
+      {
+        "source": "scripts/verify-run.js",
+        "git_blob": "b939a27ef99210d484fdc8a78f3105f97c9663a7"
+      }
+    ],
+    "adaptation": "Independent Python command-evidence implementation in scripts/verification.py, informed by exact-SHA review and computed surface-check behavior; reuses the OpenAI port raw-byte gates. No upstream runtime, hooks or permission profiles copied. Original imported baseline remains unchanged."
+  }
 }

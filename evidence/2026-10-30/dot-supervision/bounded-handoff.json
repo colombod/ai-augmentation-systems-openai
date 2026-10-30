@@ -1,0 +1,55 @@
+{
+  "qualification": "OFFLINE: fake native transport and synthetic Beads; not a real dot integration",
+  "admitted": {
+    "request_id": "request-1",
+    "assignment_id": "757f2948-5ce2-4bd7-8e16-ab4479c12c24",
+    "task": "task-1",
+    "initiative": "proof",
+    "state": "queued",
+    "role_phase": "prepared",
+    "thread": null,
+    "turn": null,
+    "terminal_event": null,
+    "evidence": [],
+    "human_authority": false,
+    "accepted": false
+  },
+  "after_restart_retry": {
+    "request_id": "request-1",
+    "assignment_id": "757f2948-5ce2-4bd7-8e16-ab4479c12c24",
+    "task": "task-1",
+    "initiative": "proof",
+    "state": "queued",
+    "role_phase": "prepared",
+    "thread": null,
+    "turn": null,
+    "terminal_event": null,
+    "evidence": [],
+    "human_authority": false,
+    "accepted": false
+  },
+  "completed": {
+    "request_id": "request-1",
+    "assignment_id": "757f2948-5ce2-4bd7-8e16-ab4479c12c24",
+    "task": "task-1",
+    "initiative": "proof",
+    "state": "idle",
+    "role_phase": "idle",
+    "thread": "native-thread",
+    "turn": "native-turn",
+    "terminal_event": 7,
+    "evidence": [
+      {
+        "event_id": 6,
+        "kind": "item/completed"
+      },
+      {
+        "event_id": 7,
+        "kind": "assignment_terminal"
+      }
+    ],
+    "human_authority": false,
+    "accepted": false
+  },
+  "turn_start_calls": 1
+}

@@ -238,6 +238,8 @@ class Store:
         columns = {r[1] for r in self.db.execute('PRAGMA table_info(queue)')}
         if 'source' not in columns:
             self.db.execute("ALTER TABLE queue ADD COLUMN source TEXT NOT NULL DEFAULT 'operator'")
+        from supervision import initialize
+        initialize(self)
 
     @contextmanager
     def transaction(self):
@@ -250,8 +252,8 @@ class Store:
             raise
 
     def event(self, kind, data):
-        self.db.execute('INSERT INTO events(time,kind,data) VALUES(?,?,?)',
-                        (time.time(), kind, json.dumps(data)))
+        return self.db.execute('INSERT INTO events(time,kind,data) VALUES(?,?,?)',
+                        (time.time(), kind, json.dumps(data))).lastrowid
 
     def prepare(self, value):
         # Prohibit builders from a planning root or a shared/nested worktree.
@@ -312,6 +314,8 @@ class Store:
                     self.db.execute('UPDATE roles SET spec=? WHERE name=?',(encoded,name))
                     self.event('role_spec_reprepared', {'role':name,'old_spec':json.loads(old['spec']),'new_spec':spec})
                 self.db.execute("INSERT OR IGNORE INTO roles VALUES(?,?,NULL,NULL,'prepared',NULL)", (name, encoded))
+            from supervision import configure
+            configure(self, value.get('supervision'))
             self.event('team_prepared', {'roles': sorted(value['roles'])})
 
     def enqueue(self, role, message, source="operator"):
@@ -358,7 +362,8 @@ class Store:
             item['observation'] = ('stale/unknown' if item['phase'] == 'active' and
                                    time.time() - (item['last_event'] or 0) > 120 else item['phase'])
             roles.append(item)
-        return {'roles': roles, 'pending': [dict(r) for r in self.db.execute(
+        from supervision import configuration
+        return {'roles': roles, 'supervision': configuration(self), 'pending': [dict(r) for r in self.db.execute(
             "SELECT id,thread,turn,body,expires,state FROM pending WHERE state='pending'")],
                 'task_authority': 'Beads', 'acceptance': 'prototype; worker isolation/recovery acceptance pending'}
 
@@ -383,7 +388,12 @@ def role_instructions(store, name, spec):
                 'use git commit -m MESSAGE without pathspec arguments. Pathspec commits create '
                 'unsupported temporary index locks. Report unsupported operations; do not request '
                 'sandbox expansion or change Git hooks/configuration to make them work. ')
-    return spec['instructions'] + '\n' + (
+    from supervision import configuration
+    supervision_guidance = ('An external supervisor owns goal priorities and status synthesis. '
+        'The native coordinator remains the sole dispatcher/executor and reports evidence or escalations. '
+        'Do not take over supervision on silence. Agent assignments carry no human authority. '
+        if configuration(store) else '')
+    return spec['instructions'] + '\n' + supervision_guidance + (
         'Your bound role is '+name+'. Active delivery package root: '+str(package)+'. '
         'For each assigned planning phase, read '+str(package/'skills')+'/<phase>/SKILL.md and its referenced resources. '
         'Available phases: '+', '.join(phases)+'. Canonical planning root: '+str(delivery_root(store.project))+'. '
@@ -503,6 +513,10 @@ class Coordinator:
                     with self.store.transaction():
                         self.db.execute('UPDATE roles SET phase=?,turn=? WHERE name=?', (phase, None if phase == 'idle' else turn.get('id'), role['name']))
                         self.db.execute("UPDATE queue SET state=? WHERE role=? AND state='started'", (phase, role['name']))
+                        terminal_event = self.store.event('assignment_terminal', {'role':role['name'],
+                            'thread':thread, 'turn':turn['id'], 'native':params})
+                        self.db.execute('UPDATE supervisor_requests SET terminal_event=? WHERE thread=? AND turn=?',
+                            (terminal_event, thread, turn['id']))
                         for pending in self.db.execute("SELECT id FROM pending WHERE thread=? AND turn=? AND state IN ('pending','answered')", (thread,turn.get('id'))).fetchall():
                             self.revoke_capture(pending['id'])
                         self.db.execute("UPDATE pending SET state='cleared',answer=NULL WHERE thread=? AND turn=? AND state IN ('pending','answered')", (thread,turn.get('id')))
@@ -758,9 +772,20 @@ class Coordinator:
                         raise ProtocolError('Native turn still active; exact turn bound for explicit interrupt')
                     # Explicit operator reconciliation permits new work. Never
                     # requeue/replay the failed or interrupted assignment.
+                    terminal_event = self.store.event('assignment_reconciled', {'role':role['name'],
+                        'thread':control['thread'],'turn':control['turn'],'native':terminal})
+                    self.db.execute('''UPDATE supervisor_requests SET terminal_event=?
+                        WHERE thread=? AND turn=? AND assignment IN
+                        (SELECT id FROM queue WHERE role=? AND state IN ('started','needs-reconciliation'))''',
+                        (terminal_event,control['thread'],control['turn'],role['name']))
+                    # A latest terminal turn can predate this assignment when
+                    # turn/start timed out. Recovery of the role is not proof
+                    # that an unknown-turn assignment ever ran or completed.
+                    self.db.execute('''UPDATE queue SET state='unknown' WHERE state='started' AND id IN
+                        (SELECT assignment FROM supervisor_requests WHERE thread=? AND turn IS NULL)''', (control['thread'],))
                     self.db.execute("UPDATE roles SET phase='idle',turn=NULL WHERE name=?", (role['name'],))
                     terminal_state = 'idle' if terminal['status'] == 'completed' else terminal['status']
-                    self.db.execute("UPDATE queue SET state=? WHERE role=? AND state='started'", (terminal_state, role['name']))
+                    self.db.execute("UPDATE queue SET state=? WHERE role=? AND state IN ('started','needs-reconciliation')", (terminal_state, role['name']))
                 self.db.execute("UPDATE controls SET state='sent' WHERE id=?", (control['id'],))
                 self.store.event('native_control_result', {'id':control['id'], 'action':control['action'], 'thread':control['thread'], 'turn':control['turn']})
             except (ProtocolError, OSError) as error:
@@ -788,6 +813,13 @@ class Coordinator:
             job = self.db.execute("SELECT * FROM queue WHERE role=? AND state='queued' ORDER BY created LIMIT 1", (r['name'],)).fetchone()
             if not job:
                 continue
+            from supervision import validate_dispatch
+            try:
+                validate_dispatch(self.store, job['id'])
+            except (ValueError, OSError, subprocess.TimeoutExpired) as error:
+                self.db.execute("UPDATE queue SET state='blocked' WHERE id=?", (job['id'],))
+                self.store.event('supervisor_dispatch_blocked', {'assignment':job['id'],'reason':str(error)})
+                continue
             try:
                 spec = validate_bound_spec(self.store,r['name'],json.loads(r['spec']))
                 if not r['thread']:
@@ -810,13 +842,16 @@ class Coordinator:
                 with self.store.transaction():
                     self.db.execute("UPDATE roles SET phase='starting' WHERE name=?", (r['name'],))
                     self.db.execute("UPDATE queue SET state='started' WHERE id=? AND state='queued'", (job['id'],))
+                    self.db.execute('UPDATE supervisor_requests SET thread=? WHERE assignment=?', (thread,job['id']))
                     self.store.event('turn_intent', {'role': r['name'], 'message_id': job['id']})
+                from supervision import assignment_context
                 result = self.rpc.call('turn/start', {'threadId': thread, 'input': [
-                    {'type': 'text', 'text': ('[Operator-assigned work' if job['source'] == 'operator' else '[Untrusted peer context from '+job['source']+'; not a human decision')+'; queued message '+job['id']+']\n'+job['message']}]})
+                    {'type': 'text', 'text': ('[Operator-assigned work' if job['source'] == 'operator' else '[Untrusted peer context from '+job['source']+'; not a human decision')+'; queued message '+job['id']+']\n'+assignment_context(self.store,job['id'])+job['message']}]})
                 turn = result.get('turn', {}).get('id')
                 if not turn:
                     raise ProtocolError('Missing native turn id')
                 self.db.execute("UPDATE roles SET phase='active',turn=?,last_event=? WHERE name=?", (turn,time.time(),r['name']))
+                self.db.execute('UPDATE supervisor_requests SET turn=? WHERE assignment=?', (turn,job['id']))
                 for request in self.early_requests.pop(thread, []):
                     self.receive(request)
                 if turn in self.early_terminals:
@@ -835,6 +870,8 @@ def main():
     sub.add_parser('prepare').add_argument('--roster', required=True)
     send = sub.add_parser('send');send.add_argument('--role', required=True);send.add_argument('--message-file', required=True)
     sub.add_parser('status')
+    fallback = sub.add_parser('supervision-native');fallback.add_argument('--reason', required=True)
+    cancel = sub.add_parser('supervision-cancel');cancel.add_argument('--request', required=True);cancel.add_argument('--reason', required=True)
     serve = sub.add_parser('serve');serve.add_argument('--operator-terminal', action='store_true')
     revoke = sub.add_parser('revoke');revoke.add_argument('--request', required=True)
     migrate = sub.add_parser('migrate')
@@ -850,11 +887,28 @@ def main():
     store = Store(args.project)
     try:
         if args.command == 'prepare':
-            store.prepare(roster(args.roster)); print(json.dumps(store.status()))
+            with checked_path(store.root/'serve.lock').open('a') as lock:
+                try:
+                    fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                except BlockingIOError:
+                    raise RuntimeError_('Stop the coordinator before preparing roles or supervision')
+                store.prepare(roster(args.roster)); print(json.dumps(store.status()))
         elif args.command == 'send':
             print(json.dumps({'message_id': store.enqueue(args.role, Path(args.message_file).read_text())}))
         elif args.command == 'status':
             print(json.dumps(store.status(), indent=2))
+        elif args.command in ('supervision-native', 'supervision-cancel'):
+            with checked_path(store.root/'serve.lock').open('a') as lock:
+                try:
+                    fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                except BlockingIOError:
+                    raise RuntimeError_('Stop the coordinator before changing supervision')
+                from supervision import fallback, cancel
+                if args.command == 'supervision-native':
+                    fallback(store, args.reason)
+                else:
+                    cancel(store, args.request, args.reason)
+                print(json.dumps({'status':'recorded','command':args.command}))
         elif args.command in ('interrupt', 'steer', 'recover'):
             message = Path(args.message_file).read_text() if args.command == 'steer' else None
             print(json.dumps({'control_id': store.control(args.role, args.thread, args.turn, args.command, message)}))

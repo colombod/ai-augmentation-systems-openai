@@ -14,3 +14,8 @@ are recorded in upstream.json and references/product.md. Full original MIT
 notices are retained in references/sources/*-LICENSE. No external product,
 Amplifier runtime, film-production tools or symbol-graph implementation is installed
 or bundled by this adaptation.
+
+The command-evidence behavior was also informed by upstream review-run.js and
+verify-run.js at revision 3d7c69416dc7524130105c9bfe308aa01b2a26f0 (Delivery
+0.37.9). The Python implementation reuses this port's existing raw-byte gates;
+it does not import upstream hooks, permissions or role-local mailbox machinery.
