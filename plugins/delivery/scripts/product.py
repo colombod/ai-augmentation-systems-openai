@@ -154,7 +154,9 @@ def validate(value, repo):
     ids = set()
     linked = set()
     for feature in value['features']:
-        exact_fields(feature, ('id','name','state','summary','code','evidence','unknowns','usefulness'), 'Feature')
+        exact_fields(feature, ('id','name','state','summary','code','evidence','unknowns','usefulness') + (('retirement',) if 'retirement' in feature else ()), 'Feature')
+        if 'retirement' in feature:
+            validate_retirement(feature, value, repo)
         if not isinstance(feature['id'],str) or not re.fullmatch(r'[a-z0-9]+(?:-[a-z0-9]+)*',feature['id']) or feature['id'] in ids:
             fail('Unique kebab-case feature IDs required')
         ids.add(feature['id'])
@@ -195,6 +197,80 @@ def validate(value, repo):
             text(card['next_check'],'Next evidence check')
     return {'schema_version':1,'mode':value['mode'],'commit':commit,'features':value['features'],'product':product,
             'snapshot':{p:files[p] for p in sorted(linked)},'method':METHOD}
+
+
+OUTCOME_FIELDS = ('commit','decision_ref','usage_review','replacement','migration','rollback','consumer_review','evidence')
+
+
+def validate_outcome(outcome, repo):
+    exact_fields(outcome, OUTCOME_FIELDS, 'Retirement outcome')
+    if repo is None:
+        fail('Retirement outcome requires a Git repository')
+    commit = exact_commit(repo, outcome['commit'])
+    for key in OUTCOME_FIELDS[1:-1]:
+        text(outcome[key], 'Submitted '+key)
+    if not isinstance(outcome['evidence'], list) or not outcome['evidence']:
+        fail('Retirement outcome requires tracked evidence')
+    files = tree(repo, commit)
+    for evidence in outcome['evidence']:
+        exact_fields(evidence, ('path','note'), 'Outcome evidence')
+        text(evidence['note'], 'Outcome evidence limitation')
+        path = relative(evidence['path'])
+        item = files.get(path)
+        if not item or item['kind']!='blob' or item['mode'] not in ('100644','100755'):
+            fail('Outcome evidence must be a regular tracked file at outcome commit: '+path)
+
+
+def validate_retirement(feature, value, repo):
+    context = feature['retirement']
+    exact_fields(context, ('prior_map_sha256','prior_commit','prior_feature','prior_snapshot','outcome'), 'Retirement context')
+    if not isinstance(context['prior_map_sha256'], str) or not re.fullmatch('[a-f0-9]{64}', context['prior_map_sha256']):
+        fail('Retirement requires exact prior map SHA256')
+    prior = context['prior_feature']
+    if not isinstance(prior, dict) or 'retirement' in prior or prior.get('state') not in ('preview','shipped') or prior.get('id')!=feature['id']:
+        fail('Retirement prior feature must be the same active feature')
+    baseline = validate(dict(schema_version=1, mode='brownfield', commit=context['prior_commit'],
+        features=[prior], product=value['product']), repo)
+    if context['prior_snapshot'] != baseline['snapshot']:
+        fail('Retirement prior anchors do not match prior commit')
+    validate_outcome(context['outcome'], repo)
+    if feature['state']!='retired' or feature['code'] or feature['evidence']!=context['outcome']['evidence']:
+        fail('Completed retirement retains outcome evidence and no current code routes')
+
+
+def record_retirement(project, repo, feature_id, outcome, expected_sha):
+    """Record submitted completion claims; never authorize or perform retirement."""
+    prior, sha = read_map(project, repo)
+    if sha != expected_sha:
+        fail('Map changed; read current state before writing (expected SHA mismatch)')
+    validate_outcome(outcome, repo)
+    if outcome['commit'] != git(repo,'rev-parse','HEAD').decode().strip():
+        fail('Retirement outcome commit must be current HEAD')
+    feature = next((f for f in prior['features'] if f['id']==feature_id), None)
+    if not feature or feature['state'] not in ('preview','shipped'):
+        fail('Retirement completion requires an existing preview or shipped feature ID')
+    result = json.loads(json.dumps({k:prior[k] for k in ('schema_version','mode','commit','features','product')}))
+    result['commit'] = outcome['commit']
+    target = next(f for f in result['features'] if f['id']==feature_id)
+    anchors = set(feature['code']) | {e['path'] for e in feature['evidence'] if e['path'] is not None}
+    target.update(state='retired', code=[], evidence=outcome['evidence'], retirement={
+        'prior_map_sha256':sha, 'prior_commit':prior['commit'], 'prior_feature':feature,
+        'prior_snapshot':{p:prior['snapshot'][p] for p in sorted(anchors)}, 'outcome':outcome})
+    consumer_check = retirement(prior, repo, feature_id, transitive=True)
+    shared = set(consumer_check['shared_code_to_preserve'])
+    shared.update(consumer_check.get('transitive', {}).get('shared_code_to_preserve', {}))
+    files = tree(repo, outcome['commit'])
+    for path in shared:
+        item = files.get(path)
+        if not item or item['kind']!='blob' or item['mode'] not in ('100644','100755') or raw_changed(repo,path,item):
+            fail('Preserve known surviving shared code at outcome commit: '+path)
+    validated = validate(result, repo)  # Includes every surviving feature's unchanged scope.
+    if not freshness(validated, repo)['fresh']:
+        fail('Retirement outcome source/evidence is stale; reconcile raw bytes and staged changes')
+    saved = save(project, repo, result, expected_sha, retirement_id=feature_id)
+    saved['consumer_check'] = consumer_check
+    saved['qualification'] = 'Submitted completion claims only; no authentication, independent verification or retirement performed. Unknown consumers remain unknown.'
+    return saved
 
 
 def draft(outline, repo):
@@ -279,7 +355,7 @@ def read_map(project, repo):
     return value, hashlib.sha256(data).hexdigest()
 
 
-def save(project, repo, value, expected_sha):
+def save(project, repo, value, expected_sha, retirement_id=None):
     result = validate(value,repo)
     data = (json.dumps(result,indent=2,sort_keys=True,allow_nan=False)+'\n').encode()
     if len(data)>MAX_RECORD:
@@ -296,9 +372,18 @@ def save(project, repo, value, expected_sha):
             prior = json.loads(current)
             if {f['id'] for f in prior['features']} - {f['id'] for f in result['features']}:
                 fail('Preserve old feature IDs/history; mark retirement through a reviewed proposal, never silently drop')
+            old_features = {f['id']:f for f in prior['features']}
+            for feature in result['features']:
+                old_feature = old_features.get(feature['id'], {})
+                if feature['id'] != retirement_id and feature.get('retirement') != old_feature.get('retirement'):
+                    fail('Preserve retirement context; use retire-record for completion')
+            if retirement_id is not None:
+                expected_prior = next(f for f in result['features'] if f['id']==retirement_id)['retirement']
+                if expected_prior['prior_map_sha256']!=actual or expected_prior['prior_feature']!=old_features[retirement_id]:
+                    fail('Retirement prior scope changed')
             old = {f['id']:f['state'] for f in prior['features']}
-            if any(f['state']=='retired' and old.get(f['id']) not in (None,'retired') for f in result['features']):
-                fail('This helper records retirement proposals, not human-authorized retirement transitions')
+            if any(f['state']=='retired' and old.get(f['id']) not in (None,'retired') and f['id']!=retirement_id for f in result['features']):
+                fail('Bare retirement transitions are refused; use retire-record with completion evidence')
             history = checked_path(path.parent/'product-map-history')
             history.mkdir(exist_ok=True)
             history_file = checked_path(history/(actual+'.json'))
@@ -307,6 +392,8 @@ def save(project, repo, value, expected_sha):
                     fail('History conflicts with current record; preserve current bytes and reconcile the history first')
             else:
                 atomic_write(history_file,current)
+        if current is None and any('retirement' in f for f in result['features']):
+            fail('Retirement context requires an existing record and retire-record')
         atomic_write(path,data)
     return {'path':str(path),'sha256':hashlib.sha256(data).hexdigest(),'commit':result['commit'],'features':len(result['features'])}
 
@@ -655,7 +742,7 @@ def handoff(value, repo, feature_id=None):
     unresolved += [k for k in ('must_survive','cuts') if any(d['basis']!='owner-stated' for d in product[k])]
     result = {'product':product,'placement':placement(product['right_shape']),
         'unconfirmed_choices':unresolved,'freshness':freshness(value,repo),
-        'features':[{k:f[k] for k in ('id','name','state','summary','code','evidence','usefulness','unknowns')} for f in features],
+        'features':[{k:f[k] for k in ('id','name','state','summary','code','evidence','usefulness','unknowns') + (('retirement',) if 'retirement' in f else ())} for f in features],
         'authority':'Recorded choices are attributed submissions, not authenticated approvals; proposals never authorize execution or retirement'}
     if feature_id is not None:
         result['selection'] = {'feature_id':feature_id,'scope':'display/context only',
@@ -671,6 +758,8 @@ def main():
     sub.add_parser('inspect')
     drafting=sub.add_parser('draft');drafting.add_argument('--outline',required=True)
     record = sub.add_parser('record');record.add_argument('--input',required=True);record.add_argument('--expected-sha256',required=True)
+    completion = sub.add_parser('retire-record', help='Record an externally authorized completed retirement; performs no retirement')
+    completion.add_argument('--feature',required=True);completion.add_argument('--input',required=True);completion.add_argument('--expected-sha256',required=True)
     sub.add_parser('status')
     handing_off = sub.add_parser('handoff');handing_off.add_argument('--feature',help='Exact feature ID; display/context scope only, with global context and freshness')
     change = sub.add_parser('impact');change.add_argument('--path',action='append',required=True);change.add_argument('--transitive',action='store_true',help='Optional possible Python import reach at the recorded commit')
@@ -687,12 +776,13 @@ def main():
             data=stream.read(MAX_RECORD+1)
         if len(data)>MAX_RECORD:fail('Outline exceeds four megabytes')
         result=draft(json.loads(data),repo)
-    elif args.command=='record':
+    elif args.command in ('record','retire-record'):
         with Path(args.input).open('rb') as stream:
             data = stream.read(MAX_RECORD+1)
         if len(data)>MAX_RECORD:
             fail('Input exceeds four megabytes')
-        result = save(project,repo,json.loads(data),args.expected_sha256)
+        result = (record_retirement(project,repo,args.feature,json.loads(data),args.expected_sha256)
+                  if args.command=='retire-record' else save(project,repo,json.loads(data),args.expected_sha256))
     else:
         value, sha = read_map(project,repo)
         if args.command=='impact':
@@ -702,7 +792,7 @@ def main():
         elif args.command=='handoff':
             result = handoff(value,repo,args.feature)
         else:
-            result = {'freshness':freshness(value,repo),'features':[{k:f[k] for k in ('id','name','state','summary','code','evidence','unknowns')} for f in value['features']]}
+            result = {'freshness':freshness(value,repo),'features':[{k:f[k] for k in ('id','name','state','summary','code','evidence','unknowns') + (('retirement',) if 'retirement' in f else ())} for f in value['features']]}
         result['map_sha256'] = sha
     print(json.dumps(result,indent=2,sort_keys=True,allow_nan=False))
     observed = result.get('freshness') or result.get('impact',{}).get('freshness')

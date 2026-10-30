@@ -21,6 +21,7 @@ required for brownfield code mapping and unnecessary for a greenfield idea.
 | `status` | Feature states, exact source revision and raw-byte/mode freshness |
 | `impact --path FILE [--path FILE] [--transitive]` | Direct curated links; optional possible Python import reach, shortest file/line chains and coverage limits |
 | `handoff [--feature ID]` | Product choices, separate usefulness cards, shape calculation and unconfirmed choices; optionally display one exact feature ID |
+| `retire-record --feature ID --input FILE --expected-sha256 DIGEST` | Record submitted completion context after separately authorized retirement; no source changes |
 | `retire-plan --feature ID [--transitive]` | Read-only proposal: shared code to preserve, exclusive candidates, unknown human decision and migration checks |
 
 `project.py init` creates directories first. Record updates use a local file lock,
@@ -145,8 +146,7 @@ reach: neither missing analysis nor a graph verdict sets or blocks story readine
 Derived retirement exclusivity means **candidate only**, never deletable or proof
 of no unknown consumers. Preserve shared reach, inspect unresolved/external and
 unsupported consumers, retain history, and obtain the exact owner decision plus
-replacement/migration/rollback review already required below. No command deletes
-code, changes a feature's state or widens execution authority.
+replacement/migration/rollback review already required below. No impact or proposal command deletes code, changes a feature's state or widens execution authority.
 
 ## Owner choice before expansion
 
@@ -220,6 +220,56 @@ choice, migration, rollback and retention of history. Get an explicit user decis
 on that exact proposal before separately authorized implementation. Unknown Return
 and a model's preference are not permission. Historical retired features can be
 recorded as facts with evidence; this command does not authenticate that history.
+
+## Record a completed retirement
+
+Use `retire-plan` first, obtain the concrete owner decision through the host's
+existing permission process, then perform separately authorized actual work and
+verify its outcome. Only after that, an already authorized writable host records
+completion with the existing product helper:
+
+```sh
+python3 <plugin-root>/scripts/product.py --project <planning> --repo <git-root> retire-record --feature <id> --input outcome.json --expected-sha256 <current-map-digest>
+```
+
+`outcome.json` has exactly these fields (the reference below is synthetic):
+
+```json
+{
+  "commit": "<full lowercase current HEAD SHA>",
+  "decision_ref": "SYNTHETIC fixture owner decision; not authenticated",
+  "usage_review": "Fixture only; actual use and Return remain Unknown",
+  "replacement": "Explicit none in this synthetic fixture",
+  "migration": "No fixture data; external consumers remain unknown",
+  "rollback": "Restore the recorded prior fixture commit",
+  "consumer_review": "Inspect shared, external, dynamic and unresolved consumers",
+  "evidence": [{"path": "outcome.md", "note": "Synthetic observation, not independent verification"}]
+}
+```
+
+The helper checks exact fields, nonempty text, an existing preview/shipped ID,
+expected map SHA, current full HEAD, tracked regular outcome evidence and matching
+raw mapped bytes/modes with no staged changes. It derives the scope from the prior
+canonical map, retains all other feature records, and refuses missing surviving
+anchors or known direct/possible Python shared files from that prior scope. The
+returned `consumer_check` includes prior proposal and optional dependency coverage;
+unsupported/unresolved/external consumers remain unknown. These checks do not
+prove that review text is true, that retirement was authorized, or that the outcome
+is independently correct. Submitted references never authenticate owner permission.
+Unknown Return grants no authority. Missing optional analysis remains explicit.
+
+The same feature ID becomes retired with `code: []` and current outcome evidence.
+An optional `retirement` field retains the prior map SHA, commit, full feature,
+prior anchor snapshot and submitted outcome. Removed exclusive code is historical
+context, not a current route or freshness failure. Previous complete map bytes
+remain in the existing history directory. `status` and selected/full `handoff`
+retain this optional context; active impact still follows surviving features.
+Resume from that selected handoff and realign the existing product/backlog based
+on actual shipment and evidence. Generic `record` refuses bare retirement flips
+and changes/removal of saved completion context. Existing schema-1 maps and
+historical retired imports need no migration or invented completion proof;
+no-code greenfield behavior is unchanged. No helper deletes code or creates an
+approval framework, provider, credential or runtime lane.
 
 ## Method sources and limits
 

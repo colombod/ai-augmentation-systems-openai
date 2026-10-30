@@ -1,6 +1,6 @@
 ---
 name: product
-description: Frame a greenfield idea or onboard a brownfield project into one evidence-bound product record. Connect customer promises to planned or observed code, check freshness and feature impact, carry owner choices forward, and prepare safe retirement proposals.
+description: Frame a greenfield idea or onboard a brownfield project into one evidence-bound product record. Connect customer promises to planned or observed code, check freshness and feature impact, carry owner choices forward, and prepare retirement proposals and record submitted completed outcomes.
 ---
 
 # Product work at the depth needed
@@ -72,7 +72,11 @@ writing sections needed by the artifact. Expanded guidance is action-dependent.
    next relevant phase without forcing a full pipeline. For
    `retire-plan --feature <id>` (optionally `--transitive`), use the contract's
    shared-code, usage, replacement/migration/rollback and explicit-human-decision
-   checks.
+   checks. After separately authorized actual work and outcome verification, use
+   `retire-record --feature <id> --input <outcome.json> --expected-sha256 <digest>`
+   as the contract specifies. Preserve prior anchors/history and unknown consumers;
+   submitted decision references authenticate nobody. Resume the retired feature
+   through selected handoff and realign actual state and evidence.
 
 ## Choose and deliver one useful next change
 

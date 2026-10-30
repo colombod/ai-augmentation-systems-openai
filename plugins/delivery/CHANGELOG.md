@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased candidate — 0.1.0-preview.14
+
+- Add explicit completed retirement recording with current outcome evidence,
+  prior feature/anchor context, existing CAS/history and known shared survivors.
+- Preserve optional retirement context in status and selected/full handoffs;
+  existing schema-1, historical retired and no-code records need no migration.
+- Decision and review references remain submitted claims, not authenticated
+  approval or independent verification. No actual retirement or runtime expansion.
+- Candidate 14 follows main preview 12; the separate preview 13 work is pending.
+
 ## 0.1.0-preview.12 — 2026-10-30
 
 - Add an explicit bounded-change route shared by product, stories, sprint, review

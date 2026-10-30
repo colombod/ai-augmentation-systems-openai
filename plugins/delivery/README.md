@@ -17,7 +17,7 @@ brief, supporting research, customer personas, requirements, design, architectur
 roadmap, stories and a scoped implementation handoff. After implementation, it
 helps review the evidence and update the plan with what was learned.
 
-**Version `0.1.0-preview.12` — product and local runtime preview.** Sixteen skills use
+**Version `0.1.0-preview.14` — product and local runtime preview.** Sixteen skills use
 21 templates and 10 review lenses. Greenfield ideas and brownfield projects share
 one product contract: owner intent, customer promise, usefulness and planned or
 observed features. The local coordinator adds persistent Codex
@@ -303,3 +303,10 @@ See [CHANGELOG](CHANGELOG.md), [NOTICE](NOTICE), [upstream.json](upstream.json)
 and [LICENSE](LICENSE). The source revision and per-file hashes support future
 upstream comparisons; new Claude features are reviewed and adapted deliberately,
 not automatically inherited. No Claude installation or checkout is required at runtime.
+
+Completed retirement recording is an unshipped preview capability: use
+`retire-record --feature ID --input outcome.json --expected-sha256 DIGEST` only
+after separately authorized actual work. The [product contract](references/product.md#record-a-completed-retirement)
+defines current tracked evidence, preserved prior anchors/history, survivor checks
+and resumed handoffs. Submitted decision/review text authenticates no approval or
+independent verification; the helper performs no retirement or deletion.
