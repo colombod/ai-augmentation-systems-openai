@@ -143,6 +143,10 @@ class ProductTests(unittest.TestCase):
         self.assertEqual(report['shared_code_to_preserve'],{'shared.py':['feature-b']})
         self.assertEqual(report['exclusive_candidates_not_deletion_permission'],['a.py'])
         self.assertEqual(report['required_owner_decision']['choice'],'unknown')
+        for key in ('replacement','migration','rollback','usage_review'):
+            self.assertIn(key,report['required_owner_decision'])
+        self.assertEqual(report['decision_context']['summary'],value['features'][0]['summary'])
+        self.assertIn('Return',report['decision_context']['usefulness'])
         self.assertEqual(P.map_path(self.project).read_bytes(),before)
         self.assertTrue((self.repo/'a.py').exists())
         with self.assertRaises(ValueError):
@@ -226,6 +230,25 @@ class ProductTests(unittest.TestCase):
         value,_=P.read_map(self.project,self.repo)
         original_blob=self.git('--no-replace-objects','rev-parse',self.head+':a.py').strip()
         self.assertEqual(value['snapshot']['a.py']['blob'],original_blob)
+
+    def test_handoff_preserves_feature_promise_alongside_paths(self):
+        self.record();value,_=P.read_map(self.project,self.repo)
+        result=P.handoff(value,self.repo)
+        self.assertEqual(result['features'][0]['summary'],value['features'][0]['summary'])
+
+    def test_greenfield_planning_contract_labels_paths_without_requiring_implementation(self):
+        # Regression for the independently reproduced instruction contradiction:
+        # the old imperative prevented no-repo designs and new-file stories.
+        architecture=(PACKAGE/'skills/architecture/SKILL.md').read_text()
+        stories=(PACKAGE/'skills/stories/SKILL.md').read_text()
+        self.assertNotIn('Read the codebase before designing.** This is not optional',architecture)
+        self.assertNotIn('**3. Verify the file paths exist.**',stories)
+        for name in ('architecture','story'):
+            template=(PACKAGE/'templates'/(name+'.md')).read_text()
+            self.assertIn('proposed new',template)
+            self.assertIn('greenfield',template)
+        self.assertIn('Source absence is a starting',architecture)
+        self.assertIn('Do not\nrequire a file that the story is meant to create',stories)
 
 
 if __name__=='__main__':

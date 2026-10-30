@@ -1,6 +1,6 @@
 ---
 name: architecture
-description: "Turn an approved PRD into a technical design grounded in the actual codebase, with decisions, spikes, migration plan and test strategy. Use once requirements are settled and before work is broken into stories. Produces .delivery/initiatives/initiative/architecture.md."
+description: "Turn an approved PRD into a technical design grounded in existing code or an explicit greenfield baseline, with decisions, spikes, migration plan and test strategy. Use before story decomposition. Produces .delivery/initiatives/initiative/architecture.md."
 ---
 
 # Architecture and technical design
@@ -39,10 +39,17 @@ inspect stale/unknown coverage. Preserve shared consumers and the owner's stated
 intent. Greenfield may start with planned features and no source repository;
 label proposed file paths as new and link them only after actual code exists.
 
-**1. Read the codebase before designing.** This is not optional and it comes first. Identify the modules the change touches, the existing patterns and conventions, and the interfaces already in place. A design that has not been checked against the real code is a guess.
+**1. Establish the starting state before designing.** For brownfield, read the
+actual code first: affected modules, patterns, conventions and existing interfaces.
+Verify those paths. For greenfield with no repository or implementation, state
+that explicitly and read the supplied problem, PRD, owner choices and constraints.
+Do not demand existing code or invent verified paths. Describe proposed new paths
+under a proposed root, label interfaces and toolchain choices as proposed, and
+put repository/toolchain setup in the Setup section. Source absence is a starting
+state, not a failed prerequisite for creating the design.
 
 **2. Solution Architect produces the design.** Use the `solution-architect` lens. It must deliver:
-- Component structure with **real file paths**, marking what changes, what is extended, what is untouched
+- Component structure with **verified existing paths or explicitly proposed new paths**, marking modified, extended, untouched and new components separately
 - Interfaces and data contracts
 - How each `NFR-n` from the PRD is met, addressed one by one
 - Alternatives considered and why rejected, for every consequential decision
@@ -74,7 +81,7 @@ references; this preview has no upstream surface validator or done gate.
 
 - Within the template's budget, or the overrun declared in the document with its reason — measure prose when computation is available; otherwise report word count unverified
 
-- Component structure cites real, verified file paths
+- Existing component paths are verified where source is available; greenfield/new paths are explicitly proposed, with the absent repository/implementation stated
 - Every `NFR-n` in the PRD is addressed explicitly, or listed as unmet with the reason
 - Every consequential decision has stated alternatives
 - The spike list exists — or the document states plainly that nothing needs proving, which is rare enough to justify — and every spike names its decision, decision rule and decision owner

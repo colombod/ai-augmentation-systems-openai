@@ -334,7 +334,13 @@ def retirement(value, repo, feature_id):
     shared = {p:ids for p,ids in shared.items() if ids}
     return {'feature':feature_id,'proposal_only':True,'shared_code_to_preserve':shared,
         'exclusive_candidates_not_deletion_permission':sorted(set(feature['code'])-shared.keys()),
+        'decision_context':{k:feature[k] for k in ('name','state','summary','evidence','usefulness','unknowns')},
+        'owner_intent_to_preserve':value['product']['must_survive'],
         'required_owner_decision':{'choice':'unknown','scope_commit':value['commit'],
+            'replacement':'Unknown: name the replacement or explicitly choose none, with evidence.',
+            'migration':'Unknown: identify consumers/data and the migration or explain why none is needed.',
+            'rollback':'Unknown: preserve a recoverable baseline and specify how to restore behaviour.',
+            'usage_review':'Inspect actual use and unknowns; missing Return is not permission to retire.',
             'reason':'Retirement requires an explicit user decision, consumer/migration review and rollback; no action is performed'},
         'impact':report}
 
@@ -345,7 +351,7 @@ def handoff(value, repo):
     unresolved += [k for k in ('must_survive','cuts') if any(d['basis']!='owner-stated' for d in product[k])]
     return {'product':product,'placement':placement(product['right_shape']),
         'unconfirmed_choices':unresolved,'freshness':freshness(value,repo),
-        'features':[{k:f[k] for k in ('id','name','state','code','evidence','usefulness','unknowns')} for f in value['features']],
+        'features':[{k:f[k] for k in ('id','name','state','summary','code','evidence','usefulness','unknowns')} for f in value['features']],
         'authority':'Recorded choices are attributed submissions, not authenticated approvals; proposals never authorize execution or retirement'}
 
 
@@ -381,7 +387,7 @@ def main():
         elif args.command=='handoff':
             result = handoff(value,repo)
         else:
-            result = {'freshness':freshness(value,repo),'features':[{k:f[k] for k in ('id','name','state','code','evidence','unknowns')} for f in value['features']]}
+            result = {'freshness':freshness(value,repo),'features':[{k:f[k] for k in ('id','name','state','summary','code','evidence','unknowns')} for f in value['features']]}
         result['map_sha256'] = sha
     print(json.dumps(result,indent=2,sort_keys=True,allow_nan=False))
     observed = result.get('freshness') or result.get('impact',{}).get('freshness')

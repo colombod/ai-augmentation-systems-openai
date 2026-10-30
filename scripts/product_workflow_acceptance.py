@@ -135,8 +135,64 @@ def main():
     assert concept['freshness']['fresh'] is None
     assert not (green/'.git').exists()
     assert concept['features'][0]['state']=='planned'
+    # Illustrative continuation through the actual planning contracts. These
+    # are explicit proposed artifacts, not model-generated or executed code.
+    initiative=green/'.delivery/initiatives/new-plugin-idea'
+    (initiative/'prd.md').write_text('''# Illustrative PRD — draft
+FR-1: A maintainer supplies a proposed change and sees a local explanation before choosing whether to proceed.
+NFR-1: No network or autonomous side effects in the first local journey.
+Customer/proposition remain proposed; no outside-user observation is claimed.
+''')
+    (initiative/'architecture.md').write_text('''# Illustrative architecture — draft
+Starting state: greenfield; no repository or implementation supplied.
+Proposed root: a future product checkout, not this planning directory.
+
+| Path | Path state | Role today or proposed | Change |
+| :-- | :-- | :-- | :-- |
+| src/change_check.py | proposed new | explain the supplied change locally | create |
+| tests/test_change_check.py | proposed new | check outcomes and no-network boundary | create |
+
+## Setup
+Create the product repository and establish its Python test runner before execution.
+The work form is a local deterministic tool until evidence requires more autonomy.
+No migration exists yet; retain the first baseline and rollback before changing it.
+''')
+    (initiative/'roadmap.md').write_text('''# Illustrative roadmap — draft
+Phase 1: one maintainer completes FR-1 locally; no agent/service or automatic edits.
+Entry prerequisite: establish the proposed repository/toolchain from architecture Setup.
+Cut: graph service, autonomous changes, deployment and external integrations.
+''')
+    story=green/'.delivery/stories/new-plugin-idea-first-outcome.md'
+    story.write_text('''---
+id: new-plugin-idea-01
+status: draft
+requirements: [FR-1]
+---
+# Illustrative first outcome
+Owner ask: specific business ask not supplied; this scenario is proposed, not an owner quote.
+Goal: a maintainer sees a local change explanation before proceeding.
+Files: src/change_check.py and tests/test_change_check.py — proposed new, create.
+No product repository or implementation exists; do not report these paths verified.
+Acceptance: given the maintainer's proposed change, the local CLI explains it without outbound calls (FR-1).
+Run with: proposed `python3 -B -m unittest discover -s tests` after setup; not executed, not yet available.
+Execution prerequisite: establish repository, files and test runner; this story remains draft.
+Out of scope: agents, graph service and automatic product edits.
+''')
+    assert not (green/'src/change_check.py').exists()
+    assert not (green/'tests/test_change_check.py').exists()
+    assert concept['features'][0]['code']==[]
+    architecture_contract=(package/'skills/architecture/SKILL.md').read_text()
+    stories_contract=(package/'skills/stories/SKILL.md').read_text()
+    assert 'Source absence is a starting' in architecture_contract
+    assert '**3. Verify the file paths exist.**' not in stories_contract
+    (output/'green-planning-check.json').write_text(json.dumps({
+        'mode':'illustrative artifact conformance, not native model invocation',
+        'stages':['product','supplied draft PRD','architecture','roadmap','stories'],
+        'proposed_paths':['src/change_check.py','tests/test_change_check.py'],
+        'observed_code_paths':[],'git_repository_created':False,'test_command_executed':False,
+        'story_state':'draft; setup/command availability unverified'},indent=2)+'\n')
     summary={'source_commit':head,'brownfield':'Actual Delivery source, seven curated preview features; direct project.py impact answered.',
-        'greenfield':'Illustrative idea only; no Git repository or invented code; shared product handoff works.',
+        'greenfield':'Illustrative idea only; no Git or invented code; product handoff and proposed architecture/story artifacts work without existing paths.',
         'owner_choice':'Actual user priority retained: greenfield and brownfield equally important.',
         'unconfirmed':'Primary customer, proposition and cuts remain proposed until owner correction/confirmation; no fabricated decision.',
         'usefulness':'Author-run evidence is Claimed, Return Unknown; no Seen or Repeated user evidence.',

@@ -18,6 +18,11 @@ Read [host capability guidance](../../references/runtime.md) and
 
 Read all three inputs and list any existing stories in `.delivery/stories/`.
 
+Read any shared product record and the [product contract](../../references/product.md).
+Greenfield may have no repository or implementation. That does not prevent story
+decomposition from the supplied PRD/design/roadmap: preserve planned features and
+proposed new paths, never invent existing code or a working test command.
+
 - **Roadmap missing** — stop and run `$delivery:roadmap` first. Without it there is no defensible phase boundary to decompose along.
 - **Architecture missing** — warn hard. Stories written without a design either omit the technical context (making them un-pickable) or invent a design inline (which is the Solution Architect's job, done badly). Recommend running `$delivery:architecture` first.
 - **Setup, not a feature** — if the item is pure environment/repo/framework/build-system setup (no persona completes a journey through it), refuse to write it as a story; point back to `architecture.md`'s Setup section, where it belongs as a Phase-1-gating prerequisite, not a phase deliverable.
@@ -80,20 +85,35 @@ check is cheap and it is the only part that genuinely needs the whole set in han
 
 The governing rule: **the story file is the complete context.** Someone opening one story file — a teammate who missed the planning, or an agent with no memory of it — must have everything needed to finish it. Extract the relevant slices of the PRD and architecture *into* the story. Do not link out. A story requiring three other documents to be read has failed at its one job.
 
-Each story carries: the owner's ask (quoted, with a citation to the actual decision when available), its customer surface (an id from `surface.json`), acceptance criteria written as outcomes the customer sees on that surface (never a tool, endpoint, test, link or ticket), one probe per criterion (what is observed, where, by `test` or `reality-check`), a measurement plan (signal, numeric threshold, where), the shippable unit, user-facing goal, real verified file paths, the interfaces and contracts it must honor, the architecture decisions that apply and why, acceptance criteria traced to `FR-n`, the test approach with the actual command to run tests in this repo, dependencies on other stories, and explicit out-of-scope notes.
+Each story carries: the owner's ask (quoted only when actually supplied), its
+declared customer surface, falsifiable customer outcomes traced to `FR-n`, one
+probe per criterion, measurement plan, shippable unit and user-facing goal. Embed
+verified existing paths or explicitly proposed new paths, interfaces, relevant
+architecture decisions, dependencies and cuts. Include the real test command
+when established; otherwise label the proposed command and the setup/verification
+needed before execution. Neither a proposed path nor a command is observed code
+or a passing test. An unknown owner ask remains unknown, not a fabricated quote.
 
 **2. Each writer carries the design system into its UI story.** Where `design-system.md` exists, each story touching UI names the **tokens by their real project name**, the component states it must implement (including error and empty), and the accessibility rules that apply. An implementer who cannot find the token reaches for a raw value, and the design system erodes one commit at a time — naming them in the story is what prevents that.
 
-**3. Verify the file paths exist.** The Delivery Manager cites paths; you check them against the repo. A story pointing at a file that does not exist sends the implementer looking for something imaginary.
+**3. Verify each path's state.** Existing paths must be checked against available
+source. New files are labelled **proposed new** with a create action; check for
+collisions when a repository exists. With no repository, state that path/root
+availability is unverified and carry the architecture setup prerequisite. Do not
+require a file that the story is meant to create to already exist. Keep proposed
+routes separate from the product map's observed code links until code is present.
 
 **4. QA Strategist sets the test approach** per story — the level, the negative and boundary cases, and how it is verified.
 
 **5. Planning readiness check.** For each story, verify falsifiable customer outcomes,
-real paths, required sections, declared surface, dependencies and an executable test
-approach. Record `ready` only as **planning-ready, manually reviewed**; missing inputs
-leave it `draft` with the reason. This preview has no criteria-hash stamp, claim gate,
-Beads materialisation or authority to start builders. Changed criteria require renewed
-review; preserve the old criteria in the document history.
+path states, required sections, declared surface, dependencies and a concrete test
+approach. Greenfield can produce a complete draft while setup or command
+availability remains unverified; name the execution prerequisite rather than
+blocking all planning on absent code. Record `ready` only as **planning-ready,
+manually reviewed**, never execution authority. Missing planning inputs leave it
+`draft`. The separately configured local runtime has controlled materialisation
+and evidence gates; a story label alone does not satisfy those gates or start
+builders. Changed criteria require renewed review and retained document history.
 
 **6. Write the stories** to `.delivery/stories/<initiative>-<epic>-<nn>-<slug>.md` using `../../templates/story.md`, and update the story index at `.delivery/stories/README.md`.
 
@@ -103,7 +123,7 @@ review; preserve the old criteria in the document history.
 
 - Every story is a vertical slice delivering observable behavior, or states why it cannot be
 - Every acceptance criterion in the target phase is covered by at least one story
-- Every story's file paths verified against the repo
+- Every path is labelled verified existing or proposed new; unavailable source/setup and unverified test commands remain explicit
 - Dependencies between stories are explicit
 - Each story is finishable in one focused sitting, or is split
 

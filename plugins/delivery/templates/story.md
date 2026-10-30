@@ -53,13 +53,16 @@ implementer understands the intent, not just the instruction.
 
 ## Files and modules
 
-Real paths, verified against the repo.
+Starting state: brownfield / greenfield. Verify existing paths when source is
+available. Label future paths **proposed new**, with a create action. If no
+repository exists, state the proposed root and setup dependency; do not claim
+the files or test command already exist. Proposed paths are not observed map links.
 
-| Path | What to do |
-| :-- | :-- |
-| `src/...` | modify — |
-| `src/...` | create — |
-| `tests/...` | add tests for — |
+| Path | Path state | What to do |
+| :-- | :-- | :-- |
+| `src/...` | verified existing | modify — |
+| `src/new...` | proposed new | create — |
+| `tests/new...` | proposed new | add tests for — |
 
 ## Interfaces and contracts to honor
 
@@ -114,7 +117,9 @@ ships it.
 | permission denied | |
 | concurrent | |
 
-**Run with:** `<the actual command in this repo>`
+**Run with:** `<established command, or explicitly proposed command after setup>`
+**Availability:** verified / proposed, not yet executable. Name the setup or probe
+needed before execution; a planned command is not a test result.
 
 ## Ship readiness
 

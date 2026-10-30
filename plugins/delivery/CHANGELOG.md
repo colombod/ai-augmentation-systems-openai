@@ -9,6 +9,10 @@
 - Add a standard-library product helper for source census, curated file maps,
   full-commit/raw-byte freshness, direct feature impact, revision-safe history,
   product handoffs and read-only retirement proposals that preserve shared code.
+- Keep architecture/story paths explicitly proposed for no-code greenfield work;
+  verify existing paths only when source exists. Preserve feature promises in
+  handoffs and include usefulness, evidence and pending replacement/migration/
+  rollback context in retirement proposals.
 - Retain named method provenance and original MIT notices. No external runtime,
   provider, hook, graph service, code deletion or authenticated owner decision is
   introduced. Greenfield can proceed without a repository; planned code stays absent.
