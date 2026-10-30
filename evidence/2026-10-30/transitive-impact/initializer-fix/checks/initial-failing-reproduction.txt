@@ -1,0 +1,15 @@
+test_package_anchor_without_imports_retains_initializer_shared_dependency (test_product_transitive.DependencyImpactTests.test_package_anchor_without_imports_retains_initializer_shared_dependency) ... ERROR
+
+======================================================================
+ERROR: test_package_anchor_without_imports_retains_initializer_shared_dependency (test_product_transitive.DependencyImpactTests.test_package_anchor_without_imports_retains_initializer_shared_dependency)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/delivery-transitive-impact/tests/delivery/test_product_transitive.py", line 196, in test_package_anchor_without_imports_retains_initializer_shared_dependency
+    self.assertEqual(graph['shared_files']['shared.py'],['feature-0','feature-1'])
+                     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+KeyError: 'shared.py'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.030s
+
+FAILED (errors=1)

@@ -1,5 +1,9 @@
 # Optional dependency-side feature impact
 
+Historical first candidate. A subsequent independent finding and its correction
+are retained under [initializer-fix](initializer-fix/README.md); use that source
+SHA for current evaluation. This initial evidence remains intact.
+
 Base merged main: `a46dc827826c9d641f5e745101f4cc14fcf1a21b` (preview.7).
 Exact source: `d1d9176d99c67a0de84234d00ebe02122a90b2ea`.
 Branch `delivery/transitive-impact`, candidate `0.1.0-preview.10`.
