@@ -1,11 +1,14 @@
 # Delivery
 
+**UNSHIPPED disposable local integration test.** This package combines review
+branches for compatibility checks; it is not a released or approved plugin.
+
 Delivery helps turn a product idea into a plan someone can implement: a problem
 brief, supporting research, customer personas, requirements, design, architecture,
 roadmap, stories and a scoped implementation handoff. After implementation, it
 helps review the evidence and update the plan with what was learned.
 
-**Version `0.1.0-preview.9` — product and local runtime preview.** Sixteen skills use
+**Version `0.1.0-integration.20261030` — product and local runtime preview.** Sixteen skills use
 21 templates and 10 review lenses. Greenfield ideas and brownfield projects share
 one product contract: owner intent, customer promise, usefulness and planned or
 observed features. The local coordinator adds persistent Codex
@@ -21,6 +24,14 @@ load the full product contract. The [common contract](references/core.md) owns
 source reuse, including mutable-checkout content verification and compaction rules.
 This is instruction routing; improvement remains unproven until model evaluation
 shows quality is preserved alongside actual resource use.
+
+For dependency-side impact, the existing helper accepts
+`impact --path <file> --transitive`. Direct matches remain separate; optional
+Python import reach adds shortest file/line chains, shared consumers, exact commit
+and unresolved/unsupported coverage. It executes no project code and adds no
+service or registry. Other languages retain direct coverage. Planned greenfield
+features have no observed dependency graph; unavailable reach is informational,
+not a story-readiness gate. See [the product contract](references/product.md).
 
 ## Dependencies
 

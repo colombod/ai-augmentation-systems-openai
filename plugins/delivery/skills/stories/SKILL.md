@@ -103,6 +103,13 @@ availability is unverified and carry the architecture setup prerequisite. Do not
 require a file that the story is meant to create to already exist. Keep proposed
 routes separate from the product map's observed code links until code is present.
 
+Where a product record and code are available, `product.py ... impact --path <file>
+--transitive` can inform which feature promises the story may affect. Cite its
+recorded commit, direct versus possible import reach and coverage/staleness. This
+is informational, not a readiness gate: if absent, unsupported or unavailable,
+record the reason and continue the existing planning-readiness assessment. No-code
+greenfield paths remain proposed rather than invented observed graph links.
+
 **4. QA Strategist sets the test approach** per story — the level, the negative and boundary cases, and how it is verified.
 
 **5. Planning readiness check.** For each story, verify falsifiable customer outcomes,

@@ -1,5 +1,27 @@
 # Changelog
 
+## Local test only — 0.1.0-integration.20261030
+
+- Combine existing supervision, drafting, selective loading and optional impact
+  increments in a disposable worktree. Not published, released or approved.
+
+## Unreleased — 0.1.0-preview.10
+
+- Add optional `--transitive` to existing product impact and retirement proposals:
+  possible Python import reach at the recorded commit, shortest file/line evidence
+  chains, shared consumers and raw dependency freshness. Direct coverage remains
+  unchanged. No graph service, second registry or project-code execution.
+- Report unresolved/ambiguous imports, unsupported languages/package contexts,
+  dynamic loaders and parse limits. Greenfield remains code-free; unavailable
+  optional reach is informational and does not gate story readiness.
+- Include possible enclosing regular-package initializer reach for Python module
+  anchors with no explicit imports; label implicit edges with null source line
+  and retain unknown package context. Preserve initializer-only shared consumers
+  and detect raw initializer/dependency changes.
+- Derived exclusive retirement reach remains candidate-only and never permits
+  deletion or replaces owner/migration/rollback/usage review. Retain source pins
+  and MIT attribution for the selectively adapted upstream traversal design.
+
 ## Unreleased — 0.1.0-preview.9
 
 - Keep no-code greenfield architecture/story review grounded in proposed paths

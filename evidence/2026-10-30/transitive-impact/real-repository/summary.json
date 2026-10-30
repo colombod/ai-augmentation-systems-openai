@@ -1,0 +1,29 @@
+{
+  "source_commit": "d1d9176d99c67a0de84234d00ebe02122a90b2ea",
+  "question": "Which recorded feature promises may a change to plugins/delivery/scripts/operator_capture.py affect?",
+  "direct_matches": 0,
+  "dependency_matches": 2,
+  "shared_dependency_preserved": true,
+  "shortest_chains": {
+    "native-coordination": [
+      {
+        "from": "plugins/delivery/scripts/runtime.py",
+        "kind": "python-import",
+        "line": 657,
+        "to": "plugins/delivery/scripts/operator_capture.py"
+      }
+    ],
+    "controlled-work": [
+      {
+        "from": "plugins/delivery/scripts/delivery_gates.py",
+        "kind": "python-import",
+        "line": 22,
+        "to": "plugins/delivery/scripts/operator_capture.py"
+      }
+    ]
+  },
+  "greenfield": "Illustrative concept, planned code absent; optional graph unavailable with reason; no readiness gate.",
+  "commands": 8,
+  "model_calls": 0,
+  "qualification": "Actual repository, public deterministic commands and possible source imports only; source blobs parsed for reach; no deployment, adoption, native runtime or model quality proof."
+}

@@ -26,9 +26,14 @@ merely to answer the query. Offer authoring only when wanted.
 
 Report relevant promises/paths, snapshot/current commit, changed bytes, shared
 consumers and unmapped uncertainty. This is curated direct file coverage, not a
-complete/transitive graph or proof of shipping/adoption. Preserve owner choices
+complete dependency graph or proof of shipping/adoption. Preserve owner choices
 and findings; consult relevant evidence/glossary entries only as needed. Do not
 load authoring templates, budgets or coaching for this path.
+
+If dependency reach is wanted, add `--transitive` and consult the product
+contract's optional dependency-side guidance: possible Python imports/initializer
+reach at the recorded commit, shortest evidence chains and explicit uncertainty.
+Implicit initializer edges have no invented line. This is not a semantic graph.
 
 ## Create, assess, change choices, hand off, or plan retirement
 
@@ -59,5 +64,5 @@ writing sections needed by the artifact. Expanded guidance is action-dependent.
 4. Use full `handoff` when passing planning/owner context: saved revision, observed
    versus proposed states, owner choices, usefulness gaps, shape/authority and one
    bounded next result. Carry it into the next relevant phase without forcing a
-   full pipeline. For `retire-plan --feature <id>`, use the contract's shared-code,
+   full pipeline. For `retire-plan --feature <id>` (optionally `--transitive`), use the contract's shared-code,
    usage, replacement/migration/rollback and explicit-human-decision checks.

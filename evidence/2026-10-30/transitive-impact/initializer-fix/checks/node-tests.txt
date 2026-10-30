@@ -1,0 +1,30 @@
+✔ judgeConfig: off without a block, with provider none, or without the key; on with both (4.851742ms)
+✔ the key variable is pinned to TYPESAFE_*, and the endpoint comes only from a loopback DELIVERY_JUDGE_ENDPOINT (8.286673ms)
+✔ under node --test a real provider is never called (4.544927ms)
+✔ ask: a noul answer is typed, the key goes only in the header, and the log line has no state (14.473414ms)
+✔ ask: a choice answer carries confidence and probabilities (4.650043ms)
+✔ ask fails open: timeout, 401, 429, a closed port and a bad body give a reason, never a throw (112.202169ms)
+✔ ask rejects malformed answers as bad_response and does not follow a redirect (26.122271ms)
+✔ ask refuses locally: off, unknown question, sensitive or missing fields; nothing is sent (225.378794ms)
+✔ stats: calls, latency percentiles, tokens and the share at the thresholds per question (0.3712ms)
+✔ the catalogue: every question has a version, a type, declared state and instructions; divergence is warn-only (0.244482ms)
+✔ Copilot round 5: redaction replaces the whole path, not a prefix of it (2.707733ms)
+✔ configuration rejects typos, malformed calibration and cross-provider key selection (0.257392ms)
+✔ protected policy fails closed for unavailable, uncalibrated, alias, revised and other-provider scores (0.587682ms)
+✔ warn-only never blocks and second-key classification never grants authority (0.128841ms)
+✔ evaluate bridges answers to unavailable protected policy without leaking extra log metadata (4.818683ms)
+✔ Jev rejects incomplete distributions, arrays and refusals (9.412462ms)
+✔ CLI evaluate has stable protected output and never enables an unavailable provider (1.386645ms)
+✔ selection is explicit, isolated to each provider key, and does not fall back (0.934906ms)
+✔ OpenAI predicate wire shape, declared state filtering and no human authority (25.684182ms)
+✔ OpenAI choice maps declared options and retains warn-only mode (5.023797ms)
+✔ refusals and malformed probabilities never become an answer (5.902069ms)
+✔ OpenAI rejects incomplete, duplicate, unnormalised and unknown choice probabilities (6.520996ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 610.398745
