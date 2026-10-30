@@ -103,6 +103,22 @@ class VerificationTests(unittest.TestCase):
             self.assertFalse(result['passed'])
             self.assertIn('hides tracked bytes',result['tracked_changes']['error'])
 
+    def test_replacement_tree_cannot_certify_mutated_review_bytes(self):
+        code = """import subprocess
+from pathlib import Path
+def git(*args):
+    return subprocess.check_output(['git', *args], text=True).strip()
+original = git('rev-parse', 'HEAD^{tree}')
+Path('product.txt').write_text('mutated')
+git('add', 'product.txt')
+git('replace', original, git('write-tree'))
+print(Path('product.txt').read_text())
+"""
+        result = V.review(self.product, self.head, self.python(code))
+        self.assertEqual(result['run']['stdout'], 'mutated\n')
+        self.assertFalse(result['passed'])
+        self.assertIn('raw bytes differ', result['tracked_changes']['error'])
+
     def test_inherited_role_and_git_redirection_are_cleared(self):
         with patch.dict(os.environ, {'GIT_DIR':'/wrong','GIT_CONFIG_COUNT':'1','DELIVERY_ROLE':'operator','BD_ACTOR':'operator','BEADS_DIR':'/wrong'}):
             result = V.capture(self.python("import os; print([k for k in os.environ if k.startswith(('GIT_', 'DELIVERY_', 'BEADS_')) or k == 'BD_ACTOR'])"), self.product,2)

@@ -1,12 +1,14 @@
 # Changelog
 
-## Unreleased candidate — 0.1.0-preview.11
+## 0.1.0-preview.11 — 2026-10-30
 
+- Ignore Git replacement objects during exact-commit review and acceptance-gate
+  inspection, preventing replacement trees from masking altered tracked bytes.
 - Add read-only `handoff --feature ID` to resume one exact capability while
   preserving whole-product owner, shape, authority, unconfirmed choices and global
   freshness context. Default handoff stays unchanged; invalid IDs fail explicitly.
 - Consolidate the existing product/drafting, greenfield reviewer/loading, optional
-  Python impact and supervision/verification source into one local review artifact.
+  Python impact and supervision/verification source into one versioned preview.
   No new runtime feature is introduced by consolidation. Product records are saved
   by an authorized host; protected native-manager write lanes stay unchanged.
 - Scope the preview to product/feature decisions, planning and read-only retirement proposals.

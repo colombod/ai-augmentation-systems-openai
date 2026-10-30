@@ -204,7 +204,7 @@ class GateService:
         # Inspection must not execute a worker-editable fsmonitor helper as
         # the coordinator. This per-command setting changes no repository
         # configuration, commit hooks, native trust or worker permissions.
-        git = ['git', '--no-optional-locks', '-c', 'core.fsmonitor=false', '-c', 'core.untrackedCache=false', '-C', root]
+        git = ['git', '--no-replace-objects', '--no-optional-locks', '-c', 'core.fsmonitor=false', '-c', 'core.untrackedCache=false', '-C', root]
         result = subprocess.run(git+['rev-parse', '--verify', 'HEAD^{commit}'],
                                 text=True, capture_output=True, timeout=10)
         if result.returncode or not re.fullmatch(r'[0-9a-f]{40,64}', result.stdout.strip()):

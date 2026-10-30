@@ -78,7 +78,7 @@ def require_sha(head):
 
 
 def raw_check(root, head):
-    git = ['git','--no-optional-locks','-c','core.fsmonitor=false','-c','core.untrackedCache=false','-C',str(root)]
+    git = ['git','--no-replace-objects','--no-optional-locks','-c','core.fsmonitor=false','-c','core.untrackedCache=false','-C',str(root)]
     try:
         GateService.verify_tracked_bytes(git, root, head, env=clean_environment())
         staged = capture(git+['diff-index','--cached','--quiet','--no-ext-diff','--no-textconv',head,'--'],root,10)
