@@ -37,8 +37,9 @@ controlled Beads operation. Follow any task-tracking rules of the project you ar
 
 ## Install in Codex CLI
 
-Use a checkout containing `plugins/delivery/`. The current implementation has
-not been pushed; a clone of the remote alone may not contain it yet.
+Use a checkout containing `plugins/delivery/`. The implementation is available
+in this repository. An installed package is a separate snapshot: check its
+version and files before assuming it contains the runtime in your checkout.
 
 From the **marketplace repository root**, run in a terminal:
 
@@ -187,6 +188,12 @@ operator-attested, not advertised as automatic external verification.
 
 See [local runtime setup](references/team-runtime.md) for roster, dependencies,
 operator terminal, recovery controls, explicit judge configuration and boundaries.
+An optional [external supervision seam](references/supervision.md) lets a trusted
+host submit scoped agent assignments to that same dispatcher. Its fake-transport
+tests do not establish a supported dot/ChatGPT integration; host authentication
+and actual host qualification remain prerequisites.
+The [command evidence helper](references/verification.md) records exact-commit
+review and revision-bound surface checks without granting task acceptance.
 A bare JSON file cannot provide human approval. Protected judging needs matching
 provider-specific calibration; sample evaluations are not installed as defaults.
 

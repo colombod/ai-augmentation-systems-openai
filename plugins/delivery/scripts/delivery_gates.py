@@ -225,19 +225,20 @@ class GateService:
                 raise GateError('Product changes are not committed; only .delivery-evidence/ outputs may be untracked')
         return result.stdout.strip()
 
-    def verify_tracked_bytes(self, git, root, head):
+    @staticmethod
+    def verify_tracked_bytes(git, root, head, env=None):
         """Compare raw checkout bytes to HEAD, never trusting index stat caches.
 
         This intentionally refuses transformed clean-filter/CRLF checkouts and
         unverified gitlinks. No clean/smudge/textconv command is invoked by the
         coordinator. Such repositories need a separately reviewed safe adapter.
         """
-        flags = subprocess.run(git+['ls-files', '-v', '-z'], capture_output=True, timeout=10)
+        flags = subprocess.run(git+['ls-files', '-v', '-z'], capture_output=True, timeout=10, env=env)
         if flags.returncode:
             raise GateError('Cannot inspect product index flags')
         if any(entry[:1].islower() or entry.startswith(b'S ') for entry in flags.stdout.split(b'\0') if entry):
             raise GateError('Product index hides tracked bytes with assume-unchanged/skip-worktree')
-        tree = subprocess.run(git+['ls-tree', '-rz', '--full-tree', head], capture_output=True, timeout=10)
+        tree = subprocess.run(git+['ls-tree', '-rz', '--full-tree', head], capture_output=True, timeout=10, env=env)
         if tree.returncode:
             raise GateError('Cannot inspect committed product tree')
         for entry in tree.stdout.split(b'\0'):

@@ -1,5 +1,19 @@
 # Changelog
 
+## Unreleased
+
+- Correct status and installation guidance to distinguish available repository
+  source, installed snapshots, local runtime observations and pending host acceptance.
+- Add an optional trusted in-process supervision boundary with explicit binding
+  generations, task scope, caller request identity, stale-state checks and durable
+  assignment receipts. Native dispatch and operator acceptance stay authoritative.
+  This is fake-transport-tested; no authenticated dot integration is installed.
+- Add explicit local exact-SHA scratch review and revision-bound command evidence
+  helpers. Retain real outputs and failed results; reuse raw-byte checks from the
+  existing gates. These are evidence submissions, not automatic acceptance.
+- Preserve uncertain assignment outcomes across recovery and reconcile known
+  native failures without presenting them as successful task acceptance.
+
 ## Unreleased — 0.1.0-preview.6
 
 - Refuse forbidden native command/file escalation immediately using the offered

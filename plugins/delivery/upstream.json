@@ -3,6 +3,15 @@
   "revision": "df0c0a5b0dba1449b6cdfef421bfe1ebc4d658c0",
   "plugin_version": "0.30.0",
   "license": "MIT",
+  "reviewed_alignment": {
+    "revision": "3d7c69416dc7524130105c9bfe308aa01b2a26f0",
+    "plugin_version": "0.37.9",
+    "sources": [
+      {"source": "scripts/review-run.js", "git_blob": "b46ef525f5f134a05c22314a7dd1347bee50a411"},
+      {"source": "scripts/verify-run.js", "git_blob": "b939a27ef99210d484fdc8a78f3105f97c9663a7"}
+    ],
+    "adaptation": "Independent Python command-evidence implementation in scripts/verification.py, informed by exact-SHA review and computed surface-check behavior; reuses the OpenAI port raw-byte gates. No upstream runtime, hooks or permission profiles copied. Original imported baseline remains unchanged."
+  },
   "files": [
     {
       "source": "templates/adr.md",
