@@ -30,6 +30,13 @@ Where the runner used its own task IDs rather than `FR-n`, use the ID mapping re
 
 ## Run
 
+When a product record exists, read [the product contract](../../references/product.md).
+Reconcile shipped/preview/planned claims against actual evidence at the reviewed
+commit. Keep Job, First value, Fit, Outcome, Trust and Return separate from task
+acceptance and from each other. A passing test or our own walkthrough remains
+Claimed usefulness evidence, not Seen outside-user adoption. Carry unknowns and
+the next real-use/return check forward; never infer retirement from missing use.
+
 **1. Verify criteria against direct evidence.** Use the `qa-strategist` lens. Read
 criteria first, then inspect the actual current behavior. Record met / not-met / partial /
 unable-to-check with the surface, revision, command or capture, result and reviewer.

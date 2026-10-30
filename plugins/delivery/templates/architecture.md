@@ -18,11 +18,14 @@ The design in a paragraph, and the single most important decision behind it.
 
 ## Codebase context
 
-What exists today in the areas this touches. Real paths, checked.
+Starting state: brownfield / greenfield. For existing code, state what exists and
+verify its paths. For a no-code greenfield idea, state **no implementation or
+repository supplied**; list proposed new paths under a proposed root without
+claiming they exist. Keep assumptions and setup prerequisites visible.
 
-| Path | Role today | Change |
-| :-- | :-- | :-- |
-| `src/...` | | new / modified / extended / untouched |
+| Path | Path state | Role today or proposed | Change |
+| :-- | :-- | :-- | :-- |
+| `src/...` | verified existing / proposed new | | new / modified / extended / untouched |
 
 ## Setup — prerequisite, not a feature or a phase
 

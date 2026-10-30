@@ -16,6 +16,12 @@ Read [host capability guidance](../../references/runtime.md) and
 
 ## Gate check
 
+Read any `.delivery/product-map.json` owner lens and what must survive before
+proposing a visual direction. Follow the [product contract](../../references/product.md):
+preserve stated intent, label inference, check critical gates before polish and
+use a bounded refinement/reframe with baseline and rollback. Do not turn an
+owner's preference into measured customer benefit or a universal aesthetic score.
+
 Read the brief and the personas.
 
 - **Brief missing** — stop, run `$delivery:brief`.

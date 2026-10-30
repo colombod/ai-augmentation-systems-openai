@@ -1,0 +1,568 @@
+{
+  "schema_version": 1,
+  "mode": "brownfield",
+  "commit": "f2e2b1ffa76a5754b7ed0acc63e99878efd13d0d",
+  "product": {
+    "customer": {
+      "text": "Maintainer of an existing repository preparing a change.",
+      "basis": "proposed",
+      "source": "Maintainer proposal; not an owner confirmation.",
+      "revisit": "Revisit when the owner corrects the choice or real-use evidence contradicts it."
+    },
+    "problem": {
+      "text": "Planning can expand before the first useful customer outcome is established.",
+      "basis": "proposed",
+      "source": "Maintainer proposal; not an owner confirmation.",
+      "revisit": "Revisit when the owner corrects the choice or real-use evidence contradicts it."
+    },
+    "current_cost": {
+      "text": "Unknown: the owner reports wasted effort but no measured time/cost was supplied.",
+      "basis": "unknown",
+      "source": "Maintainer proposal; not an owner confirmation.",
+      "revisit": "Revisit when the owner corrects the choice or real-use evidence contradicts it."
+    },
+    "proposition": {
+      "text": "See which customer-visible features a file change can affect before editing.",
+      "basis": "proposed",
+      "source": "Maintainer proposal; not an owner confirmation.",
+      "revisit": "Revisit when the owner corrects the choice or real-use evidence contradicts it."
+    },
+    "before_after": {
+      "text": "Before: guess what matters. After: inspect promises, evidence, cuts and the next observable result.",
+      "basis": "proposed",
+      "source": "Maintainer proposal; not an owner confirmation.",
+      "revisit": "Revisit when the owner corrects the choice or real-use evidence contradicts it."
+    },
+    "riskiest_assumption": {
+      "text": "A stranger can get a useful first result from the packaged skill without its author.",
+      "basis": "unknown",
+      "source": "Maintainer proposal; not an owner confirmation.",
+      "revisit": "Revisit when the owner corrects the choice or real-use evidence contradicts it."
+    },
+    "must_survive": [
+      {
+        "text": "Greenfield and brownfield are equally important.",
+        "basis": "owner-stated",
+        "source": "User, 2026-10-30: \"Brown field and green field are equally important\"",
+        "revisit": "Revisit when the owner corrects the choice or real-use evidence contradicts it."
+      },
+      {
+        "text": "Drive to completion and value; preserve agency, value and priorities.",
+        "basis": "owner-stated",
+        "source": "User: \"Do not do such mistake and drive this to completion and value\"",
+        "revisit": "Revisit when the owner corrects the choice or real-use evidence contradicts it."
+      }
+    ],
+    "cuts": [
+      {
+        "text": "No new service, automatic code deletion, film production or model dependency in this slice.",
+        "basis": "proposed",
+        "source": "Maintainer proposal; not an owner confirmation.",
+        "revisit": "Revisit when the owner corrects the choice or real-use evidence contradicts it."
+      }
+    ],
+    "next_slice": {
+      "text": "A maintainer can frame a new idea or inspect an existing feature, then obtain a source-bound impact answer and one next done-when check.",
+      "basis": "proposed",
+      "source": "Maintainer proposal; not an owner confirmation.",
+      "revisit": "Revisit when the owner corrects the choice or real-use evidence contradicts it."
+    },
+    "right_shape": {
+      "need": {
+        "N1": 1,
+        "N2": 1,
+        "N3": 1,
+        "N4": 0
+      },
+      "gates": {
+        "G1": {
+          "status": "unknown",
+          "reason": "Not yet verified in the intended host."
+        },
+        "G2": {
+          "status": "unknown",
+          "reason": "Not yet verified in the intended host."
+        },
+        "G3": {
+          "status": "unknown",
+          "reason": "Not yet verified in the intended host."
+        },
+        "G4": {
+          "status": "unknown",
+          "reason": "Not yet verified in the intended host."
+        },
+        "G5": {
+          "status": "unknown",
+          "reason": "Not yet verified in the intended host."
+        },
+        "G6": {
+          "status": "unknown",
+          "reason": "Not yet verified in the intended host."
+        }
+      },
+      "form": "skill",
+      "autonomy_rung": 2,
+      "engine": "LLM",
+      "reason": "The host curates customer promises and choices; deterministic local commands check paths, bytes and impact. No separate model or agent loop.",
+      "alternatives": [
+        "Just prose: lacks repeatable freshness and shared-file checks.",
+        "A graph service or persistent agent: unnecessary for this bounded file-level first outcome."
+      ],
+      "benchmark": "This actual-repository command run plus a labelled idea, stale/unknown/share traps in tests, a leave-alone check and no adoption claim. Stop after recording one next slice."
+    }
+  },
+  "features": [
+    {
+      "id": "workspace",
+      "name": "Planning workspace initialization and inventory",
+      "state": "preview",
+      "summary": "Available in source preview; source and tests do not establish deployed acceptance.",
+      "code": [
+        "plugins/delivery/scripts/project.py"
+      ],
+      "evidence": [
+        {
+          "path": "tests/delivery/test_project.py",
+          "note": "Executable test source; actual run is separate evidence, not outside-user use."
+        },
+        {
+          "path": "plugins/delivery/README.md",
+          "note": "Declared source preview and host limits; not independent deployment proof."
+        }
+      ],
+      "unknowns": [
+        "Outside-user first value and unprompted return have not been measured.",
+        "Hook-event-log is a separate product component, intentionally outside this curated Delivery feature map."
+      ],
+      "usefulness": {
+        "Job": {
+          "rating": "Partial",
+          "grade": "Claimed",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        },
+        "First value": {
+          "rating": "Partial",
+          "grade": "Claimed",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        },
+        "Fit": {
+          "rating": "Partial",
+          "grade": "Claimed",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        },
+        "Outcome": {
+          "rating": "Partial",
+          "grade": "Claimed",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        },
+        "Trust": {
+          "rating": "Partial",
+          "grade": "Claimed",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        },
+        "Return": {
+          "rating": "Unknown",
+          "grade": "Unknown",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        }
+      }
+    },
+    {
+      "id": "planning",
+      "name": "Existing planning and review skill workflows",
+      "state": "preview",
+      "summary": "Available in source preview; source and tests do not establish deployed acceptance.",
+      "code": [
+        "plugins/delivery/scripts/project.py",
+        "plugins/delivery/skills/architecture/SKILL.md",
+        "plugins/delivery/skills/brief/SKILL.md",
+        "plugins/delivery/skills/challenge/SKILL.md",
+        "plugins/delivery/skills/design/SKILL.md",
+        "plugins/delivery/skills/personas/SKILL.md",
+        "plugins/delivery/skills/prd/SKILL.md",
+        "plugins/delivery/skills/realign/SKILL.md",
+        "plugins/delivery/skills/research/SKILL.md",
+        "plugins/delivery/skills/roadmap/SKILL.md",
+        "plugins/delivery/skills/simulate/SKILL.md",
+        "plugins/delivery/skills/sprint/SKILL.md",
+        "plugins/delivery/skills/sprint-review/SKILL.md",
+        "plugins/delivery/skills/start/SKILL.md",
+        "plugins/delivery/skills/status/SKILL.md",
+        "plugins/delivery/skills/stories/SKILL.md"
+      ],
+      "evidence": [
+        {
+          "path": "tests/delivery/test_package.py",
+          "note": "Executable test source; actual run is separate evidence, not outside-user use."
+        },
+        {
+          "path": "plugins/delivery/README.md",
+          "note": "Declared source preview and host limits; not independent deployment proof."
+        }
+      ],
+      "unknowns": [
+        "Outside-user first value and unprompted return have not been measured.",
+        "Hook-event-log is a separate product component, intentionally outside this curated Delivery feature map."
+      ],
+      "usefulness": {
+        "Job": {
+          "rating": "Partial",
+          "grade": "Claimed",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        },
+        "First value": {
+          "rating": "Partial",
+          "grade": "Claimed",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        },
+        "Fit": {
+          "rating": "Partial",
+          "grade": "Claimed",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        },
+        "Outcome": {
+          "rating": "Partial",
+          "grade": "Claimed",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        },
+        "Trust": {
+          "rating": "Partial",
+          "grade": "Claimed",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        },
+        "Return": {
+          "rating": "Unknown",
+          "grade": "Unknown",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        }
+      }
+    },
+    {
+      "id": "product-baseline",
+      "name": "Greenfield and brownfield product records, feature impact and handoff",
+      "state": "preview",
+      "summary": "Available in source preview; source and tests do not establish deployed acceptance.",
+      "code": [
+        "plugins/delivery/scripts/product.py",
+        "plugins/delivery/scripts/project.py",
+        "plugins/delivery/skills/product/SKILL.md"
+      ],
+      "evidence": [
+        {
+          "path": "tests/delivery/test_product.py",
+          "note": "Executable test source; actual run is separate evidence, not outside-user use."
+        },
+        {
+          "path": "plugins/delivery/README.md",
+          "note": "Declared source preview and host limits; not independent deployment proof."
+        }
+      ],
+      "unknowns": [
+        "Outside-user first value and unprompted return have not been measured.",
+        "Hook-event-log is a separate product component, intentionally outside this curated Delivery feature map."
+      ],
+      "usefulness": {
+        "Job": {
+          "rating": "Partial",
+          "grade": "Claimed",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        },
+        "First value": {
+          "rating": "Partial",
+          "grade": "Claimed",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        },
+        "Fit": {
+          "rating": "Partial",
+          "grade": "Claimed",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        },
+        "Outcome": {
+          "rating": "Partial",
+          "grade": "Claimed",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        },
+        "Trust": {
+          "rating": "Partial",
+          "grade": "Claimed",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        },
+        "Return": {
+          "rating": "Unknown",
+          "grade": "Unknown",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        }
+      }
+    },
+    {
+      "id": "native-team",
+      "name": "Persistent local Codex role coordination",
+      "state": "preview",
+      "summary": "Available in source preview; source and tests do not establish deployed acceptance.",
+      "code": [
+        "plugins/delivery/scripts/runtime.py",
+        "plugins/delivery/scripts/codex_rpc.py",
+        "plugins/delivery/scripts/project.py"
+      ],
+      "evidence": [
+        {
+          "path": "tests/delivery/test_runtime.py",
+          "note": "Executable test source; actual run is separate evidence, not outside-user use."
+        },
+        {
+          "path": "plugins/delivery/README.md",
+          "note": "Declared source preview and host limits; not independent deployment proof."
+        }
+      ],
+      "unknowns": [
+        "Outside-user first value and unprompted return have not been measured.",
+        "Hook-event-log is a separate product component, intentionally outside this curated Delivery feature map."
+      ],
+      "usefulness": {
+        "Job": {
+          "rating": "Partial",
+          "grade": "Claimed",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        },
+        "First value": {
+          "rating": "Partial",
+          "grade": "Claimed",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        },
+        "Fit": {
+          "rating": "Partial",
+          "grade": "Claimed",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        },
+        "Outcome": {
+          "rating": "Partial",
+          "grade": "Claimed",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        },
+        "Trust": {
+          "rating": "Partial",
+          "grade": "Claimed",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        },
+        "Return": {
+          "rating": "Unknown",
+          "grade": "Unknown",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        }
+      }
+    },
+    {
+      "id": "canonical-artifacts",
+      "name": "Controlled canonical planning and review saves",
+      "state": "preview",
+      "summary": "Available in source preview; source and tests do not establish deployed acceptance.",
+      "code": [
+        "plugins/delivery/scripts/artifacts.py",
+        "plugins/delivery/scripts/project.py"
+      ],
+      "evidence": [
+        {
+          "path": "tests/delivery/test_artifacts.py",
+          "note": "Executable test source; actual run is separate evidence, not outside-user use."
+        },
+        {
+          "path": "plugins/delivery/README.md",
+          "note": "Declared source preview and host limits; not independent deployment proof."
+        }
+      ],
+      "unknowns": [
+        "Outside-user first value and unprompted return have not been measured.",
+        "Hook-event-log is a separate product component, intentionally outside this curated Delivery feature map."
+      ],
+      "usefulness": {
+        "Job": {
+          "rating": "Partial",
+          "grade": "Claimed",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        },
+        "First value": {
+          "rating": "Partial",
+          "grade": "Claimed",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        },
+        "Fit": {
+          "rating": "Partial",
+          "grade": "Claimed",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        },
+        "Outcome": {
+          "rating": "Partial",
+          "grade": "Claimed",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        },
+        "Trust": {
+          "rating": "Partial",
+          "grade": "Claimed",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        },
+        "Return": {
+          "rating": "Unknown",
+          "grade": "Unknown",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        }
+      }
+    },
+    {
+      "id": "controlled-review",
+      "name": "Identity-bound Beads workflow and human acceptance",
+      "state": "preview",
+      "summary": "Available in source preview; source and tests do not establish deployed acceptance.",
+      "code": [
+        "plugins/delivery/scripts/delivery_gates.py",
+        "plugins/delivery/scripts/operator_capture.py",
+        "plugins/delivery/scripts/runtime.py",
+        "plugins/delivery/scripts/project.py"
+      ],
+      "evidence": [
+        {
+          "path": "tests/delivery/test_delivery_gates.py",
+          "note": "Executable test source; actual run is separate evidence, not outside-user use."
+        },
+        {
+          "path": "plugins/delivery/README.md",
+          "note": "Declared source preview and host limits; not independent deployment proof."
+        }
+      ],
+      "unknowns": [
+        "Outside-user first value and unprompted return have not been measured.",
+        "Hook-event-log is a separate product component, intentionally outside this curated Delivery feature map."
+      ],
+      "usefulness": {
+        "Job": {
+          "rating": "Partial",
+          "grade": "Claimed",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        },
+        "First value": {
+          "rating": "Partial",
+          "grade": "Claimed",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        },
+        "Fit": {
+          "rating": "Partial",
+          "grade": "Claimed",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        },
+        "Outcome": {
+          "rating": "Partial",
+          "grade": "Claimed",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        },
+        "Trust": {
+          "rating": "Partial",
+          "grade": "Claimed",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        },
+        "Return": {
+          "rating": "Unknown",
+          "grade": "Unknown",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        }
+      }
+    },
+    {
+      "id": "explicit-judge",
+      "name": "Explicit Jev/OpenAI advisory judge selection",
+      "state": "preview",
+      "summary": "Available in source preview; source and tests do not establish deployed acceptance.",
+      "code": [
+        "plugins/delivery/scripts/judge.js",
+        "plugins/delivery/scripts/lib/judge.js",
+        "plugins/delivery/scripts/lib/openai-judge.js"
+      ],
+      "evidence": [
+        {
+          "path": "tests/delivery/openai-judge.test.js",
+          "note": "Executable test source; actual run is separate evidence, not outside-user use."
+        },
+        {
+          "path": "plugins/delivery/README.md",
+          "note": "Declared source preview and host limits; not independent deployment proof."
+        }
+      ],
+      "unknowns": [
+        "Outside-user first value and unprompted return have not been measured.",
+        "Hook-event-log is a separate product component, intentionally outside this curated Delivery feature map."
+      ],
+      "usefulness": {
+        "Job": {
+          "rating": "Partial",
+          "grade": "Claimed",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        },
+        "First value": {
+          "rating": "Partial",
+          "grade": "Claimed",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        },
+        "Fit": {
+          "rating": "Partial",
+          "grade": "Claimed",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        },
+        "Outcome": {
+          "rating": "Partial",
+          "grade": "Claimed",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        },
+        "Trust": {
+          "rating": "Partial",
+          "grade": "Claimed",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        },
+        "Return": {
+          "rating": "Unknown",
+          "grade": "Unknown",
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check."
+        }
+      }
+    }
+  ]
+}

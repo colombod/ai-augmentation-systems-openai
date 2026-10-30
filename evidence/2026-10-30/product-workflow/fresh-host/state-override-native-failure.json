@@ -1,0 +1,8 @@
+{
+  "case": "brownfield",
+  "source_commit": "f817ab6d1af5b8eabcd76687d0c28446136e15f9",
+  "stage": "native initialization",
+  "error": "server_disconnected",
+  "record_present": false,
+  "qualification": "Failed native startup; no model turn or credential/config copying"
+}

@@ -16,6 +16,15 @@ Read [host capability guidance](../../references/runtime.md) and
 
 ## Gate check
 
+When `.delivery/product-map.json` exists, read the
+[shared product contract](../../references/product.md) and run its `handoff` with
+the available local helper, or inspect it manually without execution. Carry its
+primary customer/proposition, owner constraints, explicit cuts, work form and
+separate usefulness gaps forward. Resolve only unconfirmed choices that affect
+the next consequential requirement; preserve the rest as unknowns. Never claim
+this record authenticates consent. Planned greenfield features need no existing
+code; brownfield code claims must retain commit freshness and unknown coverage.
+
 Read `.delivery/initiatives/<initiative>/brief.md`.
 
 - **Missing** — stop. Tell the user to run `$delivery:brief` first, and offer to run it now. Do not improvise a brief.

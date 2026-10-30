@@ -1,5 +1,22 @@
 # Changelog
 
+## Unreleased — 0.1.0-preview.7
+
+- Add `$delivery:product` for equally first-class greenfield and brownfield work,
+  with one shared record, an optional Git code snapshot and six separate
+  usefulness/evidence judgements. Carry owner intent, explicit cuts and the
+  smallest sufficient work form into existing planning/review skills.
+- Add a standard-library product helper for source census, curated file maps,
+  full-commit/raw-byte freshness, direct feature impact, revision-safe history,
+  product handoffs and read-only retirement proposals that preserve shared code.
+- Keep architecture/story paths explicitly proposed for no-code greenfield work;
+  verify existing paths only when source exists. Preserve feature promises in
+  handoffs and include usefulness, evidence and pending replacement/migration/
+  rollback context in retirement proposals.
+- Retain named method provenance and original MIT notices. No external runtime,
+  provider, hook, graph service, code deletion or authenticated owner decision is
+  introduced. Greenfield can proceed without a repository; planned code stays absent.
+
 ## Unreleased — 0.1.0-preview.6
 
 - Refuse forbidden native command/file escalation immediately using the offered

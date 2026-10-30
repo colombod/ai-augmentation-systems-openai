@@ -29,6 +29,15 @@ not the subject.
 
 ## Gate check
 
+Read [the shared product contract](../../references/product.md) and any existing
+`.delivery/product-map.json`. Reuse its customer, job, proposition, explicit cuts,
+owner intent and what must survive. Keep proposed/unknown choices distinct from
+owner statements. For a new greenfield idea, `$delivery:product` can establish
+these without a repository; for existing work it also maps observed features and
+checks current source. Do not substitute a code inventory for a customer problem.
+Carry the product choices and their revisit conditions into the brief; do not
+silently broaden the customer or resurrect a deliberate cut.
+
 No prerequisites — this is the entry point. If `.delivery/initiatives/<initiative>/brief.md`
 already exists, read it and ask whether to **revise**, **replace**, or **start new version**.
 See `../../templates/version-history.md` for what each means, the

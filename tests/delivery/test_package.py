@@ -17,7 +17,7 @@ PACKAGE = Path(__file__).resolve().parents[2] / 'plugins/delivery'
 class PackageTests(unittest.TestCase):
     def test_skill_resources_are_contained_and_present(self):
         skills = list((PACKAGE / 'skills').glob('*/SKILL.md'))
-        self.assertEqual(len(skills), 15)
+        self.assertEqual(len(skills), 16)
         for path in skills:
             text = path.read_text()
             self.assertTrue(text.startswith('---\nname: ' + path.parent.name + '\n'))
@@ -44,6 +44,8 @@ class PackageTests(unittest.TestCase):
             targets.add(item['target'])
         for folder in ('templates', 'references/reviewers'):
             for path in (PACKAGE / folder).iterdir():
+                if path.name == 'product-input.json':
+                    continue  # New native contract, not a claimed Claude import.
                 self.assertIn(str(path.relative_to(PACKAGE)), targets)
 
     def test_preview_loads_no_unimplemented_runtime(self):
@@ -53,6 +55,16 @@ class PackageTests(unittest.TestCase):
         self.assertNotIn('hooks', manifest)
         self.assertNotIn('mcpServers', manifest)
         self.assertFalse((PACKAGE / 'hooks').exists())
+
+    def test_product_methods_retain_source_pins_and_full_license_notices(self):
+        provenance=json.loads((PACKAGE/'upstream.json').read_text())
+        self.assertEqual(len(provenance['product_methods']),7)
+        for method in provenance['product_methods']:
+            self.assertRegex(method['revision'],r'^[a-f0-9]{40}$')
+            notice=(PACKAGE/method['notice']).resolve()
+            self.assertTrue(notice.is_relative_to(PACKAGE))
+            self.assertIn('Permission is hereby granted',notice.read_text())
+            self.assertIn('THE SOFTWARE IS PROVIDED "AS IS"',notice.read_text())
 
     def test_shipped_boundary_excludes_port_assessment_and_retains_lineage(self):
         self.assertFalse(any(PACKAGE.rglob('delivery-port-assessment.md')))

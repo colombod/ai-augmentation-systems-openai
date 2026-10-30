@@ -1,0 +1,9 @@
+{
+  "source_commit": "f817ab6d1af5b8eabcd76687d0c28446136e15f9",
+  "stage": "native app-server initialization",
+  "error": "failed to initialize sqlite state runtime under /home/agent/.codex: failed to initialize state runtime at /home/agent/.codex",
+  "outcome": "server_disconnected before model turn; no skill invocation or product record",
+  "model_calls": 0,
+  "credential_copy": false,
+  "next_evidence": "Installed CLI schema/binary exposes separate sqliteHome/CODEX_SQLITE_HOME; supported writable-state override will be tested without moving sign-in."
+}

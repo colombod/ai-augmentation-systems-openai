@@ -5,6 +5,13 @@ description: Initialize a delivery planning workspace and initiative without ove
 
 # Start delivery planning
 
+Greenfield ideas and brownfield products are equal entry paths. When the user
+needs to establish customer value, preserve owner intent, understand existing
+features or assess change impact, continue with `$delivery:product` and the
+[shared product contract](../../references/product.md). A greenfield product
+record needs no code repository. Existing code/artifacts are inspected and reused
+for brownfield; neither path implies a running team or a deployed feature.
+
 Read [host capability guidance](../../references/runtime.md) and
 [delivery conventions](../../references/conventions.md).
 

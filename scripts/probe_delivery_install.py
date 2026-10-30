@@ -105,9 +105,26 @@ def probe():
                                        '--initiative', 'probe'], text=True, capture_output=True, timeout=10)
                 if init.returncode:
                     raise RuntimeError(init.stderr)
+                # Verify the new product contract/helper survives installation,
+                # independently of any source checkout or model invocation.
+                product_helper = installed_root / 'scripts/product.py'
+                if not product_helper.is_file():
+                    raise AssertionError('Installed package is missing product.py')
+                product_record = subprocess.run(['python3', '-B', str(product_helper), '--project', str(project),
+                    'record', '--input', str(installed_root/'templates/product-input.json'),
+                    '--expected-sha256', 'new'], text=True, capture_output=True, timeout=10)
+                if product_record.returncode:
+                    raise RuntimeError('Installed product record failed: '+product_record.stderr)
+                handoff = subprocess.run(['python3', '-B', str(product_helper), '--project', str(project),
+                    'handoff'], text=True, capture_output=True, timeout=10)
+                product = json.loads(handoff.stdout)
+                if handoff.returncode != 1 or not product.get('unconfirmed_choices') or product['freshness']['snapshot_commit'] is not None:
+                    raise AssertionError('Installed greenfield helper hid unknown choices or invented source')
                 return {'codex': version, 'package_version': json.loads((installed_root / 'plugin.json').read_text())['version'],
                         'installation': 'passed', 'skills_discovered': sorted(s['name'] for s in skills),
                         'installed_helper': 'passed', 'model_calls': 0,
+                        'installed_product_helper': {'record':'passed', 'handoff':'passed',
+                            'qualification':'illustrative greenfield template; unconfirmed choices retained; no model or customer-use claim'},
                         'package_boundary': {'port_assessment': 'excluded', 'release_lineage': 'present'},
                         'acceptance': {'cli_install_and_discovery': 'passed', 'real_model_workflow': 'not-tested',
                                        'desktop_ui': 'not-tested', 'chatgpt': 'not-tested'}}

@@ -3,6 +3,71 @@
   "revision": "df0c0a5b0dba1449b6cdfef421bfe1ebc4d658c0",
   "plugin_version": "0.30.0",
   "license": "MIT",
+  "product_methods": [
+    {
+      "name": "Worth Using",
+      "repository": "https://github.com/michaeljabbour/amplifier-skill-worth-using",
+      "revision": "15760599596a5ceffb998a119174cd2ce84e42b6",
+      "license": "MIT",
+      "notice": "references/sources/worth-using-LICENSE",
+      "license_git_blob": "e1986860369343bc0c75d9342b99136a1ea9e4c6",
+      "adaptation": "Compact product contract/reference in references/product.md; native helper and skill. External software/runtime is not copied or installed."
+    },
+    {
+      "name": "Market Fit",
+      "repository": "https://github.com/michaeljabbour/amplifier-skill-market-fit",
+      "revision": "1a16404f20babb1832cda117e162ebe6020b7e6d",
+      "license": "MIT",
+      "notice": "references/sources/market-fit-LICENSE",
+      "license_git_blob": "e1986860369343bc0c75d9342b99136a1ea9e4c6",
+      "adaptation": "Compact product contract/reference in references/product.md; native helper and skill. External software/runtime is not copied or installed."
+    },
+    {
+      "name": "Taste × Elegance",
+      "repository": "https://github.com/michaeljabbour/amplifier-skill-taste",
+      "revision": "e13b717541a813a7e05fd2eb6868da1d66b6591a",
+      "license": "MIT",
+      "notice": "references/sources/taste-LICENSE",
+      "license_git_blob": "4953e5ec22046d7dd9f7bcda3295850dda143c82",
+      "adaptation": "Compact product contract/reference in references/product.md; native helper and skill. External software/runtime is not copied or installed."
+    },
+    {
+      "name": "Sizzle",
+      "repository": "https://github.com/michaeljabbour/amplifier-skill-sizzle",
+      "revision": "d7aa28736f63de65aaac18dabc838533be103b40",
+      "license": "MIT",
+      "notice": "references/sources/sizzle-LICENSE",
+      "license_git_blob": "d2df7579fd3b825a14e2f86df1504ba531ad47ab",
+      "adaptation": "Compact product contract/reference in references/product.md; native helper and skill. External software/runtime is not copied or installed."
+    },
+    {
+      "name": "Decisioncraft",
+      "repository": "https://github.com/michaeljabbour/amplifier-smart-tool-decisioncraft",
+      "revision": "153342d5bac385f38fdf41c58e58cddb2a147df7",
+      "license": "MIT",
+      "notice": "references/sources/decisioncraft-LICENSE",
+      "license_git_blob": "aa59a07074ac95935f2bf7871d8d885fbe27052f",
+      "adaptation": "Compact product contract/reference in references/product.md; native helper and skill. External software/runtime is not copied or installed."
+    },
+    {
+      "name": "Right Shape",
+      "repository": "https://github.com/michaeljabbour/amplifier-skill-right-shape",
+      "revision": "181fb2da453558935ae9da615442f08cb93f52ea",
+      "license": "MIT",
+      "notice": "references/sources/right-shape-LICENSE",
+      "license_git_blob": "a2c79d61d3122c70fb3ad338a34b5846cc232445",
+      "adaptation": "Compact product contract/reference in references/product.md; native helper and skill. External software/runtime is not copied or installed."
+    },
+    {
+      "name": "Trail-Code",
+      "repository": "https://github.com/trailhq/Trail-Code",
+      "revision": "a44da3dfb5894c8e316e320526041ef8e5ddbb8c",
+      "license": "MIT",
+      "notice": "references/sources/trail-code-LICENSE",
+      "license_git_blob": "09273d286f8661ac4468483b02ac4c1e505e38bf",
+      "adaptation": "Compact product contract/reference in references/product.md; native helper and skill. External software/runtime is not copied or installed."
+    }
+  ],
   "files": [
     {
       "source": "templates/adr.md",

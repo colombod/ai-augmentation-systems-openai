@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "/workspace/delivery-brownfield/plugins/delivery/scripts/product.py",
+    "--project",
+    "/workspace/delivery-brownfield/evidence/2026-10-30/product-workflow/greenfield-fix-case/brownfield",
+    "--repo",
+    "/workspace/delivery-brownfield",
+    "record",
+    "--input",
+    "/workspace/delivery-brownfield/evidence/2026-10-30/product-workflow/greenfield-fix-case/brownfield-input.json",
+    "--expected-sha256",
+    "new"
+  ],
+  "exit_code": 0,
+  "stdout": "{\n  \"commit\": \"ab483a6dd0a7c1c0b5b02a1961de3d1d4fd0a1a2\",\n  \"features\": 7,\n  \"path\": \"/workspace/delivery-brownfield/evidence/2026-10-30/product-workflow/greenfield-fix-case/brownfield/.delivery/product-map.json\",\n  \"sha256\": \"ae5599dd7b749300dd9e12b511a74f322df3f045ab0bced3eb27345ebad9da85\"\n}\n",
+  "stderr": ""
+}
