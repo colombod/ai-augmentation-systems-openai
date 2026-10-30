@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-B",
+    "/workspace/delivery-product-drafting/plugins/delivery/scripts/product.py",
+    "--project",
+    "/workspace/compact-product-drafting-proof/brownfield",
+    "--repo",
+    "/workspace/delivery-product-drafting",
+    "record",
+    "--input",
+    "/workspace/delivery-product-drafting/evidence/2026-10-30/compact-product-drafting/brownfield-input.json",
+    "--expected-sha256",
+    "new"
+  ],
+  "exit_code": 0,
+  "stdout": "{\n  \"commit\": \"8e01b536b2ba7ebf47f4c61a3cc42a8904b94aec\",\n  \"features\": 2,\n  \"path\": \"/workspace/compact-product-drafting-proof/brownfield/.delivery/product-map.json\",\n  \"sha256\": \"440eee3434006e1379e03872aa8f7c49a461ff9d576d5c11b2b1d875ec2613ee\"\n}\n",
+  "stderr": ""
+}
