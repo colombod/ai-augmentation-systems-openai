@@ -52,7 +52,7 @@ integrated installed-host qualification or measured token/latency evidence.
 | Guarded execution, evidence and durable handoff/recovery | Main: native mechanisms/gates; PR1: durable request receipts and exact-SHA command evidence. | Fresh-context handoffs/resumption worked in source-driven QA. **Persistent native coordinated execution remains unproved** on this candidate; fake transport is not human acceptance. | Maintainer + QA → qualify real bounded native execution only before advertising it; never infer merge/deploy authority. |
 | Dot as optional chief of staff, retaining Delivery execution/state and human acceptance | Main: native runtime/gates. PR1 only: trusted in-process supervision, durable requests/receipts and verification helpers. | Combined regressions and exact-SHA scratch review pass, but no authenticated dot adapter or real dot completion. Native managers cannot write product-map.json; authorized host save remains required. | Maintainer + Owner → later choose one supported authenticated host boundary and prove one bounded handoff/receipt; do not block core preview on an unbuilt adapter. |
 | Quality-preserving efficiency and reliable review | Branch: focused loading/common source rules; PR1 exact-SHA verification. | Combined deterministic checks pass. **Native-host acceptance and measured token efficiency are blocked/unproved**; no quality/performance win claimed from bytes. | QA + Maintainer → require actual host/usage receipts before those claims; source-driven success is not installed native execution. |
-| One usable installable OpenAI Delivery version | Frozen local preview.11; original source branches/main unchanged. | Manifest/resources/provenance and targeted installed CLI smoke pass. No customer-host update, desktop/ChatGPT acceptance or delivered unified release. | Maintainer + Owner → complete the self-development milestone, then seek exact private publication authorization and CI/review. |
+| One usable installable OpenAI Delivery version | Frozen local preview.11; original source branches/main unchanged. | Manifest/resources/provenance and targeted installed CLI smoke pass. No customer-host update, desktop/ChatGPT acceptance or delivered unified release. | Maintainer + Owner → complete the self-development milestone, then publish the authorized consolidated PR after CI/review. |
 
 ### Preview gate and shortest shipping route
 
@@ -88,12 +88,12 @@ owner-stated versus proposed choices and CAS conflicts. Without writes return
 prepared/unsaved. Protected managers still cannot write product-map.json; an input
 field is not human consent. Active → retired remains refused, not silently edited.
 
-**Next smallest product workflow.** Prove a focused **feature decision/resumption
+**Next supported-host product proof.** Prove a focused **feature decision/resumption
 loop**: user + dot discuss one capability/customer, current/planned state, evidence,
 what must survive, and build/change/retire options; retain the decision and one
 bounded handoff against the canonical product revision; resume fresh, verify the
-outcome and return learning. Current handoff is whole-product, so first onboard
-Delivery and observe whether feature-scoped context is the concrete missing piece.
+outcome and return learning. The reviewed helper now supports exact feature-scoped context, but the
+user+dot conversation quality and installed model workflow remain unproved.
 Reuse the record/initiative artifacts; no second ledger, autonomous agent platform
 or new authentication service. Return the chosen gap/evidence before large changes.
 
@@ -123,6 +123,9 @@ large roadmap/token-cache system. Consolidate existing value, resolve the actual
 QA blockers, prove installation and one useful journey, then extend from observed
 need. Keep this checkpoint current after each accepted result; do not add parallel
 release lists.
+
+Current normal review PR: [#3](https://github.com/colombod/ai-augmentation-systems-openai/pull/3).
+Publication is complete; merge awaits independent combined-diff review and exact-head CI.
 
 ### What self-development actually demonstrated
 

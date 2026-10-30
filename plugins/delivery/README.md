@@ -1,7 +1,7 @@
 # Delivery
 
-**UNRELEASED product/feature preview candidate.** This combines reviewed source
-for a single installable candidate; it is not published or approved for deployment.
+**Product/feature preview.** This combines the previously separate source
+into one installable version. Installation on your devices is a separate step.
 The working unit is a product or feature outcome: who it serves, current versus
 planned capability, value/evidence, owner intent and whether to build/change/retire.
 The candidate supports owner-led framing, authorized host-saved product records,
@@ -124,6 +124,7 @@ an initialized planning project, the helper supports:
 python3 <package>/scripts/product.py --project <planning> --repo <git-root> inspect
 python3 <package>/scripts/product.py --project <planning> --repo <git-root> impact --path scripts/project.py
 python3 <package>/scripts/product.py --project <planning> handoff
+python3 <package>/scripts/product.py --project <planning> handoff --feature <exact-feature-id>
 ```
 
 The impact command requires a previously curated brownfield record. For its
