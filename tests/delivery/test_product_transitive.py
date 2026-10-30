@@ -184,6 +184,50 @@ class DependencyImpactTests(unittest.TestCase):
         self.assertFalse(report['transitive']['available'])
         self.assertIn('unavailable',report['transitive']['reason'])
 
+    def test_package_anchor_without_imports_retains_initializer_shared_dependency(self):
+        value = self.record({'pkg/__init__.py':'import shared\n','pkg/b.py':'pass\n',
+                             'pkg/a.py':'import shared\n','shared.py':'pass\n'},
+                            [['pkg/b.py'],['pkg/a.py']])
+        original = P.map_path(self.project).read_bytes()
+        report = P.impact(value,self.repo,['shared.py'],True)
+        self.assertEqual(report['features'],[])
+        graph = report['transitive']
+        self.assertEqual(graph['snapshot_commit'],value['commit'])
+        self.assertEqual(graph['shared_files']['shared.py'],['feature-0','feature-1'])
+        chain = graph['features'][0]['via'][0]['chain']
+        self.assertEqual([edge['to'] for edge in chain],['pkg/__init__.py','shared.py'])
+        self.assertIsNone(chain[0]['line'])
+        self.assertEqual(chain[0]['kind'],'python-package-initializer')
+        self.assertEqual(chain[1]['line'],1)
+        retirement = P.retirement(value,self.repo,'feature-1',True)['transitive']
+        self.assertEqual(retirement['shared_code_to_preserve']['shared.py'],['feature-0'])
+        self.assertNotIn('shared.py',retirement['exclusive_candidates_not_deletion_permission'])
+        self.assertEqual(P.map_path(self.project).read_bytes(),original)
+        self.assertTrue(graph['freshness']['fresh'])
+        for name, replacement in [('pkg/__init__.py','import absent\n'),('shared.py','True\n')]:
+            self.git('update-index','--assume-unchanged',name)
+            before = (self.repo/name).stat()
+            (self.repo/name).write_text(replacement)
+            self.assertEqual((self.repo/name).stat().st_size,before.st_size)
+            os.utime(self.repo/name,ns=(before.st_atime_ns,before.st_mtime_ns))
+        run = self.cli('impact','--path','shared.py','--transitive')
+        self.assertEqual(run.returncode,1,run.stderr)
+        changed = json.loads(run.stdout)['transitive']
+        self.assertEqual(changed['snapshot_commit'],value['commit'])
+        self.assertEqual(changed['freshness']['changed_reached_files'],['pkg/__init__.py','shared.py'])
+        self.assertFalse(changed['freshness']['fresh'])
+
+    def test_anchor_namespace_or_unsupported_initializer_stays_explicitly_unknown(self):
+        (self.repo/'pkg').mkdir()
+        (self.repo/'pkg/__init__.py').symlink_to('../outside.py')
+        value = self.record({'pkg/b.py':'pass\n','ns/b.py':'pass\n','outside.py':'pass\n'},
+                            [['pkg/b.py','ns/b.py']])
+        graph = P.impact(value,self.repo,['outside.py'],True)['transitive']
+        self.assertEqual(graph['features'],[])
+        unknown = graph['coverage']['anchor_package_context_unknown']
+        self.assertEqual({row['path'] for row in unknown},{'pkg/b.py','ns/b.py'})
+        self.assertTrue(all('missing or unsupported' in row['reason'] for row in unknown))
+
     def test_retirement_preserves_transitively_shared_dependency_without_writing(self):
         value = self.record({'a.py':'import shared\n','b.py':'import shared\n','shared.py':'pass\n'},[['a.py'],['b.py']])
         before = P.map_path(self.project).read_bytes()

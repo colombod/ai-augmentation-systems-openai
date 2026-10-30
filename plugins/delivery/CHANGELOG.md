@@ -9,6 +9,10 @@
 - Report unresolved/ambiguous imports, unsupported languages/package contexts,
   dynamic loaders and parse limits. Greenfield remains code-free; unavailable
   optional reach is informational and does not gate story readiness.
+- Include possible enclosing regular-package initializer reach for Python module
+  anchors with no explicit imports; label implicit edges with null source line
+  and retain unknown package context. Preserve initializer-only shared consumers
+  and detect raw initializer/dependency changes.
 - Derived exclusive retirement reach remains candidate-only and never permits
   deletion or replaces owner/migration/rollback/usage review. Retain source pins
   and MIT attribution for the selectively adapted upstream traversal design.

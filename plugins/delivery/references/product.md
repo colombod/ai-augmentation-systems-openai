@@ -65,7 +65,14 @@ This first slice supports Python AST imports in conventional sibling/repository/
 `src` roots and regular package initializers. It does not resolve installed
 packages, namespace/custom import contexts, custom `sys.path`, dynamic loaders,
 other languages or semantic calls. Conditional/function-local imports are possible
-reach, not proof that a runtime path executes. Ambiguous paths, unresolved/external
+reach, not proof that a runtime path executes. Curated Python module anchors also
+include possible enclosing regular-package initializer reach, even with no import
+statements in the anchor. These `python-package-initializer` edges use `line: null`:
+tracked ancestry is the evidence, not a fabricated import location. This assumes
+a possible package-import context; standalone script execution may not run those
+initializers. Missing/unsupported enclosing package context stays explicit in
+`anchor_package_context_unknown`; namespace/custom contexts remain unsupported.
+Ambiguous paths, unresolved/external
 imports, unsupported source/initializer modes, parse/size failures and recognized
 dynamic loaders are reported even inside otherwise analyzed files. Files outside
 anchor reach are uninspected. A smaller unresolved list never proves completeness.

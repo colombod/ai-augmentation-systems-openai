@@ -437,10 +437,40 @@ def dependency_reach(value, repo, include_retired=()):
         edges[path] = sorted((e for e in edges[path] if e['to']!=path),key=lambda e:(e['to'],e['line']))
         return edges[path]
 
+    # Curated anchors have no guaranteed invocation mode. In a package-import
+    # context, enclosing regular initializers may run even when the module has
+    # no explicit imports. Seed these possible edges per feature, not globally
+    # on imported dependencies whose lookup roots were already resolved above.
+    anchor_context_unknown, anchor_initializer_cache = [], {}
+
+    def anchor_initializers(path):
+        if path in anchor_initializer_cache:
+            return anchor_initializer_cache[path]
+        result = []
+        anchor_initializer_cache[path] = result
+        if not path.endswith('.py'):
+            return result
+        directory = PurePosixPath(path).parent
+        while str(directory) not in ('.','src'):
+            init = str(directory/'__init__.py')
+            if init not in files or files[init]['mode'] not in ('100644','100755'):
+                anchor_context_unknown.append({'path':path,'package_initializer':init,
+                    'reason':'Anchor may be a script or namespace/custom package; enclosing initializer missing or unsupported. No further package reach inferred.'})
+                break
+            if init!=path:
+                result.append({'from':path,'to':init,'line':None,'kind':'python-package-initializer'})
+            directory = directory.parent
+        return result
+
     reached = {}
     for feature in features:
         previous = {p:None for p in sorted(feature['code'])}
         queue = deque(previous)
+        for anchor in sorted(feature['code']):
+            for edge in anchor_initializers(anchor):
+                if edge['to'] not in previous:
+                    previous[edge['to']] = edge
+                    queue.append(edge['to'])
         while queue:
             source = queue.popleft()
             for edge in outgoing(source):
@@ -456,6 +486,8 @@ def dependency_reach(value, repo, include_retired=()):
                      'fresh':current==commit and not changed},
         'coverage':{'scope':'Reachable from curated anchors, at recorded commit only; possible Python imports, not runtime calls',
                     'features_without_code':[f['id'] for f in features if not f['code']],
+                    'anchor_package_context_unknown':sorted(anchor_context_unknown,key=lambda x:x['path']),
+                    'initializer_edge_context':'python-package-initializer edges are possible package-import reach; standalone script execution may not run them. line:null means implicit ancestry, not an invented import location.',
                     'analyzed_files':sorted(analyzed),'unsupported_or_unparsed':sorted(skipped,key=lambda x:x['path']),
                     'unresolved_references':sorted(unresolved,key=lambda x:(x['from'],x['line'],x['reference'])),
                     'dynamic_loaders_not_inferred':sorted(dynamic,key=lambda x:(x['from'],x['line'])),
