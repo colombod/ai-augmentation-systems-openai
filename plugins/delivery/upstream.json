@@ -199,7 +199,7 @@
       "source": "agents/delivery-lead.md",
       "target": "references/reviewers/delivery-lead.md",
       "sha256": "72e991693efc54b50b4b8e67b6eee224b8a383e1d22dc85d4220af0737489b37",
-      "adaptation": "review lens; removed Claude model metadata and Chief of Staff runtime; QA uses direct evidence"
+      "adaptation": "review lens; removed Claude model metadata and Chief of Staff runtime; QA uses direct evidence Shared language/context obligations are consolidated in references/reviewer-context.md, with native source-integrity and greenfield clarification; original source notice and pin retained."
     },
     {
       "source": "agents/design-lead.md",
@@ -211,7 +211,7 @@
       "source": "agents/feature-critic.md",
       "target": "references/reviewers/feature-critic.md",
       "sha256": "4fe82e5d4390c5456672bc6abca25c0582eb55c3821025da3e5ba1a20a672e38",
-      "adaptation": "review lens; removed Claude model metadata and Chief of Staff runtime; QA uses direct evidence"
+      "adaptation": "review lens; removed Claude model metadata and Chief of Staff runtime; QA uses direct evidence Shared language/context obligations are consolidated in references/reviewer-context.md, with native source-integrity and greenfield clarification; original source notice and pin retained."
     },
     {
       "source": "agents/persona-simulator.md",
@@ -235,13 +235,13 @@
       "source": "agents/qa-strategist.md",
       "target": "references/reviewers/qa-strategist.md",
       "sha256": "3f076e6af5fa104ed9c069897b94b90ae08a6f3f2d8b203dcc04d570cab4b97e",
-      "adaptation": "review lens; removed Claude model metadata and Chief of Staff runtime; QA uses direct evidence"
+      "adaptation": "review lens; removed Claude model metadata and Chief of Staff runtime; QA uses direct evidence Shared language/context obligations are consolidated in references/reviewer-context.md, with native source-integrity and greenfield clarification; original source notice and pin retained."
     },
     {
       "source": "agents/solution-architect.md",
       "target": "references/reviewers/solution-architect.md",
       "sha256": "83f048f67e4173b92dc17de2ec4106872d07276d272c51c6c95fdd96a85a2b5a",
-      "adaptation": "review lens; removed Claude model metadata and Chief of Staff runtime; QA uses direct evidence"
+      "adaptation": "review lens; removed Claude model metadata and Chief of Staff runtime; QA uses direct evidence Shared language/context obligations are consolidated in references/reviewer-context.md, with native source-integrity and greenfield clarification; original source notice and pin retained."
     },
     {
       "source": "agents/user-researcher.md",

@@ -3,89 +3,55 @@ name: product
 description: Frame a greenfield idea or onboard a brownfield project into one evidence-bound product record. Connect customer promises to planned or observed code, check freshness and feature impact, carry owner choices forward, and prepare safe retirement proposals.
 ---
 
-# Product first, for ideas and existing work
+# Product work at the depth needed
 
-Read [host capabilities](../../references/runtime.md), [conventions](../../references/conventions.md)
-and the [product contract](../../references/product.md). Use this before PRD or
-roadmap work when the owner needs a product boundary, a baseline, or a feature-side
-impact answer. Greenfield and brownfield are equal paths, not maturity scores.
+Read [the core contract](../../references/core.md) before this action. If the host
+showed only catalogue metadata, open this full selected skill first; do not assume
+that any linked body is already loaded. Reuse a reference only with its exact text
+still visible and an established unchanged path/revision or content hash. Re-read
+after compaction, changed source/package, lost context or unverifiable revision.
+Never substitute remembered summaries for source or rules.
 
-Resolve the actual project/component and canonical record. Inspect existing
-`.delivery/` records and source documents before writing. Reuse them; never reset
-unfinished work or silently overwrite an owner's decisions. Initialize directories
-through `project.py init` only when the user has authorized the named initiative.
-Without local tools, provide a labelled unsaved record using the same contract.
+## Focused read-only map question
 
-## Start with the job and the owner's lens
-
-From the user's own words, capture one primary customer, recurring job, current
-cost (or unknown), proposition and before/after outcome. Reflect their examples
-and reasons: what matters, what must survive and what may be cut. Keep stated
-intent separate from your proposed interpretation; ask only what changes the next
-decision. A delegated run may continue with proposed choices, but cannot call
-them confirmed. Preserve the rejected alternative, reason and revisit condition.
-
-Choose the smallest useful work form. Keep form, autonomy and engine separate.
-Use the Right Shape scales/gates in the product contract; unknown critical gates
-conservatively cap autonomy. A local deterministic command plus host instructions
-often suffices; do not add an agent/service merely because the package supports one.
-Record an observable next slice, its done-when check and what is deliberately cut.
-
-## Greenfield: make a coherent first promise
-
-No product repository is required. Read supplied notes and existing plans. Create
-planned features with empty `code` arrays, `commit: null` and explicit unknowns.
-Describe a first end-to-end customer journey before expanding the requirements.
-Use `mode: greenfield`. Do not invent source paths, customer observations or a
-deployed product. When code exists, transition the same stable feature IDs to a
-brownfield snapshot; do not create a second product ledger.
-
-## Brownfield: distinguish what exists from what is promised
-
-Run the read-only source census:
+For existing feature/code inventory, freshness or a proposed file's direct impact,
+stay on this path. Resolve the actual project/component and canonical store using
+the core rules. Do not initialize a workspace, start an owner interview, rewrite
+plans or create a glossary merely to answer a read-only question.
 
 ```sh
-python3 <plugin-root>/scripts/product.py --project <planning> --repo <product-git-root> inspect
+python3 <plugin-root>/scripts/product.py --project <planning> --repo <product-git-root> status
+python3 <plugin-root>/scripts/product.py --project <planning> --repo <product-git-root> impact --path <file>
 ```
 
-Read project instructions, README, relevant entry points, manifests, tests,
-architecture/ADRs and accessible release evidence. Reconcile current Git changes,
-known branches/PRs and existing backlog with actual access; do not invent an
-import or infer completion from task names. The census finds candidate paths,
-not features. Curate customer-visible promises and distinguish shipped, preview,
-planned and historical retired features. Source existence alone proves neither
-installation nor deployment. Link regular tracked code/evidence files at the
-exact named commit; explain the evidence boundary beside each claim. Shared
-files may support several features. State what was not inspected.
+Run the one command matching the question; `impact` already includes freshness,
+so a separate full status/handoff is unnecessary. Without tools, inspect the
+identified map as a snapshot and state current code freshness unverified. For a
+greenfield idea, omit `--repo` for status; planned features have no observed code
+or code-freshness verdict. If the map/store is absent, say so and offer the
+authoring path only when wanted. Do not invent a feature map from memory.
 
-## Record, use and hand over
+Report relevant feature promises/paths, snapshot/current commit, changed bytes,
+shared consumers and unmapped uncertainty. A curated file map is not complete or
+transitive; unmapped is unknown, never permission to remove. Source availability
+is not proof of shipping, deployment or outside-user use. Preserve owner choices
+and findings; read relevant source/evidence or glossary entries only when needed
+to resolve the question. A query does not need a new initiative for a project-wide
+map. Do not load authoring budgets, scoring/coaching or templates for this path.
 
-Draft the input from [the packaged starter](../../templates/product-input.json).
-The starter is schema guidance, not an observation or a task to build. Fill its
-customer choices, paths, six usefulness judgements and shape reasons from actual
-inputs. Save with an expected hash, then query:
+## Create, assess, change choices, hand off, or plan retirement
 
-```sh
-python3 <plugin-root>/scripts/product.py --project <planning> record --input <curated-input.json> --expected-sha256 new
-python3 <plugin-root>/scripts/product.py --project <planning> handoff
-```
+Read [the product workflow](../../references/product-workflow.md),
+[product contract](../../references/product.md), and the relevant host/persistence
+and writing sections of [runtime](../../references/runtime.md) and
+[conventions](../../references/conventions.md). Their constraints remain active;
+unchanged visible resources need not be fetched repeatedly. The workflow covers
+equal greenfield/brownfield entry, owner intent, customer/proposition/cuts,
+separate usefulness judgements, Right Shape, safe recording and retirement
+proposals. Load its template only when producing that input.
 
-For brownfield add `--repo <product-git-root>` before the subcommand. Use the
-reported SHA for updates. `record` preserves previous versions and feature IDs.
-Read `status` before relying on the map and `impact --path <file>` before edits.
-Report unknown/unmapped coverage, changed raw bytes and stale commits prominently.
-Never describe this curated file index as a transitive dependency graph.
-
-Keep Job, First value, Fit, Outcome, Trust and Return separate, each with rating,
-evidence grade, source and next check. Never average them. Source inspection,
-tests and our own walkthrough remain Claimed, not Seen outside-user evidence.
-Unknown Return is a validation gap, never a retirement recommendation.
-
-For subtraction run `retire-plan --feature <id>`. Inspect its shared-code warnings,
-usage uncertainty and migration/rollback needs. Take the concrete proposal to the
-user. No helper performs retirement or deletion; a proposal grants no authority.
-
-Hand over the saved record/revision, observed vs proposed states, owner choices
-and unconfirmed decisions, usefulness gaps, shape/engine/authority, and one bounded
-next result. Pass this context into brief/PRD/architecture and sprint review;
-do not force a complete planning pipeline when the next step is already clear.
+Use the full `handoff` only for a requested planning/owner-context handoff. For
+retirement, preserve shared-code/value evidence and pending replacement,
+migration, rollback and usage decisions. A proposal never authorizes deletion.
+Native read-only roles gain no write lane from loading instructions. Missing
+host execution or authentication remains unavailable, never simulated success.

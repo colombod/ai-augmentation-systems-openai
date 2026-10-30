@@ -1,8 +1,12 @@
 # Delivery conventions
 
 Shared rules for the pipeline skills. A skill that points here is bound by every section
-it names exactly as if that section were written in the skill itself. Read the whole file
-once per skill run; it is short.
+it names exactly as if that section were written in the skill itself. Keep the
+[core contract](core.md) active for every action. Load the relevant sections for
+authoring, rather than forcing glossary curation and writing budgets into a map
+query. Reuse exact text already visible only when its source revision/hash is
+established unchanged; re-read after compaction, changes, lost context or an
+unverifiable revision. This changes loading, not which constraints apply.
 
 ## Where `.delivery/` resolves to
 
@@ -21,12 +25,13 @@ Not necessarily the repository root. Resolve before reading or writing any artif
 
 ## Which initiative
 
-Every artifact below lives under `.delivery/initiatives/<slug>/`, never directly under
-`.delivery/` — this is what lets independent initiatives (epics, sprints, parallel
+Initiative planning artifacts live under `.delivery/initiatives/<slug>/`, never directly under
+`.delivery/`. The shared `product-map.json` remains project-wide and querying it
+does not require selecting or creating an initiative. Namespacing is what lets independent initiatives (epics, sprints, parallel
 workstreams) be planned in parallel branches without colliding on the same shared file
 (`ADR-004`; the incident that motivated it: two initiatives independently continued the same
 `S-n`/`FR-n` sequence in one shared `prd.md`, discovered only at merge). Resolve which
-initiative before reading or writing any artifact:
+initiative before reading or writing initiative artifacts:
 
 1. **Explicit signal.** The user names an initiative, or one is already established for this
    conversation — use it.

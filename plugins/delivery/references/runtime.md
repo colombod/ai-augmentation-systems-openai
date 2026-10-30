@@ -20,8 +20,12 @@ Resolve resources from the skill that the host loaded. From
 `skills/<phase>/SKILL.md`, `../..` is this package's root when represented as files.
 Use the host's resource reader when resources are exposed another way. A path
 the host cannot open is unavailable, not permission to invent its contents.
-Read the full active skill, its conventions and named inputs; after compaction,
-read them again. References to "the user's request" mean actual conversation
+Read the full selected skill, then its action-relevant references and named inputs;
+catalogue metadata alone is not the workflow. The [core contract](core.md) governs
+focused queries. Shared text already exactly visible may be reused only with an
+established unchanged path/revision or content hash. If that cannot be checked,
+read it again. After compaction, source/package changes or lost context, reload
+the selected skill and needed references/artifacts. References to "the user's request" mean actual conversation
 context, not a literal argument variable. Use the host's skill picker; Codex
 invocation examples use `$delivery:brief`, while ChatGPT can expose `@` selection.
 
