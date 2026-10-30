@@ -236,6 +236,10 @@ and [MCP documentation](https://learn.chatgpt.com/docs/extend/mcp?surface=cli).
 ## Validation and provenance
 
 CLI 0.159.3 passed isolated installation and discovery of the 15 skills. The
+new product skill increases the current source to 16; that historical installed
+snapshot does not include it. This increment is validated through its public local
+commands and package checks; fresh host skill invocation remains a separate check.
+The
 planning preview also passed three selected-skill real-model file workflows.
 Runtime validation includes native thread persistence across coordinator restart,
 a native shell test denying a planning-file write while allowing a worktree

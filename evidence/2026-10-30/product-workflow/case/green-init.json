@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "/workspace/delivery-brownfield/plugins/delivery/scripts/project.py",
+    "init",
+    "--project",
+    "/workspace/delivery-brownfield/evidence/2026-10-30/product-workflow/case/greenfield",
+    "--initiative",
+    "new-plugin-idea"
+  ],
+  "exit_code": 0,
+  "stdout": "{\n  \"delivery_root\": \"/workspace/delivery-brownfield/evidence/2026-10-30/product-workflow/case/greenfield/.delivery\",\n  \"initiative\": \"new-plugin-idea\",\n  \"created\": [\n    \"/workspace/delivery-brownfield/evidence/2026-10-30/product-workflow/case/greenfield/.delivery\",\n    \"/workspace/delivery-brownfield/evidence/2026-10-30/product-workflow/case/greenfield/.delivery/initiatives\",\n    \"/workspace/delivery-brownfield/evidence/2026-10-30/product-workflow/case/greenfield/.delivery/initiatives/new-plugin-idea\",\n    \"/workspace/delivery-brownfield/evidence/2026-10-30/product-workflow/case/greenfield/.delivery/personas\",\n    \"/workspace/delivery-brownfield/evidence/2026-10-30/product-workflow/case/greenfield/.delivery/interviews\",\n    \"/workspace/delivery-brownfield/evidence/2026-10-30/product-workflow/case/greenfield/.delivery/simulations\",\n    \"/workspace/delivery-brownfield/evidence/2026-10-30/product-workflow/case/greenfield/.delivery/decisions\",\n    \"/workspace/delivery-brownfield/evidence/2026-10-30/product-workflow/case/greenfield/.delivery/stories\",\n    \"/workspace/delivery-brownfield/evidence/2026-10-30/product-workflow/case/greenfield/.delivery/reviews\",\n    \"/workspace/delivery-brownfield/evidence/2026-10-30/product-workflow/case/greenfield/.delivery/sprints\"\n  ],\n  \"capability\": \"planning-preview\",\n  \"artifacts_overwritten\": 0\n}\n",
+  "stderr": ""
+}
