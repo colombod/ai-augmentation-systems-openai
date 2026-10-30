@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased — 0.1.0-preview.13
+
+- Explain how an existing cloud/remote assistant with authorized resource tools
+  can follow installed product skills without a local device or new model launcher.
+  Keep file-resource access distinct from automatic host discovery, persistent
+  coordination, authenticated dot and host acceptance.
+- Route ordinary authorized delivery/shipping through the bounded-change guide;
+  reserve local team runtime setup for requested persistent coordination.
+- Preserve canonical-store reuse, equal greenfield/brownfield entry, explicit
+  unavailable/unsaved fallbacks and existing review/authority gates.
+
 ## 0.1.0-preview.12 — 2026-10-30
 
 - Add an explicit bounded-change route shared by product, stories, sprint, review

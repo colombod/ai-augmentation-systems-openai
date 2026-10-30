@@ -17,7 +17,7 @@ brief, supporting research, customer personas, requirements, design, architectur
 roadmap, stories and a scoped implementation handoff. After implementation, it
 helps review the evidence and update the plan with what was learned.
 
-**Version `0.1.0-preview.12` — product and local runtime preview.** Sixteen skills use
+**Version `0.1.0-preview.13` — product and local runtime preview.** Sixteen skills use
 21 templates and 10 review lenses. Greenfield ideas and brownfield projects share
 one product contract: owner intent, customer promise, usefulness and planned or
 observed features. The local coordinator adds persistent Codex
@@ -90,6 +90,52 @@ not been accepted yet. CLI registration is not a ChatGPT install. Once installed
 through an available host-supported route, select the skills in that host's
 picker (`@` where supported). This preview does not claim a verified desktop or
 ChatGPT setup path.
+
+### Existing cloud or remote sessions
+
+If your existing cloud assistant has model access and authorized tools to read the
+installed package, it can follow Delivery in that session. A local Mac or another
+model launcher is not a prerequisite. Automatic discovery in the host's skill
+picker is a separate capability: a CLI install does not register skills in a
+cloud chat catalogue. This file-resource route does not establish a persistent
+team, authenticated dot access or acceptance on other hosts.
+
+Use the host's supported resource reader or filesystem tools to read the full
+installed `skills/product/SKILL.md`, then its linked `references/core.md`,
+`references/product.md`, `references/runtime.md` and, for choosing/delivering one
+small change, `references/bounded-change.md`. Resolve links against that installed
+package; a source checkout may be a different revision. Record the package
+identity and loaded resources. Reading catalogue metadata alone is insufficient.
+
+For a new idea, supply the customer goal and notes; no repository is required.
+For an existing product, identify the repository/component and read its instructions,
+current features, unfinished work and evidence. In either case, first reuse the
+existing canonical `.delivery/` store (or identified document store) and initiative;
+keep owner choices and history. Do not initialize a parallel map. The product
+skill guides framing, onboarding gaps and selection of one useful next outcome.
+Use its bounded-change route for a small story, sprint, independent review and
+realignment; ordinary authorized shipping follows that route's shipping handoff.
+Local coordinator setup is required only when persistent coordination is requested.
+
+With shell/Python and filesystem access, invoke helpers from the installed package:
+
+```sh
+python3 <installed-package>/scripts/product.py --project <planning> --repo <product-git-root> inspect
+python3 <installed-package>/scripts/product.py --project <planning> --repo <product-git-root> status
+python3 <installed-package>/scripts/product.py --project <planning> --repo <product-git-root> handoff --feature <exact-feature-id>
+```
+
+These read-only queries reuse an existing record; `inspect` also works before a
+map exists. Omit `--repo` for a greenfield idea. A missing map remains missing until
+authorized authoring; a helper output or model judgment grants no write, acceptance,
+merge or deployment authority. Follow the selected skill for authoring commands.
+
+If resources cannot be read, report them as unavailable rather than inventing their
+instructions. Without shell/Python, follow readable resources and accessible
+artifacts manually. Without an authorized save tool, return a complete export
+labelled **prepared, not saved to the canonical store**. Missing capabilities stay
+explicit; do not add a service, copy credentials or weaken host controls to make
+planning work. No remote operation or device installation follows from file access.
 
 ## How to use it
 
