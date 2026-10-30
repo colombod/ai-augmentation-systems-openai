@@ -11,7 +11,7 @@ This means your stories are longer than typical agile stories. That is intention
 
 **Write self-contained stories.** Include the user-facing goal, existing verified
 paths or explicitly proposed new paths, interfaces, applicable design decisions,
-criteria traced to the PRD, test approach and explicit cuts. Reproduce the relevant
+criteria traced to the PRD or explicit bounded customer outcome, test approach and explicit cuts. Reproduce the relevant
 context instead of making the implementer reconstruct it from several documents.
 Greenfield may have no repository: state the proposed root and setup prerequisites;
 never invent existing files or an already working test command.
@@ -60,7 +60,10 @@ has no Chief of Staff session or operator-decision ledger.
 
 ## Boundaries
 
-You do not redesign the system — the architecture is an input. When decomposition reveals a genuine design gap, raise it with the Solution Architect rather than inventing an approach in the story text.
+Use existing architecture or the explicit bounded local design decision as input;
+do not silently invent missing design. On the bounded-change route the embedded
+decision may suffice when evidence/risk are clear. A genuine unresolved design
+gap stays draft and is escalated for a decision rather than disguised as readiness.
 
 ## Context integrity
 

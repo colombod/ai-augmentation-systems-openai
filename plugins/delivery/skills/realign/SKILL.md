@@ -49,12 +49,12 @@ Where an assumption came from a persona, update the persona — and consider whe
 grounding grade should change. An `assumed` attribute that turned out true is still
 `assumed`; one that turned out false should be corrected and marked.
 
-**2. Estimates.** The review recorded which sizings were wrong and in which direction.
+**2. Estimates (where estimated comparable work exists).** The review recorded which sizings were wrong and in which direction.
 Apply the correction to the remaining roadmap items of similar shape. Do not just fix the
 one that was wrong — the bias usually generalises, and a team that under-sizes integration
 work under-sizes all of it.
 
-**3. Re-stage.** Use the `product-owner` lens. The sprint may have changed what is
+**3. Re-stage (full pipeline with stages/personas).** Use the `product-owner` lens. The sprint may have changed what is
 worth doing next: a feature turned out cheap, a persona need turned out shallow, a
 dependency turned out to block more than expected. Re-check the MVP boundary against what
 is now known, applying the same rule as before — **a stage must let at least one persona
@@ -63,15 +63,21 @@ finish a journey end to end.**
 If the review found that personas could not complete their journey, that outcome dominates
 this step: the next stage's job is to close that gap, not to add scope.
 
-**4. Re-sequence.** Use the `program-manager` lens to update the roadmap: revised
+**4. Re-sequence (where a roadmap exists).** Use the `program-manager` lens to update the roadmap: revised
 sizes, new dependencies the sprint exposed, and the critical path recomputed. Carried debt
 from the review is work — it goes in a phase with an owner, or it is explicitly accepted
 as permanent. Debt that is neither is debt that never gets paid.
 
-**5. Calibrate the persona phases.** The review compared predicted friction against real
+**5. Calibrate the persona phases (only when simulation/personas were used).** The review compared predicted friction against real
 friction. If simulation missed things the real implementation hit, say so in
 `personas/README.md` — it is the only feedback loop those phases have, and it should make
 the next `$delivery:simulate` output trusted more or less accordingly.
+
+For bounded changes without these artifacts, record the actual versus proposed
+effort, customer outcome, corrected embedded design/assumptions and next useful
+work in the story and existing backlog/product record. Name stage/simulation
+checks not applicable with reasons; do not create documents to satisfy headings.
+Retain Unknown usefulness and the next real-use check.
 
 **6. Close or carry findings.** Every finding the sprint resolved gets marked `fixed` in
 `.delivery/reviews/`. Anything still open stays open and keeps appearing in
@@ -87,10 +93,10 @@ changed and why. Then make the actual edits to those documents.
 - Within the template's budget, or the overrun declared in the document with its reason — measure prose when computation is available; otherwise report word count unverified
 
 - Every invalidated assumption updated at its source, not just noted
-- Estimate corrections applied to comparable remaining work, not only the item that missed
-- MVP staging re-checked against end-to-end persona coverage
+- Estimate corrections applied where comparable estimated work exists; otherwise record the reason
+- Existing MVP staging re-checked, or bounded customer outcome and next action updated
 - Carried debt scheduled with an owner or explicitly accepted as permanent
-- Simulation calibration recorded
+- Simulation calibration recorded if used; otherwise explicitly not applicable
 - Findings closed or explicitly still open
 
 ## Writing, then revising
@@ -102,5 +108,6 @@ changed and why. Then make the actual edits to those documents.
 Report what changed and what it means for the plan — particularly any change to the MVP
 boundary or the end date, since those are the originator's to accept.
 
-Next step: `$delivery:sprint` to scope the following wave, or the specific repair the
-review named if personas still cannot complete their journey.
+Next step: the specific repair, another wave, or the
+[authorized shipping handoff](../../references/bounded-change.md#authorized-shipping-handoff)
+for the accepted bounded unit. State which and why.
