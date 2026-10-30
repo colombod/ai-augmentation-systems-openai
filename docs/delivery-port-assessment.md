@@ -1,6 +1,73 @@
 # Delivery port assessment
 
-## Current design: OpenAI capabilities first
+## Release checklist — 30 October 2026
+
+**Verdict: pending independent goal/scenario QA. Not full original-goal coverage.**
+This is the single current release checkpoint; the older design, observations and
+contracts below remain history/context, not a newer readiness claim. The user
+explicitly requested a repo-based checklist. Beads is unavailable here; this
+updates the existing assessment rather than creating another task database.
+Owners below are roles: **Maintainer** = implementing assistant; **QA** = independent
+goal/scenario reviewer; **Owner** = user/release owner. No new service or work is
+commissioned by listing a next action.
+
+**Delivery state.** Main source is preview.7, not a verified unified installed
+release. The unpublished branches are preview.8 compact drafting, preview.9 loading,
+preview.10 dependency impact, plus PR1 supervision/evidence. Their local combination
+is **unshipped** `0.1.0-integration.20261030`, tested at
+`edd036fbd96b60f58a3936766a2e712cbf18f502` (evidence-only head
+`a3007a12fb2b4979519b60272da0d2ef273ca0b5`). No publication, remote merge or user-host
+update occurred. [Input pins, conflicts and raw checks](../evidence/2026-10-30/local-integration/README.md).
+
+| Original goal | Main source versus branch-only | Local evidence / remaining gap | Owner → next useful action |
+|---|---|---|---|
+| Equal greenfield and brownfield entry | Main: one product record, planned/no-code mode and existing-project census; drafting and remaining greenfield reviewer corrections are branch-only. | Both compact-draft → record → impact → retirement → handoff paths pass; multi-stage model use still awaits QA. | QA → verify both journeys preserve context through architecture/stories, not just JSON. |
+| Feature promises connected to code; freshness and pre-edit impact | Main: curated full-commit file anchors/raw-byte checks. Branch: optional Python import/initializer reach and shortest evidence chains. | Actual operator_capture.py change: zero direct matches, two dependency matches. Curated anchors, unresolved imports and unsupported consumers remain explicit; no complete semantic/deployed inventory. | Maintainer → consolidate tested direct/optional reach with honest coverage; do not promise automatic discovery. |
+| Owner taste and what must survive | Main: attributed owner/proposed/unknown choices and preservation intent carried to planning. | Interaction checks retain proposed choices; model interpretation across phases is unproven. | QA + Owner → inspect preservation of actual owner intent and unresolved decisions in the scenario outputs. |
+| One customer, one proposition and explicit cuts before expansion | Main: product framing/brief/PRD guidance; branch draft reduces repetitive input. | Draft does not confirm choices or infer shipping. This is a workflow contract, not universal runtime enforcement. | QA → verify next work serves the stated customer and cuts rather than merely filling fields. |
+| Job, First value, Fit, Outcome, Trust, Return; no total | Main: separate rating/grade/evidence/next-check cards. Draft branch keeps missing judgements Unknown. | Integration preserves Unknown/Claimed boundaries; no outside-user first-value or return evidence. | Owner + Maintainer → run one real first-use pilot after a qualified preview; record observations/dated Return check without promoting demos to Seen. |
+| Deliberate retirement; shared-code protection and user decision | Main: proposal-only direct shared-code analysis and explicit replacement/migration/rollback context. Branch: partial dependency reach, including initializer-only consumers. | Shared retention and hidden-index/raw initializer/dependency staleness pass. No deletion, absent-consumer proof or authenticated retirement decision. | Maintainer → ship read-only proposals only; Owner decides any concrete retirement separately. |
+| Right Shape: smallest sufficient form, autonomy and engine | Main: separate form/engine/need/gates; unknown gates cap autonomy. | Arithmetic and conservative defaults pass; a draft placeholder is not a justified work-form decision. | QA + Maintainer → require a reasoned smallest form for the next useful result, not an assumed agent/service. |
+| Guarded execution, evidence and durable handoff/recovery | Main: local native roles, canonical artifacts/Beads gates and operator-owned acceptance. PR1: request/receipt recovery and exact-SHA/revision-bound command evidence. | Combined regression/scratch checks pass; fake transport is not coordinated host execution or real human acceptance. | Maintainer + QA → qualify one bounded real native task/review/terminal acceptance only when advertising runtime capability; never infer merge/deploy authority. |
+| Dot as optional chief of staff, retaining Delivery execution/state and human acceptance | Main: native runtime/gates. PR1 only: trusted in-process supervision, durable requests/receipts and verification helpers. | Combined regressions and exact-SHA scratch review pass, but no authenticated dot adapter or real dot completion. Native managers cannot write product-map.json; authorized host save remains required. | Maintainer + Owner → later choose one supported authenticated host boundary and prove one bounded handoff/receipt; do not block core preview on an unbuilt adapter. |
+| Quality-preserving efficiency and reliable review | Branch-only: focused loading/common source rules; PR1 exact-SHA command evidence. | Combined **185 Python**, **22 Node**, **16 discovered skills**, **12 installed resource hashes**, **33 public helper commands** pass. These are not model token/time or multi-stage quality results. | QA → return objective scenario findings/quality evidence; evaluate the combined skill body before transferring standalone loading claims. |
+| One usable installable OpenAI Delivery version | Main and separate branches are not one published candidate. Local textual/version/provenance/skill conflicts are reconciled for testing only. | One isolated CLI package installs; no user-installed update, desktop/ChatGPT acceptance or live coordinated execution is established. | Maintainer + Owner → follow the bounded preview gate below after QA; keep unsupported host/runtime claims out of the listing. |
+
+### Preview gate and shortest shipping route
+
+A useful **explicitly scoped preview** can deliver both product journeys, owner/
+customer/cut context, curated mapping with optional Python reach, separate usefulness
+and safe retirement proposals. Optional native/dot features stay off/experimental
+unless independently accepted. Dot completion, a complete graph and long-term Return
+are **full-vision gaps**, not automatic blockers for that honestly scoped preview.
+
+| Gate | Current state | Accountable owner / done when |
+|---|---|---|
+| Independent original-goal and scenario review | **Awaiting findings; final verdict deliberately pending.** | QA supplies exact tested source, criterion-level failures/unknowns, model/host and actual usage receipts where available. Maintainer folds confirmed blockers into this same checkpoint. |
+| One reviewable combined candidate | Local compatibility passed; not a published release. | Maintainer keeps only confirmed scope, preserves provenance/authority, reconciles all conflicts and chooses one manifest/readme/changelog version. Do not publish the local integration label. |
+| Quality before optimization | Static/source checks pass; model quality/resource benefit unproven. | QA checks the combined body on equal greenfield/brownfield tasks. If loading changes lose quality, retain conservative guidance; do not call smaller byte counts a win. |
+| Exact candidate publication and checks | No new PR/retry/merge authorized by this record. Prior branch-publication rejections remain respected. | Owner resolves applicable publication/merge authorization for the concrete diff. Maintainer opens a normal review PR only when allowed, runs/reviews exact-head CI and fixes confirmed failures; no automatic merge/release. |
+| Supported installation and first useful journey | Isolated CLI discovery passed; customer-host acceptance pending. | Owner supplies/authorizes an available supported host and writable test project. Verify fresh installed invocation and a useful result. CLI-scoped preview needs explicit restricted scope; full CLI/desktop/ChatGPT claims need their separate acceptance. |
+| Value follow-up | Unknown outside-user usefulness/Return, retained honestly. | Owner + Maintainer record one pilot's actual outcome and next return check after preview; this does not require an analytics platform or fabricated adoption score. |
+
+**External prerequisites/decisions:** independent QA findings; preview surface/scope
+accepted by Owner; applicable permission for the concrete PR/merge and later
+user-host update; an available authorized model host for missing behavior tests.
+Basic planning needs no new server or provider key. Beads/Dolt are absent here,
+so real Beads-backed runtime qualification needs an already authorized suitable
+environment. No credentials, network policy or host permissions are changed to
+make a test pass. Authenticated dot access needs an actual adapter/host trust proof,
+not an agent-supplied role string or a model response.
+
+**Do not build yet:** a graph service/database or second registry; a new agent/
+authentication framework; broad language/semantic-graph parity; Amplifier runtime/
+mandatory storyboard machinery; automatic retirement/merge/approval; or another
+large roadmap/token-cache system. Consolidate existing value, resolve the actual
+QA blockers, prove installation and one useful journey, then extend from observed
+need. Keep this checkpoint current after each accepted result; do not add parallel
+release lists.
+
+## Design contract: OpenAI capabilities first
 
 The delivery outcomes are the product: a grounded plan, traceable requirements,
 review findings, an implementation handoff and an honest acceptance record.

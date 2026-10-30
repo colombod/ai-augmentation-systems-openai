@@ -87,6 +87,7 @@ existing Claude marketplace.
 
 ## Changelog and upstream alignment
 
+- [Current Delivery release checklist](docs/delivery-port-assessment.md#release-checklist--30-october-2026)
 - [Delivery changelog](plugins/delivery/CHANGELOG.md)
 - [Maintainer alignment guidance](docs/upstream-alignment.md)
 - [Platform validation](docs/platform-validation.md)
