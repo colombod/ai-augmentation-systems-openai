@@ -6,7 +6,7 @@
   Python impact and supervision/verification source into one local review artifact.
   No new runtime feature is introduced by consolidation. Product records are saved
   by an authorized host; protected native-manager write lanes stay unchanged.
-- Scope the preview to planning/helper work and read-only retirement proposals.
+- Scope the preview to product/feature decisions, planning and read-only retirement proposals.
   Full retirement lifecycle, native/dot acceptance and token benefit remain unproved
   or incomplete; prior branch and local-test history below is not a release record.
 

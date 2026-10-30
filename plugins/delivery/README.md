@@ -1,9 +1,13 @@
 # Delivery
 
-**UNRELEASED planning/helper preview candidate.** This combines reviewed source
+**UNRELEASED product/feature preview candidate.** This combines reviewed source
 for a single installable candidate; it is not published or approved for deployment.
-Supported preview scope is owner-led planning, authorized host-saved product records,
+The working unit is a product or feature outcome: who it serves, current versus
+planned capability, value/evidence, owner intent and whether to build/change/retire.
+The candidate supports owner-led framing, authorized host-saved product records,
 curated direct/optional Python impact, handoffs and read-only retirement proposals.
+Code, tasks and agents support those decisions; the preview is an increment toward
+the full user-and-dot delivery loop, not its completion.
 Native coordination remains experimental and separately configured; authenticated
 dot access, desktop/ChatGPT acceptance and measured token benefit are not established.
 An active feature cannot yet transition to retired through the helper.
