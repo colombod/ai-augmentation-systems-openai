@@ -1,0 +1,29 @@
+{
+  "case": "brownfield",
+  "command": [
+    "codex",
+    "exec",
+    "--ignore-user-config",
+    "--ephemeral",
+    "--sandbox",
+    "workspace-write",
+    "--skip-git-repo-check",
+    "-C",
+    "/workspace/native-product-cli-20261030/brownfield",
+    "-c",
+    "log_dir=\"/workspace/native-product-cli-20261030/native-logs\"",
+    "-c",
+    "features.apps=false",
+    "--json",
+    "--output-last-message",
+    "/workspace/native-product-cli-20261030/brownfield/answer.md",
+    "-"
+  ],
+  "exit_code": 1,
+  "failure": null,
+  "seconds": 0.11,
+  "source_commit": "f817ab6d1af5b8eabcd76687d0c28446136e15f9",
+  "skill_sha256": "991f58a142569518beac70950d7f5f5a13289230618f234255120999eb35d4ed",
+  "record_present": false,
+  "qualification": "Fresh ephemeral native CLI with project-local skill copy; isolated plugin install/discovery was tested separately; no credential copying."
+}

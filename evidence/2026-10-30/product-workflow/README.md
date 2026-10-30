@@ -110,9 +110,14 @@ The adaptation records pinned methods and full MIT notices; it does not bundle
 their complete coaching modes, film production, Decisioncraft canvas, Trail
 symbol graph, model routing or Amplifier infrastructure.
 
-The 16th skill has package/source checks and public local-command proof; a fresh
-native skill invocation/installation has not been performed in this increment.
-Historical CLI discovery of 15 skills does not qualify the new one. Desktop and
+Fresh isolated CLI 0.163.0 installation/discovery now qualifies all 16 skills and
+the installed product helper's greenfield record/handoff (`fresh-host/`). No
+model call was made. Fresh native model invocation failed during startup before
+any skill turn: the authenticated managed Codex home is read-only. A supported
+SQLite-state override still disconnected; the documented ephemeral CLI path returned EROFS.
+The exact remaining write path is not identified by the generic startup error.
+See the retained failed attempts, not a simulated substitute. Historical CLI
+discovery of 15 skills does not qualify a fresh model workflow. Desktop and
 ChatGPT workflow acceptance remain separate. An authenticated dot adapter is still
 absent and does not block these local product workflows.
 
