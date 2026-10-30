@@ -409,20 +409,44 @@ def atomic_write(path, data):
             os.unlink(temporary)
 
 
-def inspect(repo):
+def inspect(repo, scopes=None):
     commit = git(repo,'rev-parse','HEAD').decode().strip()
     files = tree(repo,commit)
-    docs = [p for p in files if Path(p).name in ('AGENTS.md','README.md','CONTRIBUTING.md') or
+    selected, context = files, set()
+    if scopes is not None:
+        if not isinstance(scopes, list) or not scopes:
+            fail('Supply one or more explicit source scopes')
+        scopes = sorted({relative(path) for path in scopes})
+        for scope in scopes:
+            item = files.get(scope)
+            if item is not None:
+                if item['kind']!='blob' or item['mode'] not in ('100644','100755'):
+                    fail('Source scope must be a regular tracked file or subtree: '+scope)
+            elif not any(path.startswith(scope+'/') for path in files):
+                fail('Source scope has no tracked files at HEAD: '+scope)
+            for ancestor in (PurePosixPath(scope), *PurePosixPath(scope).parents):
+                for name in ('AGENTS.md','CONTRIBUTING.md','README.md'):
+                    candidate = str(ancestor/name)
+                    if candidate in files:
+                        context.add(candidate)
+        selected = {path:item for path,item in files.items()
+                    if any(path==scope or path.startswith(scope+'/') for scope in scopes)}
+    docs = [p for p in selected if Path(p).name in ('AGENTS.md','README.md','CONTRIBUTING.md') or
             p.startswith(('docs/','.delivery/')) and p.endswith(('.md','.json'))]
-    manifests = [p for p in files if Path(p).name in ('plugin.json','package.json','pyproject.toml','Cargo.toml','go.mod','Makefile')]
+    manifests = [p for p in selected if Path(p).name in ('plugin.json','package.json','pyproject.toml','Cargo.toml','go.mod','Makefile')]
     staged = git(repo,'diff','--cached','--name-only','--no-renames','--no-ext-diff','--no-textconv','HEAD','--').decode().splitlines()
-    return {'repository':str(repo),'commit':commit,'tracked_files':len(files),
+    result = {'repository':str(repo),'commit':commit,'tracked_files':len(files),
         'instructions_and_docs':sorted(docs),'manifests':sorted(manifests),
-        'test_paths':sorted(p for p in files if '/tests/' in '/'+p or Path(p).name.startswith('test_')),
+        'test_paths':sorted(p for p in selected if '/tests/' in '/'+p or Path(p).name.startswith('test_')),
         'working_changes':sorted(set(staged)|{p for p,item in files.items() if item['kind']=='blob' and raw_changed(repo,p,item)}),
         'staged_changes':staged,
         'untracked':git(repo,'ls-files','--others','--exclude-standard','-z').decode().split('\0')[:-1],
         'feature_discovery':'Candidate sources only: an agent must inspect them and curate features; no tickets or PRs imported'}
+    if scopes is not None:
+        result['scope'] = {'requested':scopes, 'selected_tracked_files':len(selected),
+            'repository_context':sorted(context-set(selected)),
+            'qualification':'Only candidate lists are scoped; repository identity and staged/working/untracked state remain global. Outside-scope support is unknown, not absent; no features inferred.'}
+    return result
 
 
 def raw_changed(repo, name, item):
@@ -755,7 +779,8 @@ def main():
     parser.add_argument('--repo',help='Explicit existing product Git root; unnecessary for a greenfield idea')
     parser.add_argument('--project',required=True,help='Canonical planning project, independent of product code')
     sub = parser.add_subparsers(dest='command',required=True)
-    sub.add_parser('inspect')
+    inspection = sub.add_parser('inspect')
+    inspection.add_argument('--scope',action='append',help='Repeat repository-relative tracked file/subtree scopes; candidate paths only, Git state remains global')
     drafting=sub.add_parser('draft');drafting.add_argument('--outline',required=True)
     record = sub.add_parser('record');record.add_argument('--input',required=True);record.add_argument('--expected-sha256',required=True)
     completion = sub.add_parser('retire-record', help='Record an externally authorized completed retirement; performs no retirement')
@@ -768,7 +793,9 @@ def main():
     repo = repository(args.repo) if args.repo else None
     project = checked_path(args.project)
     if args.command=='inspect':
-        result = inspect(repo) if repo else {'mode':'greenfield','project':str(project),
+        if args.scope and repo is None:
+            fail('Source scopes require --repo; no-code ideas use inspect without --scope')
+        result = inspect(repo,args.scope) if repo else {'mode':'greenfield','project':str(project),
             'code':'not supplied; start with the customer, job, promise and cuts',
             'planning_artifacts':__import__('project').inventory(project)}
     elif args.command=='draft':

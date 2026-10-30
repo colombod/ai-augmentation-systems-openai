@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased candidate — 0.1.0-preview.15
+
+- Add repeated explicit `inspect --scope PATH` component/test source scopes.
+  Candidate paths are filtered; ancestor instructions and all repository change
+  warnings stay visible. Default full census and no-code greenfield stay unchanged.
+- Reject invalid/unknown/symlink scopes without a global fallback. This is a
+  source census, not automatic feature discovery or complete map coverage.
+
 ## Unreleased candidate — 0.1.0-preview.14
 
 - Add explicit completed retirement recording with current outcome evidence,

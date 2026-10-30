@@ -50,6 +50,9 @@ writing sections needed by the artifact. Expanded guidance is action-dependent.
    and explicit unknowns. Describe one first customer journey; no repository needed.
    Brownfield: run `inspect`, then read relevant README, entry points, manifests,
    tests, ADRs and release evidence. Reconcile accessible Git changes/PRs/backlog.
+   For a selected component use repeated `inspect --scope PATH` values, including
+   separate test paths where needed; read returned `scope.repository_context`
+   ancestor instructions and global Git-state warnings. Outside scope stays unknown.
    The census finds candidate paths, not features. Curate promises at an exact
    commit and state gaps; source presence does not prove release. Keep stable IDs
    when an idea gains code rather than opening another ledger.

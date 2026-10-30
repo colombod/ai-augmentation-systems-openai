@@ -19,7 +19,7 @@ brief, supporting research, customer personas, requirements, design, architectur
 roadmap, stories and a scoped implementation handoff. After implementation, it
 helps review the evidence and update the plan with what was learned.
 
-**Version `0.1.0-preview.14` — product and local runtime preview.** Sixteen skills use
+**Version `0.1.0-preview.15` — product and local runtime preview.** Sixteen skills use
 21 templates and 10 review lenses. Greenfield ideas and brownfield projects share
 one product contract: owner intent, customer promise, usefulness and planned or
 observed features. The local coordinator adds persistent Codex
@@ -157,7 +157,10 @@ $delivery:product Onboard this existing repository. Read its instructions, curre
 ```
 
 The skill curates the record; its read-only census does not infer features or
-import remote backlogs automatically. It carries one primary customer/proposition,
+import remote backlogs automatically. For a selected repository component,
+`inspect --scope plugins/delivery --scope tests/delivery` limits candidate paths
+while retaining ancestor instruction context and repository-wide change warnings.
+Select actual paths for your project; omitted support remains unknown. It carries one primary customer/proposition,
 the owner's reasons and what must survive, six separate usefulness judgements and
 the smallest sufficient work form into the next planning step. Proposed choices
 remain proposed. No repository is required for a greenfield record.

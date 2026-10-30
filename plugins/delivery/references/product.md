@@ -15,7 +15,7 @@ required for brownfield code mapping and unnecessary for a greenfield idea.
 
 | Command | Result |
 |---|---|
-| `inspect` | Read-only candidate docs/manifests/tests and current source commit, or existing concept artifacts without a repo |
+| `inspect [--scope PATH ...]` | Read-only candidate docs/manifests/tests; optional explicit tracked scopes, or existing concept artifacts without a repo |
 | `draft --outline FILE` | Expand compact notes into complete input JSON on stdout; no canonical write or evidence upgrade |
 | `record --input FILE --expected-sha256 new` | Validate curated JSON and save a new product record; use the reported digest for later updates |
 | `status` | Feature states, exact source revision and raw-byte/mode freshness |
@@ -41,6 +41,31 @@ retains the actual whole-map `map_sha256`. Empty or unknown IDs fail with exit 2
 there is no fallback to all features. Omit `--feature` for the unchanged full
 handoff. Both forms are read-only and grant no implementation, approval,
 retirement or native write rights; greenfield selection needs no Git repository.
+
+## Inspect a selected component
+
+With a code repository, repeat `--scope` for its explicit files/subtrees, including
+its tests when they live elsewhere. For example:
+
+```sh
+python3 <plugin-root>/scripts/product.py --project <planning> --repo <git-root> inspect --scope plugins/delivery --scope tests/delivery
+```
+
+Only candidate docs/manifests/test lists are filtered. Read the returned
+`scope.repository_context` as well: applicable root/ancestor README, AGENTS and
+CONTRIBUTING paths remain visible even outside the chosen scopes. Repository
+identity, current commit, total tracked count and staged/working/untracked warnings
+remain global. `scope.selected_tracked_files` names the selected count; selection
+is not a claim that outside support is absent or the feature map complete.
+
+Scopes match tracked regular files or subtrees at HEAD with path boundaries;
+order/overlap/duplicates are normalized. Empty, noncanonical, unknown, traversal,
+absolute and symlink scopes fail rather than falling back to the whole repository.
+No scope retains the existing full-census output. Helpers do not infer companion
+tests, feature promises or shipped status. Without a repository use plain `inspect`
+for greenfield context; a source scope without `--repo` is explicitly unavailable.
+No map is created or changed by either census. Resource reuse follows the core
+contract; smaller candidate output is not proof of token or quality improvement.
 
 ## Start with compact notes
 
