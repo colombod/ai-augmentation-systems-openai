@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "/workspace/delivery-selective-loading/plugins/delivery/scripts/project.py",
+    "init",
+    "--project",
+    "/tmp/delivery-selective-journeys/greenfield",
+    "--initiative",
+    "new-plugin-idea"
+  ],
+  "exit_code": 0,
+  "stdout": "{\n  \"delivery_root\": \"/tmp/delivery-selective-journeys/greenfield/.delivery\",\n  \"initiative\": \"new-plugin-idea\",\n  \"created\": [\n    \"/tmp/delivery-selective-journeys/greenfield/.delivery\",\n    \"/tmp/delivery-selective-journeys/greenfield/.delivery/initiatives\",\n    \"/tmp/delivery-selective-journeys/greenfield/.delivery/initiatives/new-plugin-idea\",\n    \"/tmp/delivery-selective-journeys/greenfield/.delivery/personas\",\n    \"/tmp/delivery-selective-journeys/greenfield/.delivery/interviews\",\n    \"/tmp/delivery-selective-journeys/greenfield/.delivery/simulations\",\n    \"/tmp/delivery-selective-journeys/greenfield/.delivery/decisions\",\n    \"/tmp/delivery-selective-journeys/greenfield/.delivery/stories\",\n    \"/tmp/delivery-selective-journeys/greenfield/.delivery/reviews\",\n    \"/tmp/delivery-selective-journeys/greenfield/.delivery/sprints\"\n  ],\n  \"capability\": \"planning-preview\",\n  \"artifacts_overwritten\": 0\n}\n",
+  "stderr": ""
+}

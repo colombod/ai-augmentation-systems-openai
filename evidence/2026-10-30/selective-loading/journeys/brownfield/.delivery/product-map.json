@@ -1,0 +1,741 @@
+{
+  "commit": "0ab84d132c5c5d4a1b2555aab08003a66fefa1a1",
+  "features": [
+    {
+      "code": [
+        "plugins/delivery/scripts/project.py"
+      ],
+      "evidence": [
+        {
+          "note": "Executable test source; actual run is separate evidence, not outside-user use.",
+          "path": "tests/delivery/test_project.py"
+        },
+        {
+          "note": "Declared source preview and host limits; not independent deployment proof.",
+          "path": "plugins/delivery/README.md"
+        }
+      ],
+      "id": "workspace",
+      "name": "Planning workspace initialization and inventory",
+      "state": "preview",
+      "summary": "Available in source preview; source and tests do not establish deployed acceptance.",
+      "unknowns": [
+        "Outside-user first value and unprompted return have not been measured.",
+        "Hook-event-log is a separate product component, intentionally outside this curated Delivery feature map."
+      ],
+      "usefulness": {
+        "First value": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Partial"
+        },
+        "Fit": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Partial"
+        },
+        "Job": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Partial"
+        },
+        "Outcome": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Partial"
+        },
+        "Return": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Unknown",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Unknown"
+        },
+        "Trust": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Partial"
+        }
+      }
+    },
+    {
+      "code": [
+        "plugins/delivery/scripts/project.py",
+        "plugins/delivery/skills/architecture/SKILL.md",
+        "plugins/delivery/skills/brief/SKILL.md",
+        "plugins/delivery/skills/challenge/SKILL.md",
+        "plugins/delivery/skills/design/SKILL.md",
+        "plugins/delivery/skills/personas/SKILL.md",
+        "plugins/delivery/skills/prd/SKILL.md",
+        "plugins/delivery/skills/realign/SKILL.md",
+        "plugins/delivery/skills/research/SKILL.md",
+        "plugins/delivery/skills/roadmap/SKILL.md",
+        "plugins/delivery/skills/simulate/SKILL.md",
+        "plugins/delivery/skills/sprint/SKILL.md",
+        "plugins/delivery/skills/sprint-review/SKILL.md",
+        "plugins/delivery/skills/start/SKILL.md",
+        "plugins/delivery/skills/status/SKILL.md",
+        "plugins/delivery/skills/stories/SKILL.md"
+      ],
+      "evidence": [
+        {
+          "note": "Executable test source; actual run is separate evidence, not outside-user use.",
+          "path": "tests/delivery/test_package.py"
+        },
+        {
+          "note": "Declared source preview and host limits; not independent deployment proof.",
+          "path": "plugins/delivery/README.md"
+        }
+      ],
+      "id": "planning",
+      "name": "Existing planning and review skill workflows",
+      "state": "preview",
+      "summary": "Available in source preview; source and tests do not establish deployed acceptance.",
+      "unknowns": [
+        "Outside-user first value and unprompted return have not been measured.",
+        "Hook-event-log is a separate product component, intentionally outside this curated Delivery feature map."
+      ],
+      "usefulness": {
+        "First value": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Partial"
+        },
+        "Fit": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Partial"
+        },
+        "Job": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Partial"
+        },
+        "Outcome": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Partial"
+        },
+        "Return": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Unknown",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Unknown"
+        },
+        "Trust": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Partial"
+        }
+      }
+    },
+    {
+      "code": [
+        "plugins/delivery/scripts/product.py",
+        "plugins/delivery/scripts/project.py",
+        "plugins/delivery/skills/product/SKILL.md"
+      ],
+      "evidence": [
+        {
+          "note": "Executable test source; actual run is separate evidence, not outside-user use.",
+          "path": "tests/delivery/test_product.py"
+        },
+        {
+          "note": "Declared source preview and host limits; not independent deployment proof.",
+          "path": "plugins/delivery/README.md"
+        }
+      ],
+      "id": "product-baseline",
+      "name": "Greenfield and brownfield product records, feature impact and handoff",
+      "state": "preview",
+      "summary": "Available in source preview; source and tests do not establish deployed acceptance.",
+      "unknowns": [
+        "Outside-user first value and unprompted return have not been measured.",
+        "Hook-event-log is a separate product component, intentionally outside this curated Delivery feature map."
+      ],
+      "usefulness": {
+        "First value": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Partial"
+        },
+        "Fit": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Partial"
+        },
+        "Job": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Partial"
+        },
+        "Outcome": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Partial"
+        },
+        "Return": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Unknown",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Unknown"
+        },
+        "Trust": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Partial"
+        }
+      }
+    },
+    {
+      "code": [
+        "plugins/delivery/scripts/runtime.py",
+        "plugins/delivery/scripts/codex_rpc.py",
+        "plugins/delivery/scripts/project.py"
+      ],
+      "evidence": [
+        {
+          "note": "Executable test source; actual run is separate evidence, not outside-user use.",
+          "path": "tests/delivery/test_runtime.py"
+        },
+        {
+          "note": "Declared source preview and host limits; not independent deployment proof.",
+          "path": "plugins/delivery/README.md"
+        }
+      ],
+      "id": "native-team",
+      "name": "Persistent local Codex role coordination",
+      "state": "preview",
+      "summary": "Available in source preview; source and tests do not establish deployed acceptance.",
+      "unknowns": [
+        "Outside-user first value and unprompted return have not been measured.",
+        "Hook-event-log is a separate product component, intentionally outside this curated Delivery feature map."
+      ],
+      "usefulness": {
+        "First value": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Partial"
+        },
+        "Fit": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Partial"
+        },
+        "Job": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Partial"
+        },
+        "Outcome": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Partial"
+        },
+        "Return": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Unknown",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Unknown"
+        },
+        "Trust": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Partial"
+        }
+      }
+    },
+    {
+      "code": [
+        "plugins/delivery/scripts/artifacts.py",
+        "plugins/delivery/scripts/project.py"
+      ],
+      "evidence": [
+        {
+          "note": "Executable test source; actual run is separate evidence, not outside-user use.",
+          "path": "tests/delivery/test_artifacts.py"
+        },
+        {
+          "note": "Declared source preview and host limits; not independent deployment proof.",
+          "path": "plugins/delivery/README.md"
+        }
+      ],
+      "id": "canonical-artifacts",
+      "name": "Controlled canonical planning and review saves",
+      "state": "preview",
+      "summary": "Available in source preview; source and tests do not establish deployed acceptance.",
+      "unknowns": [
+        "Outside-user first value and unprompted return have not been measured.",
+        "Hook-event-log is a separate product component, intentionally outside this curated Delivery feature map."
+      ],
+      "usefulness": {
+        "First value": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Partial"
+        },
+        "Fit": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Partial"
+        },
+        "Job": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Partial"
+        },
+        "Outcome": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Partial"
+        },
+        "Return": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Unknown",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Unknown"
+        },
+        "Trust": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Partial"
+        }
+      }
+    },
+    {
+      "code": [
+        "plugins/delivery/scripts/delivery_gates.py",
+        "plugins/delivery/scripts/operator_capture.py",
+        "plugins/delivery/scripts/runtime.py",
+        "plugins/delivery/scripts/project.py"
+      ],
+      "evidence": [
+        {
+          "note": "Executable test source; actual run is separate evidence, not outside-user use.",
+          "path": "tests/delivery/test_delivery_gates.py"
+        },
+        {
+          "note": "Declared source preview and host limits; not independent deployment proof.",
+          "path": "plugins/delivery/README.md"
+        }
+      ],
+      "id": "controlled-review",
+      "name": "Identity-bound Beads workflow and human acceptance",
+      "state": "preview",
+      "summary": "Available in source preview; source and tests do not establish deployed acceptance.",
+      "unknowns": [
+        "Outside-user first value and unprompted return have not been measured.",
+        "Hook-event-log is a separate product component, intentionally outside this curated Delivery feature map."
+      ],
+      "usefulness": {
+        "First value": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Partial"
+        },
+        "Fit": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Partial"
+        },
+        "Job": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Partial"
+        },
+        "Outcome": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Partial"
+        },
+        "Return": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Unknown",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Unknown"
+        },
+        "Trust": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Partial"
+        }
+      }
+    },
+    {
+      "code": [
+        "plugins/delivery/scripts/judge.js",
+        "plugins/delivery/scripts/lib/judge.js",
+        "plugins/delivery/scripts/lib/openai-judge.js"
+      ],
+      "evidence": [
+        {
+          "note": "Executable test source; actual run is separate evidence, not outside-user use.",
+          "path": "tests/delivery/openai-judge.test.js"
+        },
+        {
+          "note": "Declared source preview and host limits; not independent deployment proof.",
+          "path": "plugins/delivery/README.md"
+        }
+      ],
+      "id": "explicit-judge",
+      "name": "Explicit Jev/OpenAI advisory judge selection",
+      "state": "preview",
+      "summary": "Available in source preview; source and tests do not establish deployed acceptance.",
+      "unknowns": [
+        "Outside-user first value and unprompted return have not been measured.",
+        "Hook-event-log is a separate product component, intentionally outside this curated Delivery feature map."
+      ],
+      "usefulness": {
+        "First value": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Partial"
+        },
+        "Fit": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Partial"
+        },
+        "Job": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Partial"
+        },
+        "Outcome": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Partial"
+        },
+        "Return": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Unknown",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Unknown"
+        },
+        "Trust": {
+          "evidence": "Source and author-run checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a maintainer doing their own first task, then a dated unprompted return check.",
+          "rating": "Partial"
+        }
+      }
+    }
+  ],
+  "method": "curated file-level feature links; no inferred calls or complete dependency graph",
+  "mode": "brownfield",
+  "product": {
+    "before_after": {
+      "basis": "proposed",
+      "revisit": "Revisit when the owner corrects the choice or real-use evidence contradicts it.",
+      "source": "Maintainer proposal; not an owner confirmation.",
+      "text": "Before: guess what matters. After: inspect promises, evidence, cuts and the next observable result."
+    },
+    "current_cost": {
+      "basis": "unknown",
+      "revisit": "Revisit when the owner corrects the choice or real-use evidence contradicts it.",
+      "source": "Maintainer proposal; not an owner confirmation.",
+      "text": "Unknown: the owner reports wasted effort but no measured time/cost was supplied."
+    },
+    "customer": {
+      "basis": "proposed",
+      "revisit": "Revisit when the owner corrects the choice or real-use evidence contradicts it.",
+      "source": "Maintainer proposal; not an owner confirmation.",
+      "text": "Maintainer of an existing repository preparing a change."
+    },
+    "cuts": [
+      {
+        "basis": "proposed",
+        "revisit": "Revisit when the owner corrects the choice or real-use evidence contradicts it.",
+        "source": "Maintainer proposal; not an owner confirmation.",
+        "text": "No new service, automatic code deletion, film production or model dependency in this slice."
+      }
+    ],
+    "must_survive": [
+      {
+        "basis": "owner-stated",
+        "revisit": "Revisit when the owner corrects the choice or real-use evidence contradicts it.",
+        "source": "User, 2026-10-30: \"Brown field and green field are equally important\"",
+        "text": "Greenfield and brownfield are equally important."
+      },
+      {
+        "basis": "owner-stated",
+        "revisit": "Revisit when the owner corrects the choice or real-use evidence contradicts it.",
+        "source": "User: \"Do not do such mistake and drive this to completion and value\"",
+        "text": "Drive to completion and value; preserve agency, value and priorities."
+      }
+    ],
+    "next_slice": {
+      "basis": "proposed",
+      "revisit": "Revisit when the owner corrects the choice or real-use evidence contradicts it.",
+      "source": "Maintainer proposal; not an owner confirmation.",
+      "text": "A maintainer can frame a new idea or inspect an existing feature, then obtain a source-bound impact answer and one next done-when check."
+    },
+    "problem": {
+      "basis": "proposed",
+      "revisit": "Revisit when the owner corrects the choice or real-use evidence contradicts it.",
+      "source": "Maintainer proposal; not an owner confirmation.",
+      "text": "Planning can expand before the first useful customer outcome is established."
+    },
+    "proposition": {
+      "basis": "proposed",
+      "revisit": "Revisit when the owner corrects the choice or real-use evidence contradicts it.",
+      "source": "Maintainer proposal; not an owner confirmation.",
+      "text": "See which customer-visible features a file change can affect before editing."
+    },
+    "right_shape": {
+      "alternatives": [
+        "Just prose: lacks repeatable freshness and shared-file checks.",
+        "A graph service or persistent agent: unnecessary for this bounded file-level first outcome."
+      ],
+      "autonomy_rung": 2,
+      "benchmark": "This actual-repository command run plus a labelled idea, stale/unknown/share traps in tests, a leave-alone check and no adoption claim. Stop after recording one next slice.",
+      "engine": "LLM",
+      "form": "skill",
+      "gates": {
+        "G1": {
+          "reason": "Not yet verified in the intended host.",
+          "status": "unknown"
+        },
+        "G2": {
+          "reason": "Not yet verified in the intended host.",
+          "status": "unknown"
+        },
+        "G3": {
+          "reason": "Not yet verified in the intended host.",
+          "status": "unknown"
+        },
+        "G4": {
+          "reason": "Not yet verified in the intended host.",
+          "status": "unknown"
+        },
+        "G5": {
+          "reason": "Not yet verified in the intended host.",
+          "status": "unknown"
+        },
+        "G6": {
+          "reason": "Not yet verified in the intended host.",
+          "status": "unknown"
+        }
+      },
+      "need": {
+        "N1": 1,
+        "N2": 1,
+        "N3": 1,
+        "N4": 0
+      },
+      "reason": "The host curates customer promises and choices; deterministic local commands check paths, bytes and impact. No separate model or agent loop."
+    },
+    "riskiest_assumption": {
+      "basis": "unknown",
+      "revisit": "Revisit when the owner corrects the choice or real-use evidence contradicts it.",
+      "source": "Maintainer proposal; not an owner confirmation.",
+      "text": "A stranger can get a useful first result from the packaged skill without its author."
+    }
+  },
+  "schema_version": 1,
+  "snapshot": {
+    "plugins/delivery/README.md": {
+      "blob": "4d68b4fd597878bae8786bf6c841f0bcf6c77b86",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/scripts/artifacts.py": {
+      "blob": "a3cf56ffd4314556d38cfb059ceccb317e8a2c7c",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/scripts/codex_rpc.py": {
+      "blob": "a73a20763d2a213d954c33d79cfc30d8addd085b",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/scripts/delivery_gates.py": {
+      "blob": "1be3bbb67f6f6319c684f8f937a0a397bcdacb84",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/scripts/judge.js": {
+      "blob": "d9eddc7aea864dc7734031f7ebc110a8d93953aa",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/scripts/lib/judge.js": {
+      "blob": "7cca5236285ba80dbfa88a2d3209b44d74ccf0f0",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/scripts/lib/openai-judge.js": {
+      "blob": "13cd09e77b0f06aca026d86a5f3dae7e94238aa0",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/scripts/operator_capture.py": {
+      "blob": "b1aa6f27b34d034898d274c6dfd60f4a01957c04",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/scripts/product.py": {
+      "blob": "8abd71613cb7f967c103a8cefd5aa13f15f52ced",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/scripts/project.py": {
+      "blob": "e51eb59460ad6b3fd9396dfe28ee97a552a8fab2",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/scripts/runtime.py": {
+      "blob": "9c2cbe16d033bee8f3f3311f936cecccf7083b3d",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/skills/architecture/SKILL.md": {
+      "blob": "249438b79595063329bf864fd55b6728df442c77",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/skills/brief/SKILL.md": {
+      "blob": "e348fe9f90ccc8dc037dd83b4e5ae2241858eaae",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/skills/challenge/SKILL.md": {
+      "blob": "68f65471f38ed4e35e169fa9fd6e1bc397e40b61",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/skills/design/SKILL.md": {
+      "blob": "bea61596cadf34907846871010246bb03a364fd7",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/skills/personas/SKILL.md": {
+      "blob": "7347029f25b43bd5fef48c64aa5b082fc969b50c",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/skills/prd/SKILL.md": {
+      "blob": "969aab43aae17c59c76dbafb11befe780d8fb6bd",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/skills/product/SKILL.md": {
+      "blob": "9e21bf427e6883a79187a410de24a72042d26c20",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/skills/realign/SKILL.md": {
+      "blob": "9ab0ce7cc6325269d92d3fd167c122d764e9ac5e",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/skills/research/SKILL.md": {
+      "blob": "042b79a26e56dc4a22fe1ad8d9c9a4534acd6679",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/skills/roadmap/SKILL.md": {
+      "blob": "f8dd7f840d3cda109475c645d48dd80553bc10f8",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/skills/simulate/SKILL.md": {
+      "blob": "9ae7f87d20f6a7da85011355a677a8bb082d36c5",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/skills/sprint-review/SKILL.md": {
+      "blob": "3c1cfbbda4efc98bcafad068620ab75a0f75ca0f",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/skills/sprint/SKILL.md": {
+      "blob": "34ac16527d761fcc404986c0303c5e4be01cb3e2",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/skills/start/SKILL.md": {
+      "blob": "1cf3f8aade499a89d95a3d06b20b15f659c1cf85",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/skills/status/SKILL.md": {
+      "blob": "70b0f0577467a65bad1ed36e53c5d907d7ae52ef",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/skills/stories/SKILL.md": {
+      "blob": "759ead4bfeb51965b80caa86221acddaf21077fe",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "tests/delivery/openai-judge.test.js": {
+      "blob": "e21d538d02830b21431105ba51c40ff2d52aa8b7",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "tests/delivery/test_artifacts.py": {
+      "blob": "071c38e47f745221567ffa084cebbcc0df95d846",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "tests/delivery/test_delivery_gates.py": {
+      "blob": "e4741dfaaef4a79f006c79844567af020b842042",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "tests/delivery/test_package.py": {
+      "blob": "26d6233fcc16df8144c492abc351b370dffb24f0",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "tests/delivery/test_product.py": {
+      "blob": "b9576e3595cb44422584f986b5381cf444e5bfb7",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "tests/delivery/test_project.py": {
+      "blob": "34d976b2395b416494f87cd3b96c498e714ea2af",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "tests/delivery/test_runtime.py": {
+      "blob": "f96bd3fb3720ac9cf5a4295375522b7e88baea56",
+      "kind": "blob",
+      "mode": "100644"
+    }
+  }
+}
