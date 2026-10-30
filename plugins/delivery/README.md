@@ -1,14 +1,19 @@
 # Delivery
 
-**UNSHIPPED disposable local integration test.** This package combines review
-branches for compatibility checks; it is not a released or approved plugin.
+**UNRELEASED planning/helper preview candidate.** This combines reviewed source
+for a single installable candidate; it is not published or approved for deployment.
+Supported preview scope is owner-led planning, authorized host-saved product records,
+curated direct/optional Python impact, handoffs and read-only retirement proposals.
+Native coordination remains experimental and separately configured; authenticated
+dot access, desktop/ChatGPT acceptance and measured token benefit are not established.
+An active feature cannot yet transition to retired through the helper.
 
 Delivery helps turn a product idea into a plan someone can implement: a problem
 brief, supporting research, customer personas, requirements, design, architecture,
 roadmap, stories and a scoped implementation handoff. After implementation, it
 helps review the evidence and update the plan with what was learned.
 
-**Version `0.1.0-integration.20261030` — product and local runtime preview.** Sixteen skills use
+**Version `0.1.0-preview.11` — product and local runtime preview.** Sixteen skills use
 21 templates and 10 review lenses. Greenfield ideas and brownfield projects share
 one product contract: owner intent, customer promise, usefulness and planned or
 observed features. The local coordinator adds persistent Codex

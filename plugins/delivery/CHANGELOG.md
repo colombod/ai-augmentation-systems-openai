@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased candidate — 0.1.0-preview.11
+
+- Consolidate the existing product/drafting, greenfield reviewer/loading, optional
+  Python impact and supervision/verification source into one local review artifact.
+  No new runtime feature is introduced by consolidation. Product records are saved
+  by an authorized host; protected native-manager write lanes stay unchanged.
+- Scope the preview to planning/helper work and read-only retirement proposals.
+  Full retirement lifecycle, native/dot acceptance and token benefit remain unproved
+  or incomplete; prior branch and local-test history below is not a release record.
+
 ## Local test only — 0.1.0-integration.20261030
 
 - Combine existing supervision, drafting, selective loading and optional impact
