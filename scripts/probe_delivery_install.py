@@ -110,8 +110,15 @@ def probe():
                 product_helper = installed_root / 'scripts/product.py'
                 if not product_helper.is_file():
                     raise AssertionError('Installed package is missing product.py')
+                outline = project/'outline.json'
+                outline.write_text(json.dumps({'features':[{'id':'first-result','name':'Illustrative first result'}]}))
+                drafted = subprocess.run(['python3','-B',str(product_helper),'--project',str(project),
+                    'draft','--outline',str(outline)],text=True,capture_output=True,timeout=10)
+                if drafted.returncode:
+                    raise RuntimeError('Installed product draft failed: '+drafted.stderr)
+                draft_input = project/'draft-input.json';draft_input.write_text(drafted.stdout)
                 product_record = subprocess.run(['python3', '-B', str(product_helper), '--project', str(project),
-                    'record', '--input', str(installed_root/'templates/product-input.json'),
+                    'record', '--input', str(draft_input),
                     '--expected-sha256', 'new'], text=True, capture_output=True, timeout=10)
                 if product_record.returncode:
                     raise RuntimeError('Installed product record failed: '+product_record.stderr)
@@ -123,7 +130,7 @@ def probe():
                 return {'codex': version, 'package_version': json.loads((installed_root / 'plugin.json').read_text())['version'],
                         'installation': 'passed', 'skills_discovered': sorted(s['name'] for s in skills),
                         'installed_helper': 'passed', 'model_calls': 0,
-                        'installed_product_helper': {'record':'passed', 'handoff':'passed',
+                        'installed_product_helper': {'draft':'passed','record':'passed', 'handoff':'passed',
                             'qualification':'illustrative greenfield template; unconfirmed choices retained; no model or customer-use claim'},
                         'package_boundary': {'port_assessment': 'excluded', 'release_lineage': 'present'},
                         'acceptance': {'cli_install_and_discovery': 'passed', 'real_model_workflow': 'not-tested',

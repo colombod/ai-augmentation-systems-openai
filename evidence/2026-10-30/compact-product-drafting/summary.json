@@ -1,0 +1,29 @@
+[
+  {
+    "mode": "brownfield",
+    "outline_bytes": 722,
+    "expanded_input_bytes": 8118,
+    "features": 2,
+    "commands": [
+      "draft",
+      "record",
+      "handoff",
+      "impact"
+    ],
+    "source_commit": "8e01b536b2ba7ebf47f4c61a3cc42a8904b94aec",
+    "qualification": "Author-run public local commands; no model or outside-user observation. Brownfield uses actual Delivery source; greenfield is illustrative."
+  },
+  {
+    "mode": "greenfield",
+    "outline_bytes": 290,
+    "expanded_input_bytes": 5748,
+    "features": 1,
+    "commands": [
+      "draft",
+      "record",
+      "handoff"
+    ],
+    "source_commit": "8e01b536b2ba7ebf47f4c61a3cc42a8904b94aec",
+    "qualification": "Author-run public local commands; no model or outside-user observation. Brownfield uses actual Delivery source; greenfield is illustrative."
+  }
+]

@@ -1,0 +1,29 @@
+{
+  "product": {
+    "customer": "Proposed: maintainer of an existing Delivery checkout",
+    "proposition": "Prepare a source-bound feature record without repetitive schema editing"
+  },
+  "features": [
+    {
+      "id": "workspace",
+      "name": "Initialize the planning workspace",
+      "code": [
+        "plugins/delivery/scripts/project.py"
+      ],
+      "evidence": [
+        "tests/delivery/test_project.py"
+      ]
+    },
+    {
+      "id": "product-record",
+      "name": "Draft and inspect a product baseline",
+      "code": [
+        "plugins/delivery/scripts/product.py",
+        "plugins/delivery/scripts/project.py"
+      ],
+      "evidence": [
+        "tests/delivery/test_product.py"
+      ]
+    }
+  ]
+}

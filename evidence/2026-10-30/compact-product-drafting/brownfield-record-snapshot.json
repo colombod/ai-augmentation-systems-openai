@@ -1,0 +1,247 @@
+{
+  "commit": "8e01b536b2ba7ebf47f4c61a3cc42a8904b94aec",
+  "features": [
+    {
+      "code": [
+        "plugins/delivery/scripts/project.py"
+      ],
+      "evidence": [
+        {
+          "note": "Supplied evidence route; its contents and meaning still require review. File existence is not a passing test or ship verdict.",
+          "path": "tests/delivery/test_project.py"
+        }
+      ],
+      "id": "workspace",
+      "name": "Initialize the planning workspace",
+      "state": "planned",
+      "summary": "Proposed promise: Initialize the planning workspace; behaviour and availability not yet established.",
+      "unknowns": [
+        "Curated draft only: confirm the promise, behaviour, coverage and availability.",
+        "Outside-user usefulness and unprompted return are not established."
+      ],
+      "usefulness": {
+        "First value": {
+          "evidence": "No outside-user evidence recorded.",
+          "grade": "Unknown",
+          "next_check": "Name who to observe, when, and the task/outcome.",
+          "rating": "Unknown"
+        },
+        "Fit": {
+          "evidence": "No outside-user evidence recorded.",
+          "grade": "Unknown",
+          "next_check": "Name who to observe, when, and the task/outcome.",
+          "rating": "Unknown"
+        },
+        "Job": {
+          "evidence": "No outside-user evidence recorded.",
+          "grade": "Unknown",
+          "next_check": "Name who to observe, when, and the task/outcome.",
+          "rating": "Unknown"
+        },
+        "Outcome": {
+          "evidence": "No outside-user evidence recorded.",
+          "grade": "Unknown",
+          "next_check": "Name who to observe, when, and the task/outcome.",
+          "rating": "Unknown"
+        },
+        "Return": {
+          "evidence": "No outside-user evidence recorded.",
+          "grade": "Unknown",
+          "next_check": "Name who to observe, when, and the task/outcome.",
+          "rating": "Unknown"
+        },
+        "Trust": {
+          "evidence": "No outside-user evidence recorded.",
+          "grade": "Unknown",
+          "next_check": "Name who to observe, when, and the task/outcome.",
+          "rating": "Unknown"
+        }
+      }
+    },
+    {
+      "code": [
+        "plugins/delivery/scripts/product.py",
+        "plugins/delivery/scripts/project.py"
+      ],
+      "evidence": [
+        {
+          "note": "Supplied evidence route; its contents and meaning still require review. File existence is not a passing test or ship verdict.",
+          "path": "tests/delivery/test_product.py"
+        }
+      ],
+      "id": "product-record",
+      "name": "Draft and inspect a product baseline",
+      "state": "planned",
+      "summary": "Proposed promise: Draft and inspect a product baseline; behaviour and availability not yet established.",
+      "unknowns": [
+        "Curated draft only: confirm the promise, behaviour, coverage and availability.",
+        "Outside-user usefulness and unprompted return are not established."
+      ],
+      "usefulness": {
+        "First value": {
+          "evidence": "No outside-user evidence recorded.",
+          "grade": "Unknown",
+          "next_check": "Name who to observe, when, and the task/outcome.",
+          "rating": "Unknown"
+        },
+        "Fit": {
+          "evidence": "No outside-user evidence recorded.",
+          "grade": "Unknown",
+          "next_check": "Name who to observe, when, and the task/outcome.",
+          "rating": "Unknown"
+        },
+        "Job": {
+          "evidence": "No outside-user evidence recorded.",
+          "grade": "Unknown",
+          "next_check": "Name who to observe, when, and the task/outcome.",
+          "rating": "Unknown"
+        },
+        "Outcome": {
+          "evidence": "No outside-user evidence recorded.",
+          "grade": "Unknown",
+          "next_check": "Name who to observe, when, and the task/outcome.",
+          "rating": "Unknown"
+        },
+        "Return": {
+          "evidence": "No outside-user evidence recorded.",
+          "grade": "Unknown",
+          "next_check": "Name who to observe, when, and the task/outcome.",
+          "rating": "Unknown"
+        },
+        "Trust": {
+          "evidence": "No outside-user evidence recorded.",
+          "grade": "Unknown",
+          "next_check": "Name who to observe, when, and the task/outcome.",
+          "rating": "Unknown"
+        }
+      }
+    }
+  ],
+  "method": "curated file-level feature links; no inferred calls or complete dependency graph",
+  "mode": "brownfield",
+  "product": {
+    "before_after": {
+      "basis": "unknown",
+      "revisit": "When the next consequential step requires this choice.",
+      "source": "No owner decision supplied.",
+      "text": "Unknown: discuss the specific choice with the owner."
+    },
+    "current_cost": {
+      "basis": "unknown",
+      "revisit": "When the next consequential step requires this choice.",
+      "source": "No owner decision supplied.",
+      "text": "Unknown: discuss the specific choice with the owner."
+    },
+    "customer": {
+      "basis": "proposed",
+      "revisit": "Confirm or revise with the owner before relying on this choice.",
+      "source": "Compact drafting notes; owner confirmation not established.",
+      "text": "Proposed: maintainer of an existing Delivery checkout"
+    },
+    "cuts": [
+      {
+        "basis": "unknown",
+        "revisit": "When the next consequential step requires this choice.",
+        "source": "No owner decision supplied.",
+        "text": "Unknown: discuss the specific choice with the owner."
+      }
+    ],
+    "must_survive": [
+      {
+        "basis": "unknown",
+        "revisit": "When the next consequential step requires this choice.",
+        "source": "No owner decision supplied.",
+        "text": "Unknown: discuss the specific choice with the owner."
+      }
+    ],
+    "next_slice": {
+      "basis": "unknown",
+      "revisit": "When the next consequential step requires this choice.",
+      "source": "No owner decision supplied.",
+      "text": "Unknown: discuss the specific choice with the owner."
+    },
+    "problem": {
+      "basis": "unknown",
+      "revisit": "When the next consequential step requires this choice.",
+      "source": "No owner decision supplied.",
+      "text": "Unknown: discuss the specific choice with the owner."
+    },
+    "proposition": {
+      "basis": "proposed",
+      "revisit": "Confirm or revise with the owner before relying on this choice.",
+      "source": "Compact drafting notes; owner confirmation not established.",
+      "text": "Prepare a source-bound feature record without repetitive schema editing"
+    },
+    "right_shape": {
+      "alternatives": [
+        "Assess the smallest sufficient form with the owner; do not assume an agent is needed."
+      ],
+      "autonomy_rung": 0,
+      "benchmark": "Proposed, not run: real first-value task, planted trap, leave-alone case and stopping rule.",
+      "engine": "None",
+      "form": "tool",
+      "gates": {
+        "G1": {
+          "reason": "Not yet verified in the intended host.",
+          "status": "unknown"
+        },
+        "G2": {
+          "reason": "Not yet verified in the intended host.",
+          "status": "unknown"
+        },
+        "G3": {
+          "reason": "Not yet verified in the intended host.",
+          "status": "unknown"
+        },
+        "G4": {
+          "reason": "Not yet verified in the intended host.",
+          "status": "unknown"
+        },
+        "G5": {
+          "reason": "Not yet verified in the intended host.",
+          "status": "unknown"
+        },
+        "G6": {
+          "reason": "Not yet verified in the intended host.",
+          "status": "unknown"
+        }
+      },
+      "need": {
+        "N1": 0,
+        "N2": 0,
+        "N3": 0,
+        "N4": 0
+      },
+      "reason": "Unassessed placeholder: no autonomy or model dependency is established by drafting notes."
+    },
+    "riskiest_assumption": {
+      "basis": "unknown",
+      "revisit": "When the next consequential step requires this choice.",
+      "source": "No owner decision supplied.",
+      "text": "Unknown: discuss the specific choice with the owner."
+    }
+  },
+  "schema_version": 1,
+  "snapshot": {
+    "plugins/delivery/scripts/product.py": {
+      "blob": "ae0143359d8fd18a31e2e007703397d7aadc7a41",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/scripts/project.py": {
+      "blob": "e51eb59460ad6b3fd9396dfe28ee97a552a8fab2",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "tests/delivery/test_product.py": {
+      "blob": "20c39a82988254e897919f18b4033d3f7abd0716",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "tests/delivery/test_project.py": {
+      "blob": "34d976b2395b416494f87cd3b96c498e714ea2af",
+      "kind": "blob",
+      "mode": "100644"
+    }
+  }
+}

@@ -16,6 +16,7 @@ required for brownfield code mapping and unnecessary for a greenfield idea.
 | Command | Result |
 |---|---|
 | `inspect` | Read-only candidate docs/manifests/tests and current source commit, or existing concept artifacts without a repo |
+| `draft --outline FILE` | Expand compact notes into complete input JSON on stdout; no canonical write or evidence upgrade |
 | `record --input FILE --expected-sha256 new` | Validate curated JSON and save a new product record; use the reported digest for later updates |
 | `status` | Feature states, exact source revision and raw-byte/mode freshness |
 | `impact --path FILE [--path FILE]` | Features directly linked to the proposed paths, shared files and unmapped uncertainty |
@@ -29,6 +30,53 @@ not a distributed transaction. Helpers never edit source, reset Git, install
 hooks, select a model, contact a service or delete features. Exit codes: 0 for a
 valid command, 1 for stale source or unconfirmed handoff choices, 2 for invalid
 input/conflict. A concept has no code freshness verdict (`fresh: null`).
+
+## Start with compact notes
+
+You need not fill the full starter by hand. For a no-code idea, an outline can be:
+
+```json
+{
+  "product": {
+    "customer": "Maintainer considering a local change check",
+    "proposition": "Get one useful result before adding an agent"
+  },
+  "features": [{"id": "first-result", "name": "One local result"}]
+}
+```
+
+Run `product.py --project <planning> draft --outline notes.json` and save stdout
+as a draft input file. For brownfield, add `--repo <git-root>` and supplied feature
+`code` paths and `evidence` paths; the helper checks them at HEAD. For example:
+
+```json
+{"features": [
+  {"id": "workspace", "name": "Initialize the planning workspace",
+   "code": ["plugins/delivery/scripts/project.py"],
+   "evidence": ["tests/delivery/test_project.py"]}
+]}
+```
+
+Outline features require `id` and `name`; optional keys are `summary`, `state`,
+`code`, `evidence` and `unknowns`. Evidence may be a path or a full path/note object.
+Feature state defaults to planned even when code exists. All six usefulness
+ratings and grades start Unknown. These conservative defaults are deliberate:
+the author/agent must still inspect behaviour, releases and outside-user evidence.
+Unknown keys are rejected rather than silently dropping a misspelled code field.
+
+Optional `product` notes use the full contract's keys. Plain strings become
+proposed decisions; attribution is not fabricated. Existing full decision objects
+and a fully assessed `right_shape` may be supplied explicitly. Without a shape
+assessment, draft uses an explicitly unassessed tool/None-engine placeholder at
+autonomy zero, with unknown gates. This is not a recommendation for the eventual
+product. Review it before architecture or execution.
+
+Draft only prints a complete, recordable input. It never overwrites the map,
+confirms an owner or bypasses expected-hash recording. Review and save that input
+using `record`; previous product choices should be carried forward explicitly
+when updating rather than replaced by a new sparse outline. The agent still
+discovers feature promises and selects routes; draft removes repetitive JSON,
+not the need to understand the project. No symbol graph or model service is added.
 
 Saving requires an actually authorized writable host session. Native Delivery
 manager roles remain read-only; they can read a prepared product record but do
