@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "/workspace/delivery-selective-loading/plugins/delivery/scripts/project.py",
+    "init",
+    "--project",
+    "/tmp/delivery-simplified-journeys/brownfield",
+    "--initiative",
+    "delivery-product"
+  ],
+  "exit_code": 0,
+  "stdout": "{\n  \"delivery_root\": \"/tmp/delivery-simplified-journeys/brownfield/.delivery\",\n  \"initiative\": \"delivery-product\",\n  \"created\": [\n    \"/tmp/delivery-simplified-journeys/brownfield/.delivery\",\n    \"/tmp/delivery-simplified-journeys/brownfield/.delivery/initiatives\",\n    \"/tmp/delivery-simplified-journeys/brownfield/.delivery/initiatives/delivery-product\",\n    \"/tmp/delivery-simplified-journeys/brownfield/.delivery/personas\",\n    \"/tmp/delivery-simplified-journeys/brownfield/.delivery/interviews\",\n    \"/tmp/delivery-simplified-journeys/brownfield/.delivery/simulations\",\n    \"/tmp/delivery-simplified-journeys/brownfield/.delivery/decisions\",\n    \"/tmp/delivery-simplified-journeys/brownfield/.delivery/stories\",\n    \"/tmp/delivery-simplified-journeys/brownfield/.delivery/reviews\",\n    \"/tmp/delivery-simplified-journeys/brownfield/.delivery/sprints\"\n  ],\n  \"capability\": \"planning-preview\",\n  \"artifacts_overwritten\": 0\n}\n",
+  "stderr": ""
+}

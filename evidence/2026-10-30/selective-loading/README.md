@@ -1,5 +1,9 @@
 # Selective loading and greenfield reviewer correction
 
+Historical initial candidate. Independent QA subsequently identified avoidable
+cold-authoring growth. See [the simplified candidate](simplified/README.md) for
+the corrected source and pending model-quality gate; this record is retained.
+
 Base/main: `a46dc827826c9d641f5e745101f4cc14fcf1a21b` (merged PR2, preview.7).
 Exact reviewed source: `0ab84d132c5c5d4a1b2555aab08003a66fefa1a1`, candidate
 `0.1.0-preview.9`, branch `delivery/selective-loading`. The separate pending

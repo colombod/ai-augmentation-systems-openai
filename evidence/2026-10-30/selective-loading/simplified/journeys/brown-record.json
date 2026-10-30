@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "/workspace/delivery-selective-loading/plugins/delivery/scripts/product.py",
+    "--project",
+    "/tmp/delivery-simplified-journeys/brownfield",
+    "--repo",
+    "/workspace/delivery-selective-loading",
+    "record",
+    "--input",
+    "/tmp/delivery-simplified-journeys/brownfield-input.json",
+    "--expected-sha256",
+    "new"
+  ],
+  "exit_code": 0,
+  "stdout": "{\n  \"commit\": \"74d9e6a9a3401e4811d524a9be0cc4688335e6ac\",\n  \"features\": 7,\n  \"path\": \"/tmp/delivery-simplified-journeys/brownfield/.delivery/product-map.json\",\n  \"sha256\": \"b10d1abea36119e9981cd96f83de75e8949ac9e05f31d07cf5416cba6c14f51c\"\n}\n",
+  "stderr": ""
+}
