@@ -22,7 +22,14 @@ planning artifacts remain in the execution workspace. This published summary omi
 absolute workspace paths and full fixture maps. It is not an authenticated approval
 receipt, outside-user observation or proof of unknown-consumer safety.
 
-Separate cloud-entry PR4 is unchanged and unmerged. Before any merge, refresh the
-real target, resolve version/docs changes if it moved, and require the applicable
-independent reviews, exact-head CI and user merge authorization. No automatic
-release, device installation, credentials or security changes are included.
+Consolidation update: merge commit `957a6950019c378ddc25a119ee43d0acd218e32c`
+incorporates reviewed PR4 head `3d9c6aa185c334f9eaa4fedae83055a9086ef0d3`
+without rewriting either history. PR4 itself remains unchanged and open. Final
+package version is preview14, with both changelog entries retained; accepting
+consolidated PR5 would supersede PR4. The execution summaries above retain their
+historical implementation pins. Combined local checks passed200Python/22Node,
+marketplace and isolated16-skill/nine-resource installer/helper smoke.
+
+Before any merge, refresh the real target and require independent conflict/diff
+review, exact-head CI and user merge authorization. No automatic release, device
+installation, credentials or security changes are included.
