@@ -10,7 +10,19 @@
   existing schema-1, historical retired and no-code records need no migration.
 - Decision and review references remain submitted claims, not authenticated
   approval or independent verification. No actual retirement or runtime expansion.
-- Candidate 14 follows main preview 12; the separate preview 13 work is pending.
+- Consolidate the reviewed cloud-entry/routing changes from preview 13 below
+  into this single preview 14 candidate; preserve both source histories.
+
+## Unreleased — 0.1.0-preview.13
+
+- Explain how an existing cloud/remote assistant with authorized resource tools
+  can follow installed product skills without a local device or new model launcher.
+  Keep file-resource access distinct from automatic host discovery, persistent
+  coordination, authenticated dot and host acceptance.
+- Route ordinary authorized delivery/shipping through the bounded-change guide;
+  reserve local team runtime setup for requested persistent coordination.
+- Preserve canonical-store reuse, equal greenfield/brownfield entry, explicit
+  unavailable/unsaved fallbacks and existing review/authority gates.
 
 ## 0.1.0-preview.12 — 2026-10-30
 

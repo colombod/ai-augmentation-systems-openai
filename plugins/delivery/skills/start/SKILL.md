@@ -15,13 +15,19 @@ for brownfield; neither path implies a running team or a deployed feature.
 Read [host capability guidance](../../references/runtime.md) and
 [delivery conventions](../../references/conventions.md).
 
-When the user requests a persistent delivery team or the full shipping workflow,
-read [local team runtime setup](../../references/team-runtime.md). Do not silently
-substitute planning initialization for that request. Resolve the actual roster,
-planning project, product worktrees, available models and execution capabilities.
-Only report role startup from actual coordinator status and native session
-results. Explicitly report any unimplemented protected workflow requirement; a
-queue entry or a role name is not an operating shipping team.
+For an ordinary authorized delivery or shipping workflow, follow the
+[bounded-change route](../../references/bounded-change.md) through selection,
+story, sprint, independent review, realignment and its authorized shipping
+handoff. Existing host tools can carry out authorized actions; planning
+initialization alone is not the completed workflow. Missing tools or permissions
+remain explicit, and loading this skill grants no shipping authority.
+
+When the user requests persistent coordination or a persistent delivery team,
+read [local team runtime setup](../../references/team-runtime.md). Resolve the
+actual roster, planning project, product worktrees, available models and execution
+capabilities. Only report role startup from actual coordinator status and native
+session results. Explicitly report any unimplemented protected workflow
+requirement; a queue entry or a role name is not an operating shipping team.
 
 Resolve the project/component and initiative from the user's request and existing
 artifacts. Reuse the existing delivery root; honor project instructions specifying
