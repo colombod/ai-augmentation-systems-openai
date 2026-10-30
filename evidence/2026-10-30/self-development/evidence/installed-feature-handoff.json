@@ -1,0 +1,57 @@
+{
+  "codex": "codex-cli 0.163.0",
+  "package_version": "0.1.0-preview.11",
+  "installed_loading_resources": {
+    "skills/product/SKILL.md": "a994b10522d39070a9f15e962d7ddc759080c12f90b14369e454993162e481c0",
+    "references/core.md": "66358700af4a623c71ed9f078c65adb59b674dd1c84d0f58a760e582c90e4159",
+    "references/product.md": "29ec137705dd7b1002e14a25e7d6b551cfe4d62b4420fa19f54c0a05dfe4ed87",
+    "references/reviewer-context.md": "b17f83cc0b6bc684e9e83229ab6312cccf7f724f8bf1cb3691af49a3f63dadd5"
+  },
+  "installation": "passed",
+  "skills_discovered": [
+    "delivery:architecture",
+    "delivery:brief",
+    "delivery:challenge",
+    "delivery:design",
+    "delivery:personas",
+    "delivery:prd",
+    "delivery:product",
+    "delivery:realign",
+    "delivery:research",
+    "delivery:roadmap",
+    "delivery:simulate",
+    "delivery:sprint",
+    "delivery:sprint-review",
+    "delivery:start",
+    "delivery:status",
+    "delivery:stories"
+  ],
+  "installed_helper": "passed",
+  "model_calls": 0,
+  "installed_feature_handoff": {
+    "greenfield_exit": 1,
+    "actual_delivery_exit": 1,
+    "actual_source": "1c691c886e6c542f2c76bb87cd79a7e44d0b471b",
+    "actual_map_sha256": "27d26ab2a7a387e1ecdc1cbc232e216fedbc675c7b9ae780ae8857e720b55b65",
+    "actual_feature": "feature-conversation",
+    "canonical_write": false,
+    "qualification": "Actual installed helper commands; no installed native model/skill or dot execution."
+  },
+  "installed_product_helper": {
+    "draft": "passed",
+    "record": "passed",
+    "handoff": "passed",
+    "greenfield_optional_impact": "passed",
+    "qualification": "illustrative greenfield template; unconfirmed choices retained; no model or customer-use claim"
+  },
+  "package_boundary": {
+    "port_assessment": "excluded",
+    "release_lineage": "present"
+  },
+  "acceptance": {
+    "cli_install_and_discovery": "passed",
+    "real_model_workflow": "not-tested",
+    "desktop_ui": "not-tested",
+    "chatgpt": "not-tested"
+  }
+}

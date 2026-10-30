@@ -2,7 +2,7 @@
 
 ## Release checklist — 30 October 2026
 
-**Verdict: a scoped product/feature preview candidate is locally viable; full original-goal coverage is partial, not complete. Publication, merge and customer-host acceptance are not approved.**
+**Verdict: a scoped product/feature preview candidate is locally viable; full original-goal coverage is partial, not complete. Publication of `delivery/integrated-preview` and merge after independent review and passing CI are now authorized. Customer-host installation remains unapproved/unverified.**
 This is the single current release checkpoint; the older design, observations and
 contracts below remain history/context, not a newer readiness claim. The user
 explicitly requested a repo-based checklist. Beads is unavailable here; this
@@ -18,8 +18,8 @@ is an increment toward that full loop, not permission to stop at a skill collect
 
 **Delivery state.** Main remains preview.7. Branch-only drafting/loading/impact
 and PR1 are combined locally, not delivered on main. The frozen unreleased
-`0.1.0-preview.11` candidate is `f84a502fd57389b4c01bd4a20175d8448733c9ef`, on local
-`delivery/coherent-preview` (intended same branch in the **private** remote).
+`0.1.0-preview.11` candidate is `f84a502fd57389b4c01bd4a20175d8448733c9ef`, before the reviewed feature-handoff change at `1c691c886e6c542f2c76bb87cd79a7e44d0b471b`.
+The consolidated publication branch is `delivery/integrated-preview`; repository visibility is preserved.
 The original integration at `edd036fbd96b60f58a3936766a2e712cbf18f502` passed
 **185 Python / 22 Node / 16 discovered skills / 33 public helper commands**; this
 is unshipped integration evidence, attributed to the implementation session.
@@ -66,9 +66,9 @@ are **full-vision gaps**, not automatic blockers for that honestly scoped previe
 |---|---|---|
 | Independent goal/scenario review | Complete with the partial/blocked findings above; did not inspect the combined RC. | Maintainer retains attribution and limitations; source-driven tests do not become native/model usage proof. |
 | One reviewable combined candidate | Frozen local preview.11 at f84a502; version/resources/instructions/provenance smoke passed. | Maintainer preserves this identity for dogfooding; code/functions remain those tested at edd036f. Any subsequent feature gets its own source/review. |
-| Delivery develops Delivery | **Next acceptance milestone, not yet claimed done.** | Maintainer onboards this actual candidate, chooses one feature-level gap, then traces owner intent → criteria → pre-edit impact → fresh implementation → independent verification → map/learning/resumption. |
+| Delivery develops Delivery | Source-driven helper milestone completed at 1c691c8; installed native workflow remains unproved. | Maintainer onboards this actual candidate, chooses one feature-level gap, then traces owner intent → criteria → pre-edit impact → fresh implementation → independent verification → map/learning/resumption. |
 | Quality before optimization | Static/source checks pass; model quality/resource benefit unproven. | QA checks the combined body on equal greenfield/brownfield tasks. If loading changes lose quality, retain conservative guidance; do not call smaller byte counts a win. |
-| Exact candidate publication and checks | No new PR/retry/merge authorized by this record. Prior branch-publication rejections remain respected. | Owner resolves applicable publication/merge authorization for the concrete diff. Maintainer opens a normal review PR only when allowed, runs/reviews exact-head CI and fixes confirmed failures; no automatic merge/release. |
+| Exact candidate publication and checks | User explicitly authorized this consolidated normal PR and merge after independent review and passing CI; prior separate publication attempts are superseded. | Owner resolves applicable publication/merge authorization for the concrete diff. Maintainer opens a normal review PR only when allowed, runs/reviews exact-head CI and fixes confirmed failures; no automatic merge/release. |
 | Supported installation and first useful journey | Isolated CLI discovery passed; customer-host acceptance pending. | Owner supplies/authorizes an available supported host and writable test project. Verify fresh installed invocation and a useful result. CLI-scoped preview needs explicit restricted scope; full CLI/desktop/ChatGPT claims need their separate acceptance. |
 | Value follow-up | Unknown outside-user usefulness/Return, retained honestly. | Owner + Maintainer record one pilot's actual outcome and next return check after preview; this does not require an analytics platform or fabricated adoption score. |
 
@@ -110,12 +110,11 @@ Seamless dot execution still needs a supported authenticated adapter and its own
 one-assignment/receipt proof. No credentials or new service are prerequisites for
 basic local planning; no Beads requirement is imposed on this narrow preview.
 
-**Publication gate remains unanswered.** Intended private remote branch is
-`delivery/coherent-preview` in `colombod/ai-augmentation-systems-openai`, normal PR
-into main, at an explicitly frozen reviewed head. Permission is still needed to
-push/publish that concrete candidate; earlier branch PR rejections are not retried.
-Publication alone does not authorize merge (including PR1 source), release or a
-user-host update. No remote action is performed by this checklist.
+**Publication gate resolved.** User authorized `delivery/integrated-preview` in
+`colombod/ai-augmentation-systems-openai`, one normal PR into main, and merge after
+independent review and successful CI. This includes the reviewed integrated sources
+and self-development change. Repository visibility remains unchanged. Device
+installation and credential/security changes are not authorized.
 
 **Do not build yet:** a graph service/database or second registry; a new agent/
 authentication framework; broad language/semantic-graph parity; Amplifier runtime/
@@ -124,6 +123,38 @@ large roadmap/token-cache system. Consolidate existing value, resolve the actual
 QA blockers, prove installation and one useful journey, then extend from observed
 need. Keep this checkpoint current after each accepted result; do not add parallel
 release lists.
+
+### What self-development actually demonstrated
+
+The implementing assistant manually curated the fourteen-feature map, supplied
+product judgments and drafted the story/sprint. `inspect` supplied a source census,
+not automatic feature discovery. Missing `feature-conversation` and
+`authenticated-dot` capabilities were manually recorded as planned IDs; other
+limitations were not automatically converted into a backlog or Beads tasks.
+The assistant selected a small feature-scoped handoff after the existing command
+rejected `--feature` and the whole-product result contained all fourteen features.
+Alternatives were manual filtering and a new service/agent; owner confirmation of
+this particular design remains unclaimed.
+
+Delivery's actual helpers validated and CAS-saved the record, checked exact source
+freshness, computed pre-edit impact, produced context, preserved history and
+supported post-review realignment/resumption. A fresh source-driven builder added
+`handoff --feature <exact-id>`; an independent reviewer verified exact commit
+`1c691c886e6c542f2c76bb87cd79a7e44d0b471b`: 190 Python tests, 22 Node tests,
+marketplace validation and 22 CLI processes passed. Default output stays unchanged;
+selection retains global freshness/owner context and grants no authority.
+
+Disposable CLI installation/discovery and installed helper invocations passed,
+with zero native model calls. **No installed native skill-driven onboarding,
+autonomous prioritization, authenticated dot execution, customer adoption or
+shipping success was demonstrated.** This is a reviewed local helper improvement,
+not completion of the user's full product goal. The next required product proof is
+an actual user+dot feature conversation on a supported host after publication.
+The historical map is pinned to 1c691c8; later documentation commits require normal
+refresh and must not be silently treated as the same snapshot.
+
+[Actual curated map, story, commands and verification](../evidence/2026-10-30/self-development/README.md)
+retain the distinction between assistant-supplied judgment and deterministic work.
 
 ## Design contract: OpenAI capabilities first
 

@@ -1,0 +1,57 @@
+{
+  "product_source": "1c691c886e6c542f2c76bb87cd79a7e44d0b471b",
+  "baseline_source": "9ed005a1ab1da54ad7f944622e347b0d28847284",
+  "canonical_store": "/workspace/delivery-self-plan/.delivery",
+  "baseline_map_sha256": "b8eb451a3e819a6aa83c46797b6305819ba598e432e1a17b288a612bfe7a5b5c",
+  "realigned_map_sha256": "27d26ab2a7a387e1ecdc1cbc232e216fedbc675c7b9ae780ae8857e720b55b65",
+  "history_prior_bytes_preserved": true,
+  "feature": "feature-conversation",
+  "before": "planned/code absent",
+  "after": "preview/source+process verified, unshipped",
+  "owner_statement_preserved": {
+    "basis": "owner-stated",
+    "revisit": "Revisit on owner correction or contradictory observed use; no authenticated acceptance implied.",
+    "source": "User: \"And the focus will really be at product and feature level\"",
+    "text": "Focus at product and feature level."
+  },
+  "proposed_choices_still_unconfirmed": [
+    "proposition",
+    "next_slice",
+    "cuts"
+  ],
+  "freshness": {
+    "changed_mapped_files": [],
+    "commit_matches": true,
+    "current_commit": "1c691c886e6c542f2c76bb87cd79a7e44d0b471b",
+    "fresh": true,
+    "limitation": "Fresh means snapshot commit and linked raw bytes/modes match; unmapped code and runtime wiring are not proven complete",
+    "snapshot_commit": "1c691c886e6c542f2c76bb87cd79a7e44d0b471b",
+    "staged_changes": [],
+    "unmapped_committed_changes": [],
+    "unmapped_working_changes": [],
+    "untracked_not_analyzed": []
+  },
+  "default_feature_count": 14,
+  "selected_feature_count": 1,
+  "all_nonselection_global_fields_equal": true,
+  "authenticated_dot_still_planned": true,
+  "post_change_affected_features": [
+    "product-baseline",
+    "compact-framing",
+    "dependency-impact",
+    "retirement-proposal",
+    "feature-conversation"
+  ],
+  "independent_verification": {
+    "marketplace": "passed",
+    "node_tests": 22,
+    "patch_whitespace": "passed",
+    "public_cli_processes_including_synthetic_setup": 22,
+    "python_tests": 190,
+    "receipts_exact_head_and_raw_bytes_before_after": "passed"
+  },
+  "native_model_execution": "not performed/qualified",
+  "outside_user_grades": "not Seen/Repeated",
+  "publication": "none",
+  "qualification": "Actual Delivery guided a real local Delivery change through source-driven planning, fresh agent implementation, independent exact-commit verification and canonical realignment/resumption; not installed native autonomy or token savings."
+}
