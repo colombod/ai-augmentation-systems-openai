@@ -39,6 +39,8 @@ class PackageTests(unittest.TestCase):
         # Retain the two routes and explicit release authority after future edits.
         stories = (PACKAGE/'skills/stories/SKILL.md').read_text()
         self.assertIn('Roadmap missing on the full-pipeline route', stories)
+        for name in ('story.md', 'sprint.md', 'sprint-review.md'):
+            self.assertIn('bounded', (PACKAGE/'templates'/name).read_text())
         for required in ('planned gaps and deferred gaps', 'alternatives',
                          'product-workflow', 'expected head', 'canonical source/map',
                          'receive no new write, push, merge'):

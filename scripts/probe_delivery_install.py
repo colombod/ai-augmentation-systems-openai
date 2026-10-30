@@ -104,7 +104,10 @@ def probe():
                 loading_resources = {}
                 for relative in ('skills/product/SKILL.md', 'references/core.md',
                                  'references/product.md',
-                                 'references/reviewer-context.md'):
+                                 'references/reviewer-context.md',
+                                 'references/bounded-change.md', 'skills/stories/SKILL.md',
+                                 'skills/sprint/SKILL.md', 'skills/sprint-review/SKILL.md',
+                                 'skills/realign/SKILL.md'):
                     data = (installed_root / relative).read_bytes()
                     if data != (ROOT / 'plugins/delivery' / relative).read_bytes():
                         raise AssertionError(f'Installed loading resource differs: {relative}')

@@ -14,11 +14,12 @@ epic: <epic name>
 supersedes: []          # story IDs this replaces, if any
 superseded_by: []       # story IDs that replace this, if any
 superseded_reason:      # one line — WHY the design changed, not just what replaced it
-phase: <roadmap phase>
+route: full-pipeline | bounded-change
+phase: <roadmap phase, or bounded outcome>
 requirements: [FR-1]
 depends_on: []
 size: S
-surface: <surface id from surface.json, e.g. S1>
+surface: <surface id from surface.json, or explicitly declared embedded surface, e.g. S1>
 area: <product area, planning grouping; defaults to the epic>
 wave: 1                 # the wave of this area this story belongs to (the roadmap's Waves table)
 reuses: []              # existing code, evals or decision records this builds on, for selection
@@ -30,8 +31,10 @@ reuses: []              # existing code, evals or decision records this builds o
 
 > This file is the complete context. Someone opening only this file — a teammate
 > who missed the planning, or an agent with no memory of it — must be able to
-> finish the work. Extract what is needed from the PRD and architecture into
-> this document rather than linking out.
+> finish the work. Extract what is needed from available PRD/architecture into
+> this document rather than linking out. For route: bounded-change, embed the
+> compact goal/scope/design/acceptance contract and list absent artifacts; do not
+> fabricate them or require full-pipeline documents.
 
 ## Owner's ask
 
@@ -43,7 +46,8 @@ The user-facing outcome, in one or two sentences. What becomes possible.
 
 ## Customer surface
 
-<surface id>: <host, app, mode, install artifact> from the initiative's `surface.json`. Evidence
+<surface id>: <host, app, mode, install artifact> from the initiative's `surface.json` when present, otherwise explicitly declared
+here with availability/unknowns. A new surface ID is not deployment proof. Evidence
 from any other host, app or mode does not count for this story.
 
 ## Context
@@ -66,7 +70,8 @@ the files or test command already exist. Proposed paths are not observed map lin
 
 ## Interfaces and contracts to honor
 
-Reproduced here from the architecture, not linked.
+Reproduced here from available architecture, not linked; on the bounded route
+state the local interface decision and its evidence/proposed status here.
 
 ```
 <signatures, schemas, shapes>
@@ -74,13 +79,14 @@ Reproduced here from the architecture, not linked.
 
 ## Relevant design decisions
 
-Which architecture decisions apply here and why they constrain this work.
+Which existing architecture decisions apply, or the bounded local design/risk
+decision and why it is sufficient. Absence of an ADR is explicit, not invented.
 
 - **ADR-00n** — decision, and what it means for this story
 
 ## Acceptance criteria
 
-Outcomes the customer observes on the surface, traced to the PRD, each falsifiable by someone who
+Outcomes the customer observes on the surface, traced to the PRD or bounded outcome, each falsifiable by someone who
 did not write it: "<persona> in <surface> does X and sees Y", never a tool, endpoint, test, link or
 ticket. One probe per criterion: what is observed, where, and by whom (`test` on a scriptable
 surface, `reality-check` on one that is not). A size S story needs one criterion and one probe.
