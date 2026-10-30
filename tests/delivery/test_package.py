@@ -56,6 +56,16 @@ class PackageTests(unittest.TestCase):
         self.assertNotIn('mcpServers', manifest)
         self.assertFalse((PACKAGE / 'hooks').exists())
 
+    def test_product_methods_retain_source_pins_and_full_license_notices(self):
+        provenance=json.loads((PACKAGE/'upstream.json').read_text())
+        self.assertEqual(len(provenance['product_methods']),7)
+        for method in provenance['product_methods']:
+            self.assertRegex(method['revision'],r'^[a-f0-9]{40}$')
+            notice=(PACKAGE/method['notice']).resolve()
+            self.assertTrue(notice.is_relative_to(PACKAGE))
+            self.assertIn('Permission is hereby granted',notice.read_text())
+            self.assertIn('THE SOFTWARE IS PROVIDED "AS IS"',notice.read_text())
+
     def test_shipped_boundary_excludes_port_assessment_and_retains_lineage(self):
         self.assertFalse(any(PACKAGE.rglob('delivery-port-assessment.md')))
         self.assertFalse((PACKAGE / 'evidence').exists())

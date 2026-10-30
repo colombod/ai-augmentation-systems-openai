@@ -90,6 +90,9 @@ class ProductTests(unittest.TestCase):
         self.assertEqual(impact['shared_files']['shared.py'],['feature-a','feature-b'])
         self.assertEqual(impact['unmapped_paths'],['unknown.py'])
         self.assertIn('unknown',impact['warning'])
+        status=json.loads(self.run_cli('status').stdout)
+        self.assertEqual(status['features'][0]['code'],['a.py','shared.py'])
+        self.assertEqual(status['features'][0]['evidence'][0]['path'],'README.md')
 
     def test_hash_freshness_detects_same_length_mtime_and_hidden_index_changes(self):
         self.record();value,_=P.read_map(self.project,self.repo)
@@ -214,6 +217,15 @@ class ProductTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'History conflicts'):
             P.save(self.project,self.repo,self.data(),first['sha256'])
         self.assertEqual(path.read_bytes(),original)
+
+    def test_git_replacement_cannot_rewrite_the_named_snapshot(self):
+        self.record();(self.repo/'a.py').write_text('replacement')
+        self.git('add','a.py');self.git('commit','-qm','Replacement content')
+        replacement=self.git('rev-parse','HEAD').strip()
+        self.git('replace',self.head,replacement)
+        value,_=P.read_map(self.project,self.repo)
+        original_blob=self.git('--no-replace-objects','rev-parse',self.head+':a.py').strip()
+        self.assertEqual(value['snapshot']['a.py']['blob'],original_blob)
 
 
 if __name__=='__main__':

@@ -29,7 +29,7 @@ def fail(message):
 
 def git(repo, *args):
     env = {k:v for k,v in os.environ.items() if not k.startswith('GIT_')}
-    result = subprocess.run(['git','--no-optional-locks','-c','core.fsmonitor=false',
+    result = subprocess.run(['git','--no-replace-objects','--no-optional-locks','-c','core.fsmonitor=false',
         '-c','core.untrackedCache=false','-C',str(repo),*args],env=env,
         capture_output=True,timeout=30)
     if result.returncode:
@@ -345,7 +345,7 @@ def handoff(value, repo):
     unresolved += [k for k in ('must_survive','cuts') if any(d['basis']!='owner-stated' for d in product[k])]
     return {'product':product,'placement':placement(product['right_shape']),
         'unconfirmed_choices':unresolved,'freshness':freshness(value,repo),
-        'features':[{k:f[k] for k in ('id','name','state','usefulness','unknowns')} for f in value['features']],
+        'features':[{k:f[k] for k in ('id','name','state','code','evidence','usefulness','unknowns')} for f in value['features']],
         'authority':'Recorded choices are attributed submissions, not authenticated approvals; proposals never authorize execution or retirement'}
 
 
@@ -381,7 +381,7 @@ def main():
         elif args.command=='handoff':
             result = handoff(value,repo)
         else:
-            result = {'freshness':freshness(value,repo),'features':[{k:f[k] for k in ('id','name','state')} for f in value['features']]}
+            result = {'freshness':freshness(value,repo),'features':[{k:f[k] for k in ('id','name','state','code','evidence','unknowns')} for f in value['features']]}
         result['map_sha256'] = sha
     print(json.dumps(result,indent=2,sort_keys=True,allow_nan=False))
     observed = result.get('freshness') or result.get('impact',{}).get('freshness')
