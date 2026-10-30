@@ -1,0 +1,1212 @@
+{
+  "commit": "4a11c76f70aa530b49374e88ac3a8371ff8ae9d0",
+  "features": [
+    {
+      "code": [
+        "plugins/delivery/scripts/project.py"
+      ],
+      "evidence": [
+        {
+          "note": "Executable test source; actual run is separate evidence, not outside-user use.",
+          "path": "tests/delivery/test_project.py"
+        },
+        {
+          "note": "Declared source preview and host limits; not independent deployment proof.",
+          "path": "plugins/delivery/README.md"
+        }
+      ],
+      "id": "workspace",
+      "name": "Planning workspace initialization and inventory",
+      "state": "preview",
+      "summary": "Planning workspace initialization and inventory \u2014 present in the local source preview, not verified deployed or accepted on all hosts.",
+      "unknowns": [
+        "Outside-user first value and unprompted return have not been measured.",
+        "Hook-event-log is a separate product component, intentionally outside this curated Delivery feature map.",
+        "Main/installed release availability differs from this pinned local combined candidate."
+      ],
+      "usefulness": {
+        "First value": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Fit": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Job": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Outcome": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Return": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Trust": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        }
+      }
+    },
+    {
+      "code": [
+        "plugins/delivery/scripts/project.py",
+        "plugins/delivery/skills/architecture/SKILL.md",
+        "plugins/delivery/skills/brief/SKILL.md",
+        "plugins/delivery/skills/challenge/SKILL.md",
+        "plugins/delivery/skills/design/SKILL.md",
+        "plugins/delivery/skills/personas/SKILL.md",
+        "plugins/delivery/skills/prd/SKILL.md",
+        "plugins/delivery/skills/realign/SKILL.md",
+        "plugins/delivery/skills/research/SKILL.md",
+        "plugins/delivery/skills/roadmap/SKILL.md",
+        "plugins/delivery/skills/simulate/SKILL.md",
+        "plugins/delivery/skills/sprint/SKILL.md",
+        "plugins/delivery/skills/sprint-review/SKILL.md",
+        "plugins/delivery/skills/start/SKILL.md",
+        "plugins/delivery/skills/status/SKILL.md",
+        "plugins/delivery/skills/stories/SKILL.md"
+      ],
+      "evidence": [
+        {
+          "note": "Executable test source; actual run is separate evidence, not outside-user use.",
+          "path": "tests/delivery/test_package.py"
+        },
+        {
+          "note": "Declared source preview and host limits; not independent deployment proof.",
+          "path": "plugins/delivery/README.md"
+        }
+      ],
+      "id": "planning",
+      "name": "Existing planning and review skill workflows",
+      "state": "preview",
+      "summary": "Existing planning and review skill workflows \u2014 present in the local source preview, not verified deployed or accepted on all hosts.",
+      "unknowns": [
+        "Outside-user first value and unprompted return have not been measured.",
+        "Hook-event-log is a separate product component, intentionally outside this curated Delivery feature map.",
+        "Main/installed release availability differs from this pinned local combined candidate."
+      ],
+      "usefulness": {
+        "First value": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Fit": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Job": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Outcome": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Return": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Trust": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        }
+      }
+    },
+    {
+      "code": [
+        "plugins/delivery/scripts/product.py",
+        "plugins/delivery/scripts/project.py",
+        "plugins/delivery/skills/product/SKILL.md"
+      ],
+      "evidence": [
+        {
+          "note": "Executable test source; actual run is separate evidence, not outside-user use.",
+          "path": "tests/delivery/test_product.py"
+        },
+        {
+          "note": "Declared source preview and host limits; not independent deployment proof.",
+          "path": "plugins/delivery/README.md"
+        }
+      ],
+      "id": "product-baseline",
+      "name": "Greenfield and brownfield product records, feature impact and handoff",
+      "state": "preview",
+      "summary": "Greenfield and brownfield product records, feature impact and handoff \u2014 present in the local source preview, not verified deployed or accepted on all hosts.",
+      "unknowns": [
+        "Outside-user first value and unprompted return have not been measured.",
+        "Hook-event-log is a separate product component, intentionally outside this curated Delivery feature map.",
+        "Main/installed release availability differs from this pinned local combined candidate."
+      ],
+      "usefulness": {
+        "First value": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Fit": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Job": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Outcome": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Return": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Trust": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        }
+      }
+    },
+    {
+      "code": [
+        "plugins/delivery/scripts/runtime.py",
+        "plugins/delivery/scripts/codex_rpc.py",
+        "plugins/delivery/scripts/project.py"
+      ],
+      "evidence": [
+        {
+          "note": "Executable test source; actual run is separate evidence, not outside-user use.",
+          "path": "tests/delivery/test_runtime.py"
+        },
+        {
+          "note": "Declared source preview and host limits; not independent deployment proof.",
+          "path": "plugins/delivery/README.md"
+        }
+      ],
+      "id": "native-team",
+      "name": "Persistent local Codex role coordination",
+      "state": "preview",
+      "summary": "Persistent local Codex role coordination \u2014 present in the local source preview, not verified deployed or accepted on all hosts.",
+      "unknowns": [
+        "Outside-user first value and unprompted return have not been measured.",
+        "Hook-event-log is a separate product component, intentionally outside this curated Delivery feature map.",
+        "Main/installed release availability differs from this pinned local combined candidate."
+      ],
+      "usefulness": {
+        "First value": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Fit": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Job": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Outcome": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Return": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Trust": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        }
+      }
+    },
+    {
+      "code": [
+        "plugins/delivery/scripts/artifacts.py",
+        "plugins/delivery/scripts/project.py"
+      ],
+      "evidence": [
+        {
+          "note": "Executable test source; actual run is separate evidence, not outside-user use.",
+          "path": "tests/delivery/test_artifacts.py"
+        },
+        {
+          "note": "Declared source preview and host limits; not independent deployment proof.",
+          "path": "plugins/delivery/README.md"
+        }
+      ],
+      "id": "canonical-artifacts",
+      "name": "Controlled canonical planning and review saves",
+      "state": "preview",
+      "summary": "Controlled canonical planning and review saves \u2014 present in the local source preview, not verified deployed or accepted on all hosts.",
+      "unknowns": [
+        "Outside-user first value and unprompted return have not been measured.",
+        "Hook-event-log is a separate product component, intentionally outside this curated Delivery feature map.",
+        "Main/installed release availability differs from this pinned local combined candidate."
+      ],
+      "usefulness": {
+        "First value": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Fit": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Job": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Outcome": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Return": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Trust": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        }
+      }
+    },
+    {
+      "code": [
+        "plugins/delivery/scripts/delivery_gates.py",
+        "plugins/delivery/scripts/operator_capture.py",
+        "plugins/delivery/scripts/runtime.py",
+        "plugins/delivery/scripts/project.py"
+      ],
+      "evidence": [
+        {
+          "note": "Executable test source; actual run is separate evidence, not outside-user use.",
+          "path": "tests/delivery/test_delivery_gates.py"
+        },
+        {
+          "note": "Declared source preview and host limits; not independent deployment proof.",
+          "path": "plugins/delivery/README.md"
+        }
+      ],
+      "id": "controlled-review",
+      "name": "Identity-bound Beads workflow and human acceptance",
+      "state": "preview",
+      "summary": "Identity-bound Beads workflow and human acceptance \u2014 present in the local source preview, not verified deployed or accepted on all hosts.",
+      "unknowns": [
+        "Outside-user first value and unprompted return have not been measured.",
+        "Hook-event-log is a separate product component, intentionally outside this curated Delivery feature map.",
+        "Main/installed release availability differs from this pinned local combined candidate."
+      ],
+      "usefulness": {
+        "First value": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Fit": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Job": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Outcome": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Return": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Trust": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        }
+      }
+    },
+    {
+      "code": [
+        "plugins/delivery/scripts/judge.js",
+        "plugins/delivery/scripts/lib/judge.js",
+        "plugins/delivery/scripts/lib/openai-judge.js"
+      ],
+      "evidence": [
+        {
+          "note": "Executable test source; actual run is separate evidence, not outside-user use.",
+          "path": "tests/delivery/openai-judge.test.js"
+        },
+        {
+          "note": "Declared source preview and host limits; not independent deployment proof.",
+          "path": "plugins/delivery/README.md"
+        }
+      ],
+      "id": "explicit-judge",
+      "name": "Explicit Jev/OpenAI advisory judge selection",
+      "state": "preview",
+      "summary": "Explicit Jev/OpenAI advisory judge selection \u2014 present in the local source preview, not verified deployed or accepted on all hosts.",
+      "unknowns": [
+        "Outside-user first value and unprompted return have not been measured.",
+        "Hook-event-log is a separate product component, intentionally outside this curated Delivery feature map.",
+        "Main/installed release availability differs from this pinned local combined candidate."
+      ],
+      "usefulness": {
+        "First value": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Fit": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Job": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Outcome": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Return": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Trust": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        }
+      }
+    },
+    {
+      "code": [
+        "plugins/delivery/scripts/product.py"
+      ],
+      "evidence": [
+        {
+          "note": "Current local preview: draft does not save, confirm owner choices or infer shipped status.",
+          "path": "tests/delivery/test_product.py"
+        }
+      ],
+      "id": "compact-framing",
+      "name": "Frame product and feature notes without repetitive JSON",
+      "state": "preview",
+      "summary": "Current local preview: draft does not save, confirm owner choices or infer shipped status.",
+      "unknowns": [
+        "Outside-user Fit/Outcome/Return unknown.",
+        "Current local preview: draft does not save, confirm owner choices or infer shipped status."
+      ],
+      "usefulness": {
+        "First value": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Fit": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Job": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Outcome": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Return": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Trust": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        }
+      }
+    },
+    {
+      "code": [
+        "plugins/delivery/scripts/product.py"
+      ],
+      "evidence": [
+        {
+          "note": "Current Python-only possible import/initializer reach; unsupported/dynamic consumers remain unknown.",
+          "path": "tests/delivery/test_product_transitive.py"
+        }
+      ],
+      "id": "dependency-impact",
+      "name": "Inspect possible feature-side dependency reach before a change",
+      "state": "preview",
+      "summary": "Current Python-only possible import/initializer reach; unsupported/dynamic consumers remain unknown.",
+      "unknowns": [
+        "Outside-user Fit/Outcome/Return unknown.",
+        "Current Python-only possible import/initializer reach; unsupported/dynamic consumers remain unknown."
+      ],
+      "usefulness": {
+        "First value": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Fit": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Job": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Outcome": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Return": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Trust": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        }
+      }
+    },
+    {
+      "code": [
+        "plugins/delivery/scripts/product.py"
+      ],
+      "evidence": [
+        {
+          "note": "Proposal-only: active-to-retired transition and full retirement lifecycle are absent.",
+          "path": "plugins/delivery/references/product.md"
+        }
+      ],
+      "id": "retirement-proposal",
+      "name": "Decide whether a feature should be retired with shared consumers visible",
+      "state": "preview",
+      "summary": "Proposal-only: active-to-retired transition and full retirement lifecycle are absent.",
+      "unknowns": [
+        "Outside-user Fit/Outcome/Return unknown.",
+        "Proposal-only: active-to-retired transition and full retirement lifecycle are absent."
+      ],
+      "usefulness": {
+        "First value": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Fit": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Job": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Outcome": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Return": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Trust": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        }
+      }
+    },
+    {
+      "code": [
+        "plugins/delivery/scripts/supervision.py"
+      ],
+      "evidence": [
+        {
+          "note": "Trusted in-process/fake-transport seam only, not authenticated dot access.",
+          "path": "tests/delivery/test_supervision.py"
+        }
+      ],
+      "id": "external-supervision",
+      "name": "Admit durable scoped external coordination requests",
+      "state": "preview",
+      "summary": "Trusted in-process/fake-transport seam only, not authenticated dot access.",
+      "unknowns": [
+        "Outside-user Fit/Outcome/Return unknown.",
+        "Trusted in-process/fake-transport seam only, not authenticated dot access."
+      ],
+      "usefulness": {
+        "First value": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Fit": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Job": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Outcome": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Return": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Trust": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        }
+      }
+    },
+    {
+      "code": [
+        "plugins/delivery/scripts/verification.py"
+      ],
+      "evidence": [
+        {
+          "note": "Real helper/scratch evidence available; no human acceptance, deployment or security-sandbox claim.",
+          "path": "tests/delivery/test_verification.py"
+        }
+      ],
+      "id": "command-evidence",
+      "name": "Verify a change at exact source revision and retain actual outputs",
+      "state": "preview",
+      "summary": "Real helper/scratch evidence available; no human acceptance, deployment or security-sandbox claim.",
+      "unknowns": [
+        "Outside-user Fit/Outcome/Return unknown.",
+        "Real helper/scratch evidence available; no human acceptance, deployment or security-sandbox claim."
+      ],
+      "usefulness": {
+        "First value": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Fit": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Job": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Outcome": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Return": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Trust": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        }
+      }
+    },
+    {
+      "code": [
+        "plugins/delivery/scripts/product.py",
+        "plugins/delivery/skills/product/SKILL.md",
+        "plugins/delivery/references/product.md",
+        "plugins/delivery/references/bounded-change.md",
+        "plugins/delivery/skills/stories/SKILL.md",
+        "plugins/delivery/skills/sprint/SKILL.md",
+        "plugins/delivery/skills/sprint-review/SKILL.md",
+        "plugins/delivery/skills/realign/SKILL.md"
+      ],
+      "evidence": [
+        {
+          "note": "Five added feature-handoff regressions; independent exact-source scratch review ran190Python22Node and publicCLI checks at 1c691c886e6c542f2c76bb87cd79a7e44d0b471b. Own/source evidence remains Claimed.",
+          "path": "tests/delivery/test_product.py"
+        },
+        {
+          "note": "Canonical planning evidence/independent-review/review-summary.json and exact-SHA receipts; independent source/localCLI only, not human acceptance, deployment or native host proof.",
+          "path": null
+        },
+        {
+          "note": "Packaged route/resource contract regression. Actual workflow acceptance requires independent product review, not this static check.",
+          "path": "tests/delivery/test_package.py"
+        }
+      ],
+      "id": "feature-conversation",
+      "name": "Focus user and dot on one feature decision and resume it",
+      "state": "preview",
+      "summary": "Preview source: focused feature context plus explicit bounded-change and authorized shipping guidance; product acceptance and merge pending, no native-host proof.",
+      "unknowns": [
+        "Actual user+dot hosted conversation, customer Fit/Outcome/Return and token/time impact remain unproved.",
+        "Authenticated-dot, native coordination and active-to-retired lifecycle remain outside this increment."
+      ],
+      "usefulness": {
+        "First value": {
+          "evidence": "Actual owner request plus own/source-driven helper and independent code/process checks; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe the owner using the feature in an authorized supported project conversation; retain unknowns and a dated return check.",
+          "rating": "Unknown"
+        },
+        "Fit": {
+          "evidence": "Actual owner request plus own/source-driven helper and independent code/process checks; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe the owner using the feature in an authorized supported project conversation; retain unknowns and a dated return check.",
+          "rating": "Unknown"
+        },
+        "Job": {
+          "evidence": "Actual owner request plus own/source-driven helper and independent code/process checks; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe the owner using the feature in an authorized supported project conversation; retain unknowns and a dated return check.",
+          "rating": "Unknown"
+        },
+        "Outcome": {
+          "evidence": "Actual owner request plus own/source-driven helper and independent code/process checks; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe the owner using the feature in an authorized supported project conversation; retain unknowns and a dated return check.",
+          "rating": "Unknown"
+        },
+        "Return": {
+          "evidence": "Actual owner request plus own/source-driven helper and independent code/process checks; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe the owner using the feature in an authorized supported project conversation; retain unknowns and a dated return check.",
+          "rating": "Unknown"
+        },
+        "Trust": {
+          "evidence": "Actual owner request plus own/source-driven helper and independent code/process checks; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe the owner using the feature in an authorized supported project conversation; retain unknowns and a dated return check.",
+          "rating": "Unknown"
+        }
+      }
+    },
+    {
+      "code": [],
+      "evidence": [
+        {
+          "note": "Planned: authenticated adapter and actual dot completion are absent; must not block the bounded product/feature preview.",
+          "path": "plugins/delivery/references/supervision.md"
+        }
+      ],
+      "id": "authenticated-dot",
+      "name": "Let dot supervise Delivery through an authenticated supported host",
+      "state": "planned",
+      "summary": "Planned: authenticated adapter and actual dot completion are absent; must not block the bounded product/feature preview.",
+      "unknowns": [
+        "Outside-user Fit/Outcome/Return unknown.",
+        "Planned: authenticated adapter and actual dot completion are absent; must not block the bounded product/feature preview."
+      ],
+      "usefulness": {
+        "First value": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Fit": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Job": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Outcome": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Return": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        },
+        "Trust": {
+          "evidence": "Source/own process checks only; no outside-user observation.",
+          "grade": "Claimed",
+          "next_check": "Observe a real user outcome and preserve what remains unknown.",
+          "rating": "Unknown"
+        }
+      }
+    }
+  ],
+  "method": "curated file-level feature links; no inferred calls or complete dependency graph",
+  "mode": "brownfield",
+  "product": {
+    "before_after": {
+      "basis": "proposed",
+      "revisit": "Revisit on owner correction or contradictory observed use; no authenticated acceptance implied.",
+      "source": "Implementing assistant interpretation; not user confirmation.",
+      "text": "Before: broad project dumps and inferred priorities. After: focus on one capability/customer, its evidence and what must survive."
+    },
+    "current_cost": {
+      "basis": "unknown",
+      "revisit": "Revisit on owner correction or contradictory observed use; no authenticated acceptance implied.",
+      "source": "Implementing assistant interpretation; not user confirmation.",
+      "text": "Unknown: no measured time, token or adoption baseline was supplied."
+    },
+    "customer": {
+      "basis": "owner-stated",
+      "revisit": "Revisit on owner correction or contradictory observed use; no authenticated acceptance implied.",
+      "source": "User: \"I will use it to work with you in delivering my projects\"",
+      "text": "The owner of projects working with dot to deliver them."
+    },
+    "cuts": [
+      {
+        "basis": "proposed",
+        "revisit": "Revisit on owner correction or contradictory observed use; no authenticated acceptance implied.",
+        "source": "Implementing assistant interpretation; not user confirmation.",
+        "text": "No speculative agent infrastructure or authenticated-dot claim in this small increment."
+      },
+      {
+        "basis": "proposed",
+        "revisit": "Revisit on owner correction or contradictory observed use; no authenticated acceptance implied.",
+        "source": "Implementing assistant interpretation; not user confirmation.",
+        "text": "No automatic retirement, native acceptance, merge, publication or user-host update."
+      }
+    ],
+    "must_survive": [
+      {
+        "basis": "owner-stated",
+        "revisit": "Revisit on owner correction or contradictory observed use; no authenticated acceptance implied.",
+        "source": "User: \"This is a most important thing for me because I will use it to work with you in delivering my projects\"",
+        "text": "Delivery enables the user to work with dot delivering projects."
+      },
+      {
+        "basis": "owner-stated",
+        "revisit": "Revisit on owner correction or contradictory observed use; no authenticated acceptance implied.",
+        "source": "User: \"And the focus will really be at product and feature level\"",
+        "text": "Focus at product and feature level."
+      },
+      {
+        "basis": "owner-stated",
+        "revisit": "Revisit on owner correction or contradictory observed use; no authenticated acceptance implied.",
+        "source": "User: \"Brown field and green field are equally important\"",
+        "text": "Greenfield and brownfield are equally important."
+      }
+    ],
+    "next_slice": {
+      "basis": "proposed",
+      "revisit": "Revisit on owner correction or contradictory observed use; no authenticated acceptance implied.",
+      "source": "Maintainer realignment after independent source/localCLI verification; not owner confirmation.",
+      "text": "Use this feature-scoped context for one actual user-selected product/capability decision on an authorized supported host; preserve owner clarification into a bounded verified change."
+    },
+    "problem": {
+      "basis": "proposed",
+      "revisit": "Revisit on owner correction or contradictory observed use; no authenticated acceptance implied.",
+      "source": "Implementing assistant interpretation; not user confirmation.",
+      "text": "Project work drifts into code/tasks before the product/feature decision and owner intent are clear."
+    },
+    "proposition": {
+      "basis": "proposed",
+      "revisit": "Revisit on owner correction or contradictory observed use; no authenticated acceptance implied.",
+      "source": "Implementing assistant interpretation; not user confirmation.",
+      "text": "User and dot make an evidence-bound product/feature decision, then carry it into a verified bounded outcome."
+    },
+    "right_shape": {
+      "alternatives": [
+        "Current whole-product handoff: preserves context but lacks explicit selected-feature scope.",
+        "A new agent/service: adds trust/runtime work without improving this projection."
+      ],
+      "autonomy_rung": 0,
+      "benchmark": "Actual Delivery inventory and one selected capability; preserve default full handoff, unknown IDs, no-code concept, owner context, shared/global freshness and no writes. Stop after one verified feature loop; no token saving or adoption claim.",
+      "engine": "None",
+      "form": "tool",
+      "gates": {
+        "G1": {
+          "reason": "Not yet verified in the intended host.",
+          "status": "unknown"
+        },
+        "G2": {
+          "reason": "Not yet verified in the intended host.",
+          "status": "unknown"
+        },
+        "G3": {
+          "reason": "Not yet verified in the intended host.",
+          "status": "unknown"
+        },
+        "G4": {
+          "reason": "Not yet verified in the intended host.",
+          "status": "unknown"
+        },
+        "G5": {
+          "reason": "Not yet verified in the intended host.",
+          "status": "unknown"
+        },
+        "G6": {
+          "reason": "Not yet verified in the intended host.",
+          "status": "unknown"
+        }
+      },
+      "need": {
+        "N1": 0,
+        "N2": 1,
+        "N3": 0,
+        "N4": 0
+      },
+      "reason": "The implemented feature is a deterministic read-only context projection; human/host skill retain judgment and manual invocation. No new service/model/agent loop was needed."
+    },
+    "riskiest_assumption": {
+      "basis": "unknown",
+      "revisit": "Revisit on owner correction or contradictory observed use; no authenticated acceptance implied.",
+      "source": "Implementing assistant interpretation; not user confirmation.",
+      "text": "A feature-scoped handoff will improve this real conversation without losing owner context or stale-evidence warnings."
+    }
+  },
+  "schema_version": 1,
+  "snapshot": {
+    "plugins/delivery/README.md": {
+      "blob": "1af2b5a9c1a2afe4447a8ee4514fd1dc873f6f45",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/references/bounded-change.md": {
+      "blob": "612fc9b1a378639444962202acc4e0e5534fc9fa",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/references/product.md": {
+      "blob": "8db7869c1fd9cb62c9d53798bca7f6911fb8bdde",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/references/supervision.md": {
+      "blob": "6f3cc5ebff2eaefdd5921b0f55e59443eec35363",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/scripts/artifacts.py": {
+      "blob": "a3cf56ffd4314556d38cfb059ceccb317e8a2c7c",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/scripts/codex_rpc.py": {
+      "blob": "a73a20763d2a213d954c33d79cfc30d8addd085b",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/scripts/delivery_gates.py": {
+      "blob": "ac32d40b36ab0ffa2877f91e626d270297d496ed",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/scripts/judge.js": {
+      "blob": "d9eddc7aea864dc7734031f7ebc110a8d93953aa",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/scripts/lib/judge.js": {
+      "blob": "7cca5236285ba80dbfa88a2d3209b44d74ccf0f0",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/scripts/lib/openai-judge.js": {
+      "blob": "13cd09e77b0f06aca026d86a5f3dae7e94238aa0",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/scripts/operator_capture.py": {
+      "blob": "b1aa6f27b34d034898d274c6dfd60f4a01957c04",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/scripts/product.py": {
+      "blob": "d20d1e00a7d77dff7aac452eb517e60600fae5a4",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/scripts/project.py": {
+      "blob": "e51eb59460ad6b3fd9396dfe28ee97a552a8fab2",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/scripts/runtime.py": {
+      "blob": "7271f5548535c6ce6375ba3d24d36698fa615563",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/scripts/supervision.py": {
+      "blob": "70a64bfc4c70eaea6a4f381dc5a0b5debdc7791b",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/scripts/verification.py": {
+      "blob": "c195a4bdb5b2bbc9f3c6468f1d287ca1cc219ccb",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/skills/architecture/SKILL.md": {
+      "blob": "249438b79595063329bf864fd55b6728df442c77",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/skills/brief/SKILL.md": {
+      "blob": "e348fe9f90ccc8dc037dd83b4e5ae2241858eaae",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/skills/challenge/SKILL.md": {
+      "blob": "68f65471f38ed4e35e169fa9fd6e1bc397e40b61",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/skills/design/SKILL.md": {
+      "blob": "bea61596cadf34907846871010246bb03a364fd7",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/skills/personas/SKILL.md": {
+      "blob": "7347029f25b43bd5fef48c64aa5b082fc969b50c",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/skills/prd/SKILL.md": {
+      "blob": "969aab43aae17c59c76dbafb11befe780d8fb6bd",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/skills/product/SKILL.md": {
+      "blob": "2bfa9d7b559d2965ec03d3dbf73f3a874e530603",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/skills/realign/SKILL.md": {
+      "blob": "88664da07deb684b9b10dc740126ea2584acac96",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/skills/research/SKILL.md": {
+      "blob": "042b79a26e56dc4a22fe1ad8d9c9a4534acd6679",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/skills/roadmap/SKILL.md": {
+      "blob": "f8dd7f840d3cda109475c645d48dd80553bc10f8",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/skills/simulate/SKILL.md": {
+      "blob": "9ae7f87d20f6a7da85011355a677a8bb082d36c5",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/skills/sprint-review/SKILL.md": {
+      "blob": "4bd7ac47bc1b33a329ab87cb276ccb13c8cafa38",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/skills/sprint/SKILL.md": {
+      "blob": "6b5d733f233396f5344f3bdb370fa6ae0d33be96",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/skills/start/SKILL.md": {
+      "blob": "1cf3f8aade499a89d95a3d06b20b15f659c1cf85",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/skills/status/SKILL.md": {
+      "blob": "70b0f0577467a65bad1ed36e53c5d907d7ae52ef",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/skills/stories/SKILL.md": {
+      "blob": "87e024ffdca9ebc6a7e8b9483c4581389342ea34",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "tests/delivery/openai-judge.test.js": {
+      "blob": "e21d538d02830b21431105ba51c40ff2d52aa8b7",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "tests/delivery/test_artifacts.py": {
+      "blob": "071c38e47f745221567ffa084cebbcc0df95d846",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "tests/delivery/test_delivery_gates.py": {
+      "blob": "ed91baf5cf2d1b181ddeefc79272b5b779f4ffd5",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "tests/delivery/test_package.py": {
+      "blob": "864ac1e0f1bb6cd86b5e7bb480ed51b26a777deb",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "tests/delivery/test_product.py": {
+      "blob": "036986daf16020f8fb15ae2c5a9828503138585e",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "tests/delivery/test_product_transitive.py": {
+      "blob": "00d72f1e1acddcbeac64271d491fd2802752c231",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "tests/delivery/test_project.py": {
+      "blob": "34d976b2395b416494f87cd3b96c498e714ea2af",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "tests/delivery/test_runtime.py": {
+      "blob": "f96bd3fb3720ac9cf5a4295375522b7e88baea56",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "tests/delivery/test_supervision.py": {
+      "blob": "ff71fdae961392561776799e9d7b1bad1f73f7ca",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "tests/delivery/test_verification.py": {
+      "blob": "a697b730538243387538194c48312d745d7aaaa3",
+      "kind": "blob",
+      "mode": "100644"
+    }
+  }
+}

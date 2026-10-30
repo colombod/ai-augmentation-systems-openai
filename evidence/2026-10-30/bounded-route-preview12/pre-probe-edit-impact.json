@@ -1,0 +1,774 @@
+{
+  "coverage": "curated file-level feature links; no inferred calls or complete dependency graph",
+  "features": [],
+  "freshness": {
+    "changed_mapped_files": [],
+    "commit_matches": true,
+    "current_commit": "4a11c76f70aa530b49374e88ac3a8371ff8ae9d0",
+    "fresh": true,
+    "limitation": "Fresh means snapshot commit and linked raw bytes/modes match; unmapped code and runtime wiring are not proven complete",
+    "snapshot_commit": "4a11c76f70aa530b49374e88ac3a8371ff8ae9d0",
+    "staged_changes": [],
+    "unmapped_committed_changes": [],
+    "unmapped_working_changes": [],
+    "untracked_not_analyzed": []
+  },
+  "map_sha256": "aaabb5355b044dadedb613938372537b4ef6efdde7990caa1deec0321f8ac843",
+  "question_paths": [
+    "scripts/probe_delivery_install.py"
+  ],
+  "shared_files": {},
+  "transitive": {
+    "available": true,
+    "coverage": {
+      "analyzed_files": [
+        "plugins/delivery/scripts/artifacts.py",
+        "plugins/delivery/scripts/codex_rpc.py",
+        "plugins/delivery/scripts/delivery_gates.py",
+        "plugins/delivery/scripts/operator_capture.py",
+        "plugins/delivery/scripts/product.py",
+        "plugins/delivery/scripts/project.py",
+        "plugins/delivery/scripts/runtime.py",
+        "plugins/delivery/scripts/supervision.py",
+        "plugins/delivery/scripts/verification.py"
+      ],
+      "anchor_package_context_unknown": [
+        {
+          "package_initializer": "plugins/delivery/scripts/__init__.py",
+          "path": "plugins/delivery/scripts/artifacts.py",
+          "reason": "Anchor may be a script or namespace/custom package; enclosing initializer missing or unsupported. No further package reach inferred."
+        },
+        {
+          "package_initializer": "plugins/delivery/scripts/__init__.py",
+          "path": "plugins/delivery/scripts/codex_rpc.py",
+          "reason": "Anchor may be a script or namespace/custom package; enclosing initializer missing or unsupported. No further package reach inferred."
+        },
+        {
+          "package_initializer": "plugins/delivery/scripts/__init__.py",
+          "path": "plugins/delivery/scripts/delivery_gates.py",
+          "reason": "Anchor may be a script or namespace/custom package; enclosing initializer missing or unsupported. No further package reach inferred."
+        },
+        {
+          "package_initializer": "plugins/delivery/scripts/__init__.py",
+          "path": "plugins/delivery/scripts/operator_capture.py",
+          "reason": "Anchor may be a script or namespace/custom package; enclosing initializer missing or unsupported. No further package reach inferred."
+        },
+        {
+          "package_initializer": "plugins/delivery/scripts/__init__.py",
+          "path": "plugins/delivery/scripts/product.py",
+          "reason": "Anchor may be a script or namespace/custom package; enclosing initializer missing or unsupported. No further package reach inferred."
+        },
+        {
+          "package_initializer": "plugins/delivery/scripts/__init__.py",
+          "path": "plugins/delivery/scripts/project.py",
+          "reason": "Anchor may be a script or namespace/custom package; enclosing initializer missing or unsupported. No further package reach inferred."
+        },
+        {
+          "package_initializer": "plugins/delivery/scripts/__init__.py",
+          "path": "plugins/delivery/scripts/runtime.py",
+          "reason": "Anchor may be a script or namespace/custom package; enclosing initializer missing or unsupported. No further package reach inferred."
+        },
+        {
+          "package_initializer": "plugins/delivery/scripts/__init__.py",
+          "path": "plugins/delivery/scripts/supervision.py",
+          "reason": "Anchor may be a script or namespace/custom package; enclosing initializer missing or unsupported. No further package reach inferred."
+        },
+        {
+          "package_initializer": "plugins/delivery/scripts/__init__.py",
+          "path": "plugins/delivery/scripts/verification.py",
+          "reason": "Anchor may be a script or namespace/custom package; enclosing initializer missing or unsupported. No further package reach inferred."
+        }
+      ],
+      "dynamic_loaders_not_inferred": [
+        {
+          "from": "plugins/delivery/scripts/product.py",
+          "line": 684,
+          "reason": "dynamic loader call not inferred"
+        },
+        {
+          "from": "plugins/delivery/scripts/runtime.py",
+          "line": 75,
+          "reason": "dynamic loader call not inferred"
+        }
+      ],
+      "features_without_code": [
+        "authenticated-dot"
+      ],
+      "initializer_edge_context": "python-package-initializer edges are possible package-import reach; standalone script execution may not run them. line:null means implicit ancestry, not an invented import location.",
+      "limits": "Conventional sibling/repository/src roots only; no execution, installed packages, namespace packages, custom sys.path, aliases of dynamic loaders, or other languages. Unreached is unknown, never safe.",
+      "scope": "Reachable from curated anchors, at recorded commit only; possible Python imports, not runtime calls",
+      "unresolved_references": [
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/artifacts.py",
+          "line": 7,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "hashlib"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/artifacts.py",
+          "line": 8,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "json"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/artifacts.py",
+          "line": 9,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "os"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/artifacts.py",
+          "line": 10,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "pathlib"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/artifacts.py",
+          "line": 11,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "re"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/artifacts.py",
+          "line": 12,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "tempfile"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/artifacts.py",
+          "line": 13,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "uuid"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/codex_rpc.py",
+          "line": 2,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "json"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/codex_rpc.py",
+          "line": 3,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "queue"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/codex_rpc.py",
+          "line": 4,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "re"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/codex_rpc.py",
+          "line": 5,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "subprocess"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/codex_rpc.py",
+          "line": 6,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "threading"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/codex_rpc.py",
+          "line": 7,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "time"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/delivery_gates.py",
+          "line": 11,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "contextlib"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/delivery_gates.py",
+          "line": 12,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "hashlib"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/delivery_gates.py",
+          "line": 13,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "json"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/delivery_gates.py",
+          "line": 14,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "os"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/delivery_gates.py",
+          "line": 15,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "stat"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/delivery_gates.py",
+          "line": 16,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "pathlib"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/delivery_gates.py",
+          "line": 17,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "re"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/delivery_gates.py",
+          "line": 18,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "subprocess"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/delivery_gates.py",
+          "line": 19,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "time"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/delivery_gates.py",
+          "line": 20,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "uuid"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/operator_capture.py",
+          "line": 7,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "copy"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/operator_capture.py",
+          "line": 8,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "hashlib"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/operator_capture.py",
+          "line": 9,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "hmac"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/operator_capture.py",
+          "line": 10,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "json"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/operator_capture.py",
+          "line": 11,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "io"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/operator_capture.py",
+          "line": 12,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "math"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/operator_capture.py",
+          "line": 13,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "os"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/operator_capture.py",
+          "line": 14,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "secrets"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/operator_capture.py",
+          "line": 15,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "threading"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/operator_capture.py",
+          "line": 16,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "time"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/product.py",
+          "line": 7,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "argparse"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/product.py",
+          "line": 8,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "ast"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/product.py",
+          "line": 9,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "collections"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/product.py",
+          "line": 10,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "fcntl"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/product.py",
+          "line": 11,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "hashlib"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/product.py",
+          "line": 12,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "json"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/product.py",
+          "line": 13,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "os"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/product.py",
+          "line": 14,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "pathlib"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/product.py",
+          "line": 15,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "re"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/product.py",
+          "line": 16,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "subprocess"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/product.py",
+          "line": 17,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "sys"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/product.py",
+          "line": 18,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "tempfile"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/project.py",
+          "line": 3,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "argparse"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/project.py",
+          "line": 4,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "json"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/project.py",
+          "line": 5,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "os"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/project.py",
+          "line": 6,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "pathlib"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/project.py",
+          "line": 7,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "re"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/project.py",
+          "line": 8,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "sys"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/runtime.py",
+          "line": 7,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "argparse"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/runtime.py",
+          "line": 8,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "contextlib"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/runtime.py",
+          "line": 9,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "fcntl"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/runtime.py",
+          "line": 10,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "hashlib"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/runtime.py",
+          "line": 11,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "json"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/runtime.py",
+          "line": 12,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "os"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/runtime.py",
+          "line": 13,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "queue"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/runtime.py",
+          "line": 14,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "threading"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/runtime.py",
+          "line": 15,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "pathlib"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/runtime.py",
+          "line": 16,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "re"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/runtime.py",
+          "line": 17,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "sqlite3"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/runtime.py",
+          "line": 18,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "subprocess"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/runtime.py",
+          "line": 19,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "sys"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/runtime.py",
+          "line": 20,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "time"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/runtime.py",
+          "line": 21,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "uuid"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/supervision.py",
+          "line": 8,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "json"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/supervision.py",
+          "line": 9,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "re"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/supervision.py",
+          "line": 10,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "time"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/supervision.py",
+          "line": 11,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "uuid"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/verification.py",
+          "line": 9,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "argparse"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/verification.py",
+          "line": 10,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "datetime"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/verification.py",
+          "line": 11,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "hashlib"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/verification.py",
+          "line": 12,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "json"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/verification.py",
+          "line": 13,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "os"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/verification.py",
+          "line": 14,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "pathlib"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/verification.py",
+          "line": 15,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "re"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/verification.py",
+          "line": 16,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "signal"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/verification.py",
+          "line": 17,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "subprocess"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/verification.py",
+          "line": 18,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "tempfile"
+        },
+        {
+          "candidates": [],
+          "from": "plugins/delivery/scripts/verification.py",
+          "line": 19,
+          "reason": "outside repository or unresolved in conventional roots",
+          "reference": "time"
+        }
+      ],
+      "unsupported_or_unparsed": [
+        {
+          "path": "plugins/delivery/references/bounded-change.md",
+          "reason": "unsupported language/file type; only Python imports inferred"
+        },
+        {
+          "path": "plugins/delivery/references/product.md",
+          "reason": "unsupported language/file type; only Python imports inferred"
+        },
+        {
+          "path": "plugins/delivery/scripts/judge.js",
+          "reason": "unsupported language/file type; only Python imports inferred"
+        },
+        {
+          "path": "plugins/delivery/scripts/lib/judge.js",
+          "reason": "unsupported language/file type; only Python imports inferred"
+        },
+        {
+          "path": "plugins/delivery/scripts/lib/openai-judge.js",
+          "reason": "unsupported language/file type; only Python imports inferred"
+        },
+        {
+          "path": "plugins/delivery/skills/architecture/SKILL.md",
+          "reason": "unsupported language/file type; only Python imports inferred"
+        },
+        {
+          "path": "plugins/delivery/skills/brief/SKILL.md",
+          "reason": "unsupported language/file type; only Python imports inferred"
+        },
+        {
+          "path": "plugins/delivery/skills/challenge/SKILL.md",
+          "reason": "unsupported language/file type; only Python imports inferred"
+        },
+        {
+          "path": "plugins/delivery/skills/design/SKILL.md",
+          "reason": "unsupported language/file type; only Python imports inferred"
+        },
+        {
+          "path": "plugins/delivery/skills/personas/SKILL.md",
+          "reason": "unsupported language/file type; only Python imports inferred"
+        },
+        {
+          "path": "plugins/delivery/skills/prd/SKILL.md",
+          "reason": "unsupported language/file type; only Python imports inferred"
+        },
+        {
+          "path": "plugins/delivery/skills/product/SKILL.md",
+          "reason": "unsupported language/file type; only Python imports inferred"
+        },
+        {
+          "path": "plugins/delivery/skills/realign/SKILL.md",
+          "reason": "unsupported language/file type; only Python imports inferred"
+        },
+        {
+          "path": "plugins/delivery/skills/research/SKILL.md",
+          "reason": "unsupported language/file type; only Python imports inferred"
+        },
+        {
+          "path": "plugins/delivery/skills/roadmap/SKILL.md",
+          "reason": "unsupported language/file type; only Python imports inferred"
+        },
+        {
+          "path": "plugins/delivery/skills/simulate/SKILL.md",
+          "reason": "unsupported language/file type; only Python imports inferred"
+        },
+        {
+          "path": "plugins/delivery/skills/sprint-review/SKILL.md",
+          "reason": "unsupported language/file type; only Python imports inferred"
+        },
+        {
+          "path": "plugins/delivery/skills/sprint/SKILL.md",
+          "reason": "unsupported language/file type; only Python imports inferred"
+        },
+        {
+          "path": "plugins/delivery/skills/start/SKILL.md",
+          "reason": "unsupported language/file type; only Python imports inferred"
+        },
+        {
+          "path": "plugins/delivery/skills/status/SKILL.md",
+          "reason": "unsupported language/file type; only Python imports inferred"
+        },
+        {
+          "path": "plugins/delivery/skills/stories/SKILL.md",
+          "reason": "unsupported language/file type; only Python imports inferred"
+        }
+      ]
+    },
+    "direct_unmapped_paths_meaning": "Top-level unmapped_paths means no direct curated anchor; consult optional reach separately, with its unknowns.",
+    "features": [],
+    "freshness": {
+      "changed_reached_files": [],
+      "current_commit": "4a11c76f70aa530b49374e88ac3a8371ff8ae9d0",
+      "fresh": true,
+      "snapshot_commit": "4a11c76f70aa530b49374e88ac3a8371ff8ae9d0"
+    },
+    "shared_files": {},
+    "snapshot_commit": "4a11c76f70aa530b49374e88ac3a8371ff8ae9d0",
+    "unreached_paths": [
+      "scripts/probe_delivery_install.py"
+    ]
+  },
+  "unmapped_paths": [
+    "scripts/probe_delivery_install.py"
+  ],
+  "warning": "Unmapped means unknown, never safe to delete; transitive and dynamic dependencies require inspection"
+}

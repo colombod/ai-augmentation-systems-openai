@@ -13,7 +13,8 @@ Use `inspect` and source/evidence where available; an agent curates capabilities
 not the census. Distinguish observed capabilities, planned gaps and deferred gaps.
 For each material gap record a stable ID, affected customer/feature, evidence or
 unknown, disposition, reason, owner and next check/action in the existing initiative
-roadmap/backlog. Use planned feature IDs in the product record for missing
+roadmap/backlog. If neither exists (including fresh greenfield), embed this gap
+table in the bounded story/sprint; no roadmap or new tracker is required. Use planned feature IDs in the product record for missing
 capabilities; keep defects/debt linked to those IDs in the existing backlog rather
 than inventing capabilities. Deferred means a reason and revisit trigger, not
 forgotten. Do not create a second tracking system or imply inaccessible tickets

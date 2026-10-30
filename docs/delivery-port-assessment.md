@@ -127,6 +127,24 @@ release lists.
 Current normal review PR: [#3](https://github.com/colombod/ai-augmentation-systems-openai/pull/3).
 Publication is complete; merge awaits independent combined-diff review and exact-head CI.
 
+### Independent product rejection and corrected preview12 follow-up
+
+Independent product QA rejected the full workflow at8340a051: an unconditional
+roadmap prerequisite contradicted the small-change promise, and accepted work had
+no packaged authorized shipping path. Source/unit/installer success did not close
+those product defects. Earlier evidence and conclusions remain historical.
+
+Preview12 adds one explicit bounded-change contract across product/stories/sprint/
+review/realignment, with route-aware templates and absent-artifact handling. It
+also owns gap disposition/next-choice reasoning and authorized normal-PR/exact-head
+product+code review/CI/merge/state-refresh instructions, without runtime permission
+changes. A NEW feature-conversation follow-up used that route to improve the actual
+installed-resource probe (nine resource hashes,16 skills,zero native model calls).
+The prior roadmap/open-gap/history artifacts are now included, not reconstructed.
+[Corrected route evidence and remaining gates](../evidence/2026-10-30/bounded-route-preview12/README.md).
+Independent product recheck and exact-head CI are required before merge; no full
+installed/native or customer-use acceptance is claimed.
+
 ### What self-development actually demonstrated
 
 The implementing assistant manually curated the fourteen-feature map, supplied

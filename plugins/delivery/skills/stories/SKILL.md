@@ -104,7 +104,8 @@ or a passing test. An unknown owner ask remains unknown, not a fabricated quote.
 **3. Verify each path's state.** Existing paths must be checked against available
 source. New files are labelled **proposed new** with a create action; check for
 collisions when a repository exists. With no repository, state that path/root
-availability is unverified and carry the architecture setup prerequisite. Do not
+availability is unverified and carry the architecture setup prerequisite, or
+the explicitly embedded setup prerequisite on the bounded route. Do not
 require a file that the story is meant to create to already exist. Keep proposed
 routes separate from the product map's observed code links until code is present.
 
