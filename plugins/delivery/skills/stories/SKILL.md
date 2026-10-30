@@ -16,15 +16,20 @@ Read [host capability guidance](../../references/runtime.md) and
 
 ## Gate check
 
-Read all three inputs and list any existing stories in `.delivery/stories/`.
+Choose the full-pipeline route below or the explicit [bounded-change route](../../references/bounded-change.md).
+For `route: bounded-change`, read available prior artifacts and list missing ones;
+the self-contained story substitutes the compact goal/scope/design/acceptance
+contract for PRD/architecture/roadmap prerequisites. Preserve all readiness,
+open-finding and authority checks. Do not invent missing documents.
+For the full-pipeline route, read all three inputs. List existing stories in both routes.
 
 Read any shared product record and the [product contract](../../references/product.md).
 Greenfield may have no repository or implementation. That does not prevent story
 decomposition from the supplied PRD/design/roadmap: preserve planned features and
 proposed new paths, never invent existing code or a working test command.
 
-- **Roadmap missing** — stop and run `$delivery:roadmap` first. Without it there is no defensible phase boundary to decompose along.
-- **Architecture missing** — warn hard. Stories written without a design either omit the technical context (making them un-pickable) or invent a design inline (which is the Solution Architect's job, done badly). Recommend running `$delivery:architecture` first.
+- **Roadmap missing on the full-pipeline route** — stop and run `$delivery:roadmap` first. Without it there is no defensible phase boundary to decompose along.
+- **Architecture missing on the full-pipeline route** — warn hard. Stories written without a design either omit the technical context (making them un-pickable) or invent a design inline (which is the Solution Architect's job, done badly). Recommend running `$delivery:architecture` first.
 - **Setup, not a feature** — if the item is pure environment/repo/framework/build-system setup (no persona completes a journey through it), refuse to write it as a story; point back to `architecture.md`'s Setup section, where it belongs as a Phase-1-gating prerequisite, not a phase deliverable.
 - Never overwrite a story whose status is `in-progress` or `done` — supersede it instead, per the protocol below.
 
@@ -56,7 +61,7 @@ what was known. Treat the supersession as information about how the understandin
 and say so in the sprint review's calibration section — a design that supersedes often is a
 design being learned, and that is worth knowing.
 
-Resolve the target phase from `the user's request`, or take the first phase in the roadmap with no stories yet. State which phase you are decomposing before you start.
+Resolve the target phase from the request/roadmap, or the bounded-change outcome from its explicit compact contract. State the selected scope and route before starting.
 
 **Open blocking findings.** Apply the conventions' *Open blocking findings* check to every artifact this phase consumes before going further.
 

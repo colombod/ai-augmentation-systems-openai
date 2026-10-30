@@ -17,7 +17,7 @@ brief, supporting research, customer personas, requirements, design, architectur
 roadmap, stories and a scoped implementation handoff. After implementation, it
 helps review the evidence and update the plan with what was learned.
 
-**Version `0.1.0-preview.11` — product and local runtime preview.** Sixteen skills use
+**Version `0.1.0-preview.12` — product and local runtime preview.** Sixteen skills use
 21 templates and 10 review lenses. Greenfield ideas and brownfield projects share
 one product contract: owner intent, customer promise, usefulness and planned or
 observed features. The local coordinator adds persistent Codex
@@ -151,6 +151,13 @@ The brief identifies the problem, affected segment, success signals, scope,
 assumptions and unanswered questions. Existing artifacts are read before revision
 and their history is preserved. You can invoke any phase whose inputs already
 exist; you do not have to restart the pipeline.
+
+For a small outcome, ask `$delivery:product` to choose one evidence-backed next
+change, then `$delivery:stories` using `route: bounded-change`. The packaged
+[bounded-change route](references/bounded-change.md) carries the compact contract
+through sprint/review/realignment and an explicitly authorized shipping handoff.
+It does not require boilerplate PRD/architecture/roadmap documents or grant runtime
+actors publishing permissions.
 
 ### Choose a workflow
 

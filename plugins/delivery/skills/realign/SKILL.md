@@ -20,6 +20,11 @@ Read [host capability guidance](../../references/runtime.md) and
 Read the sprint review in `.delivery/sprints/`, plus `prd.md`, `prioritization.md`,
 `roadmap.md`, `architecture.md`, `personas/` and open findings in `reviews/`.
 
+For `route: bounded-change`, use the embedded story/sprint contract and existing
+backlog/product record in place of absent full-pipeline documents. Follow the
+[bounded-change route](../../references/bounded-change.md); update only artifacts
+that exist and record missing ones honestly.
+
 If no sprint review exists, stop and run `$delivery:sprint-review` first. Re-planning
 from a sprint's own self-report alone reuses its optimism. Read the review's
 actual evidence and independence label. A single-session review is not an

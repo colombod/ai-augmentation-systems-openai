@@ -1,6 +1,18 @@
 # Changelog
 
-## 0.1.0-preview.11 — 2026-10-30
+## 0.1.0-preview.12 — 2026-10-30
+
+- Add an explicit bounded-change route shared by product, stories, sprint, review
+  and realignment. Embedded goal/scope/design/criteria replace full-pipeline
+  document prerequisites; evidence, independent review and authority gates remain.
+- Make onboarding classify observed capabilities, planned/deferred gaps and next
+  useful work with stable IDs, evidence, alternatives, reasons and next checks.
+- Carry accepted work through an authorized normal-PR/exact-head-review/CI/merge
+  shipping handoff and canonical state refresh, without widening runtime lanes.
+- Preserve historical self-development evidence; the corrected route is a new
+  follow-up, not a claim that missing earlier planning documents existed.
+
+## Earlier local candidate — 0.1.0-preview.11
 
 - Ignore Git replacement objects during exact-commit review and acceptance-gate
   inspection, preventing replacement trees from masking altered tracked bytes.

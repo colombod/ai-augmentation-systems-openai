@@ -73,3 +73,11 @@ writing sections needed by the artifact. Expanded guidance is action-dependent.
    `retire-plan --feature <id>` (optionally `--transitive`), use the contract's
    shared-code, usage, replacement/migration/rollback and explicit-human-decision
    checks.
+
+## Choose and deliver one useful next change
+
+For onboarding gap disposition, evidence-led next-work selection and a small
+change through authorized shipping, follow [the bounded-change route](../../references/bounded-change.md).
+Keep observed, planned and deferred distinct with IDs, reasons and next actions;
+agent judgment is permitted but owner confirmation must never be invented.
+This route also applies to no-code greenfield work and does not force full-pipeline documents.

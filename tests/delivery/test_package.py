@@ -30,6 +30,20 @@ class PackageTests(unittest.TestCase):
                              'Skill tool', 'AskUserQuestion', '$ARGUMENTS'):
                 self.assertNotIn(obsolete, text, str(path))
 
+    def test_bounded_route_is_reachable_across_delivery_and_shipping(self):
+        route = PACKAGE/'references/bounded-change.md'
+        text = route.read_text()
+        for phase in ('product', 'stories', 'sprint', 'sprint-review', 'realign'):
+            skill = (PACKAGE/'skills'/phase/'SKILL.md').read_text()
+            self.assertIn('../../references/bounded-change.md', skill, phase)
+        # Retain the two routes and explicit release authority after future edits.
+        stories = (PACKAGE/'skills/stories/SKILL.md').read_text()
+        self.assertIn('Roadmap missing on the full-pipeline route', stories)
+        for required in ('planned gaps and deferred gaps', 'alternatives',
+                         'product-workflow', 'expected head', 'canonical source/map',
+                         'receive no new write, push, merge'):
+            self.assertIn(required, text)
+
     def test_import_provenance_covers_all_derived_material(self):
         provenance = json.loads((PACKAGE / 'upstream.json').read_text())
         self.assertRegex(provenance['revision'], r'^[a-f0-9]{40}$')
