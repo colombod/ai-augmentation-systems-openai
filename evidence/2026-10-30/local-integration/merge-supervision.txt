@@ -1,0 +1,10 @@
+Auto-merging plugins/delivery/CHANGELOG.md
+CONFLICT (content): Merge conflict in plugins/delivery/CHANGELOG.md
+Auto-merging plugins/delivery/NOTICE
+CONFLICT (content): Merge conflict in plugins/delivery/NOTICE
+Auto-merging plugins/delivery/README.md
+CONFLICT (content): Merge conflict in plugins/delivery/README.md
+Auto-merging plugins/delivery/skills/status/SKILL.md
+Auto-merging plugins/delivery/upstream.json
+CONFLICT (content): Merge conflict in plugins/delivery/upstream.json
+Automatic merge failed; fix conflicts and then commit the result.

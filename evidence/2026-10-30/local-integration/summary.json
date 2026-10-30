@@ -1,0 +1,50 @@
+{
+  "original_heads": {
+    "main": "a46dc827826c9d641f5e745101f4cc14fcf1a21b",
+    "supervision": "33146a95c2e1bd1ce0c1a0b6215a88be4cb44de4",
+    "drafting": "6c95dc4311b13b084f6b9a87e56c2e8aa128902e",
+    "loading": "e92b71a48b6ad417bef73bd38dd184784b163f12",
+    "transitive": "d02db2f5de2a39a721f59d3080c3f56abee61071"
+  },
+  "local_integration_commit": "edd036fbd96b60f58a3936766a2e712cbf18f502",
+  "local_branch": "test/delivery-combined-20261030",
+  "worktree": "/workspace/delivery-integration",
+  "package_version": "0.1.0-integration.20261030",
+  "published": false,
+  "native_model_calls": 0,
+  "executables": {
+    "python3": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "node": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "codex": "/opt/codex/bin/codex",
+    "bd": null,
+    "dolt": null
+  },
+  "versions": {
+    "python": "3.12.14",
+    "node": "24.19.0",
+    "codex": "0.163.0"
+  },
+  "environment_limit": "Beads and Dolt executables absent; no repeated native inference, credentials, network policy, provider or host configuration changes. Read-only-home warning observed during codex --version. Judge credentials were not inspected or invoked.",
+  "product_limits": [
+    "Authenticated dot-to-Delivery adapter absent; trusted in-process bridge only.",
+    "Product record writes remain authorized-host helper operations; native controlled artifact lane excludes product-map.json.",
+    "Python-only possible import reach is partial and does not establish shipped inventory or unknown consumers.",
+    "Model-driven multi-stage quality/token/time and live host qualification remain separate pending evidence."
+  ],
+  "catalogue_unchanged": true,
+  "installed_resources_verified": [
+    "references/core.md",
+    "references/product.md",
+    "references/reviewer-context.md",
+    "scripts/artifacts.py",
+    "scripts/codex_rpc.py",
+    "scripts/delivery_gates.py",
+    "scripts/product.py",
+    "scripts/project.py",
+    "scripts/runtime.py",
+    "scripts/supervision.py",
+    "scripts/verification.py",
+    "skills/product/SKILL.md"
+  ],
+  "source_all_ancestors_present": true
+}

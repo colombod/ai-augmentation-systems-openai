@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "/workspace/delivery-integration/plugins/delivery/scripts/project.py",
+    "init",
+    "--project",
+    "/tmp/delivery-integration-evidence/product-workflow/greenfield",
+    "--initiative",
+    "new-plugin-idea"
+  ],
+  "exit_code": 0,
+  "stdout": "{\n  \"delivery_root\": \"/tmp/delivery-integration-evidence/product-workflow/greenfield/.delivery\",\n  \"initiative\": \"new-plugin-idea\",\n  \"created\": [\n    \"/tmp/delivery-integration-evidence/product-workflow/greenfield/.delivery\",\n    \"/tmp/delivery-integration-evidence/product-workflow/greenfield/.delivery/initiatives\",\n    \"/tmp/delivery-integration-evidence/product-workflow/greenfield/.delivery/initiatives/new-plugin-idea\",\n    \"/tmp/delivery-integration-evidence/product-workflow/greenfield/.delivery/personas\",\n    \"/tmp/delivery-integration-evidence/product-workflow/greenfield/.delivery/interviews\",\n    \"/tmp/delivery-integration-evidence/product-workflow/greenfield/.delivery/simulations\",\n    \"/tmp/delivery-integration-evidence/product-workflow/greenfield/.delivery/decisions\",\n    \"/tmp/delivery-integration-evidence/product-workflow/greenfield/.delivery/stories\",\n    \"/tmp/delivery-integration-evidence/product-workflow/greenfield/.delivery/reviews\",\n    \"/tmp/delivery-integration-evidence/product-workflow/greenfield/.delivery/sprints\"\n  ],\n  \"capability\": \"planning-preview\",\n  \"artifacts_overwritten\": 0\n}\n",
+  "stderr": ""
+}

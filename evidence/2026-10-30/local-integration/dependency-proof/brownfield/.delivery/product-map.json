@@ -1,0 +1,234 @@
+{
+  "commit": "edd036fbd96b60f58a3936766a2e712cbf18f502",
+  "features": [
+    {
+      "code": [
+        "plugins/delivery/scripts/runtime.py"
+      ],
+      "evidence": [
+        {
+          "note": "Curated source anchor at exact commit; possible imports, not deployment or user evidence.",
+          "path": "plugins/delivery/scripts/runtime.py"
+        }
+      ],
+      "id": "native-coordination",
+      "name": "Native coordination source",
+      "state": "preview",
+      "summary": "Persist native roles and route controlled work; source preview, no new host proof.",
+      "unknowns": [
+        "The customer, job and return behaviour need evidence."
+      ],
+      "usefulness": {
+        "First value": {
+          "evidence": "No outside-user evidence recorded.",
+          "grade": "Unknown",
+          "next_check": "Name who to observe, when, and the task/outcome.",
+          "rating": "Unknown"
+        },
+        "Fit": {
+          "evidence": "No outside-user evidence recorded.",
+          "grade": "Unknown",
+          "next_check": "Name who to observe, when, and the task/outcome.",
+          "rating": "Unknown"
+        },
+        "Job": {
+          "evidence": "No outside-user evidence recorded.",
+          "grade": "Unknown",
+          "next_check": "Name who to observe, when, and the task/outcome.",
+          "rating": "Unknown"
+        },
+        "Outcome": {
+          "evidence": "No outside-user evidence recorded.",
+          "grade": "Unknown",
+          "next_check": "Name who to observe, when, and the task/outcome.",
+          "rating": "Unknown"
+        },
+        "Return": {
+          "evidence": "No outside-user evidence recorded.",
+          "grade": "Unknown",
+          "next_check": "Name who to observe, when, and the task/outcome.",
+          "rating": "Unknown"
+        },
+        "Trust": {
+          "evidence": "No outside-user evidence recorded.",
+          "grade": "Unknown",
+          "next_check": "Name who to observe, when, and the task/outcome.",
+          "rating": "Unknown"
+        }
+      }
+    },
+    {
+      "code": [
+        "plugins/delivery/scripts/delivery_gates.py"
+      ],
+      "evidence": [
+        {
+          "note": "Curated source anchor at exact commit; possible imports, not deployment or user evidence.",
+          "path": "plugins/delivery/scripts/delivery_gates.py"
+        }
+      ],
+      "id": "controlled-work",
+      "name": "Controlled task workflow source",
+      "state": "preview",
+      "summary": "Control task review/acceptance evidence; source preview, no inferred human authority.",
+      "unknowns": [
+        "The customer, job and return behaviour need evidence."
+      ],
+      "usefulness": {
+        "First value": {
+          "evidence": "No outside-user evidence recorded.",
+          "grade": "Unknown",
+          "next_check": "Name who to observe, when, and the task/outcome.",
+          "rating": "Unknown"
+        },
+        "Fit": {
+          "evidence": "No outside-user evidence recorded.",
+          "grade": "Unknown",
+          "next_check": "Name who to observe, when, and the task/outcome.",
+          "rating": "Unknown"
+        },
+        "Job": {
+          "evidence": "No outside-user evidence recorded.",
+          "grade": "Unknown",
+          "next_check": "Name who to observe, when, and the task/outcome.",
+          "rating": "Unknown"
+        },
+        "Outcome": {
+          "evidence": "No outside-user evidence recorded.",
+          "grade": "Unknown",
+          "next_check": "Name who to observe, when, and the task/outcome.",
+          "rating": "Unknown"
+        },
+        "Return": {
+          "evidence": "No outside-user evidence recorded.",
+          "grade": "Unknown",
+          "next_check": "Name who to observe, when, and the task/outcome.",
+          "rating": "Unknown"
+        },
+        "Trust": {
+          "evidence": "No outside-user evidence recorded.",
+          "grade": "Unknown",
+          "next_check": "Name who to observe, when, and the task/outcome.",
+          "rating": "Unknown"
+        }
+      }
+    }
+  ],
+  "method": "curated file-level feature links; no inferred calls or complete dependency graph",
+  "mode": "brownfield",
+  "product": {
+    "before_after": {
+      "basis": "unknown",
+      "revisit": "When the next consequential step requires this choice.",
+      "source": "No owner decision supplied.",
+      "text": "Unknown: discuss the specific choice with the owner."
+    },
+    "current_cost": {
+      "basis": "unknown",
+      "revisit": "When the next consequential step requires this choice.",
+      "source": "No owner decision supplied.",
+      "text": "Unknown: discuss the specific choice with the owner."
+    },
+    "customer": {
+      "basis": "unknown",
+      "revisit": "When the next consequential step requires this choice.",
+      "source": "No owner decision supplied.",
+      "text": "Unknown: discuss the specific choice with the owner."
+    },
+    "cuts": [
+      {
+        "basis": "unknown",
+        "revisit": "When the next consequential step requires this choice.",
+        "source": "No owner decision supplied.",
+        "text": "Unknown: discuss the specific choice with the owner."
+      }
+    ],
+    "must_survive": [
+      {
+        "basis": "unknown",
+        "revisit": "When the next consequential step requires this choice.",
+        "source": "No owner decision supplied.",
+        "text": "Unknown: discuss the specific choice with the owner."
+      }
+    ],
+    "next_slice": {
+      "basis": "unknown",
+      "revisit": "When the next consequential step requires this choice.",
+      "source": "No owner decision supplied.",
+      "text": "Unknown: discuss the specific choice with the owner."
+    },
+    "problem": {
+      "basis": "unknown",
+      "revisit": "When the next consequential step requires this choice.",
+      "source": "No owner decision supplied.",
+      "text": "Unknown: discuss the specific choice with the owner."
+    },
+    "proposition": {
+      "basis": "unknown",
+      "revisit": "When the next consequential step requires this choice.",
+      "source": "No owner decision supplied.",
+      "text": "Unknown: discuss the specific choice with the owner."
+    },
+    "right_shape": {
+      "alternatives": [
+        "One direct answer with no persistent infrastructure; assess whether it suffices."
+      ],
+      "autonomy_rung": 2,
+      "benchmark": "Proposed, not run: real first-value task, planted trap, leave-alone case and stopping rule.",
+      "engine": "LLM",
+      "form": "skill",
+      "gates": {
+        "G1": {
+          "reason": "Not yet verified in the intended host.",
+          "status": "unknown"
+        },
+        "G2": {
+          "reason": "Not yet verified in the intended host.",
+          "status": "unknown"
+        },
+        "G3": {
+          "reason": "Not yet verified in the intended host.",
+          "status": "unknown"
+        },
+        "G4": {
+          "reason": "Not yet verified in the intended host.",
+          "status": "unknown"
+        },
+        "G5": {
+          "reason": "Not yet verified in the intended host.",
+          "status": "unknown"
+        },
+        "G6": {
+          "reason": "Not yet verified in the intended host.",
+          "status": "unknown"
+        }
+      },
+      "need": {
+        "N1": 1,
+        "N2": 1,
+        "N3": 0,
+        "N4": 0
+      },
+      "reason": "Proposed: expertise belongs in the caller context; verify for the actual job."
+    },
+    "riskiest_assumption": {
+      "basis": "unknown",
+      "revisit": "When the next consequential step requires this choice.",
+      "source": "No owner decision supplied.",
+      "text": "Unknown: discuss the specific choice with the owner."
+    }
+  },
+  "schema_version": 1,
+  "snapshot": {
+    "plugins/delivery/scripts/delivery_gates.py": {
+      "blob": "12dc8393e48dd26337ae7665daf3d4d354953d48",
+      "kind": "blob",
+      "mode": "100644"
+    },
+    "plugins/delivery/scripts/runtime.py": {
+      "blob": "7271f5548535c6ce6375ba3d24d36698fa615563",
+      "kind": "blob",
+      "mode": "100644"
+    }
+  }
+}

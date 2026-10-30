@@ -1,0 +1,366 @@
+diff --cc README.md
+index 1698ea9,33c79e6..0000000
+--- a/README.md
++++ b/README.md
+@@@ -9,7 -9,7 +9,7 @@@ guide. Maintained separately from th
+  
+  | Plugin | What it does | Current status |
+  |---|---|---|
+- | [Delivery](plugins/delivery/README.md) | Frames new ideas and existing products, maps feature/code evidence and change impact, then carries owner choices through planning and review | Product/local runtime preview `0.1.0-preview.9`; desktop and ChatGPT acceptance pending |
+ -| [Delivery](plugins/delivery/README.md) | Frames new ideas and existing products, maps feature/code evidence and change impact, then carries owner choices through planning and review | Product/local runtime preview `0.1.0-preview.10`; desktop and ChatGPT acceptance pending |
+++| [Delivery](plugins/delivery/README.md) | Frames new ideas and existing products, maps feature/code evidence and change impact, then carries owner choices through planning and review | Product/local runtime preview `0.1.0-integration.20261030`; desktop and ChatGPT acceptance pending |
+  | [Hook Event Log](plugins/hook-event-log/README.md) | Writes lifecycle types and minimal subagent identifiers/transcript links to local session files, using TypeScript and Rust | Source `0.1.0-preview.4`, with packaged event/schema reference; real desktop callbacks observed with preview.1; refresh installed copies for updates |
+  
+  Delivery provides 16 skills, 21 templates and 10 review lenses. The autonomous
+diff --cc plugins/delivery/CHANGELOG.md
+index 3e84bff,59de97d..0000000
+--- a/plugins/delivery/CHANGELOG.md
++++ b/plugins/delivery/CHANGELOG.md
+@@@ -1,26 -1,22 +1,48 @@@
+  # Changelog
+  
+++## Local test only — 0.1.0-integration.20261030
+++
+++- Combine existing supervision, drafting, selective loading and optional impact
+++  increments in a disposable worktree. Not published, released or approved.
+++
++ ## Unreleased — 0.1.0-preview.10
++ 
++ - Add optional `--transitive` to existing product impact and retirement proposals:
++   possible Python import reach at the recorded commit, shortest file/line evidence
++   chains, shared consumers and raw dependency freshness. Direct coverage remains
++   unchanged. No graph service, second registry or project-code execution.
++ - Report unresolved/ambiguous imports, unsupported languages/package contexts,
++   dynamic loaders and parse limits. Greenfield remains code-free; unavailable
++   optional reach is informational and does not gate story readiness.
++ - Include possible enclosing regular-package initializer reach for Python module
++   anchors with no explicit imports; label implicit edges with null source line
++   and retain unknown package context. Preserve initializer-only shared consumers
++   and detect raw initializer/dependency changes.
++ - Derived exclusive retirement reach remains candidate-only and never permits
++   deletion or replaces owner/migration/rollback/usage review. Retain source pins
++   and MIT attribution for the selectively adapted upstream traversal design.
++ 
+ +## Unreleased — 0.1.0-preview.9
+ +
+ +- Keep no-code greenfield architecture/story review grounded in proposed paths
+ +  and explicit setup/test unknowns instead of demanding an existing repository.
+ +- Route focused feature-map queries through a short core contract, retaining
+ +  workspace, owner, evidence and preservation rules. Load full product/writing
+ +  guidance for authoring and retirement work. Extract common rules from the
+ +  existing references instead of layering duplicate authoring instructions. The
+ +  common contract owns reuse; unchanged HEAD in a mutable checkout is insufficient.
+ +  Resource/quality improvement requires model evaluation; bytes alone do not prove it.
+ +- Consolidate the shared language/context rules for the architecture/story
+ +  reviewers. This changes instructions, not host loading machinery or authority.
+ +
+ +## Unreleased — 0.1.0-preview.8
+ +
+ +- Add compact product drafting for ideas and existing code. Feature names and
+ +  supplied routes expand to complete record input without repetitive JSON work.
+ +  Code/evidence routes are checked at a full commit; their presence never promotes
+ +  availability, usefulness evidence or owner confirmation. Draft does not save.
+ +- Reject outline typos and oversized expansion; preserve explicit attributed
+ +  choices while defaulting missing judgements and source coverage to unknown.
+  
+  ## Unreleased — 0.1.0-preview.7
+  
+diff --cc plugins/delivery/NOTICE
+index 3f7407e,698bbdf..0000000
+--- a/plugins/delivery/NOTICE
++++ b/plugins/delivery/NOTICE
+@@@ -15,7 -15,7 +15,12 @@@ notices are retained in references/sour
+  Amplifier runtime, film-production tools or symbol-graph implementation is installed
+  or bundled by this adaptation.
+  
++ Optional Python dependency reach selectively adapts the codemap/features traversal
++ design from Delivery 0.40.2, revision 369ecaffc564fc4ece470eb229d3034e81912f75.
++ Copyright (c) 2026 Diego Colombo, MIT; full notice remains in LICENSE. Exact
++ source hashes and the narrower adaptation scope are recorded in upstream.json.
+++
+ +The command-evidence behavior was also informed by upstream review-run.js and
+ +verify-run.js at revision 3d7c69416dc7524130105c9bfe308aa01b2a26f0 (Delivery
+ +0.37.9). The Python implementation reuses this port's existing raw-byte gates;
+ +it does not import upstream hooks, permissions or role-local mailbox machinery.
+diff --cc plugins/delivery/README.md
+index b11266b,168232c..0000000
+--- a/plugins/delivery/README.md
++++ b/plugins/delivery/README.md
+@@@ -1,11 -1,11 +1,14 @@@
+  # Delivery
+  
+++**UNSHIPPED disposable local integration test.** This package combines review
+++branches for compatibility checks; it is not a released or approved plugin.
+++
+  Delivery helps turn a product idea into a plan someone can implement: a problem
+  brief, supporting research, customer personas, requirements, design, architecture,
+  roadmap, stories and a scoped implementation handoff. After implementation, it
+  helps review the evidence and update the plan with what was learned.
+  
+- **Version `0.1.0-preview.9` — product and local runtime preview.** Sixteen skills use
+ -**Version `0.1.0-preview.10` — product and local runtime preview.** Sixteen skills use
+++**Version `0.1.0-integration.20261030` — product and local runtime preview.** Sixteen skills use
+  21 templates and 10 review lenses. Greenfield ideas and brownfield projects share
+  one product contract: owner intent, customer promise, usefulness and planned or
+  observed features. The local coordinator adds persistent Codex
+@@@ -13,15 -13,14 +16,23 @@@ roles, canonical artifact saves, contro
+  submissions and explicit operator acceptance. Jev/OpenAI judging is explicitly
+  selected. Desktop and ChatGPT workflow acceptance remain pending.
+  
+ +For an existing feature-map question, invoke `$delivery:product` with the question
+ +and selected project/component. Its focused route reads the core contract and runs
+ +`status` or `impact --path`, without loading the full authoring workflow or emitting
+ +an owner-context handoff. Authoring, changing owner choices and retirement still
+ +load the full product contract. The [common contract](references/core.md) owns
+ +source reuse, including mutable-checkout content verification and compaction rules.
+ +This is instruction routing; improvement remains unproven until model evaluation
+ +shows quality is preserved alongside actual resource use.
+ +
++ For dependency-side impact, the existing helper accepts
++ `impact --path <file> --transitive`. Direct matches remain separate; optional
++ Python import reach adds shortest file/line chains, shared consumers, exact commit
++ and unresolved/unsupported coverage. It executes no project code and adds no
++ service or registry. Other languages retain direct coverage. Planned greenfield
++ features have no observed dependency graph; unavailable reach is informational,
++ not a story-readiness gate. See [the product contract](references/product.md).
++ 
+  ## Dependencies
+  
+  | Requirement | When it is needed |
+diff --cc plugins/delivery/plugin.json
+index d7c13c4,f4d1404..0000000
+--- a/plugins/delivery/plugin.json
++++ b/plugins/delivery/plugin.json
+@@@ -1,7 -1,7 +1,7 @@@
+  {
+    "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+    "name": "delivery",
+-   "version": "0.1.0-preview.9",
+ -  "version": "0.1.0-preview.10",
+++  "version": "0.1.0-integration.20261030",
+    "description": "Frame new ideas and existing products, map feature/code evidence and change impact, and carry owner choices through planning, implementation and review.",
+    "author": {
+      "name": "Diego Colombo"
+diff --cc plugins/delivery/skills/product/SKILL.md
+index b94b8c0,bcf1816..0000000
+--- a/plugins/delivery/skills/product/SKILL.md
++++ b/plugins/delivery/skills/product/SKILL.md
+@@@ -3,61 -3,92 +3,66 @@@ name: produc
+  description: Frame a greenfield idea or onboard a brownfield project into one evidence-bound product record. Connect customer promises to planned or observed code, check freshness and feature impact, carry owner choices forward, and prepare safe retirement proposals.
+  ---
+  
+ -# Product first, for ideas and existing work
+ +# Product work at the depth needed
+  
+ -Read [host capabilities](../../references/runtime.md), [conventions](../../references/conventions.md)
+ -and the [product contract](../../references/product.md). Use this before PRD or
+ -roadmap work when the owner needs a product boundary, a baseline, or a feature-side
+ -impact answer. Greenfield and brownfield are equal paths, not maturity scores.
+ +Read [the common contract](../../references/core.md), including its single source-
+ +reuse rule. Do not assume a catalogue entry loads this full skill or its links.
+  
+ -Resolve the actual project/component and canonical record. Inspect existing
+ -`.delivery/` records and source documents before writing. Reuse them; never reset
+ -unfinished work or silently overwrite an owner's decisions. Initialize directories
+ -through `project.py init` only when the user has authorized the named initiative.
+ -Without local tools, provide a labelled unsaved record using the same contract.
+ +## Focused read-only map question
+  
+ -## Start with the job and the owner's lens
+ -
+ -From the user's own words, capture one primary customer, recurring job, current
+ -cost (or unknown), proposition and before/after outcome. Reflect their examples
+ -and reasons: what matters, what must survive and what may be cut. Keep stated
+ -intent separate from your proposed interpretation; ask only what changes the next
+ -decision. A delegated run may continue with proposed choices, but cannot call
+ -them confirmed. Preserve the rejected alternative, reason and revisit condition.
+ -
+ -Choose the smallest useful work form. Keep form, autonomy and engine separate.
+ -Use the Right Shape scales/gates in the product contract; unknown critical gates
+ -conservatively cap autonomy. A local deterministic command plus host instructions
+ -often suffices; do not add an agent/service merely because the package supports one.
+ -Record an observable next slice, its done-when check and what is deliberately cut.
+ -
+ -## Greenfield: make a coherent first promise
+ -
+ -No product repository is required. Read supplied notes and existing plans. Create
+ -planned features with empty `code` arrays, `commit: null` and explicit unknowns.
+ -Describe a first end-to-end customer journey before expanding the requirements.
+ -Use `mode: greenfield`. Do not invent source paths, customer observations or a
+ -deployed product. When code exists, transition the same stable feature IDs to a
+ -brownfield snapshot; do not create a second product ledger.
+ -
+ -## Brownfield: distinguish what exists from what is promised
+ -
+ -Run the read-only source census:
+ +For inventory, freshness or direct file impact, resolve the project/component and
+ +canonical store with the common rules, then run the matching command:
+  
+  ```sh
+ -python3 <plugin-root>/scripts/product.py --project <planning> --repo <product-git-root> inspect
+ +python3 <plugin-root>/scripts/product.py --project <planning> --repo <product-git-root> status
+ +python3 <plugin-root>/scripts/product.py --project <planning> --repo <product-git-root> impact --path <file>
+  ```
+  
+ -Read project instructions, README, relevant entry points, manifests, tests,
+ -architecture/ADRs and accessible release evidence. Reconcile current Git changes,
+ -known branches/PRs and existing backlog with actual access; do not invent an
+ -import or infer completion from task names. The census finds candidate paths,
+ -not features. Curate customer-visible promises and distinguish shipped, preview,
+ -planned and historical retired features. Source existence alone proves neither
+ -installation nor deployment. Link regular tracked code/evidence files at the
+ -exact named commit; explain the evidence boundary beside each claim. Shared
+ -files may support several features. State what was not inspected.
+ -
+ -## Record, use and hand over
+ -
+ -Draft the input from [the packaged starter](../../templates/product-input.json).
+ -The starter is schema guidance, not an observation or a task to build. Fill its
+ -customer choices, paths, six usefulness judgements and shape reasons from actual
+ -inputs. Save with an expected hash, then query:
+ -
+ -```sh
+ -python3 <plugin-root>/scripts/product.py --project <planning> record --input <curated-input.json> --expected-sha256 new
+ -python3 <plugin-root>/scripts/product.py --project <planning> handoff
+ -```
+ -
+ -For brownfield add `--repo <product-git-root>` before the subcommand. Use the
+ -reported SHA for updates. `record` preserves previous versions and feature IDs.
+ -Read `status` before relying on the map and `impact --path <file>` before edits.
+ -Report unknown/unmapped coverage, changed raw bytes and stale commits prominently.
+ -The default is direct curated coverage. For optional dependency evidence use
+ -`impact --path <file> --transitive`: its separate result follows possible Python
+ -imports at the recorded commit, with shortest file/line chains and explicit
+ -unresolved/unsupported coverage. Never call it a complete semantic graph.
+ -
+ -Keep Job, First value, Fit, Outcome, Trust and Return separate, each with rating,
+ -evidence grade, source and next check. Never average them. Source inspection,
+ -tests and our own walkthrough remain Claimed, not Seen outside-user evidence.
+ -Unknown Return is a validation gap, never a retirement recommendation.
+ -
+ -For subtraction run `retire-plan --feature <id>` (optionally `--transitive`). Inspect its shared-code warnings,
+ -usage uncertainty and migration/rollback needs. Take the concrete proposal to the
+ -user. No helper performs retirement or deletion; a proposal grants no authority.
+ -
+ -Hand over the saved record/revision, observed vs proposed states, owner choices
+ -and unconfirmed decisions, usefulness gaps, shape/engine/authority, and one bounded
+ -next result. Pass this context into brief/PRD/architecture and sprint review;
+ -do not force a complete planning pipeline when the next step is already clear.
+ +`impact` already includes freshness; do not also emit a full status/handoff.
+ +For a greenfield idea omit `--repo`; planned features have no code-freshness
+ +verdict. Without tools read the identified snapshot and mark freshness unverified.
+ +If no map exists, report that; do not invent one or initialize/interview/rewrite
+ +merely to answer the query. Offer authoring only when wanted.
+ +
+ +Report relevant promises/paths, snapshot/current commit, changed bytes, shared
+ +consumers and unmapped uncertainty. This is curated direct file coverage, not a
+- complete/transitive graph or proof of shipping/adoption. Preserve owner choices
+++complete dependency graph or proof of shipping/adoption. Preserve owner choices
+ +and findings; consult relevant evidence/glossary entries only as needed. Do not
+ +load authoring templates, budgets or coaching for this path.
+ +
+++If dependency reach is wanted, add `--transitive` and consult the product
+++contract's optional dependency-side guidance: possible Python imports/initializer
+++reach at the recorded commit, shortest evidence chains and explicit uncertainty.
+++Implicit initializer edges have no invented line. This is not a semantic graph.
+++
+ +## Create, assess, change choices, hand off, or plan retirement
+ +
+ +Read [the product contract](../../references/product.md). Consult
+ +[runtime](../../references/runtime.md) for the actual host/persistence/provider
+ +boundary and [conventions](../../references/conventions.md) for the language and
+ +writing sections needed by the artifact. Expanded guidance is action-dependent.
+ +
+ +1. Read existing records, plans and accessible backlog first. Preserve unfinished
+ +   work; initialize a named initiative through `project.py init` only when authorized.
+ +   Apply owner intent, customer/proposition/cuts, usefulness and Right Shape from
+ +   the contract; retain rejected choices and revisit reasons.
+ +2. Greenfield: supplied notes become planned features, `code: []`, `commit: null`
+ +   and explicit unknowns. Describe one first customer journey; no repository needed.
+ +   Brownfield: run `inspect`, then read relevant README, entry points, manifests,
+ +   tests, ADRs and release evidence. Reconcile accessible Git changes/PRs/backlog.
+ +   The census finds candidate paths, not features. Curate promises at an exact
+ +   commit and state gaps; source presence does not prove release. Keep stable IDs
+ +   when an idea gains code rather than opening another ledger.
+ +3. Start with `draft --outline <notes.json>` from compact feature/product notes as
+ +   the product contract describes. It expands input without saving, confirming
+ +   choices, grading usefulness or inferring shipped status; missing judgements
+ +   stay Unknown and plain notes proposed. Inspect the result. Use
+ +   [the full template](../../templates/product-input.json) when detailed control
+ +   is needed. `record --input <file> --expected-sha256 new` creates it; use the returned
+ +   digest for updates. Add `--repo` before the command for brownfield. Inspect
+ +   `status` or `impact` before relying on code; do not hide stale/unknown coverage.
+ +4. Use full `handoff` when passing planning/owner context: saved revision, observed
+ +   versus proposed states, owner choices, usefulness gaps, shape/authority and one
+ +   bounded next result. Carry it into the next relevant phase without forcing a
+-    full pipeline. For `retire-plan --feature <id>`, use the contract's shared-code,
+++   full pipeline. For `retire-plan --feature <id>` (optionally `--transitive`), use the contract's shared-code,
+ +   usage, replacement/migration/rollback and explicit-human-decision checks.
+diff --cc plugins/delivery/upstream.json
+index 02d9b4f,b6e44d5..0000000
+--- a/plugins/delivery/upstream.json
++++ b/plugins/delivery/upstream.json
+@@@ -346,19 -346,26 +346,41 @@@
+        "adaptation": "Preserve question instructions/versions and historical upstream Jev measurement labels; make implicit relay blocking intent explicit; historical measurements are not OpenAI or port calibration"
+      }
+    ],
+ +  "reviewed_alignment": {
+ +    "revision": "3d7c69416dc7524130105c9bfe308aa01b2a26f0",
+ +    "plugin_version": "0.37.9",
+ +    "sources": [
+ +      {
+ +        "source": "scripts/review-run.js",
+ +        "git_blob": "b46ef525f5f134a05c22314a7dd1347bee50a411"
+ +      },
+ +      {
+ +        "source": "scripts/verify-run.js",
+ +        "git_blob": "b939a27ef99210d484fdc8a78f3105f97c9663a7"
+ +      }
+ +    ],
+ +    "adaptation": "Independent Python command-evidence implementation in scripts/verification.py, informed by exact-SHA review and computed surface-check behavior; reuses the OpenAI port raw-byte gates. No upstream runtime, hooks or permission profiles copied. Original imported baseline remains unchanged."
+++  },
++   "codemap_port": {
++     "repository": "https://github.com/colombod/ai-augmentation-systems",
++     "revision": "369ecaffc564fc4ece470eb229d3034e81912f75",
++     "plugin_version": "0.40.2",
++     "license": "MIT",
++     "notice": "LICENSE",
++     "files": [
++       {
++         "path": "plugins/delivery/scripts/lib/codemap.js",
++         "sha256": "f64ee19c81a4d8b522ded8c533fcde0948e3437a385b89f45892bbcf2f05b4c1"
++       },
++       {
++         "path": "plugins/delivery/scripts/lib/features.js",
++         "sha256": "79a5211de2e798555059f6a4cb9fd39c39ecc949f8c7955c4e4654ffae96ec36"
++       },
++       {
++         "path": "plugins/delivery/scripts/map.test.js",
++         "sha256": "13019f3ebab66251411dbff5b7a573f2424ab56981c2d1d8f7f90962abd070b3"
++       }
++     ],
++     "adaptation": "Selective traversal design/BFS and shortest file-line chain adaptation in native product.py. Existing OpenAI record retained; Python AST parser replaces upstream regex; unresolved/unsupported cases explicit. No upstream executable, discovery registry, hooks, permissions, other-language or deployment claims copied."
+    }
+  }
+diff --cc scripts/probe_delivery_install.py
+index 4fc6925,e9eb0b4..0000000
+--- a/scripts/probe_delivery_install.py
++++ b/scripts/probe_delivery_install.py
+@@@ -136,11 -120,14 +136,15 @@@ def probe()
+                  product = json.loads(handoff.stdout)
+                  if handoff.returncode != 1 or not product.get('unconfirmed_choices') or product['freshness']['snapshot_commit'] is not None:
+                      raise AssertionError('Installed greenfield helper hid unknown choices or invented source')
++                 reach = subprocess.run(['python3', '-B', str(product_helper), '--project', str(project),
++                     'impact', '--path', 'future.py', '--transitive'], text=True, capture_output=True, timeout=10)
++                 if reach.returncode or json.loads(reach.stdout)['transitive']['available'] is not False:
++                     raise AssertionError('Installed optional impact invented greenfield code or failed')
+                  return {'codex': version, 'package_version': json.loads((installed_root / 'plugin.json').read_text())['version'],
+ +                        'installed_loading_resources': loading_resources,
+                          'installation': 'passed', 'skills_discovered': sorted(s['name'] for s in skills),
+                          'installed_helper': 'passed', 'model_calls': 0,
+-                         'installed_product_helper': {'draft':'passed','record':'passed', 'handoff':'passed',
+ -                        'installed_product_helper': {'record':'passed', 'handoff':'passed', 'greenfield_optional_impact':'passed',
+++                        'installed_product_helper': {'draft':'passed','record':'passed','handoff':'passed','greenfield_optional_impact':'passed',
+                              'qualification':'illustrative greenfield template; unconfirmed choices retained; no model or customer-use claim'},
+                          'package_boundary': {'port_assessment': 'excluded', 'release_lineage': 'present'},
+                          'acceptance': {'cli_install_and_discovery': 'passed', 'real_model_workflow': 'not-tested',

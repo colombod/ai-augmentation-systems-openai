@@ -1,0 +1,30 @@
+{
+  "runtime_product_map_boundary": {
+    "denied": true,
+    "reason": "Runtime, provider configuration and authority records are not artifact targets",
+    "record_unchanged": true,
+    "qualification": "Synthetic active actor/API boundary; not live native role execution"
+  },
+  "brownfield": {
+    "compact_draft_to_record": true,
+    "direct_and_optional_impact": true,
+    "retirement_proposal": true,
+    "handoff_preserves_proposed_choices_and_unknown_usefulness": true
+  },
+  "greenfield": {
+    "compact_draft_to_record": true,
+    "direct_and_optional_impact": true,
+    "retirement_proposal": true,
+    "handoff_preserves_proposed_choices_and_unknown_usefulness": true
+  },
+  "integration_commit": "edd036fbd96b60f58a3936766a2e712cbf18f502",
+  "public_commands": 14,
+  "source_functions_preserved": true,
+  "supervision_files_unchanged": {
+    "runtime.py": "5d09085eac8a3c2340c818850f3a9d939dd2bc0d4af69fcfc76039090f2aebc5",
+    "delivery_gates.py": "52184a0a235d52c10fd933ed892caff7b3d4887f4458d594fa9dec18e9ea134f",
+    "supervision.py": "439ab9a5990f5785eed8a50a73ca20720150dce2eb23f9071fc45fda9acc751b",
+    "verification.py": "9fab97d0fa4b225ff1dddfe547fd7b84ef87472e089e4f18ae905e8e5cfae2c9"
+  },
+  "qualification": "Unshipped local integration; deterministic helper/API checks only; no live models, dot authentication or coordinated native execution"
+}
