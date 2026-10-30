@@ -17,9 +17,10 @@ For an existing feature-map question, invoke `$delivery:product` with the questi
 and selected project/component. Its focused route reads the core contract and runs
 `status` or `impact --path`, without loading the full authoring workflow or emitting
 an owner-context handoff. Authoring, changing owner choices and retirement still
-load the full product contract. Exact unchanged reference text can be reused only
-while visible at a verified revision; after compaction or changes, reread it.
-This is instruction routing, not a host cache or a token-saving guarantee.
+load the full product contract. The [common contract](references/core.md) owns
+source reuse, including mutable-checkout content verification and compaction rules.
+This is instruction routing; improvement remains unproven until model evaluation
+shows quality is preserved alongside actual resource use.
 
 ## Dependencies
 

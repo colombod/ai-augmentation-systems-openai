@@ -16,13 +16,9 @@ example; make ordinary engineering decisions within authorized scope rather than
 turning every implementation choice into an owner question. Preserve stated
 owner intent, what must survive, evidence, history and rejected alternatives.
 
-An unchanged shared reference or glossary entry may be reused only while its
-exact text and established unchanged source revision/hash remain in context.
-Check the actual revision; a path, mtime, summary or phase name is insufficient.
-If revision checks are unavailable, read the needed source again. After
-compaction, lost context, changed source/package or new scope, reload the selected
-skill/lens and relevant cited artifacts before relying on them. Do not assume a
-system prompt preserves files or that all skill bodies are automatically visible.
+Use the common contract's [single source-loading/reuse rule](core.md#source-loading-and-reuse)
+for this lens, shared references, glossary and cited artifacts. Catalogue metadata
+is not the selected skill/lens body.
 
 For brownfield, verify existing code and routes. For no-code greenfield, state
 the absence and keep future paths, interfaces and commands explicitly proposed.

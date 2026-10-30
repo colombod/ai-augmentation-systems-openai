@@ -40,16 +40,24 @@ class LoadingTests(unittest.TestCase):
         self.assertIn('impact --path', focused)
         self.assertNotIn('references/conventions.md', focused)
         self.assertNotIn('templates/product-input.json', focused)
-        self.assertIn('product-workflow.md', skill)
+        self.assertNotIn('product-workflow.md', skill)
+        self.assertFalse((PACKAGE / 'references/product-workflow.md').exists())
+        self.assertIn('references/product.md', skill)
         core = (PACKAGE / 'references/core.md').read_text()
         for necessary in ('AGENTS.md', 'nearest existing ancestor', 'multi-component',
                           'canonical store', 'blocking findings', 'owner',
-                          'expected revisions/hashes', 'compaction', 'content hash',
+                          'revisions/hashes', 'compaction', 'content hash',
                           'Greenfield and brownfield', 'not Seen', 'Retirement',
                           'merge or deploy', 'unmapped'):
             self.assertIn(necessary, core)
-        self.assertIn('not the\nworkflow', core)
-        self.assertIn('after compaction', skill)
+        self.assertIn('full body', core)
+        self.assertIn('mutable checkout', core)
+        self.assertIn('An unchanged Git HEAD', core)
+        self.assertIn('After compaction', core)
+        self.assertIn('Read actual project instructions and AGENTS.md', core)
+        self.assertIn('Without a\n   repository', core)
+        self.assertIn('explicitly selected planning directory/store', core)
+        self.assertIn('single source-', skill)
 
     def test_relevant_lenses_use_common_context_and_allow_absent_code(self):
         for name in ('solution-architect', 'delivery-lead', 'qa-strategist', 'feature-critic'):

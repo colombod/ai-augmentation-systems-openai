@@ -6,9 +6,10 @@
   and explicit setup/test unknowns instead of demanding an existing repository.
 - Route focused feature-map queries through a short core contract, retaining
   workspace, owner, evidence and preservation rules. Load full product/writing
-  guidance for authoring and retirement work. Shared references may be reused
-  only while exact text and an unchanged source revision/hash remain available;
-  compaction, lost context or changed/unverifiable source requires rereading.
+  guidance for authoring and retirement work. Extract common rules from the
+  existing references instead of layering duplicate authoring instructions. The
+  common contract owns reuse; unchanged HEAD in a mutable checkout is insufficient.
+  Resource/quality improvement requires model evaluation; bytes alone do not prove it.
 - Consolidate the shared language/context rules for the architecture/story
   reviewers. This changes instructions, not host loading machinery or authority.
 

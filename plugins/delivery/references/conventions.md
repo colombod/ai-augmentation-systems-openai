@@ -1,71 +1,22 @@
 # Delivery conventions
 
-Shared rules for the pipeline skills. A skill that points here is bound by every section
-it names exactly as if that section were written in the skill itself. Keep the
-[core contract](core.md) active for every action. Load the relevant sections for
-authoring, rather than forcing glossary curation and writing budgets into a map
-query. Reuse exact text already visible only when its source revision/hash is
-established unchanged; re-read after compaction, changes, lost context or an
-unverifiable revision. This changes loading, not which constraints apply.
+The [common contract](core.md) owns workspace resolution, preservation, evidence,
+authority and source reuse. This file owns artifact language and writing rules.
+Read the sections relevant to authoring; glossary curation applies when creating/
+editing it, not to an unrelated map query. Referenced constraints remain active.
 
 ## Where `.delivery/` resolves to
 
-Read `runtime.md` first. The filesystem rules below apply when local project
-access actually exists. Otherwise `.delivery/...` names logical artifacts in the
-explicit canonical document store or supplied snapshots. Preserve initiative
-namespaces and IDs there. Return complete exports when writes are unavailable;
-never claim local initialization or canonical persistence from a prepared draft.
-
-Not necessarily the repository root. Resolve before reading or writing any artifact:
-
-1. **Reuse.** Reuse the nearest existing ancestor `.delivery/`. If there is instead a nested component workspace, select that component explicitly; never create a second one beside it. The helper refuses ambiguity instead of picking a sibling.
-2. **Explicit override.** Otherwise honor a delivery-root path stated in the nearest `AGENTS.md`.
-3. **Ask, don't guess.** Otherwise, if this repository holds more than one independently-releasable component (multiple `package.json`/`plugin.json`/`pyproject.toml`, workspace members, or similar) stop and ask which component this work belongs to. Silently defaulting to the repo root in a multi-component repo is the failure this step exists to prevent.
-4. **Default.** Otherwise, use `.delivery/` at the repository root.
+Use the [common workspace rules](core.md#where-delivery-resolves-to).
 
 ## Which initiative
 
-Initiative planning artifacts live under `.delivery/initiatives/<slug>/`, never directly under
-`.delivery/`. The shared `product-map.json` remains project-wide and querying it
-does not require selecting or creating an initiative. Namespacing is what lets independent initiatives (epics, sprints, parallel
-workstreams) be planned in parallel branches without colliding on the same shared file
-(`ADR-004`; the incident that motivated it: two initiatives independently continued the same
-`S-n`/`FR-n` sequence in one shared `prd.md`, discovered only at merge). Resolve which
-initiative before reading or writing initiative artifacts:
-
-1. **Explicit signal.** The user names an initiative, or one is already established for this
-   conversation — use it.
-2. **Exactly one exists.** If `.delivery/initiatives/` has exactly one subdirectory, use it
-   without asking — this keeps single-initiative projects exactly as simple as before this
-   convention existed.
-3. **Ask, don't guess.** Otherwise (zero, or more than one, with no explicit signal) — ask
-   which initiative this work belongs to, or whether to start a new one. Never silently
-   default to the most recently modified one.
-4. **Starting a new initiative.** Confirm its slug (kebab-case, derived from the brief
-   subject or what the user names) before creating `.delivery/initiatives/<slug>/` — check it
-   doesn't collide with an existing initiative slug or any other top-level `.delivery/` entry.
-   A genuinely new initiative needs its own `$delivery:brief`, or an explicit
-   `extends: <existing-slug>` note (in this new initiative's own first artifact) declaring it
-   reuses an existing initiative's problem framing instead of running its own — state which,
-   don't leave it implicit.
-
-Cross-cutting, project-wide, never per-initiative: `.delivery/glossary.md`,
-`.delivery/personas/`, `.delivery/interviews/`, `.delivery/simulations/`,
-`.delivery/decisions/ADR-NNN-*.md`. This preview has no invocation ledger.
-`.delivery/stories/`, `.delivery/reviews/`, `.delivery/sprints/` stay flat but are prefixed
-by initiative slug, matching `stories/<slug>-NN-<name>.md`'s existing convention.
+Use the [common initiative rules](core.md#which-initiative). The product map is
+project-wide; do not create/select an initiative merely to query it.
 
 ## Open blocking findings
 
-Read `.delivery/reviews/`. If any finding against an artifact
-this phase consumes has status `open` and severity `blocking`, **stop and report them** — do
-not proceed. A blocking finding is one a reviewer said must be resolved before this point;
-building on it means every downstream artifact inherits a known, documented defect with no
-resolution on record.
-
-Resolving means the finding is marked `fixed`, or `rejected` with the reason recorded. The
-user may still choose to proceed over an open finding — that is their call, not a default.
-Ask, and record what they chose.
+Apply the [common blocking-findings rule](core.md#open-blocking-findings).
 
 ## Language
 

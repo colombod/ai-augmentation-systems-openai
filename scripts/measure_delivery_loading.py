@@ -21,7 +21,7 @@ PRODUCT = ['skills/product/SKILL.md', *SHARED, 'references/product.md']
 PHASES = [PRODUCT, ['skills/architecture/SKILL.md', *SHARED, 'references/product.md'],
           ['skills/stories/SKILL.md', *SHARED, 'references/product.md']]
 QUERY = ['skills/product/SKILL.md', 'references/core.md']
-AUTHOR = [*QUERY, 'references/product-workflow.md', *SHARED, 'references/product.md']
+AUTHOR = [*QUERY, *SHARED, 'references/product.md']
 AFTER_PHASES = [AUTHOR, ['skills/architecture/SKILL.md', *SHARED, 'references/core.md', 'references/product.md'],
                 ['skills/stories/SKILL.md', *SHARED, 'references/core.md', 'references/product.md']]
 LENSES = ['references/reviewers/' + name + '.md' for name in
@@ -52,10 +52,10 @@ def footprint(paths, revision, reuse=False):
 
 def measure(before, after=None):
     return {
-        'qualification': 'Declared source bytes/whitespace words; not observed model context, tokens, latency, cost or quality. No tokenizer or model run.',
+        'qualification': 'Partial declared instruction routes only; not complete prompts or observed model context, tokens, latency, cost or quality. No tokenizer or model run. Improvement is unproven pending quality-preserving model evaluation.',
         'before_revision': before, 'after_revision': after or 'working-tree (per-resource hashes below)',
         'exclusions': 'Project inputs, tool I/O, model output, templates, catalogue metadata and reviewer lenses. Authoring uses full references as a conservative bound.',
-        'reuse_condition': 'Exact text remains visible and unchanged source revision/hash is established. Compaction, lost text or changes require rereads.',
+        'reuse_condition': 'Exact text remains visible and current content hash matches, or verified immutable package snapshot. Unchanged HEAD in a mutable checkout is insufficient. Compaction, lost text or changes require rereads.',
         'focused_product_query': {'before': footprint(PRODUCT, before), 'after': footprint(QUERY, after)},
         'cold_product_authoring': {'before': footprint(PRODUCT, before), 'after': footprint(AUTHOR, after)},
         'product_architecture_stories': {

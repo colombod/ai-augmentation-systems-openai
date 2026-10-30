@@ -103,7 +103,7 @@ def probe():
                     raise AssertionError('Installed package is missing release lineage or attribution')
                 loading_resources = {}
                 for relative in ('skills/product/SKILL.md', 'references/core.md',
-                                 'references/product-workflow.md', 'references/product.md',
+                                 'references/product.md',
                                  'references/reviewer-context.md'):
                     data = (installed_root / relative).read_bytes()
                     if data != (ROOT / 'plugins/delivery' / relative).read_bytes():
