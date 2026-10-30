@@ -1,0 +1,47 @@
+{
+  "codex": "codex-cli 0.163.0",
+  "package_version": "0.1.0-preview.9",
+  "installed_loading_resources": {
+    "skills/product/SKILL.md": "aa52a8d60cc23d60184bb7a07a65a0bddf995a61d09cf9d482ae6239928f4a8c",
+    "references/core.md": "2aa1cec7c9ac0a373c2f38f916489d2ea47c8259ea82db434a35d060c589f3c1",
+    "references/product-workflow.md": "b02739fc0e9c19b17b2e9fb29d519bbf68c0699eef430f5eb238c1385c4d8bb6",
+    "references/product.md": "d1556aa4be6ca8443764727d165ead7b967a578589ed2e01cf1355a60ea2ee89",
+    "references/reviewer-context.md": "ba530c8c352e946de3122a69f257700f624992353878d755d3c09d3dea06607e"
+  },
+  "installation": "passed",
+  "skills_discovered": [
+    "delivery:architecture",
+    "delivery:brief",
+    "delivery:challenge",
+    "delivery:design",
+    "delivery:personas",
+    "delivery:prd",
+    "delivery:product",
+    "delivery:realign",
+    "delivery:research",
+    "delivery:roadmap",
+    "delivery:simulate",
+    "delivery:sprint",
+    "delivery:sprint-review",
+    "delivery:start",
+    "delivery:status",
+    "delivery:stories"
+  ],
+  "installed_helper": "passed",
+  "model_calls": 0,
+  "installed_product_helper": {
+    "record": "passed",
+    "handoff": "passed",
+    "qualification": "illustrative greenfield template; unconfirmed choices retained; no model or customer-use claim"
+  },
+  "package_boundary": {
+    "port_assessment": "excluded",
+    "release_lineage": "present"
+  },
+  "acceptance": {
+    "cli_install_and_discovery": "passed",
+    "real_model_workflow": "not-tested",
+    "desktop_ui": "not-tested",
+    "chatgpt": "not-tested"
+  }
+}

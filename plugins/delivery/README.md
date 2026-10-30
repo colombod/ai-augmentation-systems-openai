@@ -5,13 +5,22 @@ brief, supporting research, customer personas, requirements, design, architectur
 roadmap, stories and a scoped implementation handoff. After implementation, it
 helps review the evidence and update the plan with what was learned.
 
-**Version `0.1.0-preview.8` — product and local runtime preview.** Sixteen skills use
+**Version `0.1.0-preview.9` — product and local runtime preview.** Sixteen skills use
 21 templates and 10 review lenses. Greenfield ideas and brownfield projects share
 one product contract: owner intent, customer promise, usefulness and planned or
 observed features. The local coordinator adds persistent Codex
 roles, canonical artifact saves, controlled Beads workflow, independent review
 submissions and explicit operator acceptance. Jev/OpenAI judging is explicitly
 selected. Desktop and ChatGPT workflow acceptance remain pending.
+
+For an existing feature-map question, invoke `$delivery:product` with the question
+and selected project/component. Its focused route reads the core contract and runs
+`status` or `impact --path`, without loading the full authoring workflow or emitting
+an owner-context handoff. Authoring, changing owner choices and retirement still
+load the full product contract. The [common contract](references/core.md) owns
+source reuse, including mutable-checkout content verification and compaction rules.
+This is instruction routing; improvement remains unproven until model evaluation
+shows quality is preserved alongside actual resource use.
 
 ## Dependencies
 

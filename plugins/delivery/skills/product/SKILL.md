@@ -3,95 +3,61 @@ name: product
 description: Frame a greenfield idea or onboard a brownfield project into one evidence-bound product record. Connect customer promises to planned or observed code, check freshness and feature impact, carry owner choices forward, and prepare safe retirement proposals.
 ---
 
-# Product first, for ideas and existing work
+# Product work at the depth needed
 
-Read [host capabilities](../../references/runtime.md), [conventions](../../references/conventions.md)
-and the [product contract](../../references/product.md). Use this before PRD or
-roadmap work when the owner needs a product boundary, a baseline, or a feature-side
-impact answer. Greenfield and brownfield are equal paths, not maturity scores.
+Read [the common contract](../../references/core.md), including its single source-
+reuse rule. Do not assume a catalogue entry loads this full skill or its links.
 
-Resolve the actual project/component and canonical record. Inspect existing
-`.delivery/` records and source documents before writing. Reuse them; never reset
-unfinished work or silently overwrite an owner's decisions. Initialize directories
-through `project.py init` only when the user has authorized the named initiative.
-Without local tools, provide a labelled unsaved record using the same contract.
+## Focused read-only map question
 
-## Start with the job and the owner's lens
-
-From the user's own words, capture one primary customer, recurring job, current
-cost (or unknown), proposition and before/after outcome. Reflect their examples
-and reasons: what matters, what must survive and what may be cut. Keep stated
-intent separate from your proposed interpretation; ask only what changes the next
-decision. A delegated run may continue with proposed choices, but cannot call
-them confirmed. Preserve the rejected alternative, reason and revisit condition.
-
-Choose the smallest useful work form. Keep form, autonomy and engine separate.
-Use the Right Shape scales/gates in the product contract; unknown critical gates
-conservatively cap autonomy. A local deterministic command plus host instructions
-often suffices; do not add an agent/service merely because the package supports one.
-Record an observable next slice, its done-when check and what is deliberately cut.
-
-## Greenfield: make a coherent first promise
-
-No product repository is required. Read supplied notes and existing plans. Create
-planned features with empty `code` arrays, `commit: null` and explicit unknowns.
-Describe a first end-to-end customer journey before expanding the requirements.
-Use `mode: greenfield`. Do not invent source paths, customer observations or a
-deployed product. When code exists, transition the same stable feature IDs to a
-brownfield snapshot; do not create a second product ledger.
-
-## Brownfield: distinguish what exists from what is promised
-
-Run the read-only source census:
+For inventory, freshness or direct file impact, resolve the project/component and
+canonical store with the common rules, then run the matching command:
 
 ```sh
-python3 <plugin-root>/scripts/product.py --project <planning> --repo <product-git-root> inspect
+python3 <plugin-root>/scripts/product.py --project <planning> --repo <product-git-root> status
+python3 <plugin-root>/scripts/product.py --project <planning> --repo <product-git-root> impact --path <file>
 ```
 
-Read project instructions, README, relevant entry points, manifests, tests,
-architecture/ADRs and accessible release evidence. Reconcile current Git changes,
-known branches/PRs and existing backlog with actual access; do not invent an
-import or infer completion from task names. The census finds candidate paths,
-not features. Curate customer-visible promises and distinguish shipped, preview,
-planned and historical retired features. Source existence alone proves neither
-installation nor deployment. Link regular tracked code/evidence files at the
-exact named commit; explain the evidence boundary beside each claim. Shared
-files may support several features. State what was not inspected.
+`impact` already includes freshness; do not also emit a full status/handoff.
+For a greenfield idea omit `--repo`; planned features have no code-freshness
+verdict. Without tools read the identified snapshot and mark freshness unverified.
+If no map exists, report that; do not invent one or initialize/interview/rewrite
+merely to answer the query. Offer authoring only when wanted.
 
-## Record, use and hand over
+Report relevant promises/paths, snapshot/current commit, changed bytes, shared
+consumers and unmapped uncertainty. This is curated direct file coverage, not a
+complete/transitive graph or proof of shipping/adoption. Preserve owner choices
+and findings; consult relevant evidence/glossary entries only as needed. Do not
+load authoring templates, budgets or coaching for this path.
 
-Start with compact notes and `draft --outline <notes.json>` using the
-[product contract](../../references/product.md). This expands feature names,
-optional code/evidence routes and product notes into a complete input. It does
-not save, confirm choices, rate usefulness or infer shipped status. Missing
-judgements remain Unknown; plain choice notes remain proposed. Inspect the
-expanded record, then record it with the expected digest. Use
-[the full starter](../../templates/product-input.json) when detailed control is
-needed. The starter is schema guidance, not an observation or a task to build. Fill its
-customer choices, paths, six usefulness judgements and shape reasons from actual
-inputs. Save with an expected hash, then query:
+## Create, assess, change choices, hand off, or plan retirement
 
-```sh
-python3 <plugin-root>/scripts/product.py --project <planning> record --input <curated-input.json> --expected-sha256 new
-python3 <plugin-root>/scripts/product.py --project <planning> handoff
-```
+Read [the product contract](../../references/product.md). Consult
+[runtime](../../references/runtime.md) for the actual host/persistence/provider
+boundary and [conventions](../../references/conventions.md) for the language and
+writing sections needed by the artifact. Expanded guidance is action-dependent.
 
-For brownfield add `--repo <product-git-root>` before the subcommand. Use the
-reported SHA for updates. `record` preserves previous versions and feature IDs.
-Read `status` before relying on the map and `impact --path <file>` before edits.
-Report unknown/unmapped coverage, changed raw bytes and stale commits prominently.
-Never describe this curated file index as a transitive dependency graph.
-
-Keep Job, First value, Fit, Outcome, Trust and Return separate, each with rating,
-evidence grade, source and next check. Never average them. Source inspection,
-tests and our own walkthrough remain Claimed, not Seen outside-user evidence.
-Unknown Return is a validation gap, never a retirement recommendation.
-
-For subtraction run `retire-plan --feature <id>`. Inspect its shared-code warnings,
-usage uncertainty and migration/rollback needs. Take the concrete proposal to the
-user. No helper performs retirement or deletion; a proposal grants no authority.
-
-Hand over the saved record/revision, observed vs proposed states, owner choices
-and unconfirmed decisions, usefulness gaps, shape/engine/authority, and one bounded
-next result. Pass this context into brief/PRD/architecture and sprint review;
-do not force a complete planning pipeline when the next step is already clear.
+1. Read existing records, plans and accessible backlog first. Preserve unfinished
+   work; initialize a named initiative through `project.py init` only when authorized.
+   Apply owner intent, customer/proposition/cuts, usefulness and Right Shape from
+   the contract; retain rejected choices and revisit reasons.
+2. Greenfield: supplied notes become planned features, `code: []`, `commit: null`
+   and explicit unknowns. Describe one first customer journey; no repository needed.
+   Brownfield: run `inspect`, then read relevant README, entry points, manifests,
+   tests, ADRs and release evidence. Reconcile accessible Git changes/PRs/backlog.
+   The census finds candidate paths, not features. Curate promises at an exact
+   commit and state gaps; source presence does not prove release. Keep stable IDs
+   when an idea gains code rather than opening another ledger.
+3. Start with `draft --outline <notes.json>` from compact feature/product notes as
+   the product contract describes. It expands input without saving, confirming
+   choices, grading usefulness or inferring shipped status; missing judgements
+   stay Unknown and plain notes proposed. Inspect the result. Use
+   [the full template](../../templates/product-input.json) when detailed control
+   is needed. `record --input <file> --expected-sha256 new` creates it; use the returned
+   digest for updates. Add `--repo` before the command for brownfield. Inspect
+   `status` or `impact` before relying on code; do not hide stale/unknown coverage.
+4. Use full `handoff` when passing planning/owner context: saved revision, observed
+   versus proposed states, owner choices, usefulness gaps, shape/authority and one
+   bounded next result. Carry it into the next relevant phase without forcing a
+   full pipeline. For `retire-plan --feature <id>`, use the contract's shared-code,
+   usage, replacement/migration/rollback and explicit-human-decision checks.
