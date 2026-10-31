@@ -15,8 +15,10 @@ from pathlib import Path
 import stat
 import sys
 import tempfile
+import time
 
 LIMIT = 65536
+LOCK_TIMEOUT = 2.0
 RECEIPT = 'delivery-setup.json'
 TOOLS = ['delivery_publication_' + name for name in ('submit', 'publish', 'receipt')]
 
@@ -60,6 +62,7 @@ def read(path):
 
 
 def path_checked(value, exists=True, directory=False):
+    value.encode('utf-8')  # Undecodable filesystem bytes are unsupported.
     path = Path(value)
     require(path.is_absolute() and path == path.resolve(strict=False))
     require(not any(p.is_symlink() for p in (path, *path.parents)))
@@ -113,6 +116,7 @@ def exact(value, fields):
 def valid_path(value):
     # Structural only: recovery must not resolve or open recorded dependencies.
     require(type(value) is str and '\x00' not in value)
+    value.encode('utf-8')  # Undecodable filesystem bytes are unsupported.
     path = Path(value)
     require(path.is_absolute() and '..' not in path.parts and str(path) == value
             and not value.startswith('//'))
@@ -181,17 +185,34 @@ def bound_spec(home, ledger, worker, expected, recorded=None):
     return spec
 
 
+def toml_string(value):
+    require(type(value) is str)
+    value.encode('utf-8')  # TOML strings contain Unicode scalar values only.
+    escaped = []
+    for char in value:
+        if char in ('"', '\\'):
+            escaped.append('\\' + char)
+        elif ord(char) < 0x20 or ord(char) == 0x7f:
+            escaped.append('\\u%04X' % ord(char))
+        else:
+            escaped.append(char)
+    return '"' + ''.join(escaped) + '"'
+
+
+def toml_strings(values):
+    return '[' + ', '.join(toml_string(value) for value in values) + ']'
+
+
 def configuration(spec, enabled=True):
-    value = lambda x: json.dumps(x, ensure_ascii=False)
+    value = toml_string
     root = str(Path(next(iter(spec['files']))).parent)
     filesystem = {':minimal':'read', spec['worker']:'write', spec['home']:'deny',
                   str(Path(spec['ledger']).parent):'deny', root:'deny'}
     table = '{' + ', '.join(value(k) + '=' + value(v) for k,v in filesystem.items()) + '}'
     # Known local controls are useful restrictions, not a universal tool ceiling.
     features = ('apps', 'plugins', 'browser_use', 'computer_use', 'image_generation',
-                'multi_agent', 'multi_agent_v2', 'multi_agent_mode', 'shell_tool',
-                'js_repl', 'code_mode', 'code_mode_host', 'remote_control', 'hooks',
-                'codex_hooks', 'plugin_hooks', 'view_image', 'request_permissions_tool')
+                'multi_agent', 'multi_agent_v2', 'shell_tool', 'code_mode',
+                'code_mode_host', 'hooks', 'view_image', 'request_permissions_tool')
     return ('approval_policy = "never"\nweb_search = "disabled"\n'
             'default_permissions = "delivery-local"\n'
             '[permissions.delivery-local]\nfilesystem = ' + table + '\n'
@@ -199,8 +220,8 @@ def configuration(spec, enabled=True):
             '[features]\n' + ''.join(name + ' = false\n' for name in features)
             + '[mcp_servers.delivery_publication]\nenabled = ' + ('true' if enabled else 'false') + '\n'
             + 'command = ' + value(spec['python']) + '\nargs = '
-            + value(['-B', str(Path(root) / 'publication_service.py'), '--db', spec['ledger']]) + '\n'
-            + 'enabled_tools = ' + value(TOOLS) + '\n').encode()
+            + toml_strings(['-B', str(Path(root) / 'publication_service.py'), '--db', spec['ledger']]) + '\n'
+            + 'enabled_tools = ' + toml_strings(TOOLS) + '\n').encode()
 
 
 def plan(home, ledger, worker, expected):
@@ -261,7 +282,15 @@ def locked(home):
     fd = os.open(home / '.delivery-setup.lock', os.O_CREAT | os.O_RDWR | os.O_NOFOLLOW, 0o600)
     try:
         require(stat.S_ISREG(os.fstat(fd).st_mode))
-        fcntl.flock(fd, fcntl.LOCK_EX)
+        deadline = time.monotonic() + LOCK_TIMEOUT
+        while True:
+            try:
+                fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                break
+            except BlockingIOError:
+                remaining = deadline - time.monotonic()
+                require(remaining > 0)
+                time.sleep(min(0.05, remaining))
         require(identity(private_home(str(home))) == home_id)
         yield
         require(identity(private_home(str(home))) == home_id)

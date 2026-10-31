@@ -187,6 +187,10 @@ bounded local component does not provide automated archive rotation.
 
 On a POSIX host with Python 3.10+, the trusted operator can use
 `scripts/publication_setup.py` instead of hand-editing the MCP configuration.
+Paths must contain valid Unicode scalar values; undecodable filesystem byte paths
+are refused. Supported path characters are escaped without changing their values.
+A busy setup lock is refused after a two-second acquisition deadline; the holder
+keeps its lock and saved configuration and receipts remain unchanged.
 It operates only on a dedicated home, not your default `~/.codex`. Keep the
 planning receipt and destination binding private. The ledger must already be owner-only readable/writable,
 initialized and registered through the trusted control interface above; setup

@@ -475,6 +475,59 @@ class SetupTests(unittest.TestCase):
         self.action('enable',ok=False)
         self.assertFalse(self.home.exists());self.assertEqual(self.db.read_bytes(),changed)
 
+    def test_toml_strings_roundtrip_unicode_scalars_and_controls(self):
+        import importlib.util
+        import tomllib
+        spec=importlib.util.spec_from_file_location('fixture_setup',self.helper)
+        module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+        values=[chr(i) for i in range(128)]+['é','🚀','\U0010ffff','quotes " and \\','\n\r\t']
+        for value in values:
+            with self.subTest(value=repr(value)):
+                encoded=module.toml_string(value)
+                parsed=tomllib.loads(encoded+' = '+encoded+'\narray = '+module.toml_strings([value]))
+                self.assertEqual(parsed[value],value);self.assertEqual(parsed['array'],[value])
+        for value in ('\ud800','\udfff',os.fsdecode(b'\xff')):
+            with self.assertRaises(UnicodeError):module.toml_string(value)
+
+    def test_control_and_unicode_paths_roundtrip_in_all_config_positions(self):
+        import tomllib
+        suffix=''.join(chr(i) for i in range(1,32))+'\x7f " \\ 🚀'
+        old=self.package;self.package=self.base/('package'+suffix);old.rename(self.package)
+        self.service=self.package/'publication_service.py';self.helper=self.package/'publication_setup.py'
+        old=self.db;self.db=self.trusted/('ledger'+suffix);old.rename(self.db)
+        old=self.worker;self.worker=self.base/('worker'+suffix);old.rename(self.worker)
+        self.home=self.trusted/('home'+suffix)
+        value=self.make_plan()
+        for action,enabled in (('enable',True),('status',True),('disable',False)):
+            self.action(action)
+            d=tomllib.loads((self.home/'config.toml').read_text())
+            fs=d['permissions']['delivery-local']['filesystem']
+            self.assertEqual(fs[str(self.home)],'deny');self.assertEqual(fs[str(self.worker)],'write')
+            self.assertEqual(fs[str(self.package)],'deny');self.assertEqual(fs[str(self.db.parent)],'deny')
+            server=d['mcp_servers']['delivery_publication']
+            self.assertEqual(server['args'],['-B',str(self.service),'--db',str(self.db)])
+            self.assertEqual(server['command'],value['spec']['python'])
+            self.assertIs(server['enabled'],enabled)
+            self.assertEqual(self.db.read_bytes(),self.original)
+
+    def test_unsupported_byte_and_surrogate_paths_refuse_before_state_changes(self):
+        unsupported=self.base/os.fsdecode(b'worker-\xff');unsupported.mkdir()
+        worker=self.worker;self.worker=unsupported
+        self.make_plan(ok=False);self.assertFalse(self.home.exists())
+        self.assertEqual(self.db.read_bytes(),self.original);self.worker=worker
+        value=self.make_plan();self.action('enable')
+        saved={name:(self.home/name).read_bytes() for name in ('config.toml','delivery-setup.json')}
+        for bad in ('\ud800','\udfff',os.fsdecode(b'\xff')):
+            for field in ('home','ledger','worker','python'):
+                changed=json.loads(json.dumps(value));changed['spec'][field]+=bad
+                changed['sha256']=hashlib.sha256(json.dumps(changed['spec'],sort_keys=True,
+                    separators=(',',':'),ensure_ascii=True).encode()).hexdigest()
+                self.plan_path.write_text(json.dumps(changed))
+                for action in ('enable','status','disable'):
+                    self.action(action,ok=False,digest=changed['sha256'])
+                    self.assertEqual({name:(self.home/name).read_bytes() for name in saved},saved)
+                    self.assertEqual(self.db.read_bytes(),self.original)
+
     def test_special_home_paths_roundtrip_without_manual_editing(self):
         import tomllib
         self.home=self.trusted/'spaces " quote \\ rocket 🚀'
@@ -482,6 +535,28 @@ class SetupTests(unittest.TestCase):
         d=tomllib.loads((self.home/'config.toml').read_text())
         self.assertEqual(d['permissions']['delivery-local']['filesystem'][str(self.home)],'deny')
         self.assertEqual(self.action('disable')['status'],'disabled')
+
+    def test_held_setup_lock_refuses_within_deadline_without_state_changes(self):
+        import fcntl
+        import time
+        self.make_plan();self.action('enable')
+        saved={name:(self.home/name).read_bytes() for name in ('config.toml','delivery-setup.json')}
+        lock_path=self.home/'.delivery-setup.lock'
+        original_identity=(lock_path.stat().st_dev,lock_path.stat().st_ino)
+        with lock_path.open('rb') as holder:
+            fcntl.flock(holder,fcntl.LOCK_EX)
+            for action in ('enable','status','disable'):
+                start=time.monotonic();self.action(action,ok=False);elapsed=time.monotonic()-start
+                self.assertGreaterEqual(elapsed,1.8);self.assertLess(elapsed,4.0)
+                self.assertEqual({name:(self.home/name).read_bytes() for name in saved},saved)
+                self.assertEqual(self.db.read_bytes(),self.original)
+                self.assertEqual((lock_path.stat().st_dev,lock_path.stat().st_ino),original_identity)
+                # The refusing child must not break or replace the holder's lock.
+                with lock_path.open('rb') as contender:
+                    with self.assertRaises(BlockingIOError):
+                        fcntl.flock(contender,fcntl.LOCK_EX | fcntl.LOCK_NB)
+        self.assertEqual(self.action('disable')['status'],'disabled')
+        self.assertEqual(self.db.read_bytes(),self.original)
 
     def test_concurrent_enable_is_recoverable_without_overwriting(self):
         from concurrent.futures import ThreadPoolExecutor
@@ -542,6 +617,9 @@ class SetupTests(unittest.TestCase):
         self.assertEqual(d['approval_policy'],'never');self.assertEqual(d['web_search'],'disabled')
         self.assertFalse(d['permissions']['delivery-local']['network']['enabled'])
         self.assertTrue(all(value is False for value in d['features'].values()))
+        # Unknown/removed pinned0.163.0 keys cannot serve as restrictions.
+        self.assertTrue(set(d['features']).isdisjoint({
+            'codex_hooks','js_repl','plugin_hooks','remote_control','multi_agent_mode'}))
 
 
 if __name__ == '__main__':
