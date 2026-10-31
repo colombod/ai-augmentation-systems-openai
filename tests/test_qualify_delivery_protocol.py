@@ -352,7 +352,7 @@ class ProtocolTests(unittest.TestCase):
     def test_cleanup_failure_cannot_leave_success_record(self):
         with tempfile.TemporaryDirectory() as tmp:
             out = Path(tmp)
-            def failed_cleanup(codex, package, evidence, opt_in, progress):
+            def failed_cleanup(codex, package, evidence, opt_in, progress, synthetic_approvals=False):
                 progress['result'] = {'status':'canned-protocol-compatible'}
                 progress['evidence'] = evidence
                 raise OSError('synthetic cleanup failure')
@@ -456,6 +456,133 @@ class NativeFailureTests(unittest.TestCase):
         output['output'][1]['text'] = json.dumps({'status':'submitted'})
         probe.result_status(output, 'submitted')
         with self.assertRaises(probe.ProbeFailure): probe.result_status(output, 'blocked')
+
+
+class ApprovalTests(unittest.TestCase):
+    def fixture(self, suffix='submit'):
+        gate = probe.SyntheticApprovals()
+        item = probe.call_item('delivery_publication_' + suffix, probe.ARGS, suffix,
+                               'mcp__delivery_publication')
+        event = {'threadId':'thread','turnId':'turn','item':{'type':'mcpToolCall','id':suffix,
+            'server':'delivery_publication','tool':'delivery_publication_' + suffix,
+            'status':'inProgress','arguments':copy.deepcopy(probe.ARGS)}}
+        request = {'id':'approval-' + suffix,'method':'mcpServer/elicitation/request','params':{
+            'threadId':'thread','turnId':'turn','serverName':'delivery_publication','mode':'form',
+            'requestedSchema':{'type':'object','properties':{}},
+            '_meta':{'codex_approval_kind':'mcp_tool_call','tool_params':copy.deepcopy(probe.ARGS),
+                     'persist':['session','always']}}}
+        return gate, item, event, request
+
+    def test_only_three_ordered_one_time_approvals_without_persistence(self):
+        gate = probe.SyntheticApprovals(); sent = []
+        for suffix in ('submit','publish','receipt'):
+            _, item, event, request = self.fixture(suffix)
+            gate.begin('thread', item); gate.observe(event)
+            gate.request(request, sent.append)
+            self.assertEqual(len(sent), gate.accepted)  # Early request stays buffered.
+            gate.confirm_turn('turn', sent.append)
+            self.assertEqual(sent[-1], {'id':request['id'],
+                'result':{'action':'accept','content':None,'_meta':None}})
+            gate.complete()
+        gate.finish(); self.assertEqual(len(sent), 3)
+        with self.assertRaises(probe.ProbeFailure): gate.begin('thread',item)
+
+    def test_wrong_native_item_or_arguments_fail_before_approval(self):
+        for field, bad in [('id','other'),('server','other'),('tool','other'),
+                           ('status','completed'),('arguments',{})]:
+            gate,item,event,request = self.fixture(); gate.begin('thread',item)
+            event['item'][field] = bad
+            with self.subTest(field=field), self.assertRaises(probe.ProbeFailure): gate.observe(event)
+        gate,item,event,request = self.fixture(); item['arguments'] = '{}'
+        with self.assertRaises(probe.ProbeFailure): gate.begin('thread',item)
+
+    def test_mismatched_or_missing_approval_context_declines(self):
+        mutations = [lambda r:r['params'].update(threadId='other'),
+            lambda r:r['params'].update(turnId=None), lambda r:r['params'].update(serverName='other'),
+            lambda r:r['params'].update(mode='url'), lambda r:r['params'].update(requestedSchema={}),
+            lambda r:r['params']['_meta'].update(codex_approval_kind='other'),
+            lambda r:r['params']['_meta'].update(tool_params={}),
+            lambda r:r.update(method='other'), lambda r:r.update(id=True)]
+        for mutate in mutations:
+            gate,item,event,request = self.fixture(); gate.begin('thread',item); gate.observe(event)
+            gate.confirm_turn('turn', lambda _:None); mutate(request); sent=[]
+            with self.assertRaises(probe.ProbeFailure): gate.request(request,sent.append)
+            self.assertEqual([v['result']['action'] for v in sent],['decline'])
+            self.assertEqual(gate.accepted,0)
+        gate,item,event,request = self.fixture(); gate.begin('thread',item); sent=[]
+        with self.assertRaises(probe.ProbeFailure): gate.request(request,sent.append)
+        self.assertEqual(sent[0]['result']['action'],'decline')
+
+    def test_replay_duplicate_and_extra_item_cannot_approve(self):
+        gate,item,event,request = self.fixture(); gate.begin('thread',item); gate.observe(event)
+        gate.confirm_turn('turn', lambda _:None); sent=[]; gate.request(request,sent.append)
+        for ident in [request['id'],'new-id']:
+            request['id']=ident
+            with self.assertRaises(probe.ProbeFailure): gate.request(request,sent.append)
+        self.assertEqual([v['result']['action'] for v in sent],['accept','decline','decline'])
+        with self.assertRaises(probe.ProbeFailure): gate.observe(event)
+        gate.complete()
+        _, item,event,request = self.fixture('publish'); request['id']='approval-submit'
+        gate.begin('thread',item); gate.observe(event); gate.confirm_turn('turn',lambda _:None)
+        with self.assertRaises(probe.ProbeFailure): gate.request(request,sent.append)
+
+    def test_expired_wrong_turn_and_incomplete_approvals_fail(self):
+        gate,item,event,request = self.fixture(); gate.begin('thread',item); gate.observe(event)
+        with self.assertRaises(probe.ProbeFailure): gate.confirm_turn('other',lambda _:None)
+        gate.turn=None; sent=[]
+        with patch.object(probe.time,'monotonic',return_value=gate.deadline+1):
+            with self.assertRaises(probe.ProbeFailure): gate.request(request,sent.append)
+        self.assertEqual(sent[0]['result']['action'],'decline')
+        with self.assertRaises(probe.ProbeFailure): gate.complete()
+        with self.assertRaises(probe.ProbeFailure): gate.finish()
+
+    def test_rpc_buffers_approval_until_correlated_turn_reply(self):
+        gate,item,event,request=self.fixture(); gate.begin('thread',item)
+        rpc=probe.RPC.__new__(probe.RPC)
+        rpc.approvals=gate; rpc.log=[]; rpc.log_bytes=0; rpc.serial=0
+        rpc.inbox=queue.Queue(); rpc.inbox_bytes=0; rpc.inbox_lock=threading.Lock()
+        rpc.overflow=threading.Event(); rpc.completed={}; sent=[]; rpc.send=sent.append
+        for frame in [{'method':'item/started','params':event}, request,
+                      {'id':1,'result':{'turn':{'id':'turn'}}}]:
+            rpc.inbox.put((frame,0))
+        reply=rpc.call('turn/start',{'threadId':'thread'})
+        self.assertEqual(len(sent),1)  # Only turn/start, no approval yet.
+        gate.confirm_turn(reply['turn']['id'],rpc.send)
+        self.assertEqual(sent[-1]['result']['action'],'accept')
+        rpc.inbox.put(({'method':'turn/completed','params':{'threadId':'thread',
+                         'turn':{'id':'turn','status':'completed'}}},0))
+        rpc.finish_turn('thread','turn'); gate.complete()
+        rpc.inbox.put(({'id':'unknown','method':'item/commandExecution/requestApproval','params':{}},0))
+        with self.assertRaises(RuntimeError): rpc.receive(probe.time.monotonic()+1)
+        self.assertIn('error',sent[-1]); self.assertEqual(gate.accepted,1)
+
+    def test_buffered_wrong_turn_is_declined_and_not_replayed(self):
+        gate,item,event,request=self.fixture(); gate.begin('thread',item); gate.observe(event)
+        sent=[]; gate.request(request,sent.append)
+        with self.assertRaises(probe.ProbeFailure): gate.confirm_turn('wrong',sent.append)
+        self.assertEqual([v['result']['action'] for v in sent],['decline'])
+        self.assertEqual(gate.accepted,0)
+        for field,value in [('threadId','other'),('turnId',None)]:
+            gate,item,event,request=self.fixture(); gate.begin('thread',item); event[field]=value
+            with self.assertRaises(probe.ProbeFailure): gate.observe(event)
+
+    def test_opt_in_configuration_is_only_generated_not_applied(self):
+        root=Path('/synthetic-unused')
+        default=tomllib.loads(probe.normal_config(root,1234,root/'service.py'))
+        selected=tomllib.loads(probe.normal_config(root,1234,root/'service.py',synthetic_approvals=True))
+        self.assertEqual(default['approval_policy'],'never')
+        self.assertEqual(selected['approval_policy'],'on-request')
+        self.assertEqual(selected['approvals_reviewer'],'user')
+        selected['approval_policy']='never'; self.assertEqual(selected,default)
+
+    def test_workflow_changed_policy_is_manual_default_off_and_sha_bound(self):
+        workflow=(ROOT/'.github/workflows/delivery-qualification.yml').read_text()
+        self.assertIn("github.event_name == 'workflow_dispatch' && inputs.synthetic_approvals == true",workflow)
+        self.assertIn('github.run_attempt == 1',workflow)
+        self.assertIn('default: false',workflow)
+        self.assertIn('REVIEWED_SHA: ${{ inputs.reviewed_sha }}',workflow)
+        self.assertIn('[[ "$(git rev-parse HEAD)" == "$REVIEWED_SHA" ]]',workflow)
+        self.assertIn("!cancelled() && steps.install.outcome == 'success'",workflow)
 
 
 if __name__ == '__main__':

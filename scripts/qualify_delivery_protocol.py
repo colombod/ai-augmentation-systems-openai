@@ -32,6 +32,7 @@ REASON_CODES = frozenset({
     'result-status', 'result-approval-required', 'result-tool-unavailable',
     'result-tool-call-error', 'result-argument-error', 'result-cancelled', 'consumer-refusal', 'handler-arguments', 'stored-draft', 'ledger-counts',
     'bootstrap-node-missing', 'bootstrap-node-version',
+    'approval-mismatch', 'approval-timeout', 'approval-incomplete',
     'stage-failed', 'rpc-stream-failed', 'rpc-error', 'rpc-timeout', 'turn-failed',
     'turn-reply-invalid', 'fixture-incomplete', 'continuation-count', 'call-output-count',
     'discovery-type', 'discovery-call-id', 'discovery-status', 'discovery-execution',
@@ -160,8 +161,120 @@ class Handler(http.server.BaseHTTPRequestHandler):
             self.send_error(400, 'synthetic fixture refused request')
 
 
+class SyntheticApprovals:
+    """One-run, three-call approval responder; never a general approval client."""
+    ORDER = ('submit', 'publish', 'receipt')
+
+    def __init__(self):
+        self.accepted = 0
+        self.used_ids = set()
+        self.expected = None
+        self.pending = None
+        self.started = None
+        self.turn = None
+        self.deadline = 0
+        self.approved = False
+
+    def begin(self, thread, item):
+        require(self.expected is None and self.pending is None, 'unfinished approval', 'approval-mismatch')
+        if item.get('type') == 'tool_search_call':
+            return
+        require(self.accepted < 3, 'extra approval', 'approval-mismatch')
+        suffix = self.ORDER[self.accepted]
+        require(item == call_item('delivery_publication_' + suffix, ARGS, suffix,
+                                 'mcp__delivery_publication'), 'unexpected call', 'approval-mismatch')
+        self.expected = (thread, suffix, 'delivery_publication_' + suffix)
+        self.started = None
+        self.turn = None
+        self.approved = False
+        self.deadline = time.monotonic() + 45
+
+    def check_time(self):
+        require(self.expected is not None and time.monotonic() < self.deadline,
+                'approval deadline', 'approval-timeout')
+
+    def observe(self, params):
+        self.check_time()
+        thread, ident, tool = self.expected
+        item = params.get('item', {})
+        require(self.started is None and params.get('threadId') == thread
+                and isinstance(params.get('turnId'), str) and bool(params['turnId'])
+                and item.get('id') == ident and item.get('server') == 'delivery_publication'
+                and item.get('tool') == tool and item.get('status') == 'inProgress'
+                and json.dumps(item.get('arguments'), sort_keys=True) == json.dumps(ARGS, sort_keys=True),
+                'native item mismatch', 'approval-mismatch')
+        self.started = params['turnId']
+        if self.turn is not None:
+            require(self.started == self.turn, 'wrong native turn', 'approval-mismatch')
+
+    def request(self, value, send):
+        try:
+            self.check_time()
+            ident = value.get('id')
+            require(type(ident) in (str, int) and len(str(ident)) <= 256,
+                    'invalid request id', 'approval-mismatch')
+            key = (type(ident).__name__, str(ident))
+            params = value.get('params', {})
+            meta = params.get('_meta', {})
+            require(value.get('method') == 'mcpServer/elicitation/request' and not self.approved
+                    and key not in self.used_ids and self.pending is None and self.started is not None
+                    and params.get('threadId') == self.expected[0]
+                    and params.get('turnId') == self.started
+                    and params.get('serverName') == 'delivery_publication'
+                    and params.get('mode') == 'form' and isinstance(meta, dict)
+                    and meta.get('codex_approval_kind') == 'mcp_tool_call'
+                    and json.dumps(meta.get('tool_params'), sort_keys=True) == json.dumps(ARGS, sort_keys=True)
+                    and params.get('requestedSchema') == {'type':'object','properties':{}},
+                    'approval request mismatch', 'approval-mismatch')
+            self.used_ids.add(key)
+            self.pending = ident
+            self.respond(send)
+        except Exception:
+            send({'id':value.get('id'), 'result':{'action':'decline','content':None,'_meta':None}})
+            raise
+
+    def confirm_turn(self, turn, send):
+        if self.expected is None:
+            return
+        try:
+            self.check_time()
+            require(self.turn is None and isinstance(turn, str) and bool(turn)
+                    and (self.started is None or self.started == turn), 'turn mismatch', 'approval-mismatch')
+            self.turn = turn
+            self.respond(send)
+        except Exception:
+            if self.pending is not None:
+                send({'id':self.pending, 'result':{'action':'decline','content':None,'_meta':None}})
+                self.pending = None
+            raise
+
+    def respond(self, send):
+        if self.pending is None or self.turn is None:
+            return  # Never approve before the turn/start response is correlated.
+        self.check_time()
+        require(self.started == self.turn, 'wrong turn', 'approval-mismatch')
+        send({'id':self.pending, 'result':{'action':'accept','content':None,'_meta':None}})
+        self.pending = None
+        self.accepted += 1
+        self.approved = True
+
+    def complete(self):
+        if self.expected is None:
+            return
+        self.check_time()
+        require(self.pending is None and self.started == self.turn
+                and self.approved and self.accepted > 0 and self.ORDER[self.accepted - 1] == self.expected[1],
+                'missing one-time approval', 'approval-incomplete')
+        self.expected = None
+
+    def finish(self):
+        require(self.accepted == 3 and self.expected is None and self.pending is None,
+                'incomplete approvals', 'approval-incomplete')
+
+
 class RPC:
-    def __init__(self, command, env, evidence):
+    def __init__(self, command, env, evidence, approvals=None):
+        self.approvals = approvals
         self.log = []
         self.serial = 0
         self.completed = {}
@@ -221,7 +334,13 @@ class RPC:
         require(not self.overflow.is_set(), 'RPC inbox capacity', 'rpc-capacity')
         self.retain({'received': value})
         require('local_error' not in value, str(value), 'rpc-stream-failed')
+        approvals = getattr(self, 'approvals', None)
+        if value.get('method') == 'item/started' and value.get('params', {}).get('item', {}).get('type') == 'mcpToolCall' and approvals is not None:
+            approvals.observe(value['params'])
         if 'id' in value and 'method' in value:
+            if approvals is not None and value['method'] == 'mcpServer/elicitation/request':
+                approvals.request(value, self.send)
+                return value
             self.send({'id': value['id'], 'error': {'code': -32601,
                 'message': 'Fixture refuses client action'}})
             raise RuntimeError('unexpected client request')
@@ -359,7 +478,7 @@ def result_status(result, expected):
             'unexpected handler status', 'result-status')
 
 
-def normal_config(root, port, service, observer=None):
+def normal_config(root, port, service, observer=None, synthetic_approvals=False):
     q = lambda v: json.dumps(str(v), ensure_ascii=False)
     arguments = ['-B', str(service), '--db', str(root / 'ledger.sqlite')]
     if observer is not None:
@@ -367,7 +486,8 @@ def normal_config(root, port, service, observer=None):
                      '--db', str(root / 'ledger.sqlite')]
     return f'''model = "gpt-6-sol"
 model_provider = "synthetic-loopback"
-approval_policy = "never"
+approval_policy = "{'on-request' if synthetic_approvals else 'never'}"
+approvals_reviewer = "user"
 web_search = "disabled"
 default_permissions = "synthetic-local"
 [permissions.synthetic-local]
@@ -402,13 +522,20 @@ def ledger(root):
 
 
 def run_case(rpc, script, thread, item):
+    approvals = getattr(rpc, 'approvals', None)
+    if approvals is not None:
+        approvals.begin(thread, item)
     script.arm([item, None])
     try:
         started = rpc.call('turn/start', {'threadId': thread, 'input': [
             {'type': 'text', 'text': 'Run the canned synthetic protocol step.', 'text_elements': []}]})
         require(isinstance(started, dict) and isinstance(started.get('turn'), dict)
                 and isinstance(started['turn'].get('id'), str), 'invalid turn reply', 'turn-reply-invalid')
+        if approvals is not None:
+            approvals.confirm_turn(started['turn']['id'], rpc.send)
         rpc.finish_turn(thread, started['turn']['id'])
+        if approvals is not None:
+            approvals.complete()
         require(not script.steps and not script.errors and not script.contacts, 'script failed', 'fixture-incomplete')
         require(len(script.requests) == 2, 'missing native continuation', 'continuation-count')
         results = output_for(script.requests[1], item['call_id'])
@@ -504,7 +631,7 @@ def resolve_bootstrap(codex, runtime_env, cwd, bootstrap_path):
     return resolve_native_codex(codex, bootstrap_env, cwd)
 
 
-def _execute(codex, package, out, opt_in, progress):
+def _execute(codex, package, out, opt_in, progress, synthetic_approvals=False):
     global ROOT
     check_host(opt_in)  # Refuse nested/cloud or previously configured invocation.
     require(os.geteuid() != 0, 'ordinary runner required')
@@ -518,6 +645,8 @@ def _execute(codex, package, out, opt_in, progress):
             (ROOT / name).mkdir(mode=0o700)
         env = {'PATH': '/usr/bin:/bin', 'HOME': str(ROOT / 'home'),
                'CODEX_HOME': str(ROOT / 'home'), 'LANG': 'C.UTF-8'}
+        approvals = SyntheticApprovals() if synthetic_approvals else None
+        progress['approvals'] = approvals
         progress['stage'] = 'bootstrap'
         binary = resolve_bootstrap(codex, env, ROOT, os.environ.get('PATH', ''))
         version = subprocess.run([str(binary), '--version'], env=env, capture_output=True,
@@ -538,13 +667,13 @@ def _execute(codex, package, out, opt_in, progress):
         server.script = Script()
         progress['script'] = server.script
         (ROOT / 'home/config.toml').write_text(normal_config(ROOT, server.server_port, service,
-            package.resolve() / 'scripts/observe_publication_protocol.py'))
+            package.resolve() / 'scripts/observe_publication_protocol.py', synthetic_approvals))
         worker = threading.Thread(target=server.serve_forever, daemon=True)
         worker.start()
         rpc = None
         try:
             progress['stage'] = 'initialize'
-            rpc = RPC([str(binary), 'app-server', '--stdio'], env, out)
+            rpc = RPC([str(binary), 'app-server', '--stdio'], env, out, approvals)
             rpc.call('initialize', {'clientInfo':{'name':'synthetic_compatibility', 'version':'1'},
                                    'capabilities':{'experimentalApi':True}})
             rpc.send({'method':'initialized'})
@@ -561,6 +690,8 @@ def _execute(codex, package, out, opt_in, progress):
                 ns, name = identities['delivery_publication_' + suffix]
                 result = run_case(rpc, server.script, thread, call_item(name, ARGS, suffix, ns))
                 result_status(result, status)
+            if approvals is not None:
+                approvals.finish()
             progress['stage'] = 'effects'
             snapshot_ledger(ROOT, out)
             verify_handler_effects(ROOT)
@@ -589,11 +720,11 @@ def _execute(codex, package, out, opt_in, progress):
                     worker.join(timeout=2)
 
 
-def execute(codex, package, out, opt_in):
+def execute(codex, package, out, opt_in, synthetic_approvals=False):
     progress = {'stage':'preflight'}
     passed = False
     try:
-        _execute(codex, package, out, opt_in, progress)
+        _execute(codex, package, out, opt_in, progress, synthetic_approvals)
         write_json(out / 'result.json', progress['result'])
         progress['stage'] = 'complete'
         passed = True
@@ -618,8 +749,10 @@ def execute(codex, package, out, opt_in):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--clean-runner', action='store_true')
+    parser.add_argument('--synthetic-approvals', action='store_true',
+                        help='Explicitly authorize only the three canned one-time native approvals for this run')
     parser.add_argument('--codex', required=True)
     parser.add_argument('--package-root', type=Path, required=True)
     parser.add_argument('--evidence', type=Path, required=True)
     args = parser.parse_args()
-    raise SystemExit(execute(args.codex, args.package_root, args.evidence, args.clean_runner))
+    raise SystemExit(execute(args.codex, args.package_root, args.evidence, args.clean_runner, args.synthetic_approvals))
