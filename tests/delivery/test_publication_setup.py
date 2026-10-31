@@ -57,6 +57,95 @@ class SetupTests(unittest.TestCase):
     def action(self,name,ok=True,digest=None):
         return self.cli(name,'--plan',self.plan_path,'--expected-sha256',digest or self.digest,ok=ok)
 
+    def malformed_plans(self, original):
+        import copy
+        cases = []
+        def change(path, value):
+            item = copy.deepcopy(original); target = item
+            for key in path[:-1]:target = target[key]
+            target[path[-1]] = value
+            cases.append(item)
+        for value in (True, 1.0, '1', None, 2):change(['schema_version'], value)
+        for value in (0, 0.0, None, 'false'):change(['host_protected_ready'], value)
+        change(['spec','binding','visibility'], 'internal')
+        change(['spec','binding','destination'], 'INVALID')
+        change(['spec','binding','owner'], ' '*3)
+        change(['spec','binding','revision'], 'x'*257)
+        for value in (True, 1.0, 0, -1, '1', None):change(['spec','binding','generation'], value)
+        for field in original['spec']['binding']:
+            if field != 'generation':
+                change(['spec','binding',field], True)
+                change(['spec','binding',field], '')
+        for field in ('ledger_identity','worker_identity','python_identity','home_identity'):
+            identity = original['spec'][field]
+            for value in ([float(identity[0]),identity[1]], [True,identity[1]], [-1,0], [0], '01'):
+                change(['spec',field], value)
+        for field in ('home_ancestors','ledger_ancestors','worker_ancestors','file_identities'):
+            key = next(iter(original['spec'][field])); identity=original['spec'][field][key]
+            change(['spec',field,key],[identity[0],float(identity[1])])
+            change(['spec',field], {})
+        for field in ('python_sha256',):
+            for value in ('A'*64, '0'*63, True):change(['spec',field], value)
+        key=next(iter(original['spec']['files']))
+        for value in ('z'*64, None, 1):change(['spec','files',key],value)
+        for field in ('home','ledger','worker','python'):
+            change(['spec',field], True)
+            change(['spec',field], '/tmp/../invalid')
+        for path in ([], ['spec'], ['spec','binding']):
+            for extra in (True, False):
+                item=copy.deepcopy(original);target=item
+                for key in path:target=target[key]
+                if extra:target['unexpected']=1
+                else:del target[next(iter(target))]
+                cases.append(item)
+        for item in cases:
+            item['sha256']=hashlib.sha256(json.dumps(item['spec'],sort_keys=True,
+                separators=(',',':'),ensure_ascii=True).encode()).hexdigest()
+        for field in ('sha256',):
+            for value in (True, None, 'A'*64, '0'*63):
+                item=copy.deepcopy(original);item[field]=value;cases.append(item)
+        return cases
+
+    def test_strict_plan_schema_rejects_before_service_and_state_effects(self):
+        marker=self.trusted/'service-effect'
+        self.service.write_text(self.service.read_text()+
+            '\nfrom pathlib import Path as FixturePath\nFixturePath('+repr(str(marker))+').write_text("SYNTHETIC")\n')
+        self.home.mkdir(mode=0o700)
+        original=self.make_plan();marker.unlink()
+        for value in self.malformed_plans(original):
+            with self.subTest(value=value):
+                self.plan_path.write_text(json.dumps(value))
+                self.action('enable',ok=False,digest=str(value['sha256']))
+                self.assertEqual(list(self.home.iterdir()),[])
+                self.assertFalse(marker.exists());self.assertEqual(self.db.read_bytes(),self.original)
+        self.plan_path.write_text(json.dumps(original));self.action('enable');marker.unlink()
+        config=(self.home/'config.toml').read_bytes()
+        receipt_path=self.home/'delivery-setup.json'
+        receipt=json.loads(receipt_path.read_text())
+        for value in self.malformed_plans(original):
+            # Match the malformed receipt so rejection cannot rely on byte mismatch.
+            receipt['plan']=value
+            raw=(json.dumps(receipt,sort_keys=True,separators=(',',':'),ensure_ascii=True)+'\n').encode()
+            receipt_path.write_bytes(raw);self.plan_path.write_text(json.dumps(value))
+            for action in ('enable','status','disable'):
+                self.action(action,ok=False,digest=str(value['sha256']))
+                self.assertEqual((self.home/'config.toml').read_bytes(),config)
+                self.assertEqual(receipt_path.read_bytes(),raw)
+                self.assertFalse(marker.exists());self.assertEqual(self.db.read_bytes(),self.original)
+
+    def test_preflight_strict_binding_rejects_before_service_loading(self):
+        marker=self.trusted/'service-effect'
+        self.service.write_text(self.service.read_text()+
+            '\nfrom pathlib import Path as FixturePath\nFixturePath('+repr(str(marker))+').write_text("SYNTHETIC")\n')
+        original=dict(self.binding)
+        changes=[{**original,'generation':v} for v in (True,1.0,0,-1,'1',None)]
+        changes += [{**original,k:True} for k in original if k!='generation']
+        changes += [{**original,'extra':1},{k:v for k,v in original.items() if k!='owner'}]
+        for value in changes:
+            self.binding_path.write_text(json.dumps(value));self.make_plan(ok=False)
+            self.assertFalse(marker.exists());self.assertFalse(self.home.exists())
+            self.assertEqual(self.db.read_bytes(),self.original)
+
     def test_plan_enable_reconnect_disable_preserves_user_config_and_ledger(self):
         user=self.base/'original-config.toml';user.write_text('model = "SYNTHETIC"\n')
         self.make_plan();self.assertFalse(self.home.exists())

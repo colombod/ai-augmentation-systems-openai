@@ -10,6 +10,7 @@ import fcntl
 import hashlib
 import json
 import os
+import re
 from pathlib import Path
 import stat
 import sys
@@ -105,7 +106,41 @@ def program_snapshot():
             'files':{name:digest(raw) for name, raw in sources.items()}}, sources
 
 
+def exact(value, fields):
+    require(type(value) is dict and set(value) == set(fields))
+
+
+def valid_path(value):
+    # Structural only: recovery must not resolve or open recorded dependencies.
+    require(type(value) is str and '\x00' not in value)
+    path = Path(value)
+    require(path.is_absolute() and '..' not in path.parts and str(path) == value
+            and not value.startswith('//'))
+    return path
+
+
+def valid_identity(value):
+    require(type(value) is list and len(value) == 2
+            and all(type(item) is int and item >= 0 for item in value))
+
+
+def valid_hash(value):
+    require(type(value) is str and re.fullmatch(r'[0-9a-f]{64}', value) is not None)
+
+
+def valid_binding(value):
+    fields = {'destination', 'owner', 'audience', 'visibility', 'revision',
+              'authority_revision', 'policy_revision'}
+    exact(value, fields | {'generation'})
+    require(type(value['generation']) is int and value['generation'] >= 1)
+    require(all(type(value[k]) is str and value[k].strip() and len(value[k]) <= 256
+                for k in fields))
+    require(re.fullmatch(r'[a-z][a-z0-9-]{0,63}', value['destination']) is not None
+            and value['visibility'] in ('private', 'public'))
+
+
 def bound_spec(home, ledger, worker, expected, recorded=None):
+    valid_binding(expected)
     programs, sources = program_snapshot()
     if recorded is not None:
         # No service import or ledger access precedes this comparison.
@@ -137,6 +172,7 @@ def bound_spec(home, ledger, worker, expected, recorded=None):
     store = namespace['PublicationStore'](ledger)
     try:
         actual = store.control({'action':'binding', 'destination':expected['destination']})
+        valid_binding(actual.get('binding'))
         require(actual.get('status') == 'verified' and actual.get('binding') == expected)
     finally:
         store.close()
@@ -177,22 +213,36 @@ def plan(home, ledger, worker, expected):
 
 def validate_plan(value, expected_digest):
     require(type(value) is dict and set(value) == {'schema_version','spec','sha256','host_protected_ready'})
-    require(value['schema_version'] == 1 and value['host_protected_ready'] is False)
+    require(type(value['schema_version']) is int and value['schema_version'] == 1
+            and value['host_protected_ready'] is False)
+    valid_hash(value['sha256'])
+    valid_hash(expected_digest)
     require(value['sha256'] == expected_digest == digest(canonical(value['spec']).encode()))
     spec = value['spec']
     require(type(spec) is dict and set(spec) == {'home','ledger','worker','binding','ledger_identity','python','python_identity','files',
             'worker_identity','worker_ancestors','home_identity','home_ancestors','ledger_ancestors',
             'file_identities','python_sha256'})
-    # Script paths stay bound to this installed helper. Receipt validation alone
-    # grants no publication authority.
-    require(set(spec['files']) == set(spec['file_identities']) == {str(p) for p in installed_files()})
-    # Disable does not execute this command or require the old interpreter to
-    # exist. Enable/status enforce the live identity and hash in bound_spec.
-    recorded_python = spec['python']
-    require(type(recorded_python) is str and '\x00' not in recorded_python)
-    python_path = Path(recorded_python)
-    require(python_path.is_absolute() and python_path.name and '..' not in python_path.parts
-            and str(python_path) == recorded_python)
+    valid_binding(spec['binding'])
+    for field in ('home', 'ledger', 'worker', 'python'):
+        require(valid_path(spec[field]).name)
+    for field in ('ledger_identity', 'worker_identity', 'python_identity'):
+        valid_identity(spec[field])
+    if spec['home_identity'] is not None:
+        valid_identity(spec['home_identity'])
+    for field in ('home', 'ledger', 'worker'):
+        entries = spec[field + '_ancestors']
+        exact(entries, {str(p) for p in Path(spec[field]).parents})
+        for entry in entries.values():
+            valid_identity(entry)
+    # Installed script names stay bound, without loading service code for disable.
+    paths = {str(p) for p in installed_files()}
+    exact(spec['files'], paths)
+    exact(spec['file_identities'], paths)
+    for entry in spec['files'].values():
+        valid_hash(entry)
+    for entry in spec['file_identities'].values():
+        valid_identity(entry)
+    valid_hash(spec['python_sha256'])
     return spec
 
 
