@@ -6,6 +6,7 @@ on:
     paths:
       - 'scripts/qualify_delivery_host.py'
       - 'scripts/qualify_delivery_protocol.py'
+      - 'scripts/observe_publication_protocol.py'
       - 'tests/test_qualify_delivery_protocol.py'
       - '.github/workflows/delivery-qualification.yml'
       - 'tests/test_qualify_delivery_host.py'
@@ -25,11 +26,16 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: '22.14.0'
-      - name: Install pinned CLI and qualify
+      - name: Install pinned CLI
+        id: install
         shell: bash
         run: |
           set -euo pipefail
           delivery_cli_prefix="$(mktemp -d)"
           npm install --prefix "$delivery_cli_prefix" --ignore-scripts --no-audit --no-fund @openai/codex@0.163.0
-          python3 scripts/qualify_delivery_protocol.py --clean-runner --codex "$delivery_cli_prefix/node_modules/.bin/codex" --package-root "$GITHUB_WORKSPACE" --evidence "$RUNNER_TEMP/delivery-protocol-evidence"
-          python3 scripts/qualify_delivery_host.py --clean-runner --codex "$delivery_cli_prefix/node_modules/.bin/codex" --package-root "$GITHUB_WORKSPACE"
+          echo "cli=$delivery_cli_prefix/node_modules/.bin/codex" >> "$GITHUB_OUTPUT"
+      - name: Canned native protocol compatibility
+        run: python3 scripts/qualify_delivery_protocol.py --clean-runner --codex "${{ steps.install.outputs.cli }}" --package-root "$GITHUB_WORKSPACE" --evidence "$RUNNER_TEMP/delivery-protocol-evidence"
+      - name: Existing deterministic host qualification
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: python3 scripts/qualify_delivery_host.py --clean-runner --codex "${{ steps.install.outputs.cli }}" --package-root "$GITHUB_WORKSPACE"

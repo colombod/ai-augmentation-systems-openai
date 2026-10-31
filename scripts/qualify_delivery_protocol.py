@@ -9,6 +9,7 @@ from pathlib import Path
 import queue
 import re
 import sqlite3
+import shutil
 import subprocess
 import threading
 import time
@@ -136,6 +137,7 @@ class RPC:
     def __init__(self, command, env, evidence):
         self.log = []
         self.serial = 0
+        self.completed = {}
         self.inbox = queue.Queue()
         self.evidence = evidence
         self.stderr = (evidence / 'stderr.txt').open('w')
@@ -168,6 +170,11 @@ class RPC:
             self.send({'id': value['id'], 'error': {'code': -32601,
                 'message': 'Fixture refuses client action'}})
             raise RuntimeError('unexpected client request')
+        if value.get('method') == 'turn/completed':
+            params = value['params']
+            key = (params['threadId'], params['turn']['id'])
+            require(key not in self.completed and len(self.completed) < 64, 'terminal buffer invalid')
+            self.completed[key] = params['turn']
         return value
 
     def call(self, method, params):
@@ -182,13 +189,15 @@ class RPC:
                 return value['result']
         raise RuntimeError('RPC timeout: outcome unknown, no automatic retry')
 
-    def finish_turn(self):
+    def finish_turn(self, thread, turn):
         deadline = time.monotonic()+45
+        key = (thread, turn)
         while time.monotonic() < deadline:
-            value = self.receive(deadline)
-            if value.get('method') == 'turn/completed':
-                require(value['params']['turn']['status'] == 'completed', json.dumps(value))
+            if key in self.completed:
+                result = self.completed.pop(key)
+                require(result['status'] == 'completed', 'turn failed')
                 return
+            self.receive(deadline)
         raise RuntimeError('turn timeout: outcome unknown')
 
     def close(self):
@@ -257,8 +266,12 @@ def result_status(result, expected):
             'unexpected handler status')
 
 
-def normal_config(root, port, service):
+def normal_config(root, port, service, observer=None):
     q = lambda v: json.dumps(str(v), ensure_ascii=False)
+    arguments = ['-B', str(service), '--db', str(root / 'ledger.sqlite')]
+    if observer is not None:
+        arguments = ['-B', str(observer), str(service), str(root / 'handler.jsonl'),
+                     '--db', str(root / 'ledger.sqlite')]
     return f'''model = "gpt-6-sol"
 model_provider = "synthetic-loopback"
 approval_policy = "never"
@@ -284,7 +297,7 @@ request_max_retries = 0
 stream_max_retries = 0
 [mcp_servers.delivery_publication]
 command = "/usr/bin/python3"
-args = ["-B", {q(service)}, "--db", {q(root / 'ledger.sqlite')}]
+args = {json.dumps(arguments, ensure_ascii=False)}
 enabled_tools = {json.dumps(sorted(TOOLS))}
 '''
 
@@ -297,33 +310,94 @@ def ledger(root):
 
 def run_case(rpc, script, thread, item):
     script.arm([item, None])
-    rpc.call('turn/start', {'threadId': thread, 'input': [
-        {'type': 'text', 'text': 'Run the canned synthetic protocol step.', 'text_elements': []}]})
-    rpc.finish_turn()
-    require(not script.steps and not script.errors and not script.contacts, 'script failed')
-    require(len(script.requests) == 2, 'missing native continuation')
-    results = output_for(script.requests[1], item['call_id'])
-    require(len(results) == 1, 'missing unique matching call output')
-    return results[0]
+    try:
+        started = rpc.call('turn/start', {'threadId': thread, 'input': [
+            {'type': 'text', 'text': 'Run the canned synthetic protocol step.', 'text_elements': []}]})
+        rpc.finish_turn(thread, started['turn']['id'])
+        require(not script.steps and not script.errors and not script.contacts, 'script failed')
+        require(len(script.requests) == 2, 'missing native continuation')
+        results = output_for(script.requests[1], item['call_id'])
+        require(len(results) == 1, 'missing unique matching call output')
+        return results[0]
+    finally:
+        if getattr(rpc, 'evidence', None) is not None:
+            # Filename is a fixed canned call ID, never a provider-supplied value.
+            require(item['call_id'] in {'discover','submit','publish','receipt'}, 'unknown case')
+            write_json(rpc.evidence / (item['call_id'] + '.json'), {
+                'requests':script.requests, 'errors':script.errors, 'contacts':script.contacts})
 
 
-def execute(codex, package, out, opt_in):
+def verify_handler_effects(root):
+    expected = [{'name':'delivery_publication_' + suffix, 'arguments':ARGS}
+                for suffix in ('submit','publish','receipt')]
+    with (root / 'handler.jsonl').open() as capture:
+        raw = capture.read(MAX_BODY + 1)
+    require(len(raw) <= MAX_BODY, 'handler capture over limit')
+    require([json.loads(line) for line in raw.splitlines()] == expected, 'handler arguments differ')
+    with sqlite3.connect('file:' + str(root / 'ledger.sqlite') + '?mode=ro', uri=True) as db:
+        rows = db.execute('SELECT operation_id,envelope FROM drafts').fetchall()
+    canonical = json.dumps(ARGS['envelope'], sort_keys=True, separators=(',', ':'), ensure_ascii=True)
+    require(rows == [(ARGS['operation_id'], canonical)], 'stored draft differs')
+
+
+STAGES = ('preflight','bootstrap','trusted-setup','initialize','inventory','discovery',
+          'submit','publish','receipt','effects','consume','complete')
+
+
+def diagnostic_summary(stage, passed, script=None):
+    # Only fixed labels and saturated counts leave the runner. Never serialize
+    # exceptions, request values, prompts, paths, headers or arbitrary hashes.
+    stage = stage if stage in STAGES else 'preflight'
+    kinds = ('function_call_output','tool_search_output','custom_tool_call_output')
+    counts = {k:0 for k in kinds}
+    requests = getattr(script, 'requests', [])
+    for request in requests[:12]:
+        if isinstance(request, dict) and isinstance(request.get('input'), list):
+            for item in request['input'][:128]:
+                if isinstance(item, dict) and isinstance(item.get('type'), str) and item['type'] in counts:
+                    kind = item['type']; counts[kind] = min(128, counts[kind] + 1)
+    return {'status':'canned-protocol-compatible' if passed else 'canned-protocol-failed',
+        'stage':stage, 'reason':'checks-passed' if passed else 'stage-failed',
+        'requests':min(12,len(requests)), 'output_types':counts,
+        'fixture_errors':min(12,len(getattr(script,'errors',[]))),
+        'unexpected_contacts':min(12,len(getattr(script,'contacts',[]))),
+        'raw_trace_retention':'ephemeral-not-uploaded', 'model_inference':False,
+        'managed_enforcement':False, 'host_egress_isolation':False, 'real_actor_acceptance':False}
+
+
+def resolve_bootstrap(codex, runtime_env, cwd, bootstrap_path):
+    # Only Node's selected installation directory enters the trusted resolver.
+    # The native runtime keeps its separate credential-free environment.
+    selected = shutil.which('node', path=bootstrap_path)
+    require(selected is not None and Path(selected).is_absolute(), 'bootstrap Node unavailable')
+    node = Path(selected)
+    bootstrap_env = dict(runtime_env, PATH=str(node.parent) + os.pathsep + runtime_env['PATH'])
+    version = subprocess.run([str(node), '--version'], env=bootstrap_env, cwd=cwd,
+                             capture_output=True, text=True, timeout=10, check=True)
+    require(version.stdout.strip() == 'v22.14.0', 'pinned bootstrap Node required')
+    return resolve_native_codex(codex, bootstrap_env, cwd)
+
+
+def _execute(codex, package, out, opt_in, progress):
     global ROOT
     check_host(opt_in)  # Refuse nested/cloud or previously configured invocation.
     require(os.geteuid() != 0, 'ordinary runner required')
     require(not Path('/etc/codex').exists(), 'system configuration present')
     require(not out.exists(), 'new evidence directory required')
     out.mkdir(parents=True)
+    progress['evidence'] = out
     with tempfile.TemporaryDirectory(prefix='delivery-protocol-') as tmp:
         ROOT = Path(tmp)
         for name in ('home', 'worker'):
             (ROOT / name).mkdir(mode=0o700)
         env = {'PATH': '/usr/bin:/bin', 'HOME': str(ROOT / 'home'),
                'CODEX_HOME': str(ROOT / 'home'), 'LANG': 'C.UTF-8'}
-        binary = resolve_native_codex(codex, env, ROOT)
+        progress['stage'] = 'bootstrap'
+        binary = resolve_bootstrap(codex, env, ROOT, os.environ.get('PATH', ''))
         version = subprocess.run([str(binary), '--version'], env=env, capture_output=True,
                                  text=True, timeout=10, check=True)
         require(version.stdout.strip() == 'codex-cli 0.163.0', 'pinned version required')
+        progress['stage'] = 'trusted-setup'
         service = package.resolve() / 'plugins/delivery/scripts/publication_service.py'
         command = ['/usr/bin/python3', '-B', str(service), '--db', str(ROOT / 'ledger.sqlite')]
         subprocess.run(command + ['--initialize'], env=env, capture_output=True, timeout=10, check=True)
@@ -336,46 +410,82 @@ def execute(codex, package, out, opt_in):
         require(ledger(ROOT) == {'drafts':0, 'reviews':0, 'releases':0}, 'initial ledger mismatch')
         server = http.server.HTTPServer(('127.0.0.1', 0), Handler)
         server.script = Script()
-        (ROOT / 'home/config.toml').write_text(normal_config(ROOT, server.server_port, service))
+        progress['script'] = server.script
+        (ROOT / 'home/config.toml').write_text(normal_config(ROOT, server.server_port, service,
+            package.resolve() / 'scripts/observe_publication_protocol.py'))
         worker = threading.Thread(target=server.serve_forever, daemon=True)
         worker.start()
         rpc = None
         try:
+            progress['stage'] = 'initialize'
             rpc = RPC([str(binary), 'app-server', '--stdio'], env, out)
             rpc.call('initialize', {'clientInfo':{'name':'synthetic_compatibility', 'version':'1'},
                                    'capabilities':{'experimentalApi':True}})
             rpc.send({'method':'initialized'})
+            progress['stage'] = 'inventory'
             inventory = rpc.call('mcpServerStatus/list', {'cursor':None, 'limit':100, 'detail':'full'})
-            require_publication_inventory(inventory)
             write_json(out / 'inventory.json', inventory)
+            require_publication_inventory(inventory)
             expected = {n:t['inputSchema'] for n,t in inventory['data'][0]['tools'].items()}
             thread = rpc.call('thread/start', {'cwd':str(ROOT / 'worker')})['thread']['id']
             discovery = {'type':'tool_search_call', 'call_id':'discover', 'execution':'client',
                          'arguments':{'query':'delivery_publication submit publish receipt', 'limit':10}}
+            progress['stage'] = 'discovery'
             result = run_case(rpc, server.script, thread, discovery)
             identities = discovered_tools(result, expected)
-            write_json(out / 'discovery.json', server.script.requests)
             for suffix, status in [('submit','submitted'), ('publish','blocked'), ('receipt','not-released')]:
+                progress['stage'] = suffix
                 ns, name = identities['delivery_publication_' + suffix]
                 result = run_case(rpc, server.script, thread, call_item(name, ARGS, suffix, ns))
                 result_status(result, status)
-                write_json(out / (suffix + '.json'), server.script.requests)
+            progress['stage'] = 'effects'
+            verify_handler_effects(ROOT)
             counts = ledger(ROOT)
             require(counts == {'drafts':1, 'reviews':0, 'releases':0}, 'unexpected ledger effects')
+            progress['stage'] = 'consume'
             consume = subprocess.run(command + ['--consume','synthetic-one'], env=env,
                                      capture_output=True, text=True, timeout=10)
             require(consume.returncode == 2 and not consume.stdout.strip(), 'consumer released bundle')
-            print(json.dumps({'status':'canned-protocol-compatible', 'model_inference':False,
-                              'managed_enforcement':False, 'real_actor_acceptance':False}))
             write_json(out / 'result.json', {'status':'canned-protocol-compatible', 'ledger':counts,
                 'model_inference':False, 'managed_enforcement':False, 'host_egress_isolation':False,
                 'real_actor_acceptance':False, 'binary_sha256':sha(binary), 'service_sha256':sha(service)})
         finally:
-            if rpc:
-                rpc.close()
-            server.shutdown()
-            server.server_close()
-            worker.join(timeout=2)
+            try:
+                write_json(out / 'last-fixture.json', {'requests':server.script.requests,
+                    'errors':server.script.errors, 'contacts':server.script.contacts})
+                if (ROOT / 'handler.jsonl').exists():
+                    shutil.copyfile(ROOT / 'handler.jsonl', out / 'handler.jsonl')
+            finally:
+                try:
+                    if rpc:
+                        rpc.close()
+                finally:
+                    server.shutdown()
+                    server.server_close()
+                    worker.join(timeout=2)
+
+
+def execute(codex, package, out, opt_in):
+    progress = {'stage':'preflight'}
+    passed = False
+    try:
+        _execute(codex, package, out, opt_in, progress)
+        progress['stage'] = 'complete'
+        passed = True
+    except Exception as error:
+        if 'evidence' in progress:
+            try:
+                write_json(progress['evidence'] / 'failure.json', {
+                    'type':type(error).__name__, 'detail':str(error)[:MAX_BODY],
+                    'stdout':str(getattr(error, 'stdout', ''))[:MAX_BODY],
+                    'stderr':str(getattr(error, 'stderr', ''))[:MAX_BODY]})
+            except Exception:
+                pass  # A failed local save never becomes a claim of preservation.
+        # Detailed local files are ephemeral. There is no authorized private
+        # transfer configured, and raw traces must not enter public CI output.
+        pass
+    print(json.dumps(diagnostic_summary(progress['stage'], passed, progress.get('script'))))
+    return 0 if passed else 1
 
 
 if __name__ == '__main__':
@@ -385,4 +495,4 @@ if __name__ == '__main__':
     parser.add_argument('--package-root', type=Path, required=True)
     parser.add_argument('--evidence', type=Path, required=True)
     args = parser.parse_args()
-    execute(args.codex, args.package_root, args.evidence, args.clean_runner)
+    raise SystemExit(execute(args.codex, args.package_root, args.evidence, args.clean_runner))

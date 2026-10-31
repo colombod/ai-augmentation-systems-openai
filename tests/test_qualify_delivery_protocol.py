@@ -1,6 +1,11 @@
 import copy
+import contextlib
+import io
+import queue
 import importlib.util
 import json
+import os
+import subprocess
 from pathlib import Path
 import sys
 import tempfile
@@ -104,15 +109,141 @@ class ProtocolTests(unittest.TestCase):
                 def call(self, method, params):
                     script.respond({})
                     script.respond({'input':outputs})
-                def finish_turn(self):
+                    return {'turn':{'id':'turn'}}
+                def finish_turn(self, thread, turn):
                     pass
             with self.subTest(outputs=outputs), self.assertRaises(RuntimeError):
                 probe.run_case(FakeRPC(), script, 'thread', probe.call_item('synthetic', {}, 'one'))
 
+    def test_bootstrap_node_directory_is_separate_from_native_environment(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); node_dir = root / 'pinned-node'; node_dir.mkdir()
+            node = node_dir / 'node'
+            # Synthetic executable records the exact subprocess environment.
+            recorded = root / 'environment.json'
+            node.write_text('#!' + sys.executable + '\nimport os,json\n'
+                + 'open(' + repr(str(recorded)) + ',"w").write(json.dumps(dict(os.environ)))\n'
+                + 'print("v22.14.0")\n')
+            node.chmod(0o700)
+            native_env = {'PATH':'/usr/bin:/bin', 'HOME':str(root / 'home'),
+                          'CODEX_HOME':str(root / 'home'), 'LANG':'C.UTF-8'}
+            before = dict(native_env)
+            def resolve(codex, env, cwd):
+                self.assertEqual(probe.shutil.which('node', path=env['PATH']), str(node))
+                self.assertEqual(env['PATH'], str(node_dir) + ':/usr/bin:/bin')
+                self.assertEqual(set(env), set(native_env))
+                return root / 'native-codex'
+            with patch.dict(os.environ, {'OPENAI_API_KEY':'synthetic-no-credential',
+                                         'NODE_OPTIONS':'synthetic-unused'}), \
+                    patch.object(probe, 'resolve_native_codex', side_effect=resolve) as resolver:
+                self.assertEqual(probe.resolve_bootstrap('/launcher', native_env, root,
+                    str(node_dir) + ':/unrelated'), root / 'native-codex')
+                resolver.assert_called_once()
+            observed = json.loads(recorded.read_text())
+            self.assertNotIn('OPENAI_API_KEY', observed)
+            self.assertNotIn('NODE_OPTIONS', observed)
+            self.assertEqual(native_env, before)
+            self.assertNotIn(str(node_dir), native_env['PATH'])
+            config = tomllib.loads(probe.normal_config(root, 12345, root / 'service.py'))
+            provider = config['model_providers'][config['model_provider']]
+            self.assertEqual(provider['base_url'], 'http://127.0.0.1:12345/v1')
+            self.assertFalse(provider['requires_openai_auth'])
+
+    def test_missing_or_wrong_bootstrap_node_refuses_before_resolver(self):
+        env = {'PATH':'/usr/bin:/bin'}
+        with patch.object(probe.shutil, 'which', return_value=None), \
+                patch.object(probe, 'resolve_native_codex') as resolver:
+            with self.assertRaises(RuntimeError): probe.resolve_bootstrap('/launcher', env, ROOT, '')
+            resolver.assert_not_called()
+        with patch.object(probe.shutil, 'which', return_value='/pinned/node'), \
+                patch.object(probe.subprocess, 'run', return_value=subprocess.CompletedProcess([],0,'v20.0.0\n','')), \
+                patch.object(probe, 'resolve_native_codex') as resolver:
+            with self.assertRaises(RuntimeError): probe.resolve_bootstrap('/launcher', env, ROOT, '/pinned')
+            resolver.assert_not_called()
+
+    def test_early_terminal_notification_is_correlated_to_thread_and_turn(self):
+        rpc = probe.RPC.__new__(probe.RPC)
+        rpc.log = []; rpc.serial = 0; rpc.inbox = queue.Queue(); rpc.completed = {}
+        rpc.send = lambda value: None
+        for thread, turn in [('other','turn'), ('thread','other'), ('thread','turn')]:
+            rpc.inbox.put({'method':'turn/completed', 'params':{'threadId':thread,
+                'turn':{'id':turn,'status':'completed'}}})
+        rpc.inbox.put({'id':1, 'result':{'turn':{'id':'turn'}}})
+        result = rpc.call('turn/start', {'threadId':'thread'})
+        rpc.finish_turn('thread', result['turn']['id'])
+        self.assertNotIn(('thread','turn'), rpc.completed)
+        self.assertEqual(set(rpc.completed), {('other','turn'), ('thread','other')})
+        with patch.object(rpc, 'receive', side_effect=queue.Empty):
+            with self.assertRaises(queue.Empty): rpc.finish_turn('thread','missing')
+
+    def test_failure_preserves_ephemeral_case_before_validation(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            script = probe.Script()
+            class FakeRPC:
+                evidence = Path(tmp)
+                def call(self, *args):
+                    script.requests.append({'input':[{'type':'unknown','text':'synthetic raw'}]})
+                    raise RuntimeError('synthetic failed')
+            with self.assertRaises(RuntimeError):
+                probe.run_case(FakeRPC(), script, 'thread',
+                               probe.call_item('synthetic', {}, 'submit'))
+            saved = json.loads((Path(tmp) / 'submit.json').read_text())
+            self.assertEqual(saved['requests'], script.requests)
+            self.assertEqual(saved['errors'], [])
+
+    def test_observer_captures_actual_handler_arguments_and_exact_draft(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); db = root / 'ledger.sqlite'
+            service = ROOT / 'plugins/delivery/scripts/publication_service.py'
+            command = [sys.executable, '-B', str(service), '--db', str(db)]
+            subprocess.run(command + ['--initialize'], capture_output=True, check=True)
+            binding = {'action':'register','destination':'synthetic-sink','owner':'synthetic-owner',
+                'audience':'synthetic-consumer','visibility':'private','revision':'one',
+                'authority_revision':'one','policy_revision':'one'}
+            subprocess.run(command + ['--control'], input=json.dumps(binding), text=True,
+                           capture_output=True, check=True)
+            requests = [{'jsonrpc':'2.0','id':i,'method':'tools/call','params':{
+                'name':'delivery_publication_' + suffix,'arguments':probe.ARGS}}
+                for i,suffix in enumerate(('submit','publish','receipt'),1)]
+            observer = [sys.executable, '-B', str(ROOT / 'scripts/observe_publication_protocol.py'),
+                        str(service), str(root / 'handler.jsonl'), '--db', str(db)]
+            result = subprocess.run(observer, input=''.join(json.dumps(r)+'\n' for r in requests),
+                                    text=True, capture_output=True, timeout=10, check=True)
+            self.assertEqual(len(result.stdout.splitlines()), 3)
+            probe.verify_handler_effects(root)
+            original = (root / 'handler.jsonl').read_text()
+            altered = [json.loads(line) for line in original.splitlines()]
+            altered[1]['arguments']['operation_id'] = 'different'
+            (root / 'handler.jsonl').write_text(''.join(json.dumps(row)+'\n' for row in altered))
+            with self.assertRaises(RuntimeError): probe.verify_handler_effects(root)
+            (root / 'handler.jsonl').write_text(original)
+            with probe.sqlite3.connect(db) as conn:
+                conn.execute('UPDATE drafts SET envelope=?', ('{}',))
+            with self.assertRaises(RuntimeError): probe.verify_handler_effects(root)
+
+    def test_public_summary_cannot_echo_arbitrary_diagnostics(self):
+        secret = 'SYNTHETIC-DO-NOT-ECHO'
+        script = probe.Script(); script.requests = [{'input':[
+            {'type':'function_call_output','output':secret}, {'type':secret,'text':secret}]}]
+        script.errors = [secret]; script.contacts = [secret]
+        summary = probe.diagnostic_summary(secret, False, script)
+        self.assertNotIn(secret, json.dumps(summary))
+        self.assertEqual(summary['stage'], 'preflight')
+        self.assertEqual(summary['output_types']['function_call_output'], 1)
+        output = io.StringIO()
+        with patch.object(probe, '_execute', side_effect=RuntimeError(secret)), \
+                contextlib.redirect_stdout(output):
+            self.assertEqual(probe.execute('/unused', ROOT, ROOT, True), 1)
+        self.assertNotIn(secret, output.getvalue())
+        self.assertEqual(json.loads(output.getvalue())['reason'], 'stage-failed')
+        script.requests *= 100
+        self.assertEqual(probe.diagnostic_summary('effects',False,script)['requests'],12)
+
     def test_cloud_host_refusal_precedes_all_processes_and_writes(self):
         with patch.object(probe, 'check_host', side_effect=RuntimeError('refused')), \
                 patch.object(probe.subprocess, 'run') as run, patch.object(probe.subprocess, 'Popen') as popen:
-            with self.assertRaises(RuntimeError): probe.execute('/abs/codex', ROOT, Path('/tmp/not-created-protocol'), True)
+            with contextlib.redirect_stdout(io.StringIO()):
+                self.assertEqual(probe.execute('/abs/codex', ROOT, Path('/tmp/not-created-protocol'), True), 1)
             run.assert_not_called(); popen.assert_not_called()
 
 
