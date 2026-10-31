@@ -657,17 +657,6 @@ class NativeDiscoveryTests(unittest.TestCase):
             with self.subTest(page=page), self.assertRaises(module.Unsupported):
                 module.require_publication_inventory(page)
 
-    def test_configuration_roundtrips_special_paths_and_has_only_candidate_tools(self):
-        import tomllib
-        service=Path('/synthetic/quote" slash\\ emoji\U0001f680/service.py')
-        db=Path('/synthetic/ledger.sqlite')
-        config=tomllib.loads(module.publication_mcp_config(service,db))
-        row=config['mcp_servers']['delivery_publication']
-        self.assertEqual(row['args'],['-B',str(service),'--db',str(db)])
-        self.assertEqual(set(row['enabled_tools']),module.PUBLICATION_TOOLS)
-        self.assertFalse({'--initialize','--control','--consume'} & set(row['args']))
-        with self.assertRaises(module.Unsupported):module.publication_mcp_config(Path('relative'),db)
-
     def test_protected_snapshot_requires_live_readable_regular_files(self):
         import tempfile
         with tempfile.TemporaryDirectory() as folder:
@@ -703,30 +692,64 @@ class NativeDiscoveryTests(unittest.TestCase):
                 else:
                     with self.assertRaises(OSError):exec(module.MCP_RESOURCE_PROBE,{})
 
+    def test_disabled_inventory_requires_known_inactive_server(self):
+        import copy
+        row={'name':'delivery_publication','tools':{},'resources':[],'resourceTemplates':[],
+             'serverCapabilities':None,'serverInfo':None,'toolsError':None}
+        page={'data':[row],'nextCursor':None}
+        module.require_disabled_publication_inventory(page)
+        invalid=[{'data':[],'nextCursor':None},self.page(),{'data':[row,row],'nextCursor':None}]
+        for key,value in [('tools',{'extra':{}}),('resources',[{}]),('resourceTemplates',[{}]),
+                          ('serverInfo',{}),('serverCapabilities',{}),('toolsError','failure'),
+                          ('runtimeStatus','connected'),('name','other')]:
+            bad=copy.deepcopy(page);bad['data'][0][key]=value;invalid.append(bad)
+        for key in ('serverInfo','serverCapabilities','toolsError','tools','resources','resourceTemplates'):
+            bad=copy.deepcopy(page);del bad['data'][0][key];invalid.append(bad)
+        for bad in invalid:
+            with self.subTest(page=bad),self.assertRaises(module.Unsupported):
+                module.require_disabled_publication_inventory(bad)
+
     def test_reconnect_uses_distinct_config_homes_and_preserves_fixture(self):
         import tempfile,json,types
         calls=[];homes=[];closed=[];status_requests=[]
         page=self.page()
         class Server:
-            def __init__(self,argv,env,cwd):homes.append(env['CODEX_HOME'])
+            def __init__(self,argv,env,cwd):
+                self.home=Path(env['CODEX_HOME']);homes.append(env['CODEX_HOME'])
             def call(self,name,params):
                 if name=='mcpServerStatus/list':
                     status_requests.append(params)
-                    return page
+                    return {'data':[{'name':'delivery_publication','tools':{},'resources':[],
+                        'resourceTemplates':[],'serverCapabilities':None,'serverInfo':None,
+                        'toolsError':None}], 'nextCursor':None} if (self.home/'config.toml').read_text()=='disabled' else page
                 return {}
             def send(self,value):pass
             def close(self):closed.append(True)
         def run(argv,env,cwd,input_text=None):
             calls.append(argv)
-            if '--initialize' in argv:Path(argv[argv.index('--db')+1]).write_bytes(b'SYNTHETIC ledger')
-            return types.SimpleNamespace(stdout=json.dumps({'status':'recorded'}) if '--control' in argv else 'resources-denied')
+            if '--initialize' in argv:
+                Path(argv[argv.index('--db')+1]).write_bytes(b'SYNTHETIC ledger')
+            if '--control' in argv:
+                return types.SimpleNamespace(stdout=json.dumps({'status':'recorded','binding':{}}))
+            if len(argv)>3 and argv[3]=='plan':
+                return types.SimpleNamespace(stdout=json.dumps({'host_protected_ready':False,
+                    'sha256':'synthetic-digest','home':argv[argv.index('--home')+1]}))
+            if len(argv)>3 and argv[3] in ('enable','status','disable'):
+                plan=json.loads(Path(argv[argv.index('--plan')+1]).read_text());home=Path(plan['home'])
+                if argv[3]=='enable' and not home.exists():
+                    home.mkdir();(home/'config.toml').write_text('enabled');(home/'delivery-setup.json').write_text('SYNTHETIC receipt')
+                if argv[3]=='disable':(home/'config.toml').write_text('disabled')
+                return types.SimpleNamespace(stdout=json.dumps({'host_protected_ready':False,
+                    'status':'disabled' if argv[3]=='disable' else 'configured'}))
+            return types.SimpleNamespace(stdout='resources-denied')
         with tempfile.TemporaryDirectory() as folder:
             base=Path(folder);trusted=base/'trusted';trusted.mkdir();package=base/'package';(package/'scripts').mkdir(parents=True)
             (package/'scripts/publication_service.py').write_text('SYNTHETIC service')
+            (package/'scripts/publication_setup.py').write_text('SYNTHETIC setup')
             with patch.object(module,'run',side_effect=run),patch.object(module,'RPC',Server):
                 self.assertEqual(module.native_discovery_checks('codex',package,trusted,base,{},['sandbox'],base),1)
-            self.assertEqual(len(set(homes)),2);self.assertEqual(len(closed),2)
-            self.assertEqual(status_requests,[{'cursor':None,'limit':100,'detail':'full'}]*2)
+            self.assertEqual(len(set(homes)),2);self.assertEqual(len(closed),4)
+            self.assertEqual(status_requests,[{'cursor':None,'limit':100,'detail':'full'}]*4)
             self.assertEqual(sum('--initialize' in args for args in calls),1)
             for home in homes:
                 self.assertTrue((Path(home)/'config.toml').is_file())

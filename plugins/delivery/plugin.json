@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "delivery",
-  "version": "0.1.0-preview.17",
+  "version": "0.1.0-preview.18",
   "description": "Frame new ideas and existing products, map feature/code evidence and change impact, and carry owner choices through planning, implementation and review.",
   "author": {
     "name": "Diego Colombo"

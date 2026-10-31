@@ -181,3 +181,75 @@ message overhead. SQLite uses the trusted host wall clock; rollback before revie
 issuance blocks, but this is not an independent secure-time source. Preserve the
 ledger for recovery. Do not replace it to retry an uncertain operation. This
 bounded local component does not provide automated archive rotation.
+
+
+### Setup for a dedicated configuration home
+
+On a POSIX host with Python 3.10+, the trusted operator can use
+`scripts/publication_setup.py` instead of hand-editing the MCP configuration.
+Paths must contain valid Unicode scalar values; undecodable filesystem byte paths
+are refused. Permission-rule paths (worker, dedicated home, ledger parent and
+installed code directory) must be absolute literal paths without `*`, `?`, `[`
+or `]`; symbolic and home-relative spellings are not accepted. Setup reports
+`unsupported-permission-path-syntax` without echoing the path. The glob-character
+restriction does not apply to a ledger filename used only as a command argument. Supported path
+characters are escaped without changing their values.
+A busy setup lock is refused after a two-second acquisition deadline; the holder
+keeps its lock and saved configuration and receipts remain unchanged.
+It operates only on a dedicated home, not your default `~/.codex`. Keep the
+planning receipt and destination binding private. The ledger must already be owner-only readable/writable,
+initialized and registered through the trusted control interface above; setup
+never initializes, resets, registers or approves a release.
+
+Save the verified binding object from the trusted `binding` control response,
+including its generation, in a private JSON file. Then plan the exact change:
+
+```sh
+python3 /absolute/plugin/scripts/publication_setup.py plan --home /private/dedicated-codex --ledger /private/bundles.sqlite --worker /absolute/workspace --binding /private/binding.json > /private/setup-plan.json
+```
+
+After reviewing that plan and authorizing the specific configuration change,
+use its `sha256` value for each operation:
+
+```sh
+python3 /absolute/plugin/scripts/publication_setup.py enable --plan /private/setup-plan.json --expected-sha256 PLAN_SHA256
+python3 /absolute/plugin/scripts/publication_setup.py status --plan /private/setup-plan.json --expected-sha256 PLAN_SHA256
+python3 /absolute/plugin/scripts/publication_setup.py disable --plan /private/setup-plan.json --expected-sha256 PLAN_SHA256
+```
+
+Enable writes the managed receipt and configuration, starts no runtime and copies
+no credentials. Select that home explicitly in your separately authorized local
+Codex invocation. Repeated enable is idempotent; after interruption, use status
+and the same exact plan. A failed mutation reports `reconcile_required: true`;
+it does not promise that no configuration changed. Successful enable/disable
+results report `durability: synced` only after syncing the validated receipt and
+configuration files, home directory and parent directory, including matching-byte
+retries. Sync failure requires reconciliation; retry completes these barriers.
+Status reports `durability: not-checked`: it observes configuration without
+certifying or completing those barriers. This is not a physical power-loss test. Disable changes this registration
+for a fresh runtime start while preserving ledger, receipt and unrelated data.
+It does not revoke an already-running MCP process; stop that runtime separately
+before relying on the disabled configuration. Unknown existing configuration or
+changed code, destination, ledger/worker/home identity, ancestor directories, receipt or configuration refuses
+rather than overwriting or silently rebinding. Disable remains available after
+ledger/code drift when the managed receipt and configuration are intact. If a
+receipt-less home contains interrupted staging or other unknown files, setup
+reports `fresh-home-plan-required`. Repeat the `plan` command with `--fresh-home`
+and the same inputs to propose an unused sibling home, then review and use the
+new plan and digest. This leaves the old home and every file untouched; nothing
+is trusted or deleted based on a staging filename. An empty interrupted home
+can also be replanned explicitly. Once a complete receipt exists, retry verifies
+its recorded identity and bytes; unrelated staging leftovers remain preserved.
+New-home capacity checks reserve bounded identity metadata before creating the
+directory; oversized requests refuse without creating that home.
+Source upgrades or destination changes need a new explicitly reviewed plan and
+a new dedicated home. An existing receipt is immutable and cannot be rebound
+by a new plan. Retain the old home and ledger; never delete data to force reuse.
+
+Every result says `host_protected_ready: false`. The generated ordinary settings
+reduce known capabilities but are not managed security policy and do not exclude
+all host-injected tools or higher-priority configuration. A dedicated directory
+and cooperative setup lock do not isolate malicious same-user host processes.
+Actual protected actor use requires a separately established host boundary;
+configuration success or three discovered tools does not establish it. Do not
+use setup to change real settings without specific action-time consent.

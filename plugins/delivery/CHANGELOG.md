@@ -1,6 +1,14 @@
 # Changelog
 
-## Unreleased candidate — 0.1.0-preview.17
+## Unreleased candidate — 0.1.0-preview.18
+
+- Add trusted opt-in setup planning, enable/status/disable and interrupted-setup
+  recovery for an existing local ledger in a dedicated configuration home.
+- Bind configuration to installed code, ledger/worker/home identities and exact destination;
+  refuse unknown configuration and drift without resetting data.
+- Setup reports configuration state only, never protected-host readiness.
+
+## 0.1.0-preview.17
 
 - Clarify opt-in native MCP configuration for the installed local publication
   service, its exact candidate tool set, and safe reconnect/opt-out behavior.

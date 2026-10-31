@@ -277,15 +277,6 @@ def install(codex, root, base, env, actual_home):
 PUBLICATION_TOOLS = frozenset('delivery_publication_' + name for name in ('submit', 'publish', 'receipt'))
 
 
-def publication_mcp_config(service, db):
-    # JSON strings are valid TOML basic strings when Unicode is emitted directly.
-    require(service.is_absolute() and db.is_absolute(), 'mcp-absolute-paths-required')
-    value = lambda item: json.dumps(str(item), ensure_ascii=False)
-    return ('[mcp_servers.delivery_publication]\ncommand = "/usr/bin/python3"\n'
-            + 'args = [' + ', '.join(value(x) for x in ('-B', service, '--db', db)) + ']\n'
-            + 'enabled_tools = [' + ', '.join(value(x) for x in sorted(PUBLICATION_TOOLS)) + ']\n')
-
-
 def require_publication_inventory(page):
     require(isinstance(page, dict) and page.get('nextCursor') is None,
             'mcp-discovery-incomplete')
@@ -311,6 +302,24 @@ def require_publication_inventory(page):
     require(row.get('resources') == [] and row.get('resourceTemplates') == [],
             'mcp-unexpected-resources')
     return len(rows)
+
+
+def require_disabled_publication_inventory(page):
+    require(isinstance(page, dict) and page.get('nextCursor') is None,
+            'mcp-discovery-incomplete')
+    rows = page.get('data')
+    require(isinstance(rows, list) and len(rows) == 1, 'disabled-server-set-mismatch')
+    row = rows[0]
+    require(isinstance(row, dict) and row.get('name') == 'delivery_publication',
+            'disabled-server-identity-mismatch')
+    require(row.get('tools') == {} and row.get('resources') == []
+            and row.get('resourceTemplates') == [], 'disabled-server-exposes-capabilities')
+    require('serverCapabilities' in row and row['serverCapabilities'] is None
+            and 'serverInfo' in row and row['serverInfo'] is None,
+            'disabled-server-still-live')
+    require('toolsError' in row and row['toolsError'] is None,
+            'disabled-server-error')
+    require(row.get('runtimeStatus') in (None, 'disabled'), 'disabled-server-still-live')
 
 
 def protected_snapshot(paths):
@@ -354,16 +363,35 @@ def native_discovery_checks(codex, package, trusted, base, env, sandbox_prefix, 
         'audience':'synthetic-users', 'visibility':'public', 'revision':'r1',
         'authority_revision':'a1', 'policy_revision':'p1'})).stdout)
     require(registered.get('status') == 'recorded', 'mcp-fixture-register-failed')
+    helper = package / 'scripts/publication_setup.py'
+    binding_file = trusted / 'native-binding.json'
+    binding_file.write_text(json.dumps(registered['binding']))
+    ledger_before = protected_snapshot((db,))
     config_homes = [trusted / ('mcp-codex-home-' + str(index)) for index in range(2)]
-    configs = []
-    for home in config_homes:
-        home.mkdir()
-        config = home / 'config.toml'
-        config.write_text(publication_mcp_config(service, db))
-        configs.append(config)
+    configs, receipts, plans = [], [], []
+    def setup(action, plan_file, plan_digest):
+        result = json.loads(run(['/usr/bin/python3', '-B', str(helper), action,
+            '--plan', str(plan_file), '--expected-sha256', plan_digest], env, base).stdout)
+        require(result.get('host_protected_ready') is False, 'setup-overclaims-authority')
+        require(result.get('status') == ('disabled' if action == 'disable' else 'configured'),
+                'setup-lifecycle-failed')
+    for index, home in enumerate(config_homes):
+        planned = run(['/usr/bin/python3', '-B', str(helper), 'plan', '--home', str(home),
+            '--ledger', str(db), '--worker', str(worker), '--binding', str(binding_file)], env, base).stdout
+        value = json.loads(planned)
+        require(value.get('host_protected_ready') is False, 'setup-overclaims-authority')
+        plan_file = trusted / ('setup-plan-' + str(index) + '.json')
+        plan_file.write_text(planned)
+        plans.append((plan_file, value['sha256']))
+        setup('enable', *plans[-1])
+        setup('enable', *plans[-1])
+        setup('status', *plans[-1])
+        configs.append(home / 'config.toml')
+        receipts.append(home / 'delivery-setup.json')
+    require(protected_snapshot((db,)) == ledger_before, 'setup-ledger-changed')
     # Each connection has a fresh cache: a stale tool catalog cannot masquerade
     # as a live reconnect. Only the protected ledger is intentionally reused.
-    fixtures = (db, service, *configs)
+    fixtures = (db, service, helper, binding_file, *configs, *receipts)
     before = protected_snapshot(fixtures)
     for home in config_homes:
         native_env = dict(env, CODEX_HOME=str(home))
@@ -381,6 +409,18 @@ def native_discovery_checks(codex, package, trusted, base, env, sandbox_prefix, 
                   *(str(path) for path in fixtures)], env, worker)
     require(denied.stdout.strip() == 'resources-denied', 'mcp-resource-probe-incomplete')
     require(protected_snapshot(fixtures) == before, 'mcp-fixture-changed')
+    for home, plan_args in zip(config_homes, plans):
+        setup('disable', *plan_args)
+        server = RPC([codex, 'app-server', '--stdio'], dict(env, CODEX_HOME=str(home)), base)
+        try:
+            server.call('initialize', {'clientInfo': {'name':'delivery_disabled','version':'1'},
+                                      'capabilities': {'experimentalApi':True}})
+            server.send({'method':'initialized'})
+            page = server.call('mcpServerStatus/list', {'cursor':None, 'limit':100, 'detail':'full'})
+            require_disabled_publication_inventory(page)
+        finally:
+            server.close()
+    require(protected_snapshot((db,)) == ledger_before, 'setup-ledger-changed')
     return count
 
 
