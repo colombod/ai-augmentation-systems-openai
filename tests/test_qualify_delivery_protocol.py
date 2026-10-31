@@ -578,11 +578,46 @@ class ApprovalTests(unittest.TestCase):
     def test_workflow_changed_policy_is_manual_default_off_and_sha_bound(self):
         workflow=(ROOT/'.github/workflows/delivery-qualification.yml').read_text()
         self.assertIn("github.event_name == 'workflow_dispatch' && inputs.synthetic_approvals == true",workflow)
-        self.assertIn('github.run_attempt == 1',workflow)
+        self.assertNotIn('github.run_attempt == 1',workflow)
+        self.assertIn('NATIVE_RUN_ATTEMPT: ${{ github.run_attempt }}',workflow)
+        self.assertIn('[[ "$NATIVE_RUN_ATTEMPT" == "1" ]] || exit 1',workflow)
         self.assertIn('default: false',workflow)
         self.assertIn('REVIEWED_SHA: ${{ inputs.reviewed_sha }}',workflow)
         self.assertIn('[[ "$(git rev-parse HEAD)" == "$REVIEWED_SHA" ]]',workflow)
         self.assertIn("!cancelled() && steps.install.outcome == 'success'",workflow)
+
+
+class WorkflowRepairTests(unittest.TestCase):
+    def test_host_only_dispatch_does_not_require_reviewed_sha(self):
+        workflow=(ROOT/'.github/workflows/delivery-qualification.yml').read_text()
+        sha_input=workflow.split('      reviewed_sha:',1)[1].split('  pull_request:',1)[0]
+        self.assertIn('required: false',sha_input)
+        native=workflow.split('      - name: Canned native protocol compatibility',1)[1].split('      - name:',1)[0]
+        self.assertIn("if: ${{ github.event_name == 'workflow_dispatch' && inputs.synthetic_approvals == true }}",native)
+        self.assertNotIn('run_attempt ==',native)
+        self.assertIn("if: ${{ !cancelled() && steps.install.outcome == 'success' }}",workflow)
+
+    def test_actual_shell_guards_refuse_rerun_and_invalid_sha_before_native_command(self):
+        workflow=(ROOT/'.github/workflows/delivery-qualification.yml').read_text()
+        native=workflow.split('      - name: Canned native protocol compatibility',1)[1].split('      - name:',1)[0]
+        script=native.split('        run: |\n',1)[1]
+        lines=[line[10:] for line in script.splitlines() if line.strip()]
+        self.assertTrue(lines[-1].startswith('python3 scripts/qualify_delivery_protocol.py '))
+        # Execute the actual shell guards, replacing only the prohibited native
+        # invocation with a fixed marker. No Codex process or config is launched.
+        lines[-1]="printf 'native-invoked'"
+        script="git() { [[ \"$1 $2\" == 'rev-parse HEAD' ]] || return 1; printf '%s' \"$FIXTURE_HEAD\"; }\n" + '\n'.join(lines)
+        head='a'*40
+        cases=[('1',head,True),('2',head,False),('0',head,False),('',head,False),
+               ('1','',False),('1','a'*39,False),('1','A'*40,False),('1','b'*40,False),
+               ('1','$(printf injected)',False)]
+        for attempt,sha,allowed in cases:
+            with self.subTest(attempt=attempt,sha=sha):
+                result=subprocess.run(['/bin/bash','-e','-c',script],capture_output=True,text=True,
+                    env={'PATH':'/usr/bin:/bin','NATIVE_RUN_ATTEMPT':attempt,
+                         'REVIEWED_SHA':sha,'FIXTURE_HEAD':head},timeout=5)
+                self.assertEqual(result.returncode==0,allowed)
+                self.assertEqual(result.stdout,'native-invoked' if allowed else '')
 
 
 if __name__ == '__main__':
