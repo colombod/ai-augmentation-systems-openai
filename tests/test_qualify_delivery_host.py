@@ -56,6 +56,10 @@ class ProfileTests(unittest.TestCase):
                 listener.getsockname.return_value = ('127.0.0.1',12345)
                 listener.accept.return_value = (MagicMock(),None)
                 def child(*args,**kwargs):
+                    import tomllib
+                    override = next(x for x in args[0] if x.startswith('shell_environment_policy.set='))
+                    self.assertEqual(tomllib.loads('value=' + override.split('=',1)[1])['value'],
+                                     {'PATH':'/usr/bin:/synthetic/🧪'})
                     fixture = base/'trusted/synthetic-control'
                     self.assertEqual(fixture.read_text(),'SYNTHETIC CONTROL ONLY')
                     if change == 'removed': fixture.unlink()
@@ -70,11 +74,11 @@ class ProfileTests(unittest.TestCase):
                      patch.object(module.socket,'socket',return_value=listener), \
                      patch.object(module.socket,'create_connection') as connect:
                     if change == 'none':
-                        module.sandbox_checks('codex',base,{'LANG':'C.UTF-8','PATH':'/usr/bin:/bin'},Path('/synthetic/home'))
+                        module.sandbox_checks('codex',base,{'LANG':'C.UTF-8','PATH':'/usr/bin:/synthetic/🧪'},Path('/synthetic/home'))
                         self.assertEqual(connect.call_count,2)
                     else:
                         with self.assertRaises((OSError,module.Unsupported)):
-                            module.sandbox_checks('codex',base,{'LANG':'C.UTF-8','PATH':'/usr/bin:/bin'},Path('/synthetic/home'))
+                            module.sandbox_checks('codex',base,{'LANG':'C.UTF-8','PATH':'/usr/bin:/synthetic/🧪'},Path('/synthetic/home'))
                     baseline.assert_called_once()
                     listener.close.assert_called_once()
 
@@ -293,6 +297,28 @@ class NativeResolverTests(unittest.TestCase):
                 self.assertIn('createRequire',command[2])
                 self.assertEqual(command[3:],[str(launcher),'@openai/codex-linux-x64'])
                 self.assertEqual(run.call_count,1)
+
+    def test_launcher_resolution_uses_child_path_and_cwd_without_execution(self):
+        import tempfile, os
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory); (base/'bin').mkdir()
+            native = base/'bin/codex'; native.write_bytes(b'\x7fELFsynthetic')
+            native.chmod(0o700)
+            (base/'bin/alias').symlink_to(native)
+            with patch.object(module.subprocess,'run') as run, \
+                 patch.dict(os.environ, {'PATH':'/untrusted/ambient'}):
+                for name, path, cwd in [('codex',str(base/'bin'),base),
+                                        ('alias','bin',base), ('codex','',base/'bin'),
+                                        ('./bin/codex','/missing',base),
+                                        (str(native),'/missing',base)]:
+                    with self.subTest(name=name,path=path):
+                        self.assertEqual(module.resolve_native_codex(name,{'PATH':path},cwd),native)
+                with self.assertRaisesRegex(module.Unsupported,'codex-launcher-not-found'):
+                    module.resolve_native_codex('codex',{'PATH':'/missing'},base)
+                native.chmod(0o600)
+                with self.assertRaisesRegex(module.Unsupported,'codex-launcher-not-found'):
+                    module.resolve_native_codex('codex',{'PATH':str(base/'bin')},base)
+                run.assert_not_called()
 
     def test_direct_elf_does_not_run_resolver(self):
         import tempfile

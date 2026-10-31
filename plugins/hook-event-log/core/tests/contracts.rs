@@ -34,9 +34,18 @@ fn run(data: Option<&Path>, bytes: &[u8]) -> std::process::Output {
     let mut command = Command::new(env!("CARGO_BIN_EXE_event-log-core"));
     command.env_remove("PLUGIN_DATA").stdin(Stdio::piped()).stdout(Stdio::piped()).stderr(Stdio::piped());
     if let Some(data) = data { command.env("PLUGIN_DATA", data); }
-    let mut child = command.spawn().unwrap();
-    child.stdin.take().unwrap().write_all(bytes).unwrap();
-    child.wait_with_output().unwrap()
+    collect(command.spawn().unwrap(), bytes)
+}
+fn collect(mut child: std::process::Child, bytes: &[u8]) -> std::process::Output {
+    let written = child.stdin.take().unwrap().write_all(bytes);
+    let output = child.wait_with_output().unwrap();
+    if let Err(error) = written {
+        // An invalid configuration may reject before reading any input. Preserve
+        // its exit/stderr assertions; no other write error counts as rejection.
+        assert_eq!(error.kind(), std::io::ErrorKind::BrokenPipe);
+        assert!(!output.status.success());
+    }
+    output
 }
 
 #[test]
@@ -89,6 +98,21 @@ fn process_contract_quiet_success_fixed_private_failures() {
         assert_eq!(result.status.code(), Some(1)); assert!(result.stdout.is_empty());
         assert_eq!(result.stderr, b"event-log-core: logging failed\n");
     }
+}
+
+#[test]
+fn process_rejection_before_stdin_write_retains_failure_contract() {
+    let mut child = Command::new(env!("CARGO_BIN_EXE_event-log-core"))
+        .env_remove("PLUGIN_DATA").stdin(Stdio::piped())
+        .stdout(Stdio::piped()).stderr(Stdio::piped()).spawn().unwrap();
+    // Force the valid early-rejection ordering instead of relying on scheduling.
+    let stdin = child.stdin.take().unwrap();
+    assert_eq!(child.wait().unwrap().code(), Some(1));
+    child.stdin = Some(stdin);
+    let result = collect(child, b"SYNTHETIC INPUT");
+    assert_eq!(result.status.code(), Some(1));
+    assert!(result.stdout.is_empty());
+    assert_eq!(result.stderr, b"event-log-core: logging failed\n");
 }
 
 #[test]

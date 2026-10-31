@@ -282,7 +282,19 @@ def resolve_native_codex(codex, env, cwd):
     Package metadata establishes expected layout, not independent authenticity.
     The existing CLI version check remains required before this resolver runs.
     """
-    launcher = Path(codex).resolve(strict=True)
+    if os.path.dirname(codex):
+        selected = Path(codex)
+        if not selected.is_absolute():
+            selected = cwd / selected
+    else:
+        # Match subprocess lookup using the supplied environment and child cwd,
+        # including relative/empty PATH entries; never use the caller's PATH.
+        search = os.pathsep.join(str(Path(entry) if Path(entry).is_absolute() else cwd / entry)
+                                 for entry in os.get_exec_path(env))
+        found = shutil.which(codex, path=search)
+        require(found is not None, 'codex-launcher-not-found')
+        selected = Path(found)
+    launcher = selected.resolve(strict=True)
     require(launcher.is_file() and os.access(launcher, os.X_OK), 'codex-launcher-not-executable')
     with launcher.open('rb') as source:
         direct = source.read(4) == b'\x7fELF'
@@ -509,7 +521,7 @@ def sandbox_checks(codex, base, env, actual_home):
     native_codex = resolve_native_codex(codex, env, base)
     config = sandbox_config(worker, trusted, actual_home, native_codex)
     # Restore the approved PATH after native startup helpers; no broader grant.
-    config += ['-c', 'shell_environment_policy.set=' + '{PATH=' + json.dumps(env['PATH']) + '}']
+    config += ['-c', 'shell_environment_policy.set=' + '{PATH=' + json.dumps(env['PATH'], ensure_ascii=False) + '}']
     prefix = [str(native_codex), *config, 'sandbox', '--permission-profile', 'delivery-qualification', '--']
     code = '''import errno,pathlib,socket,sys
 p=pathlib.Path(sys.argv[1]); out=pathlib.Path(sys.argv[2]); port=int(sys.argv[3])
