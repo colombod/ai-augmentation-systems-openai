@@ -631,6 +631,7 @@ class NativeDiscoveryTests(unittest.TestCase):
     def page(self):
         return {'data':[{'name':'delivery_publication','toolsError':None,
             'serverInfo':{'name':'delivery-local-publication'}, 'runtimeStatus':None,
+            'serverCapabilities':{'tools':{}},
             'tools':{name:{'name':name} for name in module.PUBLICATION_TOOLS},
             'resources':[], 'resourceTemplates':[]}], 'nextCursor':None}
 
@@ -641,6 +642,9 @@ class NativeDiscoveryTests(unittest.TestCase):
         cases = []
         for key,value in [('toolsError','startup failed'),('serverInfo',None),
                           ('runtimeStatus','failed'),('resources',[{'uri':'private'}]),
+                          ('serverCapabilities',None),('serverCapabilities',{}),
+                          ('serverCapabilities',{'tools':{},'resources':{}}),
+                          ('serverCapabilities',{'tools':{},'prompts':{}}),
                           ('resourceTemplates',[{}]),('name','other')]:
             page = copy.deepcopy(good); page['data'][0][key] = value; cases.append(page)
         for names in [[], sorted(module.PUBLICATION_TOOLS)[:-1],
@@ -701,11 +705,15 @@ class NativeDiscoveryTests(unittest.TestCase):
 
     def test_reconnect_uses_distinct_config_homes_and_preserves_fixture(self):
         import tempfile,json,types
-        calls=[];homes=[];closed=[]
+        calls=[];homes=[];closed=[];status_requests=[]
         page=self.page()
         class Server:
             def __init__(self,argv,env,cwd):homes.append(env['CODEX_HOME'])
-            def call(self,name,params):return page if name=='mcpServerStatus/list' else {}
+            def call(self,name,params):
+                if name=='mcpServerStatus/list':
+                    status_requests.append(params)
+                    return page
+                return {}
             def send(self,value):pass
             def close(self):closed.append(True)
         def run(argv,env,cwd,input_text=None):
@@ -718,6 +726,7 @@ class NativeDiscoveryTests(unittest.TestCase):
             with patch.object(module,'run',side_effect=run),patch.object(module,'RPC',Server):
                 self.assertEqual(module.native_discovery_checks('codex',package,trusted,base,{},['sandbox'],base),1)
             self.assertEqual(len(set(homes)),2);self.assertEqual(len(closed),2)
+            self.assertEqual(status_requests,[{'cursor':None,'limit':100,'detail':'full'}]*2)
             self.assertEqual(sum('--initialize' in args for args in calls),1)
             for home in homes:
                 self.assertTrue((Path(home)/'config.toml').is_file())

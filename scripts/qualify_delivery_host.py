@@ -302,6 +302,12 @@ def require_publication_inventory(page):
             and all(isinstance(tool, dict) and tool.get('name') == name
                     for name, tool in row['tools'].items()), 'mcp-tool-set-mismatch')
     require(row.get('runtimeStatus') in (None, 'connected'), 'mcp-not-connected')
+    # Full inventory may suppress individual resource-list errors. Require the
+    # live server to advertise only tools as well, so [] is not absence proof
+    # for a server advertising resources whose listing failed.
+    capabilities = row.get('serverCapabilities')
+    require(isinstance(capabilities, dict) and set(capabilities) == {'tools'}
+            and isinstance(capabilities['tools'], dict), 'mcp-unexpected-capabilities')
     require(row.get('resources') == [] and row.get('resourceTemplates') == [],
             'mcp-unexpected-resources')
     return len(rows)
@@ -367,7 +373,7 @@ def native_discovery_checks(codex, package, trusted, base, env, sandbox_prefix, 
                                       'capabilities': {'experimentalApi':True}})
             server.send({'method':'initialized'})
             count = require_publication_inventory(server.call('mcpServerStatus/list', {
-                'cursor':None, 'limit':100, 'detail':'toolsAndAuthOnly'}))
+                'cursor':None, 'limit':100, 'detail':'full'}))
         finally:
             server.close()
         require(protected_snapshot(fixtures) == before, 'mcp-fixture-changed')
