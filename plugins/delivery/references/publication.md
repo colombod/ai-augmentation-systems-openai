@@ -181,3 +181,52 @@ message overhead. SQLite uses the trusted host wall clock; rollback before revie
 issuance blocks, but this is not an independent secure-time source. Preserve the
 ledger for recovery. Do not replace it to retry an uncertain operation. This
 bounded local component does not provide automated archive rotation.
+
+
+### Setup for a dedicated configuration home
+
+On a POSIX host with Python 3.10+, the trusted operator can use
+`scripts/publication_setup.py` instead of hand-editing the MCP configuration.
+It operates only on a dedicated home, not your default `~/.codex`. Keep the
+planning receipt and destination binding private. The ledger must already be owner-only readable/writable,
+initialized and registered through the trusted control interface above; setup
+never initializes, resets, registers or approves a release.
+
+Save the verified binding object from the trusted `binding` control response,
+including its generation, in a private JSON file. Then plan the exact change:
+
+```sh
+python3 /absolute/plugin/scripts/publication_setup.py plan --home /private/dedicated-codex --ledger /private/bundles.sqlite --worker /absolute/workspace --binding /private/binding.json > /private/setup-plan.json
+```
+
+After reviewing that plan and authorizing the specific configuration change,
+use its `sha256` value for each operation:
+
+```sh
+python3 /absolute/plugin/scripts/publication_setup.py enable --plan /private/setup-plan.json --expected-sha256 PLAN_SHA256
+python3 /absolute/plugin/scripts/publication_setup.py status --plan /private/setup-plan.json --expected-sha256 PLAN_SHA256
+python3 /absolute/plugin/scripts/publication_setup.py disable --plan /private/setup-plan.json --expected-sha256 PLAN_SHA256
+```
+
+Enable writes the managed receipt and configuration, starts no runtime and copies
+no credentials. Select that home explicitly in your separately authorized local
+Codex invocation. Repeated enable is idempotent; after interruption, use status
+and the same exact plan. A failed mutation reports `reconcile_required: true`;
+it does not promise that no configuration changed. Disable turns off this registration while preserving the
+ledger, receipt and unrelated runtime data. Unknown existing configuration or
+changed code, destination, ledger/worker/home identity, ancestor directories, receipt or configuration refuses
+rather than overwriting or silently rebinding. Disable remains available after
+ledger/code drift when the managed receipt and configuration are intact. If interrupted before the first receipt, an existing empty home is not adopted
+using an absent-home plan: inspect it and generate a new plan explicitly. Once
+a receipt exists, recovery verifies its recorded home identity before resuming.
+Source upgrades or destination changes need a new explicitly reviewed plan and
+a new dedicated home. An existing receipt is immutable and cannot be rebound
+by a new plan. Retain the old home and ledger; never delete data to force reuse.
+
+Every result says `host_protected_ready: false`. The generated ordinary settings
+reduce known capabilities but are not managed security policy and do not exclude
+all host-injected tools or higher-priority configuration. A dedicated directory
+and cooperative setup lock do not isolate malicious same-user host processes.
+Actual protected actor use requires a separately established host boundary;
+configuration success or three discovered tools does not establish it. Do not
+use setup to change real settings without specific action-time consent.
