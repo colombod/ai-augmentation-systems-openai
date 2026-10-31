@@ -85,36 +85,64 @@ def installed_files():
     return [root / name for name in ('publication_setup.py', 'publication_service.py', 'publication.py')]
 
 
-def bound_spec(home, ledger, worker, expected):
+def program_snapshot():
+    sources, identities = {}, {}
+    for file in installed_files():
+        path = path_checked(str(file))
+        before = identity(path)
+        sources[str(path)] = read(path)
+        require(identity(path) == before)
+        identities[str(path)] = before
+    python = path_checked(str(Path(sys.executable).resolve(strict=True)))
+    before = identity(python)
+    hasher = hashlib.sha256()
+    with python.open('rb') as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b''):
+            hasher.update(chunk)
+    require(identity(python) == before)
+    return {'python':str(python), 'python_identity':before,
+            'python_sha256':hasher.hexdigest(), 'file_identities':identities,
+            'files':{name:digest(raw) for name, raw in sources.items()}}, sources
+
+
+def bound_spec(home, ledger, worker, expected, recorded=None):
+    programs, sources = program_snapshot()
+    if recorded is not None:
+        # No service import or ledger access precedes this comparison.
+        require(all(recorded[key] == value for key, value in programs.items()))
     home = path_checked(home, directory=True) if Path(home).exists() else path_checked(home, exists=False)
+    require(home != (Path.home() / '.codex').resolve(strict=False))
     ledger = path_checked(ledger)
     ledger_info = ledger.stat()
     require(ledger_info.st_uid == os.getuid() and not ledger_info.st_mode & 0o077)
     worker = path_checked(worker, directory=True)
-    require(home != Path.home() / '.codex')
     require(type(expected) is dict and type(expected.get('destination')) is str)
     files = installed_files()
-    python = Path(sys.executable).resolve(strict=True)
     for root in (home, ledger.parent, files[0].parent):
         require(not worker.is_relative_to(root) and not root.is_relative_to(worker))
     require(not ledger.is_relative_to(home))
     before = identity(ledger)
-    from publication_service import PublicationStore
-    store = PublicationStore(ledger)
+    spec = {'home':str(home), 'ledger':str(ledger), 'worker':str(worker),
+            'binding':expected, 'ledger_identity':before, 'ledger_ancestors':ancestors(ledger),
+            'worker_identity':identity(worker), 'worker_ancestors':ancestors(worker),
+            'home_identity':identity(home) if home.exists() else None,
+            'home_ancestors':ancestors(home), **programs}
+    if recorded is not None:
+        require(spec == recorded)
+    # Execute only the captured, checked bytes, never an unchecked .pyc cache or
+    # a second import-time read. The operator still owns code/startup isolation.
+    service = str(files[1])
+    namespace = {'__name__':'delivery_setup_service', '__file__':service}
+    exec(compile(sources[service], service, 'exec'), namespace)
+    store = namespace['PublicationStore'](ledger)
     try:
         actual = store.control({'action':'binding', 'destination':expected['destination']})
         require(actual.get('status') == 'verified' and actual.get('binding') == expected)
     finally:
         store.close()
     require(identity(ledger) == before)
-    return {'home':str(home), 'ledger':str(ledger), 'worker':str(worker),
-            'binding':expected, 'ledger_identity':before, 'ledger_ancestors':ancestors(ledger),
-            'python':str(python),
-            'worker_identity':identity(worker), 'worker_ancestors':ancestors(worker),
-            'home_identity':identity(home) if home.exists() else None,
-            'home_ancestors':ancestors(home),
-            'python_identity':identity(python),
-            'files':{str(f):digest(read(path_checked(str(f)))) for f in files}}
+    require(program_snapshot()[0] == programs)
+    return spec
 
 
 def configuration(spec, enabled=True):
@@ -151,10 +179,11 @@ def validate_plan(value, expected_digest):
     require(value['sha256'] == expected_digest == digest(canonical(value['spec']).encode()))
     spec = value['spec']
     require(type(spec) is dict and set(spec) == {'home','ledger','worker','binding','ledger_identity','python','python_identity','files',
-            'worker_identity','worker_ancestors','home_identity','home_ancestors','ledger_ancestors'})
+            'worker_identity','worker_ancestors','home_identity','home_ancestors','ledger_ancestors',
+            'file_identities','python_sha256'})
     # The executable and script paths cannot be supplied independently of this
     # installed helper. Receipt validation alone grants no publication authority.
-    require(set(spec['files']) == {str(p) for p in installed_files()})
+    require(set(spec['files']) == set(spec['file_identities']) == {str(p) for p in installed_files()})
     require(spec['python'] == str(Path(sys.executable).resolve(strict=True)))
     return spec
 
@@ -228,7 +257,7 @@ def operate(action, value, expected_digest):
     created = False
     if not home.exists():
         require(action == 'enable' and spec['home_identity'] is None)
-        require(bound_spec(spec['home'],spec['ledger'],spec['worker'],spec['binding']) == spec)
+        require(bound_spec(spec['home'],spec['ledger'],spec['worker'],spec['binding'],spec) == spec)
         path_checked(str(home), exists=False)
         home.mkdir(mode=0o700)
         created = True
@@ -252,13 +281,13 @@ def operate(action, value, expected_digest):
         else:
             require(action == 'enable' and not receipt.is_symlink())
             require(set(p.name for p in home.iterdir()) == {'.delivery-setup.lock'})
-            require(bound_spec(spec['home'],spec['ledger'],spec['worker'],spec['binding']) == current_spec)
+            require(bound_spec(spec['home'],spec['ledger'],spec['worker'],spec['binding'],current_spec) == current_spec)
             create(receipt, raw_receipt)
             sync_directory(home)
             sync_directory(home.parent)
         current = read_config(home, spec)
         if action != 'disable':
-            require(bound_spec(spec['home'],spec['ledger'],spec['worker'],spec['binding']) == current_spec)
+            require(bound_spec(spec['home'],spec['ledger'],spec['worker'],spec['binding'],current_spec) == current_spec)
         if action in ('enable','disable'):
             desired = configuration(spec, action == 'enable')
             if current != desired:
@@ -268,7 +297,7 @@ def operate(action, value, expected_digest):
         require(read(path_checked(str(receipt))) == raw_receipt)
         require(identity(home) == home_id and ancestors(home) == spec['home_ancestors'])
         if action != 'disable':
-            require(bound_spec(spec['home'],spec['ledger'],spec['worker'],spec['binding']) == current_spec)
+            require(bound_spec(spec['home'],spec['ledger'],spec['worker'],spec['binding'],current_spec) == current_spec)
         require(current is not None)
         return {'status':'configured' if current == configuration(spec,True) else 'disabled',
                 'host_protected_ready':False, 'plan_sha256':expected_digest}

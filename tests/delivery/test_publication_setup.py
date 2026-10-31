@@ -116,11 +116,11 @@ class SetupTests(unittest.TestCase):
     def test_disable_survives_missing_or_invalid_service_without_reset(self):
         self.make_plan();self.action('enable')
         receipt=(self.home/'delivery-setup.json').read_bytes()
-        self.service.unlink()
+        saved_service=self.package/'saved-service.py';self.service.rename(saved_service)
         for action in ('enable','status'):self.action(action,ok=False)
         self.assertEqual(self.action('disable')['status'],'disabled')
         self.assertEqual(self.action('disable')['status'],'disabled')
-        self.service.write_bytes((SOURCE/'publication_service.py').read_bytes())
+        saved_service.rename(self.service)
         self.action('enable')
         self.service.write_text('SYNTHETIC invalid Python !')
         for action in ('enable','status'):self.action(action,ok=False)
@@ -178,6 +178,84 @@ class SetupTests(unittest.TestCase):
                 for item in directory.iterdir():item.rename(saved/item.name)
                 directory.rmdir();saved.rename(directory)
                 self.action('enable')
+
+    def test_changed_service_cannot_execute_before_drift_refusal(self):
+        self.make_plan();self.action('enable')
+        marker=self.trusted/'import-side-effect'
+        config=(self.home/'config.toml').read_bytes();receipt=(self.home/'delivery-setup.json').read_bytes()
+        self.service.write_text(self.service.read_text()+
+            '\nfrom pathlib import Path as FixturePath\nFixturePath('+repr(str(marker))+').write_text("SYNTHETIC")\n'+
+            'import sqlite3 as fixture_sqlite\nfixture_db=fixture_sqlite.connect('+repr(str(self.db))+')\n'+
+            'fixture_db.execute("DELETE FROM routes")\nfixture_db.commit()\nfixture_db.close()\n')
+        for action in ('enable','status'):
+            self.action(action,ok=False)
+            self.assertFalse(marker.exists())
+            self.assertEqual(self.db.read_bytes(),self.original)
+            self.assertEqual((self.home/'config.toml').read_bytes(),config)
+            self.assertEqual((self.home/'delivery-setup.json').read_bytes(),receipt)
+        self.action('disable');self.assertFalse(marker.exists())
+        self.assertEqual(self.db.read_bytes(),self.original)
+
+    def test_preflight_checks_program_fields_before_any_service_execution(self):
+        marker=self.trusted/'import-side-effect'
+        self.service.write_text(self.service.read_text()+
+            '\nfrom pathlib import Path as FixturePath\nFixturePath('+repr(str(marker))+').write_text("SYNTHETIC")\n')
+        value=self.make_plan();self.assertTrue(marker.exists());marker.unlink()
+        # Digest-bound plans are edited only as fabricated invalid fixtures.
+        # With no home, refusal must happen before creation and before service execution.
+        for field in ('python_identity','python_sha256','file_identities','files'):
+            changed=json.loads(json.dumps(value))
+            if field=='python_identity':changed['spec'][field][1]+=1
+            elif field=='python_sha256':changed['spec'][field]='0'*64
+            elif field=='file_identities':changed['spec'][field][str(self.service)][1]+=1
+            else:changed['spec'][field][str(self.service)]='0'*64
+            changed['sha256']=hashlib.sha256(json.dumps(changed['spec'],sort_keys=True,
+                separators=(',',':'),ensure_ascii=True).encode()).hexdigest()
+            self.plan_path.write_text(json.dumps(changed))
+            self.action('enable',ok=False,digest=changed['sha256'])
+            self.assertFalse(marker.exists());self.assertFalse(self.home.exists())
+            self.assertEqual(self.db.read_bytes(),self.original)
+
+    def test_identical_source_replacement_refuses_before_home_creation(self):
+        self.make_plan()
+        original=self.package/'publication.py'
+        replacement=self.package/'replacement.py';replacement.write_bytes(original.read_bytes())
+        replacement.replace(original)
+        self.action('enable',ok=False)
+        self.assertFalse(self.home.exists());self.assertEqual(self.db.read_bytes(),self.original)
+
+    def test_unchecked_bytecode_cache_cannot_replace_verified_source(self):
+        import py_compile
+        self.make_plan();self.action('enable')
+        original=self.service.read_bytes();marker=self.trusted/'cache-side-effect'
+        self.service.write_text('from pathlib import Path\nPath('+repr(str(marker))+').write_text("SYNTHETIC")\n')
+        py_compile.compile(str(self.service),doraise=True,invalidation_mode=py_compile.PycInvalidationMode.UNCHECKED_HASH)
+        self.service.write_bytes(original)
+        baseline=subprocess.run([sys.executable,'-B','-c','import publication_service'],cwd=self.package,
+                                capture_output=True,text=True,timeout=5)
+        self.assertEqual(baseline.returncode,0);self.assertTrue(marker.exists());marker.unlink()
+        for action in ('enable','status'):
+            self.action(action);self.assertFalse(marker.exists())
+            self.assertEqual(self.db.read_bytes(),self.original)
+
+    def test_canonical_default_home_is_refused_for_home_aliases(self):
+        actual=self.base/'fabricated-home';actual.mkdir(mode=0o700)
+        alias=self.base/'fabricated-alias';alias.symlink_to(actual,target_is_directory=True)
+        default=actual/'.codex'
+        for preexisting in (False,True):
+            if preexisting:default.mkdir(mode=0o700)
+            for environment_home in (actual,alias):
+                for chosen in (str(default),str(alias/'.codex'),str(default)+'/../.codex',
+                               str(actual)+'/./.codex'):
+                    result=subprocess.run([sys.executable,'-B',str(self.helper),'plan','--home',chosen,
+                        '--ledger',str(self.db),'--worker',str(self.worker),'--binding',str(self.binding_path)],
+                        env={**os.environ,'HOME':str(environment_home)},capture_output=True,text=True,timeout=5)
+                    self.assertEqual(result.returncode,2,(chosen,result.stdout,result.stderr))
+                    self.assertEqual(json.loads(result.stdout)['status'],'unavailable-or-drifted')
+                    self.assertFalse((default/'config.toml').exists())
+            self.assertEqual(default.exists(),preexisting)
+        self.assertEqual(list(default.iterdir()),[])
+        self.assertEqual(self.db.read_bytes(),self.original)
 
     def test_replaced_ledger_and_stale_digest_refuse(self):
         self.make_plan();self.action('enable',ok=False,digest='0'*64)
