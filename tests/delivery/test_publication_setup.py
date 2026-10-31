@@ -492,6 +492,129 @@ class SetupTests(unittest.TestCase):
         self.action('enable',ok=False)
         self.assertFalse(self.home.exists());self.assertEqual(self.db.read_bytes(),changed)
 
+    def traced_action(self, action, fail=None):
+        trace=self.base/'sync-trace.jsonl';trace.unlink(missing_ok=True)
+        wrapper='''import os,sys,runpy,json
+real_sync=os.fsync
+def sync(fd):
+ info=os.fstat(fd);label='other'
+ for name,path in TARGETS.items():
+  try:target=os.stat(path)
+  except FileNotFoundError:continue
+  if (info.st_dev,info.st_ino)==(target.st_dev,target.st_ino):label=name;break
+ with open(TRACE,'a') as stream:stream.write(json.dumps(label)+'\\n')
+ if label==FAIL:raise OSError('synthetic sync failure')
+ real_sync(fd)
+os.fsync=sync
+sys.argv=ARGV
+runpy.run_path(sys.argv[0],run_name='__main__')
+'''
+        wrapper=wrapper.replace('TARGETS',repr({'receipt':str(self.home/'delivery-setup.json'),
+            'config':str(self.home/'config.toml'),'home':str(self.home),'parent':str(self.home.parent)}))
+        wrapper=wrapper.replace('TRACE',repr(str(trace))).replace('FAIL',repr(fail)).replace('ARGV',repr([
+            str(self.helper),action,'--plan',str(self.plan_path),'--expected-sha256',self.digest]))
+        result=subprocess.run([sys.executable,'-B','-c',wrapper],capture_output=True,text=True,timeout=5)
+        self.assertEqual(result.returncode,2 if fail else 0,(result.stdout,result.stderr))
+        return json.loads(result.stdout),[json.loads(line) for line in trace.read_text().splitlines()] if trace.exists() else []
+
+    def test_interrupted_lifecycle_sync_failures_refuse_and_retry_completes_barriers(self):
+        for target in (1,2):
+            for point in ('staged','synced','linked'):
+                for failure in ('receipt','config','home','parent'):
+                    with self.subTest(target=target,point=point,failure=failure):
+                        case=SetupTests();case.setUp()
+                        try:
+                            case.make_plan();case.crash_enable(target,point)
+                            old_home=case.home
+                            leftovers={p:p.read_bytes() for p in old_home.glob('.delivery-write-*')}
+                            if target==1 and point!='linked':
+                                value=case.cli('plan','--fresh-home','--home',old_home,'--ledger',case.db,
+                                               '--worker',case.worker,'--binding',case.binding_path)
+                                case.home=Path(value['spec']['home']);case.plan_path.write_text(json.dumps(value));case.digest=value['sha256']
+                            result,trace=case.traced_action('enable',failure)
+                            self.assertEqual(result['status'],'unavailable-or-drifted')
+                            self.assertTrue(result['reconcile_required']);self.assertNotIn('durability',result)
+                            self.assertIn(failure,trace)
+                            saved={p:p.read_bytes() for p in (case.home/'config.toml',case.home/'delivery-setup.json') if p.exists()}
+                            result,trace=case.traced_action('enable')
+                            self.assertEqual(result['durability'],'synced')
+                            self.assertEqual(trace[-4:],['receipt','config','home','parent'])
+                            for path,raw in {**leftovers,**saved}.items():self.assertEqual(path.read_bytes(),raw)
+                            self.assertEqual(case.db.read_bytes(),case.original)
+                        finally:case.doCleanups()
+
+    def test_disable_sync_failures_and_matching_retries_preserve_data(self):
+        for already_disabled in (False,True):
+            for failure in ('receipt','config','home','parent'):
+                with self.subTest(already_disabled=already_disabled,failure=failure):
+                    case=SetupTests();case.setUp()
+                    try:
+                        case.make_plan();case.action('enable')
+                        if already_disabled:case.action('disable')
+                        receipt=(case.home/'delivery-setup.json').read_bytes()
+                        result,trace=case.traced_action('disable',failure)
+                        self.assertTrue(result['reconcile_required']);self.assertNotIn('durability',result)
+                        config=(case.home/'config.toml').read_bytes()
+                        result,trace=case.traced_action('disable')
+                        self.assertEqual(result['status'],'disabled');self.assertEqual(result['durability'],'synced')
+                        self.assertEqual(trace[-4:],['receipt','config','home','parent'])
+                        self.assertEqual((case.home/'config.toml').read_bytes(),config)
+                        self.assertEqual((case.home/'delivery-setup.json').read_bytes(),receipt)
+                        self.assertEqual(case.db.read_bytes(),case.original)
+                    finally:case.doCleanups()
+
+    def test_staging_file_sync_failure_preserves_data_and_can_be_replanned(self):
+        for phase in ('receipt','config','replacement'):
+            with self.subTest(phase=phase):
+                case=SetupTests();case.setUp()
+                try:
+                    case.make_plan()
+                    if phase=='config':case.crash_enable(1,'linked')
+                    elif phase=='replacement':case.action('enable')
+                    before={p:p.read_bytes() for p in case.home.iterdir()} if case.home.exists() else {}
+                    action='disable' if phase=='replacement' else 'enable'
+                    result,trace=case.traced_action(action,'other')
+                    self.assertTrue(result['reconcile_required']);self.assertNotIn('durability',result)
+                    for path,raw in before.items():self.assertEqual(path.read_bytes(),raw)
+                    if phase=='receipt':case.make_plan()  # Explicitly adopt only the empty home.
+                    result,trace=case.traced_action(action)
+                    self.assertEqual(result['durability'],'synced')
+                    self.assertEqual(trace[-4:],['receipt','config','home','parent'])
+                    self.assertEqual(case.db.read_bytes(),case.original)
+                finally:case.doCleanups()
+
+    def test_interrupted_config_replacement_retry_finishes_durability(self):
+        self.make_plan();self.action('enable')
+        receipt=(self.home/'delivery-setup.json').read_bytes()
+        for action in ('disable','enable'):
+            wrapper="import os,sys,runpy\nreal=os.replace\ndef replace(*args,**kwargs):\n real(*args,**kwargs);os._exit(97)\nos.replace=replace\nsys.argv=ARGV\nrunpy.run_path(sys.argv[0],run_name='__main__')\n"
+            wrapper=wrapper.replace('ARGV',repr([str(self.helper),action,'--plan',str(self.plan_path),
+                                               '--expected-sha256',self.digest]))
+            result=subprocess.run([sys.executable,'-B','-c',wrapper],capture_output=True,text=True,timeout=5)
+            self.assertEqual(result.returncode,97,(result.stdout,result.stderr))
+            config=self.home/'config.toml';before=(config.stat().st_ino,config.read_bytes())
+            result,trace=self.traced_action(action,'parent')
+            self.assertTrue(result['reconcile_required'])
+            result,trace=self.traced_action(action)
+            self.assertEqual(result['durability'],'synced')
+            self.assertEqual(trace[-4:],['receipt','config','home','parent'])
+            self.assertEqual((config.stat().st_ino,config.read_bytes()),before)
+            self.assertEqual((self.home/'delivery-setup.json').read_bytes(),receipt)
+            self.assertEqual(self.db.read_bytes(),self.original)
+
+    def test_status_observes_without_certifying_or_performing_sync(self):
+        self.make_plan();self.action('enable')
+        before={p.name:(p.stat().st_ino,p.read_bytes()) for p in self.home.iterdir()}
+        result,trace=self.traced_action('status')
+        self.assertEqual(result['status'],'configured');self.assertEqual(result['durability'],'not-checked')
+        self.assertEqual(trace,[])
+        self.assertEqual({p.name:(p.stat().st_ino,p.read_bytes()) for p in self.home.iterdir()},before)
+        self.assertEqual(self.db.read_bytes(),self.original)
+        # Idempotent successful mutation must perform barriers, unlike status.
+        result,trace=self.traced_action('enable')
+        self.assertEqual(result['durability'],'synced')
+        self.assertEqual(trace[-4:],['receipt','config','home','parent'])
+
     def crash_enable(self, target, point):
         wrapper = '''import os,sys,runpy,tempfile
 real_temp,real_sync,real_link=tempfile.mkstemp,os.fsync,os.link

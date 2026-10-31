@@ -221,7 +221,12 @@ Enable writes the managed receipt and configuration, starts no runtime and copie
 no credentials. Select that home explicitly in your separately authorized local
 Codex invocation. Repeated enable is idempotent; after interruption, use status
 and the same exact plan. A failed mutation reports `reconcile_required: true`;
-it does not promise that no configuration changed. Disable changes this registration
+it does not promise that no configuration changed. Successful enable/disable
+results report `durability: synced` only after syncing the validated receipt and
+configuration files, home directory and parent directory, including matching-byte
+retries. Sync failure requires reconciliation; retry completes these barriers.
+Status reports `durability: not-checked`: it observes configuration without
+certifying or completing those barriers. This is not a physical power-loss test. Disable changes this registration
 for a fresh runtime start while preserving ledger, receipt and unrelated data.
 It does not revoke an already-running MCP process; stop that runtime separately
 before relying on the disabled configuration. Unknown existing configuration or

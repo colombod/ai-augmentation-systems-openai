@@ -430,8 +430,26 @@ def operate(action, value, expected_digest):
         if action != 'disable':
             require(bound_spec(spec['home'],spec['ledger'],spec['worker'],spec['binding'],current_spec) == current_spec)
         require(current is not None)
-        return {'status':'configured' if current == configuration(spec,True) else 'disabled',
+        if action in ('enable','disable'):
+            # A prior invocation may have linked/replaced files and died before
+            # directory sync. Matching bytes alone do not complete durability.
+            sync_file(receipt, raw_receipt)
+            sync_file(home / 'config.toml', current)
+            sync_directory(home)
+            sync_directory(home.parent)
+            require(identity(home) == home_id and ancestors(home) == spec['home_ancestors'])
+        return {'durability':'synced' if action in ('enable','disable') else 'not-checked',
+                'status':'configured' if current == configuration(spec,True) else 'disabled',
                 'host_protected_ready':False, 'plan_sha256':expected_digest}
+
+
+def sync_file(path, expected):
+    fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW)
+    with os.fdopen(fd, 'rb') as stream:
+        info = os.fstat(stream.fileno())
+        require(stat.S_ISREG(info.st_mode) and stream.read(LIMIT + 1) == expected)
+        os.fsync(stream.fileno())
+        require(identity(path_checked(str(path))) == [info.st_dev, info.st_ino])
 
 
 def sync_directory(path):
