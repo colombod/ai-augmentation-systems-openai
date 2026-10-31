@@ -5,6 +5,8 @@ on:
     types: [opened, synchronize, reopened]
     paths:
       - 'scripts/qualify_delivery_host.py'
+      - 'scripts/qualify_delivery_protocol.py'
+      - 'tests/test_qualify_delivery_protocol.py'
       - '.github/workflows/delivery-qualification.yml'
       - 'tests/test_qualify_delivery_host.py'
       - 'plugins/delivery/**'
@@ -29,4 +31,5 @@ jobs:
           set -euo pipefail
           delivery_cli_prefix="$(mktemp -d)"
           npm install --prefix "$delivery_cli_prefix" --ignore-scripts --no-audit --no-fund @openai/codex@0.163.0
+          python3 scripts/qualify_delivery_protocol.py --clean-runner --codex "$delivery_cli_prefix/node_modules/.bin/codex" --package-root "$GITHUB_WORKSPACE" --evidence "$RUNNER_TEMP/delivery-protocol-evidence"
           python3 scripts/qualify_delivery_host.py --clean-runner --codex "$delivery_cli_prefix/node_modules/.bin/codex" --package-root "$GITHUB_WORKSPACE"
