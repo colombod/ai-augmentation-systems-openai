@@ -361,9 +361,10 @@ def sandbox_checks(codex, base, env, actual_home):
     code = '''import pathlib,socket,sys
 p=pathlib.Path(sys.argv[1]); out=pathlib.Path(sys.argv[2]); port=int(sys.argv[3])
 out.write_text('synthetic worker write')
-for action in (lambda:p.read_bytes(),lambda:p.write_text('changed'),lambda:pathlib.Path('/proc/self/environ').read_bytes(),lambda:socket.create_connection(('127.0.0.1',port),timeout=2)):
+for label,action in (('control-read',lambda:p.read_bytes()),('control-write',lambda:p.write_text('changed')),('proc-read',lambda:pathlib.Path('/proc/self/environ').read_bytes()),('network-connect',lambda:socket.create_connection(('127.0.0.1',port),timeout=2))):
  try: action()
  except (OSError,PermissionError): continue
+ print('unexpected-route-success:'+label,file=sys.stderr)
  raise SystemExit(9)
 print('restricted-routes-passed')
 '''

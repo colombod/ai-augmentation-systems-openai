@@ -13,6 +13,43 @@ spec.loader.exec_module(module)
 
 
 class ProfileTests(unittest.TestCase):
+    def test_fixed_probe_identifies_each_unexpected_success_without_payload(self):
+        import ast
+        from contextlib import redirect_stdout, redirect_stderr
+        tree = ast.parse(PATH.read_text())
+        function = next(node for node in tree.body if isinstance(node,ast.FunctionDef)
+                        and node.name == 'sandbox_checks')
+        code = next(node.value.value for node in ast.walk(function)
+                    if isinstance(node,ast.Assign) and any(isinstance(t,ast.Name)
+                    and t.id == 'code' for t in node.targets))
+        labels = ('control-read','control-write','proc-read','network-connect')
+        for allowed in (*labels, None):
+            with self.subTest(allowed=allowed):
+                def action(label):
+                    if label != allowed:
+                        raise PermissionError('SYNTHETIC PRIVATE DIAGNOSTIC')
+                    return b'SYNTHETIC PRIVATE PAYLOAD'
+                class FakePath:
+                    def __init__(self,name): self.name = name
+                    def read_bytes(self):
+                        return action('proc-read' if self.name.startswith('/proc/') else 'control-read')
+                    def write_text(self,value):
+                        return None if self.name == '/synthetic/result' else action('control-write')
+                stdout,stderr = io.StringIO(),io.StringIO()
+                with patch('sys.argv',['probe','/synthetic/control','/synthetic/result','12345']), \
+                     patch('pathlib.Path',FakePath), \
+                     patch('socket.create_connection',side_effect=lambda *a,**k:action('network-connect')), \
+                     redirect_stdout(stdout), redirect_stderr(stderr):
+                    if allowed is None:
+                        exec(code,{})
+                    else:
+                        with self.assertRaises(SystemExit) as raised:
+                            exec(code,{})
+                        self.assertEqual(raised.exception.code,9)
+                self.assertEqual(stderr.getvalue(),'' if allowed is None else
+                                 'unexpected-route-success:'+allowed+'\n')
+                self.assertEqual(stdout.getvalue(),'restricted-routes-passed\n' if allowed is None else '')
+
     def test_native_grant_cannot_override_protected_or_worker_roots(self):
         worker,trusted,home = Path('/tmp/worker'),Path('/tmp/trusted'),Path('/home/example')
         for native in (worker/'codex',trusted/'codex',home/'.codex/codex',Path('/proc/native')):
