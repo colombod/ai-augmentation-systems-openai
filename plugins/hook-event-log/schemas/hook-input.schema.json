@@ -1,0 +1,405 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ai-augmentation-systems-openai:hook-event-log:hook-input:1",
+  "title": "Documented Codex hook input profile",
+  "description": "Package-maintained documentation profile, not an official strict wire schema or runtime validator. Only routing fields required here; other documented fields are typed when present. Unknown fields are permitted. Optional in this profile does not establish official protocol optionalness.",
+  "x-source": "https://learn.chatgpt.com/docs/hooks",
+  "x-checked-date": "2026-10-21",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/SessionStart"
+    },
+    {
+      "$ref": "#/$defs/SessionEnd"
+    },
+    {
+      "$ref": "#/$defs/UserPromptSubmit"
+    },
+    {
+      "$ref": "#/$defs/PreToolUse"
+    },
+    {
+      "$ref": "#/$defs/PostToolUse"
+    },
+    {
+      "$ref": "#/$defs/PermissionRequest"
+    },
+    {
+      "$ref": "#/$defs/SubagentStart"
+    },
+    {
+      "$ref": "#/$defs/SubagentStop"
+    },
+    {
+      "$ref": "#/$defs/PreCompact"
+    },
+    {
+      "$ref": "#/$defs/PostCompact"
+    },
+    {
+      "$ref": "#/$defs/Stop"
+    },
+    {
+      "$ref": "#/$defs/Interrupt"
+    }
+  ],
+  "$defs": {
+    "permissionMode": {
+      "enum": [
+        "default",
+        "acceptEdits",
+        "plan",
+        "dontAsk",
+        "bypassPermissions"
+      ]
+    },
+    "common": {
+      "type": "object",
+      "required": [
+        "session_id",
+        "hook_event_name"
+      ],
+      "properties": {
+        "session_id": {
+          "type": "string"
+        },
+        "hook_event_name": {
+          "enum": [
+            "SessionStart",
+            "SessionEnd",
+            "UserPromptSubmit",
+            "PreToolUse",
+            "PostToolUse",
+            "PermissionRequest",
+            "SubagentStart",
+            "SubagentStop",
+            "PreCompact",
+            "PostCompact",
+            "Stop",
+            "Interrupt"
+          ]
+        },
+        "transcript_path": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "cwd": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "SessionStart": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "properties": {
+            "source": {
+              "enum": [
+                "startup",
+                "resume",
+                "clear",
+                "compact",
+                "fork"
+              ]
+            },
+            "permission_mode": {
+              "$ref": "#/$defs/permissionMode"
+            },
+            "hook_event_name": {
+              "const": "SessionStart"
+            }
+          }
+        }
+      ]
+    },
+    "SessionEnd": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "properties": {
+            "reason": {
+              "const": "other"
+            },
+            "hook_event_name": {
+              "const": "SessionEnd"
+            }
+          }
+        }
+      ]
+    },
+    "UserPromptSubmit": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "properties": {
+            "turn_id": {
+              "type": "string"
+            },
+            "prompt": {
+              "type": "string"
+            },
+            "permission_mode": {
+              "$ref": "#/$defs/permissionMode"
+            },
+            "hook_event_name": {
+              "const": "UserPromptSubmit"
+            }
+          }
+        }
+      ]
+    },
+    "PreToolUse": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "properties": {
+            "turn_id": {
+              "type": "string"
+            },
+            "tool_name": {
+              "type": "string"
+            },
+            "tool_use_id": {
+              "type": "string"
+            },
+            "tool_input": {},
+            "permission_mode": {
+              "$ref": "#/$defs/permissionMode"
+            },
+            "hook_event_name": {
+              "const": "PreToolUse"
+            }
+          }
+        }
+      ]
+    },
+    "PostToolUse": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "properties": {
+            "turn_id": {
+              "type": "string"
+            },
+            "tool_name": {
+              "type": "string"
+            },
+            "tool_use_id": {
+              "type": "string"
+            },
+            "tool_input": {},
+            "tool_response": {},
+            "permission_mode": {
+              "$ref": "#/$defs/permissionMode"
+            },
+            "hook_event_name": {
+              "const": "PostToolUse"
+            }
+          }
+        }
+      ]
+    },
+    "PermissionRequest": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "properties": {
+            "turn_id": {
+              "type": "string"
+            },
+            "tool_name": {
+              "type": "string"
+            },
+            "tool_input": {},
+            "permission_mode": {
+              "$ref": "#/$defs/permissionMode"
+            },
+            "hook_event_name": {
+              "const": "PermissionRequest"
+            }
+          }
+        }
+      ]
+    },
+    "SubagentStart": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "properties": {
+            "turn_id": {
+              "type": "string"
+            },
+            "agent_id": {
+              "type": "string"
+            },
+            "agent_type": {
+              "type": "string"
+            },
+            "permission_mode": {
+              "$ref": "#/$defs/permissionMode"
+            },
+            "hook_event_name": {
+              "const": "SubagentStart"
+            }
+          }
+        }
+      ]
+    },
+    "SubagentStop": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "properties": {
+            "turn_id": {
+              "type": "string"
+            },
+            "agent_id": {
+              "type": "string"
+            },
+            "agent_type": {
+              "type": "string"
+            },
+            "stop_hook_active": {
+              "type": "boolean"
+            },
+            "last_assistant_message": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "agent_transcript_path": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "permission_mode": {
+              "$ref": "#/$defs/permissionMode"
+            },
+            "hook_event_name": {
+              "const": "SubagentStop"
+            }
+          }
+        }
+      ]
+    },
+    "PreCompact": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "properties": {
+            "turn_id": {
+              "type": "string"
+            },
+            "trigger": {
+              "enum": [
+                "manual",
+                "auto"
+              ]
+            },
+            "hook_event_name": {
+              "const": "PreCompact"
+            }
+          }
+        }
+      ]
+    },
+    "PostCompact": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "properties": {
+            "turn_id": {
+              "type": "string"
+            },
+            "trigger": {
+              "enum": [
+                "manual",
+                "auto"
+              ]
+            },
+            "hook_event_name": {
+              "const": "PostCompact"
+            }
+          }
+        }
+      ]
+    },
+    "Stop": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "properties": {
+            "turn_id": {
+              "type": "string"
+            },
+            "stop_hook_active": {
+              "type": "boolean"
+            },
+            "last_assistant_message": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "permission_mode": {
+              "$ref": "#/$defs/permissionMode"
+            },
+            "hook_event_name": {
+              "const": "Stop"
+            }
+          }
+        }
+      ]
+    },
+    "Interrupt": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/common"
+        },
+        {
+          "properties": {
+            "turn_id": {
+              "type": "string"
+            },
+            "permission_mode": {
+              "$ref": "#/$defs/permissionMode"
+            },
+            "hook_event_name": {
+              "const": "Interrupt"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

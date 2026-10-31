@@ -1,0 +1,1 @@
+{"name": "mechanism-probe", "version": "0.0.2", "description": "Isolated mechanism validation fixture.", "skills": "./skills/", "hooks": "./hooks/hooks.json"}

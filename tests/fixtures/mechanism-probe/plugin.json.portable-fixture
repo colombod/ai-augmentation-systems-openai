@@ -1,0 +1,11 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "mechanism-probe",
+  "version": "0.0.1",
+  "description": "Isolated validation fixture, not a delivery implementation.",
+  "extensions": {
+    "com.openai": {
+      "hooks": "./hooks/hooks.json"
+    }
+  }
+}

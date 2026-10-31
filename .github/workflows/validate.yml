@@ -1,0 +1,36 @@
+name: Validate marketplace
+on: [push, pull_request]
+jobs:
+  catalogue:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python3 -m pip install -r requirements-dev.txt
+      - run: python3 scripts/validate_marketplace.py
+      - run: python3 -m unittest discover -s tests/delivery -v
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --test tests/delivery/judge.test.js tests/delivery/openai-judge.test.js
+
+  hook-event-log:
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: plugins/hook-event-log
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts
+      - run: npm run build
+      - run: cargo test --locked --manifest-path core/Cargo.toml
+      - run: npm test

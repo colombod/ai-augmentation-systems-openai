@@ -1,0 +1,26 @@
+Delivery planning preview derives selected skills, templates and reviewer lenses
+from Diego Colombo's ai-augmentation-systems delivery plugin, version 0.30.0,
+revision df0c0a5b0dba1449b6cdfef421bfe1ebc4d658c0, under the MIT license.
+Copyright (c) 2026 Diego Colombo. See LICENSE and upstream.json.
+
+Native Codex instructions and Python helpers are new work. This package does not
+include the upstream Claude hooks, role launcher, permissions or judge runtime.
+Imported content has been adapted; it does not establish feature parity.
+
+The shared product contract adapts methods from Michael Jabbour's Worth Using,
+Market Fit, Taste × Elegance, Sizzle, Decisioncraft and Right Shape, with file-map
+freshness concepts informed by Trail-Code. Exact revisions and adaptation scope
+are recorded in upstream.json and references/product.md. Full original MIT
+notices are retained in references/sources/*-LICENSE. No external product,
+Amplifier runtime, film-production tools or symbol-graph implementation is installed
+or bundled by this adaptation.
+
+Optional Python dependency reach selectively adapts the codemap/features traversal
+design from Delivery 0.40.2, revision 369ecaffc564fc4ece470eb229d3034e81912f75.
+Copyright (c) 2026 Diego Colombo, MIT; full notice remains in LICENSE. Exact
+source hashes and the narrower adaptation scope are recorded in upstream.json.
+
+The command-evidence behavior was also informed by upstream review-run.js and
+verify-run.js at revision 3d7c69416dc7524130105c9bfe308aa01b2a26f0 (Delivery
+0.37.9). The Python implementation reuses this port's existing raw-byte gates;
+it does not import upstream hooks, permissions or role-local mailbox machinery.

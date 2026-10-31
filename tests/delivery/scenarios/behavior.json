@@ -1,0 +1,69 @@
+{
+  "evidence_status": "Prepared scenarios; live CLI runs and manual assessments are retained separately under evidence/2026-10-20/live-behavior",
+  "cases": [
+    {
+      "id": "status-without-access",
+      "skill": "status",
+      "user_request": "What is the status of checkout-redesign? No project artifacts or previous status report are supplied.",
+      "capabilities": {
+        "local_files": false,
+        "shell": false,
+        "browsing": false,
+        "connections": false,
+        "delegation": false
+      },
+      "provided_artifacts": {},
+      "acceptance": [
+        "Reports status unavailable",
+        "Requests relevant source artifacts",
+        "Does not infer a phase or task state",
+        "Does not claim helper execution, filesystem creation or server installation"
+      ]
+    },
+    {
+      "id": "brief-without-delegation-or-save",
+      "skill": "brief",
+      "user_request": "Frame checkout-redesign: phone shoppers abandon a checkout after they discover delivery costs too late. Produce a brief for this new initiative. No codebase or existing plan is supplied. Work in this chat; I cannot provide more information now.",
+      "capabilities": {
+        "local_files": false,
+        "shell": false,
+        "browsing": false,
+        "connections": false,
+        "delegation": false
+      },
+      "provided_artifacts": {},
+      "acceptance": [
+        "Returns a complete frame brief as prepared export",
+        "Uses sequential lenses and labels single-session review",
+        "Independent convergence is unavailable",
+        "Does not invent counts, prices, citations or measured word count",
+        "States open questions and does not claim canonical persistence"
+      ]
+    },
+    {
+      "id": "simulation-without-workers",
+      "skill": "simulate",
+      "user_request": "Run a simulated interview about checkout delivery costs for these personas. Use the provided brief. Work in this chat without creating files.",
+      "capabilities": {
+        "local_files": false,
+        "shell": false,
+        "browsing": false,
+        "connections": false,
+        "delegation": false
+      },
+      "provided_artifacts": {
+        ".delivery/initiatives/checkout-redesign/brief.md": "Mode: frame. Phone shoppers discover delivery costs too late in checkout. Goal: show total costs before they commit. No measured abandonment rate exists. These are supplied planning snapshots.",
+        ".delivery/personas/shopper.md": "---\nid: P-1\nname: Phone shopper\nslug: shopper\ngrounding: assumed\nstatus: active\nsource: derived\n---\nCompares the final cost of two shops on a phone. Leaves when total costs are unclear. All attributes are assumed.",
+        ".delivery/personas/skeptic.md": "---\nid: P-2\nname: Budget skeptic\nslug: skeptic\ngrounding: reported\nstatus: active\nsource: derived\n---\nThe team reports this segment has a strict total-spend limit. No direct customer observations are supplied. Leaves when late charges exceed that limit."
+      },
+      "acceptance": [
+        "Writes a non-leading interview guide before persona answers; follow-up probes do not suggest a fix or seek confirmation of it",
+        "Labels every transcript and synthesis synthetic",
+        "Records single-session simulation and no independent convergence",
+        "Preserves persona grounding grades",
+        "Does not cite synthetic quotes as customer research or invent active workers",
+        "Returns prepared content without claiming saved files"
+      ]
+    }
+  ]
+}

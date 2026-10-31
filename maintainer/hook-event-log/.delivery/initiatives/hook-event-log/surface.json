@@ -1,0 +1,19 @@
+{
+  "owner_record": "User 2026-10-21: create hook plugin for Codex desktop; logs event types only",
+  "surfaces": [
+    {
+      "id": "S1",
+      "host": "Local macOS execution",
+      "app": "Codex desktop",
+      "mode": "Local Codex chat with reviewed trusted plugin hooks",
+      "install_artifact": "plugins/hook-event-log",
+      "scriptable": true,
+      "size_budgets": {
+        "tool_list_max": 0,
+        "answer_max_chars": 0
+      },
+      "test_account": "Current user, no credentials copied",
+      "version_on_screen": "Record actual desktop version during acceptance"
+    }
+  ]
+}
