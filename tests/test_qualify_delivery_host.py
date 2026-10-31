@@ -133,5 +133,68 @@ class DiagnosticTests(unittest.TestCase):
             self.assertNotIn('token=',str(raised.exception))
 
 
+class DetailTests(unittest.TestCase):
+    def test_preserves_actionable_wording_but_redacts_values(self):
+        raw = ('bwrap: cannot create directory "/synthetic/private folder/name": '
+               'Permission denied; token=FIXTURE_SECRET; bearer FIXTURE_BEARER '
+               'https://example.invalid/path; C:\\synthetic\\private; sk-fixturekey')
+        value = module.redact_synthetic_probe_stderr(raw)
+        self.assertIn('cannot create directory',value)
+        self.assertIn('Permission denied',value)
+        for secret in ('synthetic','FIXTURE_SECRET','FIXTURE_BEARER','example.invalid','fixturekey'):
+            self.assertNotIn(secret,value)
+        self.assertIn('[PATH]',value)
+        self.assertIn('[CREDENTIAL]',value)
+
+    def test_detail_is_bounded_and_controls_removed(self):
+        value = module.redact_synthetic_probe_stderr('\x00\x1b[31m'+'x'*10000)
+        self.assertLessEqual(len(value),2048)
+        self.assertNotIn('\x00',value)
+        self.assertNotIn('\x1b',value)
+
+    def test_only_exact_stage_and_error_type_can_emit_detail(self):
+        error = module.SyntheticProbeFailure('bwrap: Permission denied',1)
+        self.assertIn('synthetic_probe_stderr',module.failure_report('sandbox-command-boundary',error))
+        for stage in ('host-preflight','install-discovery','installed-service-local-release'):
+            self.assertNotIn('synthetic_probe_stderr',module.failure_report(stage,error))
+        ordinary = module.Unsupported('fixed-code')
+        self.assertNotIn('synthetic_probe_stderr',module.failure_report('sandbox-command-boundary',ordinary))
+
+    def test_auth_headers_environment_keys_and_traceback_paths_are_redacted(self):
+        raw = ('Authorization: Bearer SYNTHETIC_BEARER_VALUE\n'
+               'OPENAI_API_KEY=SYNTHETIC_KEY_VALUE\n'
+               'GITHUB_TOKEN=shortvalue github_pat_fixturetoken\n'
+               'File "/synthetic/traceback.py", line 3\r\n'
+               'failed to create namespace')
+        value = module.redact_synthetic_probe_stderr(raw)
+        self.assertNotIn('SYNTHETIC_',value)
+        self.assertNotIn('shortvalue',value)
+        self.assertNotIn('fixturetoken',value)
+        self.assertNotIn('/synthetic',value)
+        self.assertNotIn('\r',value)
+        self.assertIn('failed to create namespace',value)
+
+    def test_generic_command_failure_never_emits_detail_even_at_probe_stage(self):
+        result = module.subprocess.CompletedProcess(['synthetic'],1,'','secret fixture diagnostic')
+        with patch.object(module.subprocess,'run',return_value=result):
+            with self.assertRaises(module.Unsupported) as raised:
+                module.run(['synthetic'],{},Path('/tmp'))
+        self.assertNotIn('synthetic_probe_stderr',
+                         module.failure_report('sandbox-command-boundary',raised.exception))
+
+    def test_detail_constructor_only_used_by_fixed_sandbox_probe(self):
+        import ast
+        tree = ast.parse(PATH.read_text())
+        callers = []
+        for function in tree.body:
+            if isinstance(function,ast.FunctionDef):
+                for node in ast.walk(function):
+                    if isinstance(node,ast.Call) and isinstance(node.func,ast.Name) and node.func.id == 'SyntheticProbeFailure':
+                        callers.append(function.name)
+        self.assertEqual(callers,['sandbox_checks'])
+        import inspect
+        self.assertEqual(tuple(inspect.signature(module.run).parameters),('argv','env','cwd','data','allowed'))
+
+
 if __name__ == '__main__':
     unittest.main()

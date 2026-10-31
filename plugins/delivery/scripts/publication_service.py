@@ -96,6 +96,7 @@ class PublicationStore:
         if not stat.S_ISREG(info.st_mode):
             raise Refused()
         self.identity = (info.st_dev, info.st_ino)
+        self._closed = False
         self.db = sqlite3.connect(self.path.as_uri() + '?mode=rw', uri=True, isolation_level=None)
         self.db.execute('PRAGMA busy_timeout=1000')
         self.db.execute('PRAGMA synchronous=FULL')
@@ -111,16 +112,41 @@ class PublicationStore:
                 CREATE TABLE releases(operation_id TEXT PRIMARY KEY, envelope TEXT NOT NULL,
                     binding TEXT NOT NULL, generation INTEGER NOT NULL, released REAL NOT NULL);
                 COMMIT;''')
-        self._health()
+        try:
+            self._health(full=True)
+        except Exception:
+            self.close()
+            raise
 
     def close(self):
-        self.db.close()
+        if self._closed:
+            return
+        self._closed = True
+        try:
+            self.db.close()
+        except Exception:
+            # Quarantine remains permanent even if the driver cannot close.
+            pass
 
-    def _health(self):
+    def _rollback_or_quarantine(self):
+        if self._closed:
+            return
+        try:
+            if self.db.in_transaction:
+                self.db.execute('ROLLBACK')
+        except Exception:
+            # Never reuse a connection whose transaction state is uncertain.
+            self.close()
+
+    def _health(self, full=False):
+        if self._closed:
+            raise Refused()
         info = self.path.stat()
         if self.path.is_symlink() or (info.st_dev, info.st_ino) != self.identity:
             raise Refused()
-        if self.db.execute('PRAGMA quick_check').fetchone() != ('ok',):
+        # The launcher owns ledger files. Full page integrity is checked on open;
+        # requests retain identity/schema checks and SQLite errors fail closed.
+        if full and self.db.execute('PRAGMA quick_check').fetchone() != ('ok',):
             raise Refused()
         if self.db.execute('SELECT version FROM format').fetchall() != [(1,)]:
             raise Refused()
@@ -190,8 +216,7 @@ class PublicationStore:
             self.db.execute('COMMIT')
             return result
         except Exception:
-            if self.db.in_transaction:
-                self.db.execute('ROLLBACK')
+            self._rollback_or_quarantine()
             return {'status':'blocked'}
 
     def call(self, name, args):
@@ -242,8 +267,7 @@ class PublicationStore:
         except Exception:
             # A commit error is conservatively unknown for publish. The caller must
             # query/retry the same immutable operation; never allocate a replacement ID.
-            if self.db.in_transaction:
-                self.db.execute('ROLLBACK')
+            self._rollback_or_quarantine()
             return {'status':'unknown' if committing and name == 'delivery_publication_publish' else 'blocked'}
 
     def consume(self, ident):

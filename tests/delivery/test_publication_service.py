@@ -312,6 +312,112 @@ class ServiceTests(unittest.TestCase):
         self.assertEqual(self.session.call('publish'), 'blocked')
         self.assertEqual(self.count(),0)
 
+    def test_control_rollback_failure_quarantines_without_escaping(self):
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('publication_control_quarantine_test', SCRIPT)
+        service = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(service)
+        self.session.stop()
+        store = service.PublicationStore(self.db)
+        underlying = store.db
+
+        class BrokenRollback:
+            def __getattr__(self, name):
+                return getattr(underlying, name)
+
+            def execute(self, sql, *args):
+                if sql == 'ROLLBACK':
+                    raise sqlite3.OperationalError('synthetic rollback failure')
+                return underlying.execute(sql, *args)
+
+        store.db = BrokenRollback()
+        try:
+            self.assertEqual(store.control({'action':'invalid'}),{'status':'blocked'})
+            self.assertTrue(store._closed)
+            self.assertEqual(store.control(REGISTER),{'status':'blocked'})
+            with sqlite3.connect(self.db,timeout=.1) as reopened:
+                reopened.execute('BEGIN IMMEDIATE')
+                reopened.rollback()
+        finally:
+            underlying.close()
+        self.session = Session(self.db)
+        self.assertEqual(self.session.trusted(REGISTER)['status'],'recorded')
+
+    def _assert_quarantined_commit_failure(self, after_effect):
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('publication_quarantine_test', SCRIPT)
+        service = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(service)
+        self.approved()
+        self.session.stop()
+        store = service.PublicationStore(self.db)
+        underlying = store.db
+
+        class BrokenRollback:
+            failed_commit = False
+            close_count = 0
+
+            def __getattr__(self, name):
+                return getattr(underlying, name)
+
+            @property
+            def in_transaction(self):
+                if after_effect and self.failed_commit:
+                    raise sqlite3.OperationalError('synthetic transaction-state failure')
+                return underlying.in_transaction
+
+            def execute(self, sql, *args):
+                if sql == 'COMMIT':
+                    if after_effect:
+                        underlying.execute(sql, *args)
+                    self.failed_commit = True
+                    raise sqlite3.OperationalError('synthetic commit failure')
+                if sql == 'ROLLBACK':
+                    raise sqlite3.OperationalError('synthetic rollback failure')
+                return underlying.execute(sql, *args)
+
+            def close(self):
+                self.close_count += 1
+                underlying.close()
+
+        broken = BrokenRollback()
+        store.db = broken
+        args = {'operation_id':'sample-one','envelope':copy.deepcopy(SAFE)}
+        try:
+            self.assertEqual(store.call('delivery_publication_publish',args),{'status':'unknown'})
+            self.assertTrue(store._closed)
+            self.assertEqual(broken.close_count,1)
+            self.assertEqual(store.call('delivery_publication_publish',args),{'status':'blocked'})
+            self.assertEqual(store.control(REGISTER),{'status':'blocked'})
+            with self.assertRaises(service.Refused):
+                store.consume('sample-one')
+            store.close()
+            self.assertEqual(broken.close_count,1)
+            # A separate writer can acquire the lock; quarantine released it.
+            with sqlite3.connect(self.db,timeout=.1) as reopened:
+                reopened.execute('BEGIN IMMEDIATE')
+                self.assertEqual(reopened.execute('SELECT count(*) FROM releases').fetchone()[0],
+                                 1 if after_effect else 0)
+                reopened.rollback()
+        finally:
+            underlying.close()
+        self.session = Session(self.db)
+        self.assertEqual(self.session.call('receipt'),'completed' if after_effect else 'not-released')
+        wrong = copy.deepcopy(SAFE)
+        wrong['body'] = 'SYNTHETIC wrong bytes'
+        self.assertEqual(self.session.call('publish',value=wrong),'blocked')
+        self.assertEqual(self.session.call('publish','replacement-id'),'blocked')
+        self.assertEqual(self.session.call('publish'),'completed')
+        self.assertEqual(self.session.call('publish'),'completed')
+        self.assertEqual(self.session.call('receipt'),'completed')
+        self.assertEqual(self.count(),1)
+
+    def test_commit_and_rollback_failure_quarantines_connection_before_effect(self):
+        self._assert_quarantined_commit_failure(after_effect=False)
+
+    def test_committed_effect_and_transaction_inspection_failure_quarantine_then_reconcile(self):
+        self._assert_quarantined_commit_failure(after_effect=True)
+
     def _assert_commit_failure_reconciliation(self, after_effect):
         import importlib.util
         spec = importlib.util.spec_from_file_location('publication_commit_test', SCRIPT)
@@ -371,6 +477,46 @@ class ServiceTests(unittest.TestCase):
 
     def test_exception_after_real_commit_is_unknown_and_restart_has_one_receipt(self):
         self._assert_commit_failure_reconciliation(after_effect=True)
+
+    def test_integrity_scan_runs_on_open_not_on_each_receipt(self):
+        import importlib.util
+        from unittest.mock import patch
+        spec = importlib.util.spec_from_file_location('publication_health_test', SCRIPT)
+        service = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(service)
+        queries = []
+        connect = sqlite3.connect
+        def traced(*args, **kwargs):
+            db = connect(*args, **kwargs)
+            db.set_trace_callback(queries.append)
+            return db
+        with patch.object(service.sqlite3, 'connect', side_effect=traced):
+            store = service.PublicationStore(self.db)
+        try:
+            self.assertEqual(sum(q == 'PRAGMA quick_check' for q in queries), 1)
+            for index in range(4):
+                value = copy.deepcopy(SAFE)
+                value['body'] = 'SYNTHETIC ' + 'x' * 131072
+                args = {'operation_id':'history-' + str(index), 'envelope':value}
+                self.assertEqual(store.call('delivery_publication_submit', args)['status'], 'submitted')
+                self.assertEqual(store.control({'action':'review', **args, 'decision':'approve',
+                    'ttl_seconds':30, 'expected_binding':self.binding})['status'], 'recorded')
+                self.assertEqual(store.call('delivery_publication_publish', args)['status'], 'completed')
+            for _ in range(8):
+                self.assertEqual(store.call('delivery_publication_receipt', args)['status'], 'completed')
+                self.assertEqual(store.consume(args['operation_id']), value)
+            self.assertEqual(sum(q == 'PRAGMA quick_check' for q in queries), 1)
+            # Identity/schema checks still execute on requests; corrupt metadata
+            # cannot receive a successful receipt just because startup passed.
+            store.db.execute('UPDATE format SET version=1 WHERE version=1')
+            store.db.execute('DELETE FROM format')
+            self.assertEqual(store.call('delivery_publication_receipt', args)['status'], 'blocked')
+            with self.assertRaises(service.Refused):
+                store.consume(args['operation_id'])
+        finally:
+            store.close()
+        with self.assertRaises(service.Refused):
+            service.PublicationStore(self.db)
 
     def test_restart_lost_response_idempotent_receipt_and_no_new_id_authority(self):
         self.approved()

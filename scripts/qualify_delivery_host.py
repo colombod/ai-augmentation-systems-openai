@@ -12,6 +12,7 @@ import os
 from pathlib import Path
 import pwd
 import queue
+import re
 import shutil
 import socket
 import subprocess
@@ -92,6 +93,42 @@ def command_diagnosis(stderr, returncode):
     digest = hashlib.sha256(stderr.encode()).hexdigest()
     return (f'command-failed:exit={returncode}:category={category}:'
             f'scan-truncated={int(len(stderr) > 65536)}:stderr-sha256={digest}')
+
+
+class SyntheticProbeFailure(Unsupported):
+    """Only the fixed, credential-free sandbox command probe supplies details."""
+    def __init__(self, stderr, returncode):
+        super().__init__(command_diagnosis(stderr, returncode))
+        self.detail = redact_synthetic_probe_stderr(stderr)
+
+
+def redact_synthetic_probe_stderr(stderr):
+    # Defense in depth, NOT a sanitizer for arbitrary application/private output.
+    # Provenance is the fixed source-generated probe, after clean-host preflight,
+    # with fabricated input and whitelisted environment. Never use for services,
+    # installation, model output, private fixtures or other run() commands.
+    text = stderr[:8192]
+    text = re.sub(r'\x1b\[[0-?]*[ -/]*[@-~]', '', text)
+    text = re.sub(r'(?i)\b(?:https?|ssh|file)://\S+', '[URL]', text)
+    text = re.sub(r'(?i)\bbearer\s+\S+', '[CREDENTIAL]', text)
+    text = re.sub(r'''(?i)\b[A-Za-z0-9_]*(?:authorization|password|passwd|secret|token|api[_-]?key|access[_-]?key)(?:\s*[:=]\s*|\s+)(?:"[^"\n]*"|'[^'\n]*'|[^\s,;]+)''', '[CREDENTIAL]', text)
+    text = re.sub(r'\b(?:sk-|gh[pousr]_|github_pat_)[A-Za-z0-9_-]+', '[CREDENTIAL]', text)
+    # Remove entire quoted paths, including spaces, before unquoted path tokens.
+    text = re.sub(r'''["'](?:/|[A-Za-z]:\\)[^"'\n]*["']''', '[PATH]', text)
+    text = re.sub(r'(?:[A-Za-z]:\\|/|\.\.?/|~/)[^\s,;:()\[\]"\']+', '[PATH]', text)
+    text = re.sub(r'\b[A-Za-z0-9_+/-]{32,}={0,2}\b', '[OPAQUE]', text)
+    text = ''.join(c if c in '\n\t' or 32 <= ord(c) < 127 else '?' for c in text)
+    return text[:2048]
+
+
+def failure_report(stage, error):
+    diagnosis = str(error) if isinstance(error, Unsupported) else type(error).__name__
+    report = {'status':'unsupported-or-failed','stage':stage,'diagnosis':diagnosis[:240],
+              'acceptance':False,'fallback_attempted':False}
+    if stage == 'sandbox-command-boundary' and isinstance(error, SyntheticProbeFailure):
+        report['synthetic_probe_stderr'] = error.detail
+        report['detail_scope'] = 'fixed-synthetic-command-only'
+    return report
 
 
 def run(argv, env, cwd, data=None, allowed=(0,)):
@@ -266,8 +303,13 @@ for action in (lambda:p.read_bytes(),lambda:p.write_text('changed'),lambda:pathl
 print('restricted-routes-passed')
 '''
     try:
-        result = run([codex, *config, 'sandbox', '--permission-profile', 'delivery-qualification',
-            '--', '/usr/bin/python3', '-c', code, str(secret), str(worker / 'result'), str(port)], env, worker)
+        # Detail mode is internal to this exact fixed synthetic invocation. There
+        # is deliberately no CLI flag or generic run() option to enable it elsewhere.
+        result = subprocess.run([codex, *config, 'sandbox', '--permission-profile', 'delivery-qualification',
+            '--', '/usr/bin/python3', '-c', code, str(secret), str(worker / 'result'), str(port)],
+            input=None, text=True, capture_output=True, timeout=45, env=env, cwd=worker)
+        if result.returncode != 0:
+            raise SyntheticProbeFailure(result.stderr, result.returncode)
         require(result.stdout.strip() == 'restricted-routes-passed', 'sandbox-probe-result-invalid')
         require(secret.read_text() == 'SYNTHETIC CONTROL ONLY', 'control-fixture-mutated')
     finally:
@@ -388,9 +430,7 @@ def main():
             'fresh_model_acceptance':False,'remote_publication':'not-tested'}))
         return 0
     except (Unsupported, OSError, ValueError, KeyError, subprocess.TimeoutExpired) as error:
-        diagnosis = str(error) if isinstance(error, Unsupported) else type(error).__name__
-        print(json.dumps({'status':'unsupported-or-failed','stage':stage,'diagnosis':diagnosis[:240],
-                          'acceptance':False,'fallback_attempted':False}))
+        print(json.dumps(failure_report(stage, error)))
         return 2
 
 
