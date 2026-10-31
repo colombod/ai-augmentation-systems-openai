@@ -11,6 +11,8 @@ import json
 import os
 from pathlib import Path
 import pwd
+import platform
+import stat
 import queue
 import re
 import shutil
@@ -270,12 +272,68 @@ def install(codex, root, base, env, actual_home):
         server.close()
 
 
-def sandbox_config(worker, trusted, actual_home):
+def resolve_native_codex(codex, env, cwd):
+    """Resolve the pinned npm launcher's native file without executing Codex.
+
+    Match rust-v0.163.0 codex-cli/bin/codex.js's optional-package layout.
+    Unsupported packaging fails closed; no vendor fallback or directory grant.
+    Package metadata establishes expected layout, not independent authenticity.
+    The existing CLI version check remains required before this resolver runs.
+    """
+    launcher = Path(codex).resolve(strict=True)
+    require(launcher.is_file() and os.access(launcher, os.X_OK), 'codex-launcher-not-executable')
+    with launcher.open('rb') as source:
+        direct = source.read(4) == b'\x7fELF'
+    if direct:
+        return launcher
+    package_root = launcher.parent.parent
+    metadata = json.loads((package_root / 'package.json').read_text())
+    require(type(metadata) is dict, 'codex-launcher-metadata-invalid')
+    require(metadata.get('name') == '@openai/codex' and metadata.get('version') == '0.163.0',
+            'codex-launcher-package-mismatch')
+    require(type(metadata.get('bin')) is dict, 'codex-launcher-layout-mismatch')
+    require(metadata.get('bin', {}).get('codex') == 'bin/codex.js'
+            and launcher == (package_root / 'bin/codex.js').resolve(strict=True),
+            'codex-launcher-layout-mismatch')
+    targets = {'x86_64':('x64','x86_64-unknown-linux-musl'),
+               'aarch64':('arm64','aarch64-unknown-linux-musl')}
+    require(platform.machine() in targets, 'codex-native-architecture-unsupported')
+    architecture, triple = targets[platform.machine()]
+    alias = '@openai/codex-linux-' + architecture
+    require(type(metadata.get('optionalDependencies')) is dict, 'codex-native-dependency-unpinned')
+    dependency = metadata['optionalDependencies'].get(alias)
+    expected_alias = 'npm:@openai/codex@0.163.0-linux-' + architecture
+    require(dependency in ('0.163.0', expected_alias), 'codex-native-dependency-unpinned')
+    resolver = ("const {createRequire}=require('node:module');"
+                "const r=createRequire(process.argv[1]);"
+                "process.stdout.write(JSON.stringify(r.resolve(process.argv[2]+'/package.json')));")
+    result = run(['node', '-e', resolver, str(launcher), alias], env, cwd)
+    manifest_path = json.loads(result.stdout)
+    require(type(manifest_path) is str and Path(manifest_path).is_absolute(), 'codex-native-manifest-invalid')
+    manifest = Path(manifest_path).resolve(strict=True)
+    native_metadata = json.loads(manifest.read_text())
+    require(type(native_metadata) is dict, 'codex-native-package-mismatch')
+    expected_name = '@openai/codex' if dependency == expected_alias else alias
+    expected_version = '0.163.0-linux-' + architecture if dependency == expected_alias else '0.163.0'
+    require(native_metadata.get('name') == expected_name
+            and native_metadata.get('version') == expected_version, 'codex-native-package-mismatch')
+    native = (manifest.parent / 'vendor' / triple / 'bin/codex').resolve(strict=True)
+    require(native.is_relative_to(manifest.parent) and stat.S_ISREG(native.stat().st_mode)
+            and os.access(native, os.X_OK), 'codex-native-file-invalid')
+    with native.open('rb') as source:
+        require(source.read(4) == b'\x7fELF', 'codex-native-not-elf')
+    return native
+
+
+def sandbox_config(worker, trusted, actual_home, native_codex):
+    require(native_codex.is_absolute() and not any(native_codex.is_relative_to(path)
+            for path in (worker, trusted, actual_home / '.codex', Path('/proc'))),
+            'codex-native-overlaps-protected-root')
     filesystem = {':minimal':'read', str(worker):'write', str(trusted):'deny',
-                  str(actual_home / '.codex'):'deny', '/proc':'deny'}
+                  str(actual_home / '.codex'):'deny', '/proc':'deny', str(native_codex):'read'}
     # CLI dotted keys are split literally. Put path keys inside the TOML value
     # so quotes and dots in paths are decoded by the TOML parser instead.
-    table = '{' + ','.join(json.dumps(path) + '=' + json.dumps(access)
+    table = '{' + ','.join(json.dumps(path, ensure_ascii=False) + '=' + json.dumps(access)
                            for path, access in filesystem.items()) + '}'
     return ['-c', 'default_permissions="delivery-qualification"',
             '-c', 'permissions.delivery-qualification.filesystem=' + table,
@@ -298,7 +356,8 @@ def sandbox_checks(codex, base, env, actual_home):
         connection, _ = listener.accept()
         connection.close()
     require(secret.read_text() == 'SYNTHETIC CONTROL ONLY', 'fixture-baseline-failed')
-    config = sandbox_config(worker, trusted, actual_home)
+    native_codex = resolve_native_codex(codex, env, base)
+    config = sandbox_config(worker, trusted, actual_home, native_codex)
     code = '''import pathlib,socket,sys
 p=pathlib.Path(sys.argv[1]); out=pathlib.Path(sys.argv[2]); port=int(sys.argv[3])
 out.write_text('synthetic worker write')
@@ -322,6 +381,38 @@ print('restricted-routes-passed')
         listener.close()
     prefix = [codex, *config, 'sandbox', '--permission-profile', 'delivery-qualification', '--']
     return trusted, prefix, worker
+
+
+CONSUMER_CODE = """import errno,json,pathlib,sys
+for name in sys.argv[1:]:
+ try: pathlib.Path(name).read_bytes()
+ except OSError as error:
+  if error.errno in (errno.EACCES,errno.EPERM,errno.ENOENT): continue
+  raise
+ raise SystemExit(11)
+x=json.load(sys.stdin)
+assert x['files']==[{'name':'counter.txt','content':'1'}]
+assert int(x['files'][0]['content'])+1==2
+print('consumed')
+"""
+
+
+def consume_released_bundle(sandbox_prefix, env, worker, db, control, output):
+    # The trusted exporter remains outside. This separate recipient inherits the
+    # worker's restricted profile; synthetic paths are denial probes, not grants.
+    require(db.is_file() and control.is_file(), 'consumer-denial-fixture-missing')
+    fixtures = (db, control)
+    before = [(info.st_dev, info.st_ino) for info in (path.stat() for path in fixtures)]
+    result = run([*sandbox_prefix, '/usr/bin/python3', '-c', CONSUMER_CODE,
+                  str(db), str(control)], env, worker, output)
+    # ENOENT inside a namespace is evidence only while the trusted fixtures still
+    # exist at the same identities outside it. Other I/O errors are not denial.
+    try:
+        after = [(info.st_dev, info.st_ino) for info in (path.stat() for path in fixtures)]
+    except OSError:
+        raise Unsupported('consumer-denial-fixture-changed') from None
+    require(before == after, 'consumer-denial-fixture-changed')
+    return result
 
 
 def service_checks(package, trusted, base, env, sandbox_prefix, worker):
@@ -354,6 +445,8 @@ for action in (lambda:ledger.read_bytes(),lambda:ledger.open('ab')):
  try: action()
  except OSError: continue
  raise SystemExit(10)
+# This probes denied resource access, not handler authorization: the installed
+# script is inaccessible and the fabricated control request is itself invalid.
 forged=subprocess.run(['/usr/bin/python3',service,'--db',str(ledger),'--control'],input='{}',text=True,capture_output=True,timeout=5)
 assert forged.returncode != 0
 
@@ -401,10 +494,8 @@ print(json.dumps({'done':True}),flush=True)
         candidate.close()
         rpc.close()
     output = run([*argv, '--consume', 'synthetic-one'], env, base).stdout
-    # Clean recipient receives only bytes on stdin, not private ledger access/path.
-    consumer = run(['/usr/bin/python3', '-c',
-        'import json,sys;x=json.load(sys.stdin);assert x["files"]==[{"name":"counter.txt","content":"1"}];print("consumed")'],
-        env, base, output)
+    consumer = consume_released_bundle(sandbox_prefix, env, worker, db,
+                                       trusted / 'synthetic-control', output)
     require(json.loads(output) == envelope and consumer.stdout.strip() == 'consumed', 'consumer-envelope-mismatch')
 
 

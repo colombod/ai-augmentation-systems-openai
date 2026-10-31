@@ -142,6 +142,18 @@ Publish then inserts only the approved exact bundle. Query receipt after a lost
 response instead of inventing another operation ID. Review is an explicit trusted
 decision, not a classification service or a candidate-provided boolean.
 
+A control commit error returns `unknown` and quarantines that connection. Reopen
+only the original ledger. An uncertain approval may already authorize the exact
+bundle; an uncertain rejection does not prove revocation. Do not automatically
+repeat a review or renew its expiry. Any subsequent decision must be explicit
+and bound to the current recipient snapshot. A publication receipt identifies a
+completed release; it does not report an unreleased review's durable state.
+
+The optional inherited `--control-fd` socket shares the candidate process and
+event loop. If candidate stdout is not drained, that control socket can stall.
+Use the separate `--control` invocation when trusted control availability must
+be independent of candidate output.
+
 To obtain the released bundle for a recipient:
 
 ```sh

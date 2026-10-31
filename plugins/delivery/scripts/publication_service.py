@@ -160,6 +160,7 @@ class PublicationStore:
         self.db.execute('BEGIN IMMEDIATE')
 
     def control(self, request):
+        committing = False
         try:
             self._begin()
             result = {'status':'recorded'}
@@ -213,11 +214,16 @@ class PublicationStore:
                                 (ident, encoded, *binding, request['decision'] == 'approve', request['ttl_seconds']))
             else:
                 raise Refused()
+            committing = True
             self.db.execute('COMMIT')
             return result
         except Exception:
             self._rollback_or_quarantine()
-            return {'status':'blocked'}
+            if committing:
+                # A lost commit receipt is not a refusal or a revocation.
+                # Reopen the original ledger; do not silently renew approvals.
+                self.close()
+            return {'status':'unknown' if committing else 'blocked'}
 
     def call(self, name, args):
         committing = False

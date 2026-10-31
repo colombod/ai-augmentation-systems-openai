@@ -312,6 +312,51 @@ class ServiceTests(unittest.TestCase):
         self.assertEqual(self.session.call('publish'), 'blocked')
         self.assertEqual(self.count(),0)
 
+    def test_control_commit_uncertainty_preserves_durable_decision_without_renewal(self):
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('publication_control_commit_test', SCRIPT)
+        service = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(service)
+        for after_effect in (False, True):
+            for decision in ('approve', 'reject'):
+                with self.subTest(after_effect=after_effect, decision=decision):
+                    ident = ('after-' if after_effect else 'before-') + decision
+                    self.assertEqual(self.session.call('submit', ident), 'submitted')
+                    # Rejection starts from an existing approval: unknown does
+                    # not mean revocation succeeded when commit never occurred.
+                    if decision == 'reject':
+                        self.assertEqual(self.session.review(self.binding, ident)['status'], 'recorded')
+                    store = service.PublicationStore(self.db)
+                    underlying = store.db
+                    class CommitFailure:
+                        def __getattr__(self, name):
+                            return getattr(underlying, name)
+                        def execute(self, sql, *args):
+                            if sql == 'COMMIT':
+                                if after_effect:
+                                    underlying.execute(sql, *args)
+                                raise sqlite3.OperationalError('synthetic control commit failure')
+                            return underlying.execute(sql, *args)
+                    store.db = CommitFailure()
+                    request = {'action':'review','operation_id':ident,'envelope':copy.deepcopy(SAFE),
+                               'decision':decision,'ttl_seconds':30,'expected_binding':self.binding}
+                    self.assertEqual(store.control(request), {'status':'unknown'})
+                    self.assertTrue(store._closed)
+                    self.assertEqual(store.control(request), {'status':'blocked'})
+                    with sqlite3.connect(self.db,timeout=.1) as db:
+                        db.execute('BEGIN IMMEDIATE')
+                        original = db.execute('SELECT * FROM reviews WHERE operation_id=?',(ident,)).fetchone()
+                        db.rollback()
+                    self.session.stop()
+                    self.session = Session(self.db)
+                    approved = (after_effect and decision == 'approve') or (not after_effect and decision == 'reject')
+                    expected = 'completed' if approved else 'blocked'
+                    self.assertEqual(self.session.call('publish', ident), expected)
+                    self.assertEqual(self.session.call('publish', ident), expected)
+                    with sqlite3.connect(self.db) as db:
+                        self.assertEqual(db.execute('SELECT * FROM reviews WHERE operation_id=?',(ident,)).fetchone(), original)
+                        self.assertEqual(db.execute('SELECT count(*) FROM releases WHERE operation_id=?',(ident,)).fetchone()[0], int(approved))
+
     def test_control_rollback_failure_quarantines_without_escaping(self):
         import importlib.util
         spec = importlib.util.spec_from_file_location('publication_control_quarantine_test', SCRIPT)
@@ -575,6 +620,22 @@ class ServiceTests(unittest.TestCase):
         self.assertEqual(repeated.stdout,'')
         self.assertEqual(repeated.stderr,'{"status":"unavailable"}\n')
         self.assertEqual(path.read_bytes(),original)
+
+    def test_partial_candidate_frame_does_not_block_trusted_rejection(self):
+        self.session.stop()
+        self.session = Session(self.db, control_socket=True)
+        self.approved()
+        self.session.process.stdin.write(b'{"jsonrpc":"2.0","id":999,"method":')
+        self.session.process.stdin.flush()
+        self.assertEqual(self.session.review(self.binding, decision='reject')['status'], 'recorded')
+        self.session.process.stdin.write(b'"ping"}\n')
+        self.session.process.stdin.flush()
+        ready, _, _ = select.select([self.session.process.stdout], [], [], 5)
+        self.assertTrue(ready)
+        self.assertEqual(json.loads(self.session.process.stdout.readline()),
+                         {'jsonrpc':'2.0','id':999,'result':{}})
+        self.assertEqual(self.session.call('publish'), 'blocked')
+        self.assertEqual(self.count(), 0)
 
     def test_inherited_control_channel_is_distinct_from_candidate_tools(self):
         self.session.stop();self.session=Session(self.db,control_socket=True)

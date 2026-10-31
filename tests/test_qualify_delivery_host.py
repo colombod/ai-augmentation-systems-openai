@@ -13,12 +13,20 @@ spec.loader.exec_module(module)
 
 
 class ProfileTests(unittest.TestCase):
+    def test_native_grant_cannot_override_protected_or_worker_roots(self):
+        worker,trusted,home = Path('/tmp/worker'),Path('/tmp/trusted'),Path('/home/example')
+        for native in (worker/'codex',trusted/'codex',home/'.codex/codex',Path('/proc/native')):
+            with self.subTest(native=native):
+                with self.assertRaisesRegex(module.Unsupported,'overlaps-protected-root'):
+                    module.sandbox_config(worker,trusted,home,native)
+
     def test_path_keys_are_toml_values_not_literal_dotted_override_segments(self):
         import tomllib
-        worker = Path('/tmp/synthetic.worker/with space')
+        worker = Path('/tmp/synthetic.worker/with space/🧪')
         trusted = Path('/tmp/synthetic.trusted')
-        home = Path('/home/synthetic.user')
-        config = module.sandbox_config(worker, trusted, home)
+        home = Path('/home/synthetic.user/😀')
+        native = Path('/tmp/synthetic.npm/vendor/bin/codex')
+        config = module.sandbox_config(worker, trusted, home, native)
         parsed = {}
         for flag, override in zip(config[::2], config[1::2]):
             self.assertEqual(flag, '-c')
@@ -30,10 +38,159 @@ class ProfileTests(unittest.TestCase):
         self.assertEqual(parsed, {'default_permissions':'delivery-qualification',
             'permissions':{'delivery-qualification':{
                 'filesystem':{':minimal':'read',str(worker):'write',str(trusted):'deny',
-                              str(home / '.codex'):'deny','/proc':'deny'},
+                              str(home / '.codex'):'deny','/proc':'deny',str(native):'read'},
                 'network':{'enabled':False}}}})
         for key in parsed['permissions']['delivery-qualification']['filesystem']:
             self.assertTrue(key.startswith(('/', ':')))
+
+
+class NativeResolverTests(unittest.TestCase):
+    def fixture(self, base, alias_package=False):
+        import json
+        launcher = base / 'launcher/bin/codex.js'
+        launcher.parent.mkdir(parents=True)
+        launcher.write_text('#!/usr/bin/env node\n')
+        launcher.chmod(0o700)
+        dependency = 'npm:@openai/codex@0.163.0-linux-x64' if alias_package else '0.163.0'
+        (launcher.parent.parent/'package.json').write_text(json.dumps({
+            'name':'@openai/codex','version':'0.163.0','bin':{'codex':'bin/codex.js'},
+            'optionalDependencies':{'@openai/codex-linux-x64':dependency}}))
+        manifest = base / 'platform/package.json'
+        manifest.parent.mkdir()
+        manifest.write_text(json.dumps({'name':'@openai/codex' if alias_package else '@openai/codex-linux-x64',
+            'version':'0.163.0-linux-x64' if alias_package else '0.163.0'}))
+        native = manifest.parent/'vendor/x86_64-unknown-linux-musl/bin/codex'
+        native.parent.mkdir(parents=True)
+        native.write_bytes(b'\x7fELFsynthetic-fixture-not-executable-code')
+        native.chmod(0o700)
+        return launcher, manifest, native
+
+    def test_pinned_npm_layout_resolves_only_exact_native_file_without_execution(self):
+        import tempfile,json
+        for alias_package in (False,True):
+            with self.subTest(alias=alias_package), tempfile.TemporaryDirectory() as directory:
+                base = Path(directory)
+                launcher,manifest,native = self.fixture(base,alias_package)
+                result = module.subprocess.CompletedProcess([],0,json.dumps(str(manifest)),'')
+                with patch.object(module.subprocess,'run',return_value=result) as run, \
+                     patch.object(module.platform,'machine',return_value='x86_64'):
+                    self.assertEqual(module.resolve_native_codex(str(launcher),{'PATH':'/bin'},base),native)
+                command = run.call_args.args[0]
+                self.assertEqual(command[:2],['node','-e'])
+                self.assertIn('createRequire',command[2])
+                self.assertEqual(command[3:],[str(launcher),'@openai/codex-linux-x64'])
+                self.assertEqual(run.call_count,1)
+
+    def test_direct_elf_does_not_run_resolver(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as directory:
+            native = Path(directory)/'codex'
+            native.write_bytes(b'\x7fELFfixture')
+            native.chmod(0o700)
+            with patch.object(module.subprocess,'run') as run:
+                self.assertEqual(module.resolve_native_codex(str(native),{},Path(directory)),native)
+                run.assert_not_called()
+
+    def test_wrong_platform_identity_and_missing_native_fail_without_fallback(self):
+        import tempfile,json
+        for missing in (False,True):
+            with self.subTest(missing=missing), tempfile.TemporaryDirectory() as directory:
+                base = Path(directory)
+                launcher,manifest,native = self.fixture(base)
+                if missing:
+                    native.unlink()
+                else:
+                    manifest.write_text(json.dumps({'name':'untrusted','version':'0.163.0'}))
+                result = module.subprocess.CompletedProcess([],0,json.dumps(str(manifest)),'')
+                with patch.object(module.subprocess,'run',return_value=result) as run, \
+                     patch.object(module.platform,'machine',return_value='x86_64'):
+                    with self.assertRaises((module.Unsupported,FileNotFoundError)):
+                        module.resolve_native_codex(str(launcher),{},base)
+                self.assertEqual(run.call_count,1)
+
+
+class ConsumerIsolationTests(unittest.TestCase):
+    def test_consumer_keeps_sandbox_prefix_and_receives_released_bytes_only_on_stdin(self):
+        import tempfile,json
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory)
+            db,control = base/'ledger',base/'control'
+            db.write_text('SYNTHETIC ledger');control.write_text('SYNTHETIC control')
+            prefix = ['codex','-c','fixed-profile','sandbox','--permission-profile','delivery-qualification','--']
+            output = json.dumps({'files':[{'name':'counter.txt','content':'1'}]})
+            env = {'HOME':'/actual','PATH':'/bin'}
+            with patch.object(module,'run',return_value=module.subprocess.CompletedProcess([],0,'consumed\n','')) as run:
+                module.consume_released_bundle(prefix,env,base,db,control,output)
+            args = run.call_args.args
+            self.assertEqual(args[0],prefix+['/usr/bin/python3','-c',module.CONSUMER_CODE,str(db),str(control)])
+            self.assertIs(args[1],env)
+            self.assertEqual(args[2:],(base,output))
+            self.assertNotIn(output,args[0])
+
+    def test_readable_fixture_fails_instead_of_claiming_consumer_isolation(self):
+        import tempfile,json
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory)
+            db,control = base/'ledger',base/'control'
+            db.write_text('SYNTHETIC ledger');control.write_text('SYNTHETIC control')
+            # Ordinary Python negative control only, never Codex or sandbox.
+            result = module.subprocess.run(['/usr/bin/python3','-c',module.CONSUMER_CODE,str(db),str(control)],
+                input=json.dumps({'files':[{'name':'counter.txt','content':'1'}]}),
+                text=True,capture_output=True,timeout=5,env=module.child_environment(module.os.environ))
+            self.assertEqual(result.returncode,11)
+            self.assertEqual(result.stdout,'')
+
+    def test_expected_denial_errnos_require_stable_trusted_fixtures(self):
+        import errno,tempfile,json,sys
+        for number in (errno.EACCES,errno.EPERM,errno.ENOENT):
+            with self.subTest(errno=number), tempfile.TemporaryDirectory() as directory:
+                base = Path(directory)
+                db,control = base/'ledger',base/'control'
+                db.write_text('SYNTHETIC ledger');control.write_text('SYNTHETIC control')
+                output=json.dumps({'files':[{'name':'counter.txt','content':'1'}]})
+                def fake_run(argv,env,cwd,data):
+                    with patch.object(sys,'argv',['consumer',str(db),str(control)]), \
+                         patch.object(sys,'stdin',io.StringIO(data)), \
+                         patch.object(sys,'stdout',io.StringIO()) as stdout, \
+                         patch.object(Path,'read_bytes',side_effect=OSError(number,'synthetic denial')):
+                        exec(module.CONSUMER_CODE,{})
+                        return module.subprocess.CompletedProcess(argv,0,stdout.getvalue(),'')
+                with patch.object(module,'run',side_effect=fake_run):
+                    result=module.consume_released_bundle(['synthetic'],{},base,db,control,output)
+                self.assertEqual(result.stdout,'consumed\n')
+
+    def test_unrelated_io_error_is_not_denial(self):
+        import errno,sys
+        with patch.object(sys,'argv',['consumer','synthetic']), \
+             patch.object(Path,'read_bytes',side_effect=OSError(errno.EIO,'synthetic I/O failure')):
+            with self.assertRaises(OSError) as error:
+                exec(module.CONSUMER_CODE,{})
+        self.assertEqual(error.exception.errno,errno.EIO)
+
+    def test_removed_or_replaced_fixture_invalidates_successful_child_result(self):
+        import tempfile
+        for replace in (False,True):
+            with self.subTest(replace=replace), tempfile.TemporaryDirectory() as directory:
+                base=Path(directory)
+                db,control=base/'ledger',base/'control'
+                db.write_text('SYNTHETIC ledger');control.write_text('SYNTHETIC control')
+                def fake_run(*args):
+                    db.rename(base/'old-ledger')
+                    if replace:
+                        db.write_text('SYNTHETIC replacement')
+                    return module.subprocess.CompletedProcess([],0,'consumed\n','')
+                with patch.object(module,'run',side_effect=fake_run):
+                    with self.assertRaisesRegex(module.Unsupported,'consumer-denial-fixture-changed'):
+                        module.consume_released_bundle(['synthetic'],{},base,db,control,'{}')
+
+    def test_absent_denial_fixture_is_not_evidence_of_isolation(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory)
+            with patch.object(module,'run') as run:
+                with self.assertRaisesRegex(module.Unsupported,'consumer-denial-fixture-missing'):
+                    module.consume_released_bundle(['codex'],{},base,base/'absent',base/'absent-control','{}')
+                run.assert_not_called()
 
 
 class SourceTests(unittest.TestCase):
