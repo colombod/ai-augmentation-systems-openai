@@ -113,7 +113,20 @@ existing ledger. This is an opt-in configuration example, not an installed setti
 [mcp_servers.delivery_publication]
 command = "python3"
 args = ["/absolute/plugin/scripts/publication_service.py", "--db", "/private/bundles.sqlite"]
+enabled_tools = ["delivery_publication_submit", "delivery_publication_publish", "delivery_publication_receipt"]
 ```
+
+Use the actual installed package path in this configuration. Codex starts the stdio
+process on connection; you do not need to launch it manually. Restart/reconnect
+uses the same existing ledger. Missing or corrupt state stays unavailable; never
+add `--initialize`, `--control`, or `--consume` to server arguments. Remove the
+server configuration to opt out; retain the private ledger for reconciliation.
+
+This explicit opt-in avoids starting an unconfigured service for every plugin
+installation. Agent Plugins use package-root `mcp.json` for automatic registration,
+but this package does not bundle one. `${PLUGIN_DATA}` is writable storage, not
+a security boundary. Configuration enables tool discovery only; a trusted host
+must separately deny candidate access to the ledger, control command and code.
 
 The stdio server is a Python tool process, not another Codex session. Follow the
 host's [MCP configuration guidance](https://learn.chatgpt.com/docs/extend/mcp).

@@ -1,6 +1,13 @@
 # Changelog
 
-## Unreleased candidate — 0.1.0-preview.16
+## Unreleased candidate — 0.1.0-preview.17
+
+- Clarify opt-in native MCP configuration for the installed local publication
+  service, its exact candidate tool set, and safe reconnect/opt-out behavior.
+- Keep initialization and trusted control separate from server startup; native
+  discovery does not establish semantic or whole-host protection.
+
+## 0.1.0-preview.16
 
 - Add an opt-in stdio MCP handler for reviewed local bundles, with separate trusted
   control, exact envelope and destination binding, durable receipts and a local
