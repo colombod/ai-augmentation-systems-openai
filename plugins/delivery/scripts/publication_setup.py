@@ -169,8 +169,10 @@ def configuration(spec, enabled=True):
 
 def plan(home, ledger, worker, expected):
     spec = bound_spec(home, ledger, worker, expected)
-    return {'schema_version':1, 'spec':spec, 'sha256':digest(canonical(spec).encode()),
-            'host_protected_ready':False}
+    value = {'schema_version':1, 'spec':spec, 'sha256':digest(canonical(spec).encode()),
+             'host_protected_ready':False}
+    require(len((canonical(value) + '\n').encode()) <= LIMIT)
+    return value
 
 
 def validate_plan(value, expected_digest):
@@ -181,10 +183,16 @@ def validate_plan(value, expected_digest):
     require(type(spec) is dict and set(spec) == {'home','ledger','worker','binding','ledger_identity','python','python_identity','files',
             'worker_identity','worker_ancestors','home_identity','home_ancestors','ledger_ancestors',
             'file_identities','python_sha256'})
-    # The executable and script paths cannot be supplied independently of this
-    # installed helper. Receipt validation alone grants no publication authority.
+    # Script paths stay bound to this installed helper. Receipt validation alone
+    # grants no publication authority.
     require(set(spec['files']) == set(spec['file_identities']) == {str(p) for p in installed_files()})
-    require(spec['python'] == str(Path(sys.executable).resolve(strict=True)))
+    # Disable does not execute this command or require the old interpreter to
+    # exist. Enable/status enforce the live identity and hash in bound_spec.
+    recorded_python = spec['python']
+    require(type(recorded_python) is str and '\x00' not in recorded_python)
+    python_path = Path(recorded_python)
+    require(python_path.is_absolute() and python_path.name and '..' not in python_path.parts
+            and str(python_path) == recorded_python)
     return spec
 
 
@@ -212,6 +220,7 @@ def locked(home):
 
 
 def create(path, raw):
+    require(len(raw) <= LIMIT)
     # Publish complete bytes without overwriting an existing target.
     fd, temporary = tempfile.mkstemp(prefix='.delivery-write-', dir=path.parent)
     try:
@@ -233,6 +242,7 @@ def read_config(home, spec):
 
 
 def replace_config(home, old, new):
+    require(len(new) <= LIMIT)
     path = home / 'config.toml'
     if old is None:
         create(path, new)
@@ -252,6 +262,8 @@ def replace_config(home, old, new):
 
 def operate(action, value, expected_digest):
     spec = validate_plan(value, expected_digest)
+    # Check both configurations before writing a receipt or either config.
+    require(all(len(configuration(spec, enabled)) <= LIMIT for enabled in (True, False)))
     home = Path(spec['home'])
     require(ancestors(home) == spec['home_ancestors'])
     created = False
@@ -264,6 +276,8 @@ def operate(action, value, expected_digest):
     home = private_home(str(home))
     home_id = identity(home)
     require(spec['home_identity'] in (None, home_id))
+    raw_receipt = (canonical({'plan':value, 'home_identity':home_id}) + '\n').encode()
+    require(len(raw_receipt) <= LIMIT)
     receipt = home / RECEIPT
     # A home created after planning must have our durable receipt, or have been
     # created in this invocation. Never adopt an arbitrary replacement, even if
@@ -275,7 +289,6 @@ def operate(action, value, expected_digest):
     current_spec = {**spec, 'home_identity':home_id}
     with locked(home):
         require(identity(home) == home_id and ancestors(home) == spec['home_ancestors'])
-        raw_receipt = (canonical({'plan':value, 'home_identity':home_id}) + '\n').encode()
         if receipt.exists():
             require(read(path_checked(str(receipt))) == raw_receipt)
         else:

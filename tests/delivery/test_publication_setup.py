@@ -257,6 +257,110 @@ class SetupTests(unittest.TestCase):
         self.assertEqual(list(default.iterdir()),[])
         self.assertEqual(self.db.read_bytes(),self.original)
 
+    def large_plan(self, receipt_bytes):
+        if not self.home.exists():self.home.mkdir(mode=0o700)
+        value=self.make_plan();worker=self.base/'deep';worker.mkdir()
+        canonical=lambda x:json.dumps(x,sort_keys=True,separators=(',',':'),ensure_ascii=True)
+        home_id=[self.home.stat().st_dev,self.home.stat().st_ino]
+        while True:
+            value['spec'].update(worker=str(worker),worker_identity=[worker.stat().st_dev,worker.stat().st_ino],
+                worker_ancestors={str(p):[p.stat().st_dev,p.stat().st_ino] for p in worker.parents})
+            value['sha256']=hashlib.sha256(canonical(value['spec']).encode()).hexdigest()
+            size=len((canonical({'plan':value,'home_identity':home_id})+'\n').encode())
+            if size>=64800:break
+            worker=worker/'a';worker.mkdir()
+        self.worker=worker
+        request={k:v for k,v in self.binding.items() if k!='generation'};request['action']='register'
+        remaining=receipt_bytes-size
+        self.assertGreaterEqual(remaining,0)
+        for field in ('owner','audience','revision','authority_revision','policy_revision'):
+            growth=min(256-len(request[field]),remaining);request[field]+='x'*growth;remaining-=growth
+        self.assertEqual(remaining,0)
+        self.binding=json.loads(self.run_service('--control',request=request).stdout)['binding']
+        self.binding_path.write_text(json.dumps(self.binding));value=self.make_plan()
+        self.plan_path.write_text(canonical(value)+'\n')
+        self.assertEqual(len((canonical({'plan':value,'home_identity':home_id})+'\n').encode()),receipt_bytes)
+        self.assertLessEqual(self.plan_path.stat().st_size,65536)
+        return self.db.read_bytes()
+
+    def test_exact_limit_receipt_remains_readable_and_reversible(self):
+        ledger=self.large_plan(65536)
+        self.action('enable');self.assertEqual((self.home/'delivery-setup.json').stat().st_size,65536)
+        self.action('status');self.action('disable');self.action('disable')
+        self.assertEqual(self.db.read_bytes(),ledger)
+
+    def test_plan_does_not_emit_an_unreadable_serialized_result(self):
+        self.large_plan(65536)
+        request={k:v for k,v in self.binding.items() if k!='generation'};request['action']='register'
+        field=next(k for k in ('owner','audience','revision','authority_revision','policy_revision') if len(request[k])<=156)
+        request[field]+='x'*100
+        self.binding=json.loads(self.run_service('--control',request=request).stdout)['binding']
+        self.binding_path.write_text(json.dumps(self.binding));before=self.db.read_bytes()
+        self.make_plan(ok=False)
+        self.assertFalse((self.home/'config.toml').exists())
+        self.assertFalse((self.home/'delivery-setup.json').exists())
+        self.assertEqual(self.db.read_bytes(),before)
+
+    def test_over_limit_receipt_never_publishes_receipt_or_config(self):
+        ledger=self.large_plan(65537)
+        self.action('enable',ok=False)
+        self.assertFalse((self.home/'config.toml').exists())
+        self.assertFalse((self.home/'delivery-setup.json').exists())
+        self.assertEqual(list(self.home.iterdir()),[])
+        self.assertEqual(self.db.read_bytes(),ledger)
+
+    def test_over_limit_candidate_preserves_disabled_recovery_state(self):
+        self.make_plan();self.action('enable');self.action('disable')
+        saved={name:(self.home/name).read_bytes() for name in ('config.toml','delivery-setup.json')}
+        ledger=self.large_plan(65537);self.action('enable',ok=False)
+        self.assertEqual({name:(self.home/name).read_bytes() for name in saved},saved)
+        self.assertEqual(self.db.read_bytes(),ledger)
+
+    def test_disable_after_disposable_interpreter_retarget_and_removal(self):
+        import shutil
+        original=self.base/'python-original';shutil.copy2(Path(sys.executable).resolve(),original)
+        alias=self.base/'python-alias';alias.symlink_to(original)
+        def invoke(python,action):
+            args=['plan','--home',str(self.home),'--ledger',str(self.db),'--worker',str(self.worker),
+                  '--binding',str(self.binding_path)] if action=='plan' else [action,'--plan',str(self.plan_path),'--expected-sha256',self.digest]
+            return subprocess.run([str(python),'-B',str(self.helper),*args],
+                env={**os.environ,'PYTHONHOME':sys.base_prefix},capture_output=True,text=True,timeout=5)
+        planned=invoke(alias,'plan');self.assertEqual(planned.returncode,0,planned.stderr)
+        self.plan_path.write_text(planned.stdout);self.digest=json.loads(planned.stdout)['sha256']
+        self.assertEqual(invoke(alias,'enable').returncode,0)
+        receipt=(self.home/'delivery-setup.json').read_bytes()
+        alias.unlink();alias.symlink_to(Path(sys.executable).resolve())
+        for action in ('enable','status'):
+            self.assertEqual(invoke(alias,action).returncode,2)
+        self.assertEqual(json.loads(invoke(alias,'disable').stdout)['status'],'disabled')
+        # Reenable with the still-original executable, then remove only that copy.
+        self.assertEqual(invoke(original,'enable').returncode,0)
+        original.unlink();self.service.unlink()
+        self.assertEqual(json.loads(invoke(alias,'disable').stdout)['status'],'disabled')
+        self.assertEqual(invoke(alias,'disable').returncode,0)
+        self.assertEqual((self.home/'delivery-setup.json').read_bytes(),receipt)
+        self.assertEqual(self.db.read_bytes(),self.original)
+
+    def test_recorded_interpreter_must_be_structurally_valid(self):
+        value=self.make_plan();self.action('enable');self.service.unlink()
+        before=(self.home/'config.toml').read_bytes()
+        for path in ('python3','/tmp/../python','/tmp/./python','/tmp//python','/', '/tmp/python\x00', None):
+            changed=json.loads(json.dumps(value));changed['spec']['python']=path
+            changed['sha256']=hashlib.sha256(json.dumps(changed['spec'],sort_keys=True,
+                separators=(',',':'),ensure_ascii=True).encode()).hexdigest()
+            self.plan_path.write_text(json.dumps(changed));self.action('disable',ok=False,digest=changed['sha256'])
+            self.assertEqual((self.home/'config.toml').read_bytes(),before)
+
+    def test_write_helpers_reject_unreadable_outputs_before_mutation(self):
+        import runpy
+        helper=runpy.run_path(str(self.helper));target=self.trusted/'bounded-file'
+        with self.assertRaises(helper['Refused']):helper['create'](target,b'x'*65537)
+        self.assertFalse(target.exists())
+        helper['create'](target,b'x'*65536);self.assertEqual(len(helper['read'](target)),65536)
+        self.home.mkdir(mode=0o700);config=self.home/'config.toml';config.write_bytes(b'SYNTHETIC disabled')
+        with self.assertRaises(helper['Refused']):helper['replace_config'](self.home,b'SYNTHETIC disabled',b'x'*65537)
+        self.assertEqual(config.read_bytes(),b'SYNTHETIC disabled')
+
     def test_replaced_ledger_and_stale_digest_refuse(self):
         self.make_plan();self.action('enable',ok=False,digest='0'*64)
         replacement=self.trusted/'replacement';replacement.write_bytes(self.original);replacement.replace(self.db)
