@@ -270,6 +270,18 @@ def install(codex, root, base, env, actual_home):
         server.close()
 
 
+def sandbox_config(worker, trusted, actual_home):
+    filesystem = {':minimal':'read', str(worker):'write', str(trusted):'deny',
+                  str(actual_home / '.codex'):'deny', '/proc':'deny'}
+    # CLI dotted keys are split literally. Put path keys inside the TOML value
+    # so quotes and dots in paths are decoded by the TOML parser instead.
+    table = '{' + ','.join(json.dumps(path) + '=' + json.dumps(access)
+                           for path, access in filesystem.items()) + '}'
+    return ['-c', 'default_permissions="delivery-qualification"',
+            '-c', 'permissions.delivery-qualification.filesystem=' + table,
+            '-c', 'permissions.delivery-qualification.network.enabled=false']
+
+
 def sandbox_checks(codex, base, env, actual_home):
     worker, trusted = base / 'worker', base / 'trusted'
     worker.mkdir()
@@ -286,13 +298,7 @@ def sandbox_checks(codex, base, env, actual_home):
         connection, _ = listener.accept()
         connection.close()
     require(secret.read_text() == 'SYNTHETIC CONTROL ONLY', 'fixture-baseline-failed')
-    config = ['-c', 'default_permissions="delivery-qualification"',
-              '-c', 'permissions.delivery-qualification.filesystem.' + json.dumps(':minimal') + '="read"',
-              '-c', 'permissions.delivery-qualification.filesystem.' + json.dumps(str(worker)) + '="write"',
-              '-c', 'permissions.delivery-qualification.filesystem.' + json.dumps(str(trusted)) + '="deny"',
-              '-c', 'permissions.delivery-qualification.filesystem.' + json.dumps(str(actual_home / '.codex')) + '="deny"',
-              '-c', 'permissions.delivery-qualification.filesystem.' + json.dumps('/proc') + '="deny"',
-              '-c', 'permissions.delivery-qualification.network.enabled=false']
+    config = sandbox_config(worker, trusted, actual_home)
     code = '''import pathlib,socket,sys
 p=pathlib.Path(sys.argv[1]); out=pathlib.Path(sys.argv[2]); port=int(sys.argv[3])
 out.write_text('synthetic worker write')

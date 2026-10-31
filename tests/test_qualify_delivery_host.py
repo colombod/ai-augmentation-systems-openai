@@ -12,6 +12,30 @@ module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(module)
 
 
+class ProfileTests(unittest.TestCase):
+    def test_path_keys_are_toml_values_not_literal_dotted_override_segments(self):
+        import tomllib
+        worker = Path('/tmp/synthetic.worker/with space')
+        trusted = Path('/tmp/synthetic.trusted')
+        home = Path('/home/synthetic.user')
+        config = module.sandbox_config(worker, trusted, home)
+        parsed = {}
+        for flag, override in zip(config[::2], config[1::2]):
+            self.assertEqual(flag, '-c')
+            key, value = override.split('=', 1)
+            node = parsed
+            for segment in key.split('.')[:-1]:
+                node = node.setdefault(segment, {})
+            node[key.split('.')[-1]] = tomllib.loads('value=' + value)['value']
+        self.assertEqual(parsed, {'default_permissions':'delivery-qualification',
+            'permissions':{'delivery-qualification':{
+                'filesystem':{':minimal':'read',str(worker):'write',str(trusted):'deny',
+                              str(home / '.codex'):'deny','/proc':'deny'},
+                'network':{'enabled':False}}}})
+        for key in parsed['permissions']['delivery-qualification']['filesystem']:
+            self.assertTrue(key.startswith(('/', ':')))
+
+
 class SourceTests(unittest.TestCase):
     def test_opt_in_rejected_before_runtime(self):
         with patch.object(module.subprocess, 'run') as run:
