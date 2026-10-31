@@ -95,6 +95,40 @@ class ProtocolTests(unittest.TestCase):
             self.assertEqual(json.loads(output.getvalue())['reason'],'stage-failed')
             self.assertNotIn(sentinel,output.getvalue())
 
+    def test_exact_name_searches_require_all_three_strict_results(self):
+        calls = []
+        def search(rpc, script, thread, item):
+            name = item['arguments']['query']
+            self.assertEqual(item['arguments']['limit'], 1)
+            self.assertEqual(item['call_id'], 'discover-' + name.rsplit('_',1)[1])
+            calls.append(name)
+            result = copy.deepcopy(self.result)
+            result['call_id'] = item['call_id']
+            result['tools'][0]['tools'] = [t for t in result['tools'][0]['tools'] if t['name'] == name]
+            return result
+        with patch.object(probe, 'run_case', side_effect=search):
+            found = probe.discover_exact_tools(None,None,'thread',self.expected)
+        self.assertEqual(calls, sorted(probe.TOOLS))
+        self.assertEqual(set(found), probe.TOOLS)
+        for name in probe.TOOLS:
+            self.assertEqual(found[name], ('mcp__delivery_publication',name))
+
+    def test_targeted_search_never_accepts_wrong_extra_or_changed_tool(self):
+        name = sorted(probe.TOOLS)[0]; ident = 'discover-' + name.rsplit('_',1)[1]
+        for fault in ('wrong-name','extra','changed-schema','wrong-call'):
+            result = copy.deepcopy(self.result); result['call_id'] = ident
+            result['tools'][0]['tools'] = [t for t in result['tools'][0]['tools'] if t['name'] == name]
+            if fault == 'wrong-name': result['tools'][0]['tools'][0]['name'] = sorted(probe.TOOLS)[1]
+            if fault == 'extra': result['tools'][0]['tools'].append(result['tools'][0]['tools'][0])
+            if fault == 'changed-schema': result['tools'][0]['tools'][0]['parameters'] = {}
+            if fault == 'wrong-call': result['call_id'] = 'discover-other'
+            with self.subTest(fault=fault), self.assertRaises(probe.ProbeFailure):
+                probe.discovered_tools(result,self.expected,ident,{name})
+        with patch.object(probe,'run_case',return_value={
+                'type':'tool_search_output','call_id':ident,'status':'completed','execution':'client','tools':[]}):
+            with self.assertRaises(probe.ProbeFailure):
+                probe.discover_exact_tools(None,None,'thread',self.expected)
+
     def test_actual_native_header_and_structural_status(self):
         value = {'type':'function_call_output', 'output':[
             {'type':'input_text','text':'Wall time: 0.0100 seconds\nOutput:'},

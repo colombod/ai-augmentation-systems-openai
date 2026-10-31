@@ -258,10 +258,11 @@ def normalized_parameters(schema):
     return result
 
 
-def discovered_tools(result, expected):
+def discovered_tools(result, expected, call_id='discover', wanted=None):
+    wanted = TOOLS if wanted is None else wanted
     require(isinstance(result, dict) and result.get('type') == 'tool_search_output',
             'invalid discovery type', 'discovery-type')
-    require(result.get('call_id') == 'discover', 'invalid discovery call', 'discovery-call-id')
+    require(result.get('call_id') == call_id, 'invalid discovery call', 'discovery-call-id')
     require(result.get('status') == 'completed', 'invalid discovery status', 'discovery-status')
     require(result.get('execution') == 'client', 'invalid discovery execution', 'discovery-execution')
     tools = result.get('tools')
@@ -274,17 +275,17 @@ def discovered_tools(result, expected):
             require(all(isinstance(child, dict) and isinstance(child.get('name'), str)
                         for child in tool['tools']), 'invalid child tools', 'discovery-tools-shape')
     rows = schemas({'tools': tools})
-    require(len(rows) == 3, 'unexpected deferred tool count', 'discovery-tool-count')
+    require(len(rows) == len(wanted), 'unexpected deferred tool count', 'discovery-tool-count')
     found = {}
     for ns, name, spec in rows:
         require(ns == 'mcp__delivery_publication', 'unexpected namespace', 'discovery-namespace')
-        require(name in TOOLS, 'unexpected tool name', 'discovery-name')
+        require(name in wanted, 'unexpected tool name', 'discovery-name')
         require(name not in found, 'duplicate tool', 'discovery-duplicate')
         require(spec.get('type') == 'function', 'unexpected tool kind', 'discovery-tool-kind')
         require(spec.get('parameters') == normalized_parameters(expected[name]),
                 'deferred parameters differ from live inventory', 'discovery-parameters')
         found[name] = (ns, name)
-    require(set(found) == TOOLS, 'incomplete discovery', 'discovery-incomplete')
+    require(set(found) == wanted, 'incomplete discovery', 'discovery-incomplete')
     return found
 
 
@@ -358,9 +359,25 @@ def run_case(rpc, script, thread, item):
     finally:
         if getattr(rpc, 'evidence', None) is not None:
             # Filename is a fixed canned call ID, never a provider-supplied value.
-            require(item['call_id'] in {'discover','submit','publish','receipt'}, 'unknown case')
+            require(item['call_id'] in {'discover','discover-submit','discover-publish','discover-receipt',
+                                        'submit','publish','receipt'}, 'unknown case')
             write_json(rpc.evidence / (item['call_id'] + '.json'), {
                 'requests':script.requests, 'errors':script.errors, 'contacts':script.contacts})
+
+
+def discover_exact_tools(rpc, script, thread, expected):
+    # Pinned tool_search ranks matches; it is not an exhaustive inventory.
+    # Query each exact name and require its exact identity/schema. The separate
+    # full inventory and this aggregate must still contain all three tools.
+    found = {}
+    for name in sorted(TOOLS):
+        ident = 'discover-' + name.rsplit('_', 1)[1]
+        item = {'type':'tool_search_call', 'call_id':ident, 'execution':'client',
+                'arguments':{'query':name, 'limit':1}}
+        result = run_case(rpc, script, thread, item)
+        found.update(discovered_tools(result, expected, ident, {name}))
+    require(set(found) == TOOLS, 'incomplete discovery', 'discovery-incomplete')
+    return found
 
 
 def verify_handler_effects(root):
@@ -465,11 +482,8 @@ def _execute(codex, package, out, opt_in, progress):
             require_publication_inventory(inventory)
             expected = {n:t['inputSchema'] for n,t in inventory['data'][0]['tools'].items()}
             thread = rpc.call('thread/start', {'cwd':str(ROOT / 'worker')})['thread']['id']
-            discovery = {'type':'tool_search_call', 'call_id':'discover', 'execution':'client',
-                         'arguments':{'query':'delivery_publication submit publish receipt', 'limit':10}}
             progress['stage'] = 'discovery'
-            result = run_case(rpc, server.script, thread, discovery)
-            identities = discovered_tools(result, expected)
+            identities = discover_exact_tools(rpc, server.script, thread, expected)
             for suffix, status in [('submit','submitted'), ('publish','blocked'), ('receipt','not-released')]:
                 progress['stage'] = suffix
                 ns, name = identities['delivery_publication_' + suffix]
