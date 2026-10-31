@@ -276,10 +276,9 @@ TOOLS = [{'name':name, 'description':'Local reviewed bundle '+name.rsplit('_',1)
 
 def mcp(store, request):
     ident = request.get('id') if type(request) is dict else None
-    # MCP correlation IDs stay on the private host transport; never become release
-    # metadata. Support bounded ordinary integer/string IDs, not arbitrary objects.
-    ident = ident if ((type(ident) is int and 0 <= ident <= 2**31-1) or
-                     (type(ident) is str and re.fullmatch(r'[A-Za-z0-9_.:-]{1,64}', ident))) else None
+    # MCP correlation IDs are opaque strings or integers, bounded by the wire
+    # frame. They stay on the private transport, never in release metadata.
+    ident = ident if type(ident) in (int, str) else None
     try:
         if type(request) is not dict or request.get('jsonrpc') != '2.0':
             raise Refused()
@@ -290,7 +289,7 @@ def mcp(store, request):
         # them without invoking publication operations or treating them as review.
         if 'id' not in request:
             return None
-        if ident is None or set(request) - {'jsonrpc','method','id','params'}:
+        if ident is None:
             raise Refused()
         if method == 'initialize':
             result = {'protocolVersion':'2024-11-05', 'capabilities':{'tools':{}},
@@ -301,8 +300,7 @@ def mcp(store, request):
             result = {'tools':TOOLS}
         elif method == 'tools/call':
             params = request.get('params')
-            if type(params) is not dict or not {'name','arguments'} <= set(params) \
-                    or set(params) - {'name','arguments','_meta'}:
+            if type(params) is not dict or type(params.get('name')) is not str or 'arguments' not in params:
                 raise Refused()
             if '_meta' in params:
                 metadata = params['_meta']
@@ -310,7 +308,7 @@ def mcp(store, request):
                         type(metadata['progressToken']) not in (str, int)):
                     raise Refused()
             # Protocol metadata stays on the private transport. Only candidate
-            # arguments reach the ledger; _meta grants no content authority.
+            # arguments reach the ledger; extensions grant no content authority.
             state = store.call(params['name'], params['arguments'])
             result = {'content':[{'type':'text','text':canonical(state)}],
                       'isError':state['status'] in ('blocked','unknown')}

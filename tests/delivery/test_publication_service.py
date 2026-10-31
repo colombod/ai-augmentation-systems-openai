@@ -130,6 +130,54 @@ class ServiceTests(unittest.TestCase):
         self.assertEqual(self.session.call('publish'), 'blocked')
         self.assertEqual(self.count(),0)
 
+    def test_opaque_protocol_ids_echo_without_becoming_application_authority(self):
+        for ident in ('', 'request/1', ' space?!\n雪 ', 'x' * 4096, -1, 2147483648, 2**80):
+            with self.subTest(ident_type=type(ident).__name__):
+                reply = self.session.rpc('ping', ident=ident)
+                self.assertEqual(reply, {'jsonrpc':'2.0','id':ident,'result':{}})
+                reply = self.session.rpc('tools/call', {
+                    'name':'delivery_publication_submit',
+                    'arguments':{'operation_id':'sample-one','envelope':SAFE}}, ident=ident)
+                self.assertEqual(reply['id'], ident)
+                self.assertEqual(json.loads(reply['result']['content'][0]['text'])['status'], 'submitted')
+        self.assertEqual(self.session.call('publish'), 'blocked')
+        self.assertEqual(self.session.call('submit', ident='request/1'), 'blocked')
+        wrong = copy.deepcopy(SAFE)
+        wrong['destination'] = 'request/1'
+        self.assertEqual(self.session.call('submit', value=wrong), 'blocked')
+        self.assertEqual(self.count(), 0)
+
+    def test_protocol_extensions_are_ignored_outside_candidate_arguments(self):
+        request = {'jsonrpc':'2.0','id':'extension/request','method':'tools/call',
+                   'syntheticExtension':'SYNTHETIC_PRIVATE_TRANSPORT',
+                   'params':{'name':'delivery_publication_submit',
+                             'approved':True,'syntheticExtension':'SYNTHETIC_PRIVATE_TRANSPORT',
+                             'arguments':{'operation_id':'sample-one','envelope':SAFE}}}
+        self.session.process.stdin.write((json.dumps(request)+'\n').encode())
+        self.session.process.stdin.flush()
+        ready, _, _ = select.select([self.session.process.stdout], [], [], 5)
+        self.assertTrue(ready)
+        reply = json.loads(self.session.process.stdout.readline())
+        self.assertEqual(reply['id'], request['id'])
+        self.assertEqual(json.loads(reply['result']['content'][0]['text'])['status'], 'submitted')
+        self.assertEqual(self.session.call('publish'), 'blocked')
+        self.assertEqual(self.session.call('submit', approved=True), 'blocked')
+        with sqlite3.connect(self.db) as connection:
+            self.assertNotIn('SYNTHETIC_PRIVATE_TRANSPORT', '\n'.join(connection.iterdump()))
+        self.assertEqual(self.count(), 0)
+
+    def test_invalid_protocol_id_types_fail_and_next_request_stays_aligned(self):
+        for ident in (True, False, None, 1.5, [], {}):
+            wire = {'jsonrpc':'2.0','id':ident,'method':'ping'}
+            self.session.process.stdin.write((json.dumps(wire)+'\n').encode())
+            self.session.process.stdin.flush()
+            ready, _, _ = select.select([self.session.process.stdout], [], [], 5)
+            self.assertTrue(ready)
+            reply = json.loads(self.session.process.stdout.readline())
+            self.assertIsNone(reply['id'])
+            self.assertIn('error', reply)
+            self.assertEqual(self.session.rpc('ping')['result'], {})
+
     def test_notifications_do_not_reply_or_publish_and_next_request_stays_aligned(self):
         self.approved()
         notifications = [
@@ -263,6 +311,66 @@ class ServiceTests(unittest.TestCase):
             connection.execute('UPDATE reviews SET issued=issued+1000, expires=expires+2000')
         self.assertEqual(self.session.call('publish'), 'blocked')
         self.assertEqual(self.count(),0)
+
+    def _assert_commit_failure_reconciliation(self, after_effect):
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('publication_commit_test', SCRIPT)
+        service = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(service)
+        self.approved()
+        self.session.stop()
+        store = service.PublicationStore(self.db)
+        underlying = store.db
+
+        class CommitFailure:
+            def __init__(self):
+                self.armed = True
+                self.rollback_count = 0
+
+            def __getattr__(self, name):
+                return getattr(underlying, name)
+
+            def execute(self, sql, *args):
+                if sql == 'ROLLBACK':
+                    self.rollback_count += 1
+                if sql == 'COMMIT' and self.armed:
+                    self.armed = False
+                    if after_effect:
+                        underlying.execute(sql, *args)
+                    raise sqlite3.OperationalError('synthetic commit failure')
+                return underlying.execute(sql, *args)
+
+        connection = CommitFailure()
+        store.db = connection
+        args = {'operation_id':'sample-one','envelope':copy.deepcopy(SAFE)}
+        try:
+            self.assertEqual(store.call('delivery_publication_publish',args), {'status':'unknown'})
+            self.assertFalse(underlying.in_transaction)
+            self.assertEqual(connection.rollback_count, 0 if after_effect else 1)
+            self.assertEqual(self.count(), 1 if after_effect else 0)
+            expected_receipt = 'completed' if after_effect else 'not-released'
+            self.assertEqual(store.call('delivery_publication_receipt',args), {'status':expected_receipt})
+            # Receipt starts and commits another transaction on the same connection.
+            self.assertFalse(underlying.in_transaction)
+        finally:
+            underlying.close()
+        self.session = Session(self.db)
+        self.assertEqual(self.session.call('receipt'), expected_receipt)
+        self.assertEqual(self.session.call('publish'),'completed')
+        self.assertEqual(self.session.call('receipt'),'completed')
+        self.assertEqual(self.session.call('publish'),'completed')
+        wrong = copy.deepcopy(SAFE)
+        wrong['metadata']['title'] = 'SYNTHETIC unreviewed replacement'
+        self.assertEqual(self.session.call('receipt',value=wrong),'blocked')
+        self.assertEqual(self.session.call('publish',value=wrong),'blocked')
+        self.assertEqual(self.session.call('publish','replacement-id'),'blocked')
+        self.assertEqual(self.count(),1)
+
+    def test_failure_before_commit_rolls_back_and_same_connection_reconciles(self):
+        self._assert_commit_failure_reconciliation(after_effect=False)
+
+    def test_exception_after_real_commit_is_unknown_and_restart_has_one_receipt(self):
+        self._assert_commit_failure_reconciliation(after_effect=True)
 
     def test_restart_lost_response_idempotent_receipt_and_no_new_id_authority(self):
         self.approved()
