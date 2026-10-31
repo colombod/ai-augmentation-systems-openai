@@ -76,6 +76,8 @@ class AssessmentScopeTests(unittest.TestCase):
         data=self.data();self.assertEqual(self.record_cli(data).returncode,0);self.scope(data)
         for change in ('direction','source'):
             with self.subTest(change=change):
+                self.scope(data)
+                self.assertEqual(self.handoff()['assessment']['applicability'],'current')
                 if change=='direction':data['product']['next_slice']['text']='Synthetic reminder to refill the bird feeder at noon'
                 else:
                     (self.repo/'README.md').write_text('Synthetic newer source\n')
