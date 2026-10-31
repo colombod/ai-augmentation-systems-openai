@@ -642,6 +642,23 @@ class ServiceTests(unittest.TestCase):
         self.approved();self.assertEqual(self.session.call('publish'),'completed')
         self.assertEqual(self.session.call('review'),'blocked')
 
+    def test_expanding_id_is_refused_without_echo_or_ledger_effect(self):
+        request = {'jsonrpc':'2.0','id':'é' * 500000,'method':'tools/call',
+                   'params':{'name':'delivery_publication_submit',
+                             'arguments':{'operation_id':'oversized-id','envelope':SAFE}}}
+        wire = (json.dumps(request, ensure_ascii=False) + '\n').encode()
+        self.assertLess(len(wire), 1048576)
+        self.session.process.stdin.write(wire)
+        self.session.process.stdin.flush()
+        self.assertTrue(select.select([self.session.process.stdout],[],[],5)[0])
+        response = self.session.process.stdout.readline(1048578)
+        self.assertLess(len(response), 1024)
+        self.assertIsNone(json.loads(response)['id'])
+        with sqlite3.connect(self.session.db) as db:
+            self.assertEqual(db.execute('SELECT count(*) FROM drafts WHERE operation_id=?',
+                                        ('oversized-id',)).fetchone()[0], 0)
+        self.assertEqual(self.session.rpc('ping')['result'], {})
+
     def test_malformed_duplicate_keys_and_oversized_frame_do_not_echo_payload(self):
         self.session.process.stdin.write(b'{"jsonrpc":"2.0","id":1,"id":2,"method":"ping"}\n')
         self.session.process.stdin.flush()
@@ -668,6 +685,26 @@ class ServiceTests(unittest.TestCase):
         value['body'] += 'x'
         self.assertEqual(self.session.call('submit','over-limit',value), 'blocked')
         self.assertEqual(self.count(),1)
+
+
+class ResponseBoundaryTests(unittest.TestCase):
+    def test_serialized_payload_and_correlation_id_exact_limits(self):
+        import importlib.util
+        from unittest.mock import Mock
+        spec = importlib.util.spec_from_file_location('publication_boundary', SCRIPT)
+        module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
+        value = 'a' * (module.MAX_FRAME - 2)
+        self.assertEqual(len(module.response_frame(value)), module.MAX_FRAME + 1)
+        with self.assertRaises(module.Refused): module.response_frame(value + 'a')
+        ident = 'a' * (module.MAX_RPC_ID - 2)
+        store = Mock()
+        reply = module.mcp(store, {'jsonrpc':'2.0','id':ident,'method':'tools/list'})
+        self.assertEqual(reply['id'], ident)
+        self.assertLessEqual(len(module.response_frame(reply)), module.MAX_FRAME + 1)
+        reply = module.mcp(store, {'jsonrpc':'2.0','id':ident+'a','method':'tools/call',
+                                  'params':{'name':'delivery_publication_submit','arguments':{}}})
+        self.assertIsNone(reply['id'])
+        store.call.assert_not_called()
 
 
 if __name__ == '__main__':

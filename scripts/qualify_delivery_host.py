@@ -150,10 +150,10 @@ def receive_messages(stream, messages):
     """Bound allocation before parsing; overflow/corruption closes the channel."""
     try:
         while True:
-            line = stream.readline(MAX_RPC_FRAME + 1)
+            line = stream.readline(MAX_RPC_FRAME + 2)
             if not line:
                 break
-            if len(line) > MAX_RPC_FRAME or not line.endswith('\n'):
+            if len(line) > MAX_RPC_FRAME + 1 or not line.endswith(b'\n'):
                 raise ValueError('invalid-frame')
             message = json.loads(line)
             if not isinstance(message, dict):
@@ -181,7 +181,7 @@ def receive_messages(stream, messages):
 
 class RPC:
     def __init__(self, argv, env, cwd):
-        self.process = subprocess.Popen(argv, env=env, cwd=cwd, text=True,
+        self.process = subprocess.Popen(argv, env=env, cwd=cwd,
             stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
         self.messages = queue.Queue(maxsize=MAX_RPC_QUEUE)
         self.serial = 0
@@ -189,7 +189,9 @@ class RPC:
                          args=(self.process.stdout, self.messages), daemon=True).start()
 
     def send(self, value):
-        self.process.stdin.write(json.dumps(value) + '\n')
+        frame = (json.dumps(value) + '\n').encode('utf-8')
+        require(len(frame) <= MAX_RPC_FRAME + 1, 'rpc-send-frame-too-large')
+        self.process.stdin.write(frame)
         self.process.stdin.flush()
 
     def call(self, method, params, mcp=False):
@@ -340,6 +342,152 @@ def sandbox_config(worker, trusted, actual_home, native_codex):
             '-c', 'permissions.delivery-qualification.network.enabled=false']
 
 
+# Fabricated fixture only; no broker data or caller environment is inspected.
+PARENT_HELPER = r'''import json,os,sys
+f=open(sys.argv[1],'rb')
+print(json.dumps({'pid':os.getpid(),'fd':f.fileno()}),flush=True)
+sys.stdin.buffer.read(1)
+'''
+
+PARENT_PROBE = r'''import errno,json,os,pathlib,stat,sys
+info=json.loads(sys.argv[1]); approved=json.loads(sys.argv[2])
+def fail(label):
+ print(label,file=sys.stderr); raise SystemExit(12)
+def denied(action,label):
+ try: action()
+ except OSError as e:
+  if e.errno in (errno.EACCES,errno.EPERM,errno.ENOENT): return
+  fail('parent-route-error:'+label)
+ # Even an empty/partial read is accessible, not proof of protection.
+ fail('parent-route-readable:'+label)
+def clean_environment(raw):
+ if not raw or not raw.endswith(b'\0'): fail('worker-environment-incomplete')
+ parts=raw[:-1].split(b'\0'); values={}
+ for part in parts:
+  key,sep,value=part.partition(b'=')
+  if not sep or key in values: fail('worker-environment-invalid')
+  values[key]=value
+ expected={k.encode():v.encode() for k,v in approved.items()}
+ optional={b'PWD':os.getcwd().encode(),b'CODEX_SANDBOX_NETWORK_DISABLED':b'1'}
+ for key,value in values.items():
+  if key in expected and value==expected[key]: continue
+  if key in optional and value==optional[key]: continue
+  fail('worker-environment-unsanitized')
+ if any(values.get(k)!=v for k,v in expected.items()): fail('worker-environment-missing')
+clean_environment(pathlib.Path('/proc/self/environ').read_bytes())
+if os.getcwd()!=info['worker']: fail('worker-directory-changed')
+own=os.readlink('/proc/self/ns/pid')
+if own==info['namespace']: fail('parent-pid-namespace-visible')
+proc=pathlib.Path('/proc')/str(info['pid'])
+# A host numeric PID may name an unrelated process in this new namespace.
+collision=False
+try:
+ target=os.readlink(proc/'ns/pid')
+except OSError as e:
+ if e.errno not in (errno.EACCES,errno.EPERM,errno.ENOENT): fail('parent-identity-error')
+else:
+ if target!=own: fail('parent-namespace-unexpected')
+ collision=True
+if collision:
+ # Readable colliding metadata must itself be sanitized, never merely lack a marker.
+ try: raw=(proc/'environ').read_bytes()
+ except OSError as e:
+  if e.errno not in (errno.EACCES,errno.EPERM,errno.ENOENT): fail('parent-environ-error')
+ else: clean_environment(raw)
+else:
+ denied(lambda:(proc/'environ').read_bytes(),'environ')
+for label,path in [('direct',pathlib.Path(info['file'])),
+                   ('root',proc/'root'/info['file'].lstrip('/')),
+                   ('cwd',proc/'cwd'/pathlib.Path(info['file']).name)]:
+ denied(lambda:path.read_bytes(),label)
+fdpath=proc/'fd'/str(info['fd'])
+if collision:
+ try: meta=fdpath.stat()
+ except OSError as e:
+  if e.errno not in (errno.EACCES,errno.EPERM,errno.ENOENT): fail('parent-fd-error')
+ else:
+  if [meta.st_dev,meta.st_ino]==info['file_identity']: fail('parent-fd-visible')
+  # An unrelated descriptor is not the outside fixture. Do not read pipes/stdio.
+else:
+ denied(lambda:fdpath.read_bytes(),'fd')
+# Inspect regular-file/directory capabilities only, never consume protocol pipes.
+for entry in pathlib.Path('/proc/self/fd').iterdir():
+ try: meta=entry.stat()
+ except OSError as e:
+  if e.errno==errno.ENOENT: continue # iterdir's closed directory descriptor
+  fail('worker-fd-inspection-error')
+ if [meta.st_dev,meta.st_ino]==info['file_identity']: fail('worker-inherited-file')
+ if stat.S_ISDIR(meta.st_mode):
+  fail('worker-inherited-directory')
+print('trusted-parent-routes-passed')
+'''
+
+
+def parent_baseline(helper, info):
+    """Verify the SAME live synthetic process and all aliases before/after launch."""
+    require(helper.poll() is None, 'parent-fixture-dead')
+    proc = Path('/proc') / str(info['pid'])
+    require(os.readlink(proc / 'ns/pid') == info['namespace'], 'parent-fixture-namespace-changed')
+    require((proc / 'stat').read_text().rsplit(')', 1)[1].split()[19] == info['start'],
+            'parent-fixture-process-changed')
+    require(b'DELIVERY_SYNTHETIC_PARENT=outside-only\0' in (proc / 'environ').read_bytes(),
+            'parent-fixture-environment-missing')
+    paths = (Path(info['file']), proc/'fd'/str(info['fd']),
+             proc/'root'/info['file'].lstrip('/'), proc/'cwd'/Path(info['file']).name)
+    for path in paths:
+        meta = path.stat()
+        require([meta.st_dev,meta.st_ino] == info['file_identity'], 'parent-fixture-identity-changed')
+        require(path.read_bytes() == b'SYNTHETIC CONTROL ONLY', 'parent-fixture-content-changed')
+
+
+def trusted_parent_checks(prefix, env, worker, secret):
+    helper = subprocess.Popen(['/usr/bin/python3','-c',PARENT_HELPER,str(secret)],
+        env={**env,'DELIVERY_SYNTHETIC_PARENT':'outside-only'}, cwd=secret.parent,
+        stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
+        close_fds=True)
+    try:
+        import select
+        require(select.select([helper.stdout], [], [], 5)[0], 'parent-fixture-timeout')
+        line = helper.stdout.readline(1025)
+        require(len(line) <= 1024 and line.endswith(b'\n'), 'parent-fixture-frame-invalid')
+        info = json.loads(line)
+        require(set(info) == {'pid','fd'} and info['pid'] == helper.pid
+                and type(info['fd']) is int and info['fd'] >= 3, 'parent-fixture-invalid')
+        proc = Path('/proc') / str(helper.pid)
+        meta = secret.stat()
+        info.update(file=str(secret), worker=str(worker), file_identity=[meta.st_dev,meta.st_ino],
+                    namespace=os.readlink(proc/'ns/pid'),
+                    start=(proc/'stat').read_text().rsplit(')',1)[1].split()[19])
+        parent_baseline(helper, info)
+        # Keep real synthetic file/directory capabilities open in the launcher;
+        # Python's non-inheritable defaults and close_fds must exclude both.
+        directory_fd = os.open(secret.parent, os.O_RDONLY | os.O_DIRECTORY)
+        try:
+            with secret.open('rb') as sentinel:
+                require(not os.get_inheritable(directory_fd)
+                        and not os.get_inheritable(sentinel.fileno()), 'parent-fd-inheritable')
+                require(sentinel.read() == b'SYNTHETIC CONTROL ONLY', 'parent-fd-baseline-failed')
+                require(os.fstat(directory_fd).st_ino == secret.parent.stat().st_ino,
+                        'parent-directory-baseline-failed')
+                result = subprocess.run([*prefix, '/usr/bin/python3','-c',PARENT_PROBE,
+                                         json.dumps(info),json.dumps(env)],
+                    stdin=subprocess.DEVNULL, text=True,capture_output=True,timeout=45,
+                    env=env,cwd=worker,close_fds=True)
+        finally:
+            os.close(directory_fd)
+        # Recheck outside identity even when the restricted probe fails.
+        parent_baseline(helper, info)
+        if result.returncode:
+            raise SyntheticProbeFailure(result.stderr, result.returncode)
+        require(result.stdout.strip() == 'trusted-parent-routes-passed', 'parent-probe-result-invalid')
+    finally:
+        helper.terminate()
+        try: helper.wait(timeout=5)
+        except subprocess.TimeoutExpired:
+            helper.kill(); helper.wait()
+        helper.stdin.close(); helper.stdout.close()
+
+
 def sandbox_checks(codex, base, env, actual_home):
     worker, trusted = base / 'worker', base / 'trusted'
     worker.mkdir()
@@ -356,14 +504,23 @@ def sandbox_checks(codex, base, env, actual_home):
         connection, _ = listener.accept()
         connection.close()
     require(secret.read_text() == 'SYNTHETIC CONTROL ONLY', 'fixture-baseline-failed')
+    secret.write_text('SYNTHETIC CONTROL ONLY')
+    before = secret.stat()
     native_codex = resolve_native_codex(codex, env, base)
     config = sandbox_config(worker, trusted, actual_home, native_codex)
-    code = '''import pathlib,socket,sys
+    # Restore the approved PATH after native startup helpers; no broader grant.
+    config += ['-c', 'shell_environment_policy.set=' + '{PATH=' + json.dumps(env['PATH']) + '}']
+    prefix = [str(native_codex), *config, 'sandbox', '--permission-profile', 'delivery-qualification', '--']
+    code = '''import errno,pathlib,socket,sys
 p=pathlib.Path(sys.argv[1]); out=pathlib.Path(sys.argv[2]); port=int(sys.argv[3])
 out.write_text('synthetic worker write')
-for label,action in (('control-read',lambda:p.read_bytes()),('control-write',lambda:p.write_text('changed')),('proc-read',lambda:pathlib.Path('/proc/self/environ').read_bytes()),('network-connect',lambda:socket.create_connection(('127.0.0.1',port),timeout=2))):
+for label,action in (('control-read',lambda:p.read_bytes()),('control-write',lambda:p.write_text('changed')),('network-connect',lambda:socket.create_connection(('127.0.0.1',port),timeout=2))):
  try: action()
- except (OSError,PermissionError): continue
+ except OSError as error:
+  expected = (errno.EACCES,errno.EPERM) if label == 'network-connect' else (errno.EACCES,errno.EPERM,errno.ENOENT)
+  if error.errno in expected: continue
+  print('unexpected-route-error:'+label,file=sys.stderr)
+  raise SystemExit(10)
  print('unexpected-route-success:'+label,file=sys.stderr)
  raise SystemExit(9)
 print('restricted-routes-passed')
@@ -371,16 +528,21 @@ print('restricted-routes-passed')
     try:
         # Detail mode is internal to this exact fixed synthetic invocation. There
         # is deliberately no CLI flag or generic run() option to enable it elsewhere.
-        result = subprocess.run([codex, *config, 'sandbox', '--permission-profile', 'delivery-qualification',
-            '--', '/usr/bin/python3', '-c', code, str(secret), str(worker / 'result'), str(port)],
+        result = subprocess.run([*prefix, '/usr/bin/python3', '-c', code, str(secret), str(worker / 'result'), str(port)],
             input=None, text=True, capture_output=True, timeout=45, env=env, cwd=worker)
         if result.returncode != 0:
             raise SyntheticProbeFailure(result.stderr, result.returncode)
         require(result.stdout.strip() == 'restricted-routes-passed', 'sandbox-probe-result-invalid')
+        trusted_parent_checks(prefix, env, worker, secret)
+        after = secret.stat()
+        require((before.st_dev,before.st_ino) == (after.st_dev,after.st_ino), 'control-fixture-changed')
         require(secret.read_text() == 'SYNTHETIC CONTROL ONLY', 'control-fixture-mutated')
+        # A missing listener must not be mistaken for network isolation.
+        with socket.create_connection(('127.0.0.1', port), timeout=2):
+            connection, _ = listener.accept()
+            connection.close()
     finally:
         listener.close()
-    prefix = [codex, *config, 'sandbox', '--permission-profile', 'delivery-qualification', '--']
     return trusted, prefix, worker
 
 
@@ -404,6 +566,8 @@ def consume_released_bundle(sandbox_prefix, env, worker, db, control, output):
     require(db.is_file() and control.is_file(), 'consumer-denial-fixture-missing')
     fixtures = (db, control)
     before = [(info.st_dev, info.st_ino) for info in (path.stat() for path in fixtures)]
+    for path in fixtures:
+        path.read_bytes()
     result = run([*sandbox_prefix, '/usr/bin/python3', '-c', CONSUMER_CODE,
                   str(db), str(control)], env, worker, output)
     # ENOENT inside a namespace is evidence only while the trusted fixtures still
@@ -440,16 +604,21 @@ def service_checks(package, trusted, base, env, sandbox_prefix, worker):
         return json.loads(reply['content'][0]['text'])['status']
     # The restricted candidate has only its stdin/stdout data channel. The
     # trusted broker owns the ledger and the approval CLI, outside that worker.
-    candidate_code = r"""import json,sys,pathlib,subprocess
-value=json.loads(sys.argv[1]); ledger=pathlib.Path(sys.argv[2]); service=sys.argv[3]
-for action in (lambda:ledger.read_bytes(),lambda:ledger.open('ab')):
+    fixtures = (db, service)
+    before = [(info.st_dev,info.st_ino) for info in (path.stat() for path in fixtures)]
+    for path in fixtures:
+        path.read_bytes()
+    with db.open('ab'):
+        pass
+    candidate_code = r"""import errno,json,sys,pathlib
+value=json.loads(sys.argv[1]); ledger=pathlib.Path(sys.argv[2]); service=pathlib.Path(sys.argv[3])
+# These are resource-isolation checks, not handler authorization checks.
+for action in (lambda:ledger.read_bytes(),lambda:ledger.open('ab'),lambda:service.read_bytes()):
  try: action()
- except OSError: continue
+ except OSError as error:
+  if error.errno in (errno.EACCES,errno.EPERM,errno.ENOENT): continue
+  raise SystemExit(11)
  raise SystemExit(10)
-# This probes denied resource access, not handler authorization: the installed
-# script is inaccessible and the fabricated control request is itself invalid.
-forged=subprocess.run(['/usr/bin/python3',service,'--db',str(ledger),'--control'],input='{}',text=True,capture_output=True,timeout=5)
-assert forged.returncode != 0
 
 def call(i,method,params):
  print(json.dumps({'jsonrpc':'2.0','id':i,'method':method,'params':params}),flush=True)
@@ -491,6 +660,8 @@ print(json.dumps({'done':True}),flush=True)
                 rpc = start()
         require(seen == [1,2,3,4,5,6], 'candidate-journey-incomplete')
         require(candidate.process.wait(timeout=5) == 0, 'candidate-assertion-failed')
+        after = [(info.st_dev,info.st_ino) for info in (path.stat() for path in fixtures)]
+        require(before == after, 'candidate-denial-fixture-changed')
     finally:
         candidate.close()
         rpc.close()

@@ -19,6 +19,7 @@ import sys
 MAX_FRAME = 1_048_576
 MAX_ENVELOPE = MAX_FRAME - 32768  # Reserve worst-case escaped control-binding overhead.
 MAX_OPERATIONS = 256
+MAX_RPC_ID = MAX_FRAME - 16384  # Canonical ASCII bytes; reserve response overhead.
 NOW = "((julianday('now') - 2440587.5) * 86400.0)"
 IDENTIFIER = re.compile(r'[a-z][a-z0-9-]{0,63}')
 BINDING_FIELDS = {'destination', 'owner', 'audience', 'visibility', 'revision',
@@ -307,8 +308,12 @@ TOOLS = [{'name':name, 'description':'Local reviewed bundle '+name.rsplit('_',1)
 def mcp(store, request):
     ident = request.get('id') if type(request) is dict else None
     # MCP correlation IDs are opaque strings or integers, bounded by the wire
-    # frame. They stay on the private transport, never in release metadata.
+    # frame and serialized response budget. They stay on the private transport,
+    # never in release metadata.
     ident = ident if type(ident) in (int, str) else None
+    if ident is not None and len(canonical(ident)) > MAX_RPC_ID:
+        # Refuse before any ledger operation; do not echo an unbounded ID.
+        return {'jsonrpc':'2.0','id':None,'error':{'code':-32600,'message':'Request blocked'}}
     try:
         if type(request) is not dict or request.get('jsonrpc') != '2.0':
             raise Refused()
@@ -349,6 +354,14 @@ def mcp(store, request):
         return {'jsonrpc':'2.0','id':ident,'error':{'code':-32600,'message':'Request blocked'}}
 
 
+def response_frame(result):
+    # MAX_FRAME counts payload bytes, excluding the mandatory newline.
+    output = canonical(result).encode('ascii')
+    if len(output) > MAX_FRAME:
+        raise Refused()
+    return output + b'\n'
+
+
 def serve(store, control_fd=None):
     selector = selectors.DefaultSelector()
     selector.register(0, selectors.EVENT_READ, 'candidate')
@@ -376,7 +389,7 @@ def serve(store, control_fd=None):
                 except Exception:
                     result = {'status':'blocked'} if key.data == 'control' else mcp(store, None)
                 if result is not None:
-                    output = (canonical(result)+'\n').encode()
+                    output = response_frame(result)
                     fd = key.fd if key.data == 'control' else 1
                     while output:
                         output = output[os.write(fd, output):]

@@ -13,8 +13,74 @@ spec.loader.exec_module(module)
 
 
 class ProfileTests(unittest.TestCase):
+    def test_candidate_resource_checks_reject_unrelated_errors_and_access(self):
+        import ast
+        import errno
+        tree = ast.parse(PATH.read_text())
+        function = next(n for n in tree.body if isinstance(n,ast.FunctionDef)
+                        and n.name == 'service_checks')
+        code = next(n.value.value for n in ast.walk(function) if isinstance(n,ast.Assign)
+                    and any(isinstance(t,ast.Name) and t.id == 'candidate_code' for t in n.targets))
+        prelude = code.split('\ndef call(',1)[0]
+        labels = ('ledger-read','ledger-write','service-read')
+        for target in labels:
+            for number in (None,errno.EIO,errno.EMFILE,errno.EBADF,errno.EACCES,errno.EPERM,errno.ENOENT):
+                with self.subTest(target=target,errno=number):
+                    def action(label):
+                        error = number if label == target else errno.EACCES
+                        if error is not None: raise OSError(error,'SYNTHETIC PRIVATE ERROR')
+                        return b'SYNTHETIC PRIVATE CONTENT'
+                    class FakePath:
+                        def __init__(self,name): self.name=name
+                        def read_bytes(self):
+                            return action('service-read' if self.name == '/synthetic/service' else 'ledger-read')
+                        def open(self,mode):
+                            if mode != 'ab': raise AssertionError('unexpected mode')
+                            return action('ledger-write')
+                    with patch('sys.argv',['probe','{}','/synthetic/ledger','/synthetic/service']), \
+                         patch('pathlib.Path',FakePath):
+                        if number in (errno.EACCES,errno.EPERM,errno.ENOENT):
+                            exec(prelude,{})
+                        else:
+                            with self.assertRaises(SystemExit) as raised:
+                                exec(prelude,{})
+                            self.assertEqual(raised.exception.code,10 if number is None else 11)
+
+    def test_probe_requires_positive_baselines_and_stable_fixture(self):
+        import tempfile
+        from unittest.mock import MagicMock
+        for change in ('none','removed','replaced','mutated'):
+            with self.subTest(change=change), tempfile.TemporaryDirectory() as directory:
+                base = Path(directory)
+                listener = MagicMock()
+                listener.getsockname.return_value = ('127.0.0.1',12345)
+                listener.accept.return_value = (MagicMock(),None)
+                def child(*args,**kwargs):
+                    fixture = base/'trusted/synthetic-control'
+                    self.assertEqual(fixture.read_text(),'SYNTHETIC CONTROL ONLY')
+                    if change == 'removed': fixture.unlink()
+                    if change == 'replaced':
+                        fixture.rename(fixture.with_name('old-control'))
+                        fixture.write_text('SYNTHETIC CONTROL ONLY')
+                    if change == 'mutated': fixture.write_text('changed')
+                    return module.subprocess.CompletedProcess(args[0],0,'restricted-routes-passed','')
+                with patch.object(module,'resolve_native_codex',return_value=Path('/usr/bin/synthetic-codex')), \
+                     patch.object(module,'trusted_parent_checks') as baseline, \
+                     patch.object(module.subprocess,'run',side_effect=child), \
+                     patch.object(module.socket,'socket',return_value=listener), \
+                     patch.object(module.socket,'create_connection') as connect:
+                    if change == 'none':
+                        module.sandbox_checks('codex',base,{'LANG':'C.UTF-8','PATH':'/usr/bin:/bin'},Path('/synthetic/home'))
+                        self.assertEqual(connect.call_count,2)
+                    else:
+                        with self.assertRaises((OSError,module.Unsupported)):
+                            module.sandbox_checks('codex',base,{'LANG':'C.UTF-8','PATH':'/usr/bin:/bin'},Path('/synthetic/home'))
+                    baseline.assert_called_once()
+                    listener.close.assert_called_once()
+
     def test_fixed_probe_identifies_each_unexpected_success_without_payload(self):
         import ast
+        import errno
         from contextlib import redirect_stdout, redirect_stderr
         tree = ast.parse(PATH.read_text())
         function = next(node for node in tree.body if isinstance(node,ast.FunctionDef)
@@ -22,12 +88,19 @@ class ProfileTests(unittest.TestCase):
         code = next(node.value.value for node in ast.walk(function)
                     if isinstance(node,ast.Assign) and any(isinstance(t,ast.Name)
                     and t.id == 'code' for t in node.targets))
-        labels = ('control-read','control-write','proc-read','network-connect')
-        for allowed in (*labels, None):
-            with self.subTest(allowed=allowed):
+        labels = ('control-read','control-write','network-connect')
+        cases = [(label,None,9) for label in labels] + [(None,None,0)]
+        for label in labels:
+            cases += [(label,number,10) for number in (errno.EIO,errno.EMFILE,errno.EBADF,errno.ECONNREFUSED)]
+            cases += [(label,number,0) for number in (errno.EACCES,errno.EPERM)]
+            cases.append((label,errno.ENOENT,10 if label == 'network-connect' else 0))
+        for allowed,number,exit_code in cases:
+            with self.subTest(allowed=allowed,errno=number):
                 def action(label):
                     if label != allowed:
-                        raise PermissionError('SYNTHETIC PRIVATE DIAGNOSTIC')
+                        raise PermissionError(errno.EACCES,'SYNTHETIC PRIVATE DIAGNOSTIC')
+                    if number is not None:
+                        raise OSError(number,'SYNTHETIC PRIVATE DIAGNOSTIC')
                     return b'SYNTHETIC PRIVATE PAYLOAD'
                 class FakePath:
                     def __init__(self,name): self.name = name
@@ -40,15 +113,15 @@ class ProfileTests(unittest.TestCase):
                      patch('pathlib.Path',FakePath), \
                      patch('socket.create_connection',side_effect=lambda *a,**k:action('network-connect')), \
                      redirect_stdout(stdout), redirect_stderr(stderr):
-                    if allowed is None:
+                    if exit_code == 0:
                         exec(code,{})
                     else:
                         with self.assertRaises(SystemExit) as raised:
                             exec(code,{})
-                        self.assertEqual(raised.exception.code,9)
-                self.assertEqual(stderr.getvalue(),'' if allowed is None else
-                                 'unexpected-route-success:'+allowed+'\n')
-                self.assertEqual(stdout.getvalue(),'restricted-routes-passed\n' if allowed is None else '')
+                        self.assertEqual(raised.exception.code,exit_code)
+                prefix = 'unexpected-route-success:' if exit_code == 9 else 'unexpected-route-error:'
+                self.assertEqual(stderr.getvalue(),'' if exit_code == 0 else prefix+allowed+'\n')
+                self.assertEqual(stdout.getvalue(),'restricted-routes-passed\n' if exit_code == 0 else '')
 
     def test_native_grant_cannot_override_protected_or_worker_roots(self):
         worker,trusted,home = Path('/tmp/worker'),Path('/tmp/trusted'),Path('/home/example')
@@ -79,6 +152,109 @@ class ProfileTests(unittest.TestCase):
                 'network':{'enabled':False}}}})
         for key in parsed['permissions']['delivery-qualification']['filesystem']:
             self.assertTrue(key.startswith(('/', ':')))
+
+
+class ParentProbeTests(unittest.TestCase):
+    def probe(self, route=None, outcome=None, collision=False, descriptor=None, environment=None):
+        import errno, json, stat
+        from pathlib import PurePosixPath
+        from types import SimpleNamespace
+        from contextlib import redirect_stdout, redirect_stderr
+        info = {'pid':98765,'fd':7,'namespace':'pid:[100]', 'worker':'/worker',
+                'file':'/trusted/synthetic-control','file_identity':[2,3]}
+        approved = {'PATH':'/usr/bin:/bin','LANG':'C.UTF-8'}
+        paths = {'/proc/98765/environ':'environ', '/trusted/synthetic-control':'direct',
+                 '/proc/98765/root/trusted/synthetic-control':'root',
+                 '/proc/98765/cwd/synthetic-control':'cwd', '/proc/98765/fd/7':'fd'}
+        def action(name):
+            if name != route: raise PermissionError(errno.EACCES,'not echoed')
+            if isinstance(outcome, BaseException): raise outcome
+            return outcome
+        class FakePath:
+            def __init__(self, name): self.path = PurePosixPath(name)
+            def __truediv__(self, name): return FakePath(str(self.path / name))
+            @property
+            def name(self): return self.path.name
+            def read_bytes(self):
+                if str(self.path) == '/proc/self/environ':
+                    return environment if environment is not None else b'PATH=/usr/bin:/bin\0LANG=C.UTF-8\0'
+                if collision and str(self.path) == '/proc/98765/environ':
+                    return b'PATH=/usr/bin:/bin\0LANG=C.UTF-8\0'
+                return action(paths[str(self.path)])
+            def stat(self):
+                if str(self.path) == '/proc/self/fd/8':
+                    return SimpleNamespace(st_dev=2,st_ino=3 if descriptor=='file' else 4,
+                                           st_mode=stat.S_IFDIR if descriptor=='directory' else stat.S_IFREG)
+                if collision and str(self.path) == '/proc/98765/fd/7':
+                    return SimpleNamespace(st_dev=2,st_ino=4)
+                return action(paths[str(self.path)])
+            def iterdir(self): return [FakePath('/proc/self/fd/8')] if descriptor else []
+        def readlink(path):
+            if str(path) == '/proc/self/ns/pid': return 'pid:[200]'
+            if collision: return 'pid:[200]'
+            raise FileNotFoundError(errno.ENOENT,'not echoed')
+        stdout,stderr = io.StringIO(),io.StringIO()
+        with patch('sys.argv',['probe',json.dumps(info),json.dumps(approved)]), \
+             patch('pathlib.Path',FakePath), patch('os.readlink',side_effect=readlink), \
+             patch('os.getcwd',return_value='/worker'), redirect_stdout(stdout), redirect_stderr(stderr):
+            try: exec(module.PARENT_PROBE,{})
+            except SystemExit as e: code=e.code
+            else: code=0
+        self.assertNotIn('not echoed', stderr.getvalue())
+        return code, stdout.getvalue(), stderr.getvalue()
+
+    def test_only_permission_or_namespace_absence_passes(self):
+        import errno
+        for route in ('environ','direct','root','cwd','fd'):
+            for number in (errno.EACCES,errno.EPERM,errno.ENOENT,errno.EIO,errno.EMFILE,errno.EBADF,None):
+                with self.subTest(route=route,number=number):
+                    error=TimeoutError() if number is None else OSError(number,'not echoed')
+                    code,out,err=self.probe(route,error)
+                    self.assertEqual(code,0 if number in (errno.EACCES,errno.EPERM,errno.ENOENT) else 12)
+            for readable in (b'',b'SYN',b'SYNTHETIC CONTROL ONLY'):
+                self.assertEqual(self.probe(route,readable)[0],12)
+
+    def test_pid_collision_is_not_confused_with_outside_process(self):
+        self.assertEqual(self.probe(collision=True)[0],0)
+        self.assertEqual(self.probe('root',b'',collision=True)[0],12)
+
+    def test_inherited_file_and_ancestor_directory_fail(self):
+        for descriptor in ('file','directory'):
+            self.assertEqual(self.probe(descriptor=descriptor)[0],12)
+
+    def test_own_environment_requires_complete_exact_approved_values(self):
+        for environment in (b'',b'PATH=/usr/bin:/bin',b'PATH=/wrong\0LANG=C.UTF-8\0',
+                            b'PATH=/usr/bin:/bin\0LANG=C.UTF-8\0PRIVATE=value\0',
+                            b'PATH=/usr/bin:/bin\0LANG=C.UTF-8\0PWD=/wrong\0'):
+            self.assertEqual(self.probe(environment=environment)[0],12)
+
+    def test_live_parent_fixture_cannot_change_during_probe(self):
+        import tempfile
+        for change in ('partial','empty','replaced','missing'):
+            with self.subTest(change=change), tempfile.TemporaryDirectory() as directory:
+                base=Path(directory);worker=base/'worker';trusted=base/'trusted'
+                worker.mkdir();trusted.mkdir();secret=trusted/'synthetic-control'
+                secret.write_text('SYNTHETIC CONTROL ONLY')
+                def fake_probe(*args, **kwargs):
+                    if change == 'replaced':
+                        secret.rename(trusted/'old-control')
+                        secret.write_text('SYNTHETIC CONTROL ONLY')
+                    elif change == 'missing': secret.unlink()
+                    else: secret.write_text('SYN' if change == 'partial' else '')
+                    return module.subprocess.CompletedProcess(args[0],0,'trusted-parent-routes-passed','')
+                with patch.object(module.subprocess,'run',side_effect=fake_probe):
+                    with self.assertRaises((module.Unsupported,OSError)):
+                        module.trusted_parent_checks([],{'PATH':'/usr/bin:/bin','LANG':'C.UTF-8'},worker,secret)
+
+    def test_live_synthetic_parent_baselines_and_unsandboxed_negative_control(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as directory:
+            base=Path(directory);worker=base/'worker';trusted=base/'trusted'
+            worker.mkdir();trusted.mkdir();secret=trusted/'synthetic-control'
+            secret.write_text('SYNTHETIC CONTROL ONLY')
+            with self.assertRaises(module.SyntheticProbeFailure) as failure:
+                module.trusted_parent_checks([],{'PATH':'/usr/bin:/bin','LANG':'C.UTF-8'},worker,secret)
+            self.assertIn('parent-pid-namespace-visible',failure.exception.detail)
 
 
 class NativeResolverTests(unittest.TestCase):
@@ -263,7 +439,7 @@ class SourceTests(unittest.TestCase):
 class ReaderTests(unittest.TestCase):
     def read(self, text):
         messages = queue.Queue(maxsize=module.MAX_RPC_QUEUE)
-        module.receive_messages(io.StringIO(text), messages)
+        module.receive_messages(io.BytesIO(text.encode()), messages)
         return list(messages.queue)
 
     def test_valid_reply_then_eof(self):
@@ -274,12 +450,21 @@ class ReaderTests(unittest.TestCase):
         class Oversized:
             def readline(self, limit):
                 self.limit = limit
-                return 'x' * limit
+                return b'x' * limit
         stream = Oversized()
         messages = queue.Queue(maxsize=module.MAX_RPC_QUEUE)
         module.receive_messages(stream, messages)
-        self.assertEqual(stream.limit, module.MAX_RPC_FRAME + 1)
+        self.assertEqual(stream.limit, module.MAX_RPC_FRAME + 2)
         self.assertEqual(list(messages.queue), [None])
+
+    def test_exact_payload_limit_and_utf8_byte_overflow(self):
+        size = module.MAX_RPC_FRAME
+        exact = '{"x":"' + 'a' * (size - 8) + '"}'
+        self.assertEqual(len(exact.encode()), size)
+        self.assertEqual(self.read(exact + '\n'), [{'x':'a' * (size - 8)}, None])
+        self.assertEqual(self.read(exact[:-2] + 'a"}\n'), [None])
+        self.assertEqual(self.read('{"x":"' + 'é' * (size // 2) + '"}\n'), [None])
+        self.assertEqual(self.read(exact), [None])
 
     def test_overflow_fails_closed(self):
         self.assertEqual(self.read('{}\n' * (module.MAX_RPC_QUEUE + 1)), [None])
@@ -409,7 +594,7 @@ class DetailTests(unittest.TestCase):
                 for node in ast.walk(function):
                     if isinstance(node,ast.Call) and isinstance(node.func,ast.Name) and node.func.id == 'SyntheticProbeFailure':
                         callers.append(function.name)
-        self.assertEqual(callers,['sandbox_checks'])
+        self.assertEqual(callers,['trusted_parent_checks','sandbox_checks'])
         import inspect
         self.assertEqual(tuple(inspect.signature(module.run).parameters),('argv','env','cwd','data','allowed'))
 
