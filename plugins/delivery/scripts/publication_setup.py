@@ -16,14 +16,24 @@ import stat
 import sys
 import tempfile
 import time
+import uuid
 
 LIMIT = 65536
 LOCK_TIMEOUT = 2.0
+MAX_IDENTITY = (1 << 64) - 1
 RECEIPT = 'delivery-setup.json'
 TOOLS = ['delivery_publication_' + name for name in ('submit', 'publish', 'receipt')]
 
 
 class Refused(ValueError):
+    pass
+
+
+class UnsupportedPermissionPath(Refused):
+    pass
+
+
+class FreshHomePlanRequired(Refused):
     pass
 
 
@@ -77,7 +87,9 @@ def path_checked(value, exists=True, directory=False):
 
 def identity(path):
     info = path.stat()
-    return [info.st_dev, info.st_ino]
+    value = [info.st_dev, info.st_ino]
+    valid_identity(value)
+    return value
 
 
 def ancestors(path):
@@ -125,7 +137,7 @@ def valid_path(value):
 
 def valid_identity(value):
     require(type(value) is list and len(value) == 2
-            and all(type(item) is int and item >= 0 for item in value))
+            and all(type(item) is int and 0 <= item <= MAX_IDENTITY for item in value))
 
 
 def valid_hash(value):
@@ -143,8 +155,19 @@ def valid_binding(value):
             and value['visibility'] in ('private', 'public'))
 
 
+def permission_rule_paths(home, ledger, worker, code_root):
+    # Pinned POSIX permission parser treats these characters as glob syntax.
+    # Ledger basenames are command arguments, not permission table keys.
+    for value in (home, worker, str(Path(ledger).parent), code_root):
+        require(type(value) is str)
+        if value.startswith((':', '~')) or any(char in value for char in '*?[]'):
+            raise UnsupportedPermissionPath()
+        valid_path(value)
+
+
 def bound_spec(home, ledger, worker, expected, recorded=None):
     valid_binding(expected)
+    permission_rule_paths(home, ledger, worker, str(installed_files()[0].parent))
     programs, sources = program_snapshot()
     if recorded is not None:
         # No service import or ledger access precedes this comparison.
@@ -224,6 +247,16 @@ def configuration(spec, enabled=True):
             + 'enabled_tools = ' + toml_strings(TOOLS) + '\n').encode()
 
 
+def fresh_home(home):
+    # Propose an unused sibling, never adopt, delete or copy interrupted state.
+    original = path_checked(home, directory=True) if Path(home).exists() else path_checked(home, exists=False)
+    for _ in range(8):
+        candidate = original.parent / ('delivery-recovery-' + uuid.uuid4().hex)
+        if not candidate.exists() and not candidate.is_symlink():
+            return str(candidate)
+    raise Refused()
+
+
 def plan(home, ledger, worker, expected):
     spec = bound_spec(home, ledger, worker, expected)
     value = {'schema_version':1, 'spec':spec, 'sha256':digest(canonical(spec).encode()),
@@ -264,6 +297,8 @@ def validate_plan(value, expected_digest):
     for entry in spec['file_identities'].values():
         valid_identity(entry)
     valid_hash(spec['python_sha256'])
+    permission_rule_paths(spec['home'], spec['ledger'], spec['worker'],
+                          str(installed_files()[0].parent))
     return spec
 
 
@@ -347,6 +382,8 @@ def operate(action, value, expected_digest):
     require(ancestors(home) == spec['home_ancestors'])
     created = False
     if not home.exists():
+        # Reserve bounded stat identity metadata before creating the final home.
+        require(len((canonical({'plan':value, 'home_identity':[MAX_IDENTITY, MAX_IDENTITY]}) + '\n').encode()) <= LIMIT)
         require(action == 'enable' and spec['home_identity'] is None)
         require(bound_spec(spec['home'],spec['ledger'],spec['worker'],spec['binding'],spec) == spec)
         path_checked(str(home), exists=False)
@@ -363,8 +400,9 @@ def operate(action, value, expected_digest):
     # empty. A crash before the receipt requires a new explicit plan for that home.
     if not receipt.exists():
         require(action == 'enable' and not receipt.is_symlink())
-        require(created or spec['home_identity'] == home_id)
-        require(set(p.name for p in home.iterdir()) <= {'.delivery-setup.lock'})
+        if not (created or spec['home_identity'] == home_id) or not (
+                set(p.name for p in home.iterdir()) <= {'.delivery-setup.lock'}):
+            raise FreshHomePlanRequired()
     current_spec = {**spec, 'home_identity':home_id}
     with locked(home):
         require(identity(home) == home_id and ancestors(home) == spec['home_ancestors'])
@@ -372,7 +410,8 @@ def operate(action, value, expected_digest):
             require(read(path_checked(str(receipt))) == raw_receipt)
         else:
             require(action == 'enable' and not receipt.is_symlink())
-            require(set(p.name for p in home.iterdir()) == {'.delivery-setup.lock'})
+            if set(p.name for p in home.iterdir()) != {'.delivery-setup.lock'}:
+                raise FreshHomePlanRequired()
             require(bound_spec(spec['home'],spec['ledger'],spec['worker'],spec['binding'],current_spec) == current_spec)
             create(receipt, raw_receipt)
             sync_directory(home)
@@ -407,6 +446,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest='action', required=True)
     draft = commands.add_parser('plan')
+    draft.add_argument('--fresh-home', action='store_true',
+                       help='Plan an unused sibling home, preserving the selected home and all its files')
     for name in ('home','ledger','worker','binding'):
         draft.add_argument('--' + name, required=True)
     for action in ('enable','status','disable'):
@@ -416,14 +457,20 @@ def main():
     args = parser.parse_args()
     try:
         if args.action == 'plan':
-            result = plan(args.home,args.ledger,args.worker,decode(read(Path(args.binding))))
+            home = fresh_home(args.home) if args.fresh_home else args.home
+            result = plan(home,args.ledger,args.worker,decode(read(Path(args.binding))))
         else:
             result = operate(args.action, decode(read(Path(args.plan))), args.expected_sha256)
         print(canonical(result))
         return 0
-    except Exception:
-        print(canonical({'status':'unavailable-or-drifted', 'host_protected_ready':False,
-                         'reconcile_required':args.action in ('enable','disable')}))
+    except Exception as error:
+        result = {'status':'unavailable-or-drifted', 'host_protected_ready':False,
+                  'reconcile_required':args.action in ('enable','disable')}
+        if isinstance(error, UnsupportedPermissionPath):
+            result['reason'] = 'unsupported-permission-path-syntax'
+        elif isinstance(error, FreshHomePlanRequired):
+            result['reason'] = 'fresh-home-plan-required'
+        print(canonical(result))
         return 2
 
 

@@ -78,7 +78,7 @@ class SetupTests(unittest.TestCase):
                 change(['spec','binding',field], '')
         for field in ('ledger_identity','worker_identity','python_identity','home_identity'):
             identity = original['spec'][field]
-            for value in ([float(identity[0]),identity[1]], [True,identity[1]], [-1,0], [0], '01'):
+            for value in ([float(identity[0]),identity[1]], [True,identity[1]], [-1,0], [0,1<<64], [0], '01'):
                 change(['spec',field], value)
         for field in ('home_ancestors','ledger_ancestors','worker_ancestors','file_identities'):
             key = next(iter(original['spec'][field])); identity=original['spec'][field][key]
@@ -346,11 +346,11 @@ class SetupTests(unittest.TestCase):
         self.assertEqual(list(default.iterdir()),[])
         self.assertEqual(self.db.read_bytes(),self.original)
 
-    def large_plan(self, receipt_bytes):
-        if not self.home.exists():self.home.mkdir(mode=0o700)
+    def large_plan(self, receipt_bytes, absent=False):
+        if not absent and not self.home.exists():self.home.mkdir(mode=0o700)
         value=self.make_plan();worker=self.base/'deep';worker.mkdir()
         canonical=lambda x:json.dumps(x,sort_keys=True,separators=(',',':'),ensure_ascii=True)
-        home_id=[self.home.stat().st_dev,self.home.stat().st_ino]
+        home_id=[(1<<64)-1,(1<<64)-1] if absent else [self.home.stat().st_dev,self.home.stat().st_ino]
         while True:
             value['spec'].update(worker=str(worker),worker_identity=[worker.stat().st_dev,worker.stat().st_ino],
                 worker_ancestors={str(p):[p.stat().st_dev,p.stat().st_ino] for p in worker.parents})
@@ -371,6 +371,23 @@ class SetupTests(unittest.TestCase):
         self.assertEqual(len((canonical({'plan':value,'home_identity':home_id})+'\n').encode()),receipt_bytes)
         self.assertLessEqual(self.plan_path.stat().st_size,65536)
         return self.db.read_bytes()
+
+    def test_absent_home_receipt_capacity_boundaries_preserve_recoverability(self):
+        for capacity in (65536,65537):
+            with self.subTest(capacity=capacity):
+                case=SetupTests();case.setUp()
+                try:
+                    ledger=case.large_plan(capacity,absent=True)
+                    if capacity>65536:
+                        result=case.action('enable',ok=False)
+                        self.assertTrue(result['reconcile_required'])
+                        self.assertFalse(case.home.exists())
+                    else:
+                        self.assertEqual(case.action('enable')['status'],'configured')
+                        self.assertLessEqual((case.home/'delivery-setup.json').stat().st_size,65536)
+                        self.assertEqual(case.action('disable')['status'],'disabled')
+                    self.assertEqual(case.db.read_bytes(),ledger)
+                finally:case.doCleanups()
 
     def test_exact_limit_receipt_remains_readable_and_reversible(self):
         ledger=self.large_plan(65536)
@@ -474,6 +491,130 @@ class SetupTests(unittest.TestCase):
         changed=self.db.read_bytes()
         self.action('enable',ok=False)
         self.assertFalse(self.home.exists());self.assertEqual(self.db.read_bytes(),changed)
+
+    def crash_enable(self, target, point):
+        wrapper = '''import os,sys,runpy,tempfile
+real_temp,real_sync,real_link=tempfile.mkstemp,os.fsync,os.link
+selected=[]
+def temp(*args,**kwargs):
+    result=real_temp(*args,**kwargs)
+    selected.append(result[0])
+    if len(selected)==TARGET and POINT=='staged':os._exit(97)
+    return result
+def sync(fd):
+    real_sync(fd)
+    if len(selected)==TARGET and fd==selected[-1] and POINT=='synced':os._exit(97)
+def link(source,destination,*args,**kwargs):
+    real_link(source,destination,*args,**kwargs)
+    if len(selected)==TARGET and POINT=='linked':os._exit(97)
+tempfile.mkstemp,os.fsync,os.link=temp,sync,link
+sys.argv=ARGV
+runpy.run_path(sys.argv[0],run_name='__main__')
+'''
+        wrapper=wrapper.replace('TARGET',str(target)).replace('POINT',repr(point)).replace('ARGV',repr([
+            str(self.helper),'enable','--plan',str(self.plan_path),'--expected-sha256',self.digest]))
+        result=subprocess.run([sys.executable,'-B','-c',wrapper],capture_output=True,text=True,timeout=5)
+        self.assertEqual(result.returncode,97,(result.stdout,result.stderr))
+
+    def test_interrupted_staging_recovers_without_deleting_or_trusting_leftovers(self):
+        for target in (1,2):
+            for point in ('staged','synced','linked'):
+                with self.subTest(target=target,point=point):
+                    case=SetupTests();case.setUp()
+                    try:
+                        case.make_plan();case.crash_enable(target,point)
+                        old_home=case.home
+                        # An unknown prefix-matching file is never trusted or deleted.
+                        (old_home/'.delivery-write-owner-data').write_bytes(b'SYNTHETIC owner data')
+                        def snapshot():
+                            return {p.name:(p.stat().st_dev,p.stat().st_ino,p.read_bytes())
+                                    for p in old_home.iterdir() if p.is_file()}
+                        before=snapshot()
+                        if target==1 and point!='linked':
+                            result=case.action('enable',ok=False)
+                            self.assertEqual(result['reason'],'fresh-home-plan-required')
+                            case.make_plan();result=case.action('enable',ok=False)
+                            self.assertEqual(result['reason'],'fresh-home-plan-required')
+                            value=case.cli('plan','--home',old_home,'--fresh-home','--ledger',case.db,
+                                           '--worker',case.worker,'--binding',case.binding_path)
+                            self.assertEqual(snapshot(),before)
+                            case.home=Path(value['spec']['home'])
+                            self.assertEqual(case.home.parent,old_home.parent)
+                            self.assertNotEqual(case.home,old_home);self.assertFalse(case.home.exists())
+                            case.plan_path.write_text(json.dumps(value));case.digest=value['sha256']
+                            case.action('enable');case.action('disable')
+                            self.assertEqual(snapshot(),before)
+                        else:
+                            self.assertEqual(case.action('enable')['status'],'configured')
+                            # Complete linked receipts/config remain usable; all staging
+                            # leftovers and unrelated owner data remain byte/identity intact.
+                            after=snapshot()
+                            for name,saved in before.items():self.assertEqual(after[name],saved)
+                            case.action('disable')
+                        self.assertEqual(case.db.read_bytes(),case.original)
+                    finally:case.doCleanups()
+
+    def test_permission_rule_metacharacters_refuse_before_preflight_effects(self):
+        for field in ('worker','home','ledger_parent','code_root'):
+            for suffix in ('*','?','[',']','[*?]'):
+                with self.subTest(field=field,suffix=suffix):
+                    case=SetupTests();case.setUp()
+                    try:
+                        marker=case.base/'service-effect'
+                        case.service.write_text(case.service.read_text()+
+                            '\nfrom pathlib import Path as FixturePath\nFixturePath('+repr(str(marker))+').write_text("SYNTHETIC")\n')
+                        if field=='worker':
+                            case.worker=case.base/('worker'+suffix);case.worker.mkdir()
+                        elif field=='home':case.home=case.trusted/('home'+suffix)
+                        elif field=='ledger_parent':
+                            parent=case.base/('ledger-parent'+suffix);parent.mkdir(mode=0o700)
+                            old=case.db;case.db=parent/'ledger.sqlite';old.rename(case.db)
+                        else:
+                            old=case.package;case.package=case.base/('package'+suffix);old.rename(case.package)
+                            case.helper=case.package/'publication_setup.py';case.service=case.package/'publication_service.py'
+                        result=case.make_plan(ok=False)
+                        self.assertEqual(result['reason'],'unsupported-permission-path-syntax')
+                        self.assertNotIn(str(case.base),json.dumps(result))
+                        self.assertFalse(case.home.exists());self.assertFalse(marker.exists())
+                        self.assertEqual(case.db.read_bytes(),case.original)
+                    finally:case.doCleanups()
+
+    def test_unsupported_permission_plan_preserves_existing_recovery_state(self):
+        marker=self.base/'service-effect'
+        self.service.write_text(self.service.read_text()+
+            '\nfrom pathlib import Path as FixturePath\nFixturePath('+repr(str(marker))+').write_text("SYNTHETIC")\n')
+        original=self.make_plan();self.action('enable');marker.unlink()
+        saved={name:(self.home/name).read_bytes() for name in ('config.toml','delivery-setup.json')}
+        for field in ('home','worker'):
+            for suffix in ('*','?','[',']','[*?]'):
+                value=json.loads(json.dumps(original));value['spec'][field]+=suffix
+                value['sha256']=hashlib.sha256(json.dumps(value['spec'],sort_keys=True,
+                    separators=(',',':'),ensure_ascii=True).encode()).hexdigest()
+                self.plan_path.write_text(json.dumps(value))
+                for action in ('enable','status','disable'):
+                    result=self.action(action,ok=False,digest=value['sha256'])
+                    self.assertEqual(result['reason'],'unsupported-permission-path-syntax')
+                    self.assertFalse(marker.exists());self.assertEqual(self.db.read_bytes(),self.original)
+                    self.assertEqual({name:(self.home/name).read_bytes() for name in saved},saved)
+
+    def test_literal_argument_metacharacters_and_nonsymbolic_paths_remain_supported(self):
+        import tomllib
+        old=self.db;self.db=self.trusted/'ledger[*?]{name}.sqlite';old.rename(self.db)
+        self.worker=self.base/'literal:~{worker} 🚀';self.worker.mkdir()
+        self.home=self.trusted/'literal:~{home} 🚀'
+        self.make_plan();self.action('enable')
+        parsed=tomllib.loads((self.home/'config.toml').read_text())
+        self.assertEqual(parsed['mcp_servers']['delivery_publication']['args'][-1],str(self.db))
+        self.assertEqual(parsed['permissions']['delivery-local']['filesystem'][str(self.worker)],'write')
+        self.action('disable');self.assertEqual(self.db.read_bytes(),self.original)
+        for field in ('worker','home'):
+            original=getattr(self,field)
+            for symbolic in (':workspace_roots','~/workspace'):
+                setattr(self,field,symbolic)
+                result=self.make_plan(ok=False)
+                self.assertEqual(result['reason'],'unsupported-permission-path-syntax')
+                self.assertNotIn(symbolic,json.dumps(result))
+            setattr(self,field,original)
 
     def test_toml_strings_roundtrip_unicode_scalars_and_controls(self):
         import importlib.util

@@ -188,7 +188,12 @@ bounded local component does not provide automated archive rotation.
 On a POSIX host with Python 3.10+, the trusted operator can use
 `scripts/publication_setup.py` instead of hand-editing the MCP configuration.
 Paths must contain valid Unicode scalar values; undecodable filesystem byte paths
-are refused. Supported path characters are escaped without changing their values.
+are refused. Permission-rule paths (worker, dedicated home, ledger parent and
+installed code directory) must be absolute literal paths without `*`, `?`, `[`
+or `]`; symbolic and home-relative spellings are not accepted. Setup reports
+`unsupported-permission-path-syntax` without echoing the path. The glob-character
+restriction does not apply to a ledger filename used only as a command argument. Supported path
+characters are escaped without changing their values.
 A busy setup lock is refused after a two-second acquisition deadline; the holder
 keeps its lock and saved configuration and receipts remain unchanged.
 It operates only on a dedicated home, not your default `~/.codex`. Keep the
@@ -216,13 +221,22 @@ Enable writes the managed receipt and configuration, starts no runtime and copie
 no credentials. Select that home explicitly in your separately authorized local
 Codex invocation. Repeated enable is idempotent; after interruption, use status
 and the same exact plan. A failed mutation reports `reconcile_required: true`;
-it does not promise that no configuration changed. Disable turns off this registration while preserving the
-ledger, receipt and unrelated runtime data. Unknown existing configuration or
+it does not promise that no configuration changed. Disable changes this registration
+for a fresh runtime start while preserving ledger, receipt and unrelated data.
+It does not revoke an already-running MCP process; stop that runtime separately
+before relying on the disabled configuration. Unknown existing configuration or
 changed code, destination, ledger/worker/home identity, ancestor directories, receipt or configuration refuses
 rather than overwriting or silently rebinding. Disable remains available after
-ledger/code drift when the managed receipt and configuration are intact. If interrupted before the first receipt, an existing empty home is not adopted
-using an absent-home plan: inspect it and generate a new plan explicitly. Once
-a receipt exists, recovery verifies its recorded home identity before resuming.
+ledger/code drift when the managed receipt and configuration are intact. If a
+receipt-less home contains interrupted staging or other unknown files, setup
+reports `fresh-home-plan-required`. Repeat the `plan` command with `--fresh-home`
+and the same inputs to propose an unused sibling home, then review and use the
+new plan and digest. This leaves the old home and every file untouched; nothing
+is trusted or deleted based on a staging filename. An empty interrupted home
+can also be replanned explicitly. Once a complete receipt exists, retry verifies
+its recorded identity and bytes; unrelated staging leftovers remain preserved.
+New-home capacity checks reserve bounded identity metadata before creating the
+directory; oversized requests refuse without creating that home.
 Source upgrades or destination changes need a new explicitly reviewed plan and
 a new dedicated home. An existing receipt is immutable and cannot be rebound
 by a new plan. Retain the old home and ledger; never delete data to force reuse.
