@@ -274,6 +274,110 @@ def install(codex, root, base, env, actual_home):
         server.close()
 
 
+PUBLICATION_TOOLS = frozenset('delivery_publication_' + name for name in ('submit', 'publish', 'receipt'))
+
+
+def publication_mcp_config(service, db):
+    # JSON strings are valid TOML basic strings when Unicode is emitted directly.
+    require(service.is_absolute() and db.is_absolute(), 'mcp-absolute-paths-required')
+    value = lambda item: json.dumps(str(item), ensure_ascii=False)
+    return ('[mcp_servers.delivery_publication]\ncommand = "/usr/bin/python3"\n'
+            + 'args = [' + ', '.join(value(x) for x in ('-B', service, '--db', db)) + ']\n'
+            + 'enabled_tools = [' + ', '.join(value(x) for x in sorted(PUBLICATION_TOOLS)) + ']\n')
+
+
+def require_publication_inventory(page):
+    require(isinstance(page, dict) and page.get('nextCursor') is None,
+            'mcp-discovery-incomplete')
+    rows = page.get('data')
+    require(isinstance(rows, list) and len(rows) == 1, 'mcp-server-set-mismatch')
+    row = rows[0]
+    require(isinstance(row, dict) and row.get('name') == 'delivery_publication',
+            'mcp-server-identity-mismatch')
+    require('toolsError' in row and row['toolsError'] is None, 'mcp-discovery-error')
+    require(isinstance(row.get('serverInfo'), dict)
+            and row['serverInfo'].get('name') == 'delivery-local-publication',
+            'mcp-live-server-identity-missing')
+    require(isinstance(row.get('tools'), dict) and set(row['tools']) == PUBLICATION_TOOLS
+            and all(isinstance(tool, dict) and tool.get('name') == name
+                    for name, tool in row['tools'].items()), 'mcp-tool-set-mismatch')
+    require(row.get('runtimeStatus') in (None, 'connected'), 'mcp-not-connected')
+    require(row.get('resources') == [] and row.get('resourceTemplates') == [],
+            'mcp-unexpected-resources')
+    return len(rows)
+
+
+def protected_snapshot(paths):
+    # Every namespace-denial probe needs a live readable outside fixture first.
+    result = []
+    for path in paths:
+        info = path.stat()
+        require(stat.S_ISREG(info.st_mode), 'mcp-fixture-not-regular')
+        data = path.read_bytes()
+        # Match both probe operations outside before crediting sandbox denial.
+        # Open without writing; even preexisting read-only fixtures must fail.
+        with path.open('ab'):
+            pass
+        require((path.stat().st_dev, path.stat().st_ino) == (info.st_dev, info.st_ino),
+                'mcp-fixture-changed')
+        result.append((info.st_dev, info.st_ino, hashlib.sha256(data).hexdigest()))
+    return result
+
+
+MCP_RESOURCE_PROBE = """import errno,pathlib,sys
+for name in sys.argv[1:]:
+ for mode in ('rb','ab'):
+  try:
+   with pathlib.Path(name).open(mode) as stream:
+    if mode=='rb': stream.read(1)
+  except OSError as error:
+   if error.errno in (errno.EACCES,errno.EPERM,errno.ENOENT): continue
+   raise
+  raise SystemExit(10)
+print('resources-denied')
+"""
+
+
+def native_discovery_checks(codex, package, trusted, base, env, sandbox_prefix, worker):
+    service = package / 'scripts/publication_service.py'
+    db = trusted / 'mcp-ledger.sqlite'
+    argv = ['/usr/bin/python3', '-B', str(service), '--db', str(db)]
+    run([*argv, '--initialize'], env, base)
+    registered = json.loads(run([*argv, '--control'], env, base, json.dumps({
+        'action':'register', 'destination':'native-sample', 'owner':'synthetic-owner',
+        'audience':'synthetic-users', 'visibility':'public', 'revision':'r1',
+        'authority_revision':'a1', 'policy_revision':'p1'})).stdout)
+    require(registered.get('status') == 'recorded', 'mcp-fixture-register-failed')
+    config_homes = [trusted / ('mcp-codex-home-' + str(index)) for index in range(2)]
+    configs = []
+    for home in config_homes:
+        home.mkdir()
+        config = home / 'config.toml'
+        config.write_text(publication_mcp_config(service, db))
+        configs.append(config)
+    # Each connection has a fresh cache: a stale tool catalog cannot masquerade
+    # as a live reconnect. Only the protected ledger is intentionally reused.
+    fixtures = (db, service, *configs)
+    before = protected_snapshot(fixtures)
+    for home in config_homes:
+        native_env = dict(env, CODEX_HOME=str(home))
+        server = RPC([codex, 'app-server', '--stdio'], native_env, base)
+        try:
+            server.call('initialize', {'clientInfo': {'name':'delivery_discovery','version':'1'},
+                                      'capabilities': {'experimentalApi':True}})
+            server.send({'method':'initialized'})
+            count = require_publication_inventory(server.call('mcpServerStatus/list', {
+                'cursor':None, 'limit':100, 'detail':'toolsAndAuthOnly'}))
+        finally:
+            server.close()
+        require(protected_snapshot(fixtures) == before, 'mcp-fixture-changed')
+    denied = run([*sandbox_prefix, '/usr/bin/python3', '-c', MCP_RESOURCE_PROBE,
+                  *(str(path) for path in fixtures)], env, worker)
+    require(denied.stdout.strip() == 'resources-denied', 'mcp-resource-probe-incomplete')
+    require(protected_snapshot(fixtures) == before, 'mcp-fixture-changed')
+    return count
+
+
 def resolve_native_codex(codex, env, cwd):
     """Resolve the pinned npm launcher's native file without executing Codex.
 
@@ -704,6 +808,8 @@ def main():
             package, inventory_count = install(args.codex, args.package_root.resolve(), base, env, actual_home)
             stage = 'sandbox-command-boundary'
             trusted, sandbox_prefix, worker = sandbox_checks(args.codex, base, env, actual_home)
+            stage = 'native-mcp-discovery'
+            inventory_count = native_discovery_checks(args.codex, package, trusted, base, env, sandbox_prefix, worker)
             stage = 'installed-service-local-release'
             service_checks(package, trusted, base, env, sandbox_prefix, worker)
         print(json.dumps({'status':'deterministic-conformance-passed','mcp_servers_discovered':inventory_count,

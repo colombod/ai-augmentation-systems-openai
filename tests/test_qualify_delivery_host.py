@@ -625,5 +625,103 @@ class DetailTests(unittest.TestCase):
         self.assertEqual(tuple(inspect.signature(module.run).parameters),('argv','env','cwd','data','allowed'))
 
 
-if __name__ == '__main__':
+
+
+class NativeDiscoveryTests(unittest.TestCase):
+    def page(self):
+        return {'data':[{'name':'delivery_publication','toolsError':None,
+            'serverInfo':{'name':'delivery-local-publication'}, 'runtimeStatus':None,
+            'tools':{name:{'name':name} for name in module.PUBLICATION_TOOLS},
+            'resources':[], 'resourceTemplates':[]}], 'nextCursor':None}
+
+    def test_exact_live_inventory_and_fail_closed_variants(self):
+        import copy
+        good = self.page()
+        self.assertEqual(module.require_publication_inventory(good), 1)
+        cases = []
+        for key,value in [('toolsError','startup failed'),('serverInfo',None),
+                          ('runtimeStatus','failed'),('resources',[{'uri':'private'}]),
+                          ('resourceTemplates',[{}]),('name','other')]:
+            page = copy.deepcopy(good); page['data'][0][key] = value; cases.append(page)
+        for names in [[], sorted(module.PUBLICATION_TOOLS)[:-1],
+                      [*module.PUBLICATION_TOOLS,'delivery_publication_control']]:
+            page=copy.deepcopy(good);page['data'][0]['tools']={n:{'name':n} for n in names};cases.append(page)
+        page=copy.deepcopy(good);page['data'][0]['tools'][next(iter(module.PUBLICATION_TOOLS))]['name']='wrong';cases.append(page)
+        cases += [{'data':[], 'nextCursor':None}, {'data':good['data']*2},
+                  dict(good,nextCursor='more'),{},None]
+        for page in cases:
+            with self.subTest(page=page), self.assertRaises(module.Unsupported):
+                module.require_publication_inventory(page)
+
+    def test_configuration_roundtrips_special_paths_and_has_only_candidate_tools(self):
+        import tomllib
+        service=Path('/synthetic/quote" slash\\ emoji\U0001f680/service.py')
+        db=Path('/synthetic/ledger.sqlite')
+        config=tomllib.loads(module.publication_mcp_config(service,db))
+        row=config['mcp_servers']['delivery_publication']
+        self.assertEqual(row['args'],['-B',str(service),'--db',str(db)])
+        self.assertEqual(set(row['enabled_tools']),module.PUBLICATION_TOOLS)
+        self.assertFalse({'--initialize','--control','--consume'} & set(row['args']))
+        with self.assertRaises(module.Unsupported):module.publication_mcp_config(Path('relative'),db)
+
+    def test_protected_snapshot_requires_live_readable_regular_files(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as folder:
+            p=Path(folder)/'fixture';p.write_bytes(b'SYNTHETIC')
+            before=module.protected_snapshot([p])
+            real_open=Path.open
+            def deny_append(path,mode='r',*args,**kwargs):
+                if mode=='ab': raise PermissionError('synthetic outside write denial')
+                return real_open(path,mode,*args,**kwargs)
+            with patch.object(Path,'open',deny_append), self.assertRaises(PermissionError):
+                module.protected_snapshot([p])
+            p.write_bytes(b'changed')
+            self.assertNotEqual(module.protected_snapshot([p]),before)
+            p.unlink()
+            with self.assertRaises(FileNotFoundError):module.protected_snapshot([p])
+            with self.assertRaises(module.Unsupported):module.protected_snapshot([Path(folder)])
+
+    def test_resource_probe_rejects_access_and_unrelated_errors(self):
+        import errno
+        import contextlib
+        for number in [None,errno.EIO,errno.EBADF,errno.EMFILE,errno.EACCES,errno.EPERM,errno.ENOENT]:
+            class File:
+                def __enter__(self):return self
+                def __exit__(self,*args):return False
+                def read(self,n):return b''  # Even empty successful reads fail.
+            def opened(*args,**kwargs):
+                if number is not None:raise OSError(number,'synthetic')
+                return File()
+            with self.subTest(number=number),patch.object(module.sys,'argv',['probe','/synthetic']),patch.object(Path,'open',side_effect=opened),contextlib.redirect_stdout(io.StringIO()):
+                if number in (errno.EACCES,errno.EPERM,errno.ENOENT):exec(module.MCP_RESOURCE_PROBE,{})
+                elif number is None:
+                    with self.assertRaises(SystemExit):exec(module.MCP_RESOURCE_PROBE,{})
+                else:
+                    with self.assertRaises(OSError):exec(module.MCP_RESOURCE_PROBE,{})
+
+    def test_reconnect_uses_distinct_config_homes_and_preserves_fixture(self):
+        import tempfile,json,types
+        calls=[];homes=[];closed=[]
+        page=self.page()
+        class Server:
+            def __init__(self,argv,env,cwd):homes.append(env['CODEX_HOME'])
+            def call(self,name,params):return page if name=='mcpServerStatus/list' else {}
+            def send(self,value):pass
+            def close(self):closed.append(True)
+        def run(argv,env,cwd,input_text=None):
+            calls.append(argv)
+            if '--initialize' in argv:Path(argv[argv.index('--db')+1]).write_bytes(b'SYNTHETIC ledger')
+            return types.SimpleNamespace(stdout=json.dumps({'status':'recorded'}) if '--control' in argv else 'resources-denied')
+        with tempfile.TemporaryDirectory() as folder:
+            base=Path(folder);trusted=base/'trusted';trusted.mkdir();package=base/'package';(package/'scripts').mkdir(parents=True)
+            (package/'scripts/publication_service.py').write_text('SYNTHETIC service')
+            with patch.object(module,'run',side_effect=run),patch.object(module,'RPC',Server):
+                self.assertEqual(module.native_discovery_checks('codex',package,trusted,base,{},['sandbox'],base),1)
+            self.assertEqual(len(set(homes)),2);self.assertEqual(len(closed),2)
+            self.assertEqual(sum('--initialize' in args for args in calls),1)
+            for home in homes:
+                self.assertTrue((Path(home)/'config.toml').is_file())
+
+
+if __name__ == "__main__":
     unittest.main()
