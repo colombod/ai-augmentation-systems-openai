@@ -64,13 +64,42 @@ def check_host(opt_in):
     return actual_home
 
 
+# Labels are observations of diagnostic wording, not a verified root cause.
+# Ordering is stable; report at most four matching observations.
+DIAGNOSTIC_CATEGORIES = (
+    ('configuration', ('failed to parse', 'error parsing', 'toml parse error',
+                       'unknown permission profile', 'permission profile not found',
+                       'unknown field', 'invalid configuration')),
+    ('namespace', ('unshare', 'create user namespace', 'creating user namespace',
+                   'namespace creation', 'user namespaces are not enabled')),
+    ('seccomp-landlock', ('seccomp', 'landlock')),
+    ('mount-bwrap', ('bwrap:', 'bubblewrap', 'failed to mount', 'mount failed')),
+    ('permission-denied', ('permission denied', 'operation not permitted')),
+    ('missing-resource', ('no such file or directory', 'executable not found',
+                          'socket not found', 'file not found')),
+    ('unsupported-argument', ('not supported', 'unsupported', 'invalid argument',
+                              'unexpected argument')),
+)
+
+
+def command_diagnosis(stderr, returncode):
+    # Scan bounded text, return only constants plus process-owned numeric status
+    # and a digest. Never return matching substrings or surrounding context.
+    sample = stderr[:65536].lower()
+    matches = [label for label, phrases in DIAGNOSTIC_CATEGORIES
+               if any(phrase in sample for phrase in phrases)]
+    category = ','.join(matches[:4]) if matches else 'unclassified'
+    digest = hashlib.sha256(stderr.encode()).hexdigest()
+    return (f'command-failed:exit={returncode}:category={category}:'
+            f'scan-truncated={int(len(stderr) > 65536)}:stderr-sha256={digest}')
+
+
 def run(argv, env, cwd, data=None, allowed=(0,)):
     result = subprocess.run(argv, input=data, text=True, capture_output=True,
                             timeout=45, env=env, cwd=cwd)
     if result.returncode not in allowed:
         # Never echo raw child payloads, personal paths, config or diagnostics.
-        digest = hashlib.sha256(result.stderr.encode()).hexdigest()
-        raise Unsupported(f'command-failed:exit={result.returncode}:stderr-sha256={digest}')
+        raise Unsupported(command_diagnosis(result.stderr, result.returncode))
     return result
 
 

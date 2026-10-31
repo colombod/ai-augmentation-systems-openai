@@ -75,5 +75,63 @@ class ReaderTests(unittest.TestCase):
         self.assertEqual(self.read('{}\n' * module.MAX_RPC_QUEUE), [None])
 
 
+class DiagnosticTests(unittest.TestCase):
+    def test_known_diagnostics_use_fixed_informative_labels(self):
+        samples = {
+            'configuration':'Error parsing configuration: TOML parse error',
+            'namespace':'unshare failed',
+            'seccomp-landlock':'Landlock initialization failed',
+            'mount-bwrap':'bwrap: failed to mount target',
+            'permission-denied':'Permission denied',
+            'missing-resource':'No such file or directory',
+            'unsupported-argument':'unexpected argument',
+        }
+        for category, sample in samples.items():
+            with self.subTest(category=category):
+                diagnosis = module.command_diagnosis(sample, 1)
+                self.assertIn(':category='+category+':', diagnosis)
+                self.assertLessEqual(len(diagnosis),240)
+
+    def test_combined_bwrap_does_not_hide_permission_or_missing_resource(self):
+        diagnosis = module.command_diagnosis(
+            'bwrap: Permission denied; No such file or directory /synthetic/private',1)
+        self.assertIn(':category=mount-bwrap,permission-denied,missing-resource:',diagnosis)
+        self.assertNotIn('/synthetic',diagnosis)
+
+    def test_at_most_four_categories_preserve_full_digest_within_limit(self):
+        import hashlib
+        raw = ' '.join(phrases[0] for _,phrases in module.DIAGNOSTIC_CATEGORIES)
+        diagnosis = module.command_diagnosis(raw,-2147483648)
+        self.assertIn(':category=configuration,namespace,seccomp-landlock,mount-bwrap:',diagnosis)
+        self.assertLessEqual(len(diagnosis),240)
+        self.assertTrue(diagnosis.endswith(hashlib.sha256(raw.encode()).hexdigest()))
+
+    def test_unknown_and_known_errors_never_echo_secret_or_path(self):
+        import hashlib
+        for prefix in ('opaque failure', 'Permission denied'):
+            raw = prefix + ' /private/secret-location token=SYNTHETIC_KEY_4321'
+            diagnosis = module.command_diagnosis(raw, 1)
+            expected_category = 'unclassified' if prefix == 'opaque failure' else 'permission-denied'
+            self.assertEqual(diagnosis, 'command-failed:exit=1:category='+expected_category+
+                ':scan-truncated=0:stderr-sha256='+hashlib.sha256(raw.encode()).hexdigest())
+            self.assertNotIn('/private',diagnosis)
+            self.assertNotIn('SYNTHETIC_KEY',diagnosis)
+
+    def test_scan_is_bounded_and_classification_is_not_root_cause(self):
+        raw = 'x' * 65536 + ' Permission denied /synthetic/private'
+        diagnosis = module.command_diagnosis(raw, -9)
+        self.assertIn('exit=-9:category=unclassified:scan-truncated=1:',diagnosis)
+
+    def test_command_failure_keeps_fixed_sanitized_diagnosis(self):
+        result = module.subprocess.CompletedProcess(['synthetic'],1,'',
+            'unshare: Operation not permitted /synthetic/private token=fixture')
+        with patch.object(module.subprocess,'run',return_value=result) as run:
+            with self.assertRaisesRegex(module.Unsupported, 'category=namespace') as raised:
+                module.run(['synthetic'],{'HOME':'/actual'},Path('/tmp'))
+            run.assert_called_once()
+            self.assertNotIn('/synthetic',str(raised.exception))
+            self.assertNotIn('token=',str(raised.exception))
+
+
 if __name__ == '__main__':
     unittest.main()
