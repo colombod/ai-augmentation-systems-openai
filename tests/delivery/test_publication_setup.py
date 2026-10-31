@@ -113,6 +113,72 @@ class SetupTests(unittest.TestCase):
         self.assertEqual(self.action('disable')['status'],'disabled')
         self.assertEqual(self.db.read_bytes(),self.original)
 
+    def test_disable_survives_missing_or_invalid_service_without_reset(self):
+        self.make_plan();self.action('enable')
+        receipt=(self.home/'delivery-setup.json').read_bytes()
+        self.service.unlink()
+        for action in ('enable','status'):self.action(action,ok=False)
+        self.assertEqual(self.action('disable')['status'],'disabled')
+        self.assertEqual(self.action('disable')['status'],'disabled')
+        self.service.write_bytes((SOURCE/'publication_service.py').read_bytes())
+        self.action('enable')
+        self.service.write_text('SYNTHETIC invalid Python !')
+        for action in ('enable','status'):self.action(action,ok=False)
+        self.assertEqual(self.action('disable')['status'],'disabled')
+        self.assertEqual((self.home/'delivery-setup.json').read_bytes(),receipt)
+        self.assertEqual(self.db.read_bytes(),self.original)
+
+    def test_disable_strictly_validates_plan_without_service_import(self):
+        self.make_plan();self.action('enable');self.service.unlink()
+        original=self.plan_path.read_text();value=json.loads(original)
+        config=(self.home/'config.toml').read_bytes()
+        receipt=(self.home/'delivery-setup.json').read_bytes()
+        malformed=['{', original[:-1]+', "sha256": "duplicate"}',
+                   original.replace('"host_protected_ready": false', '"host_protected_ready": NaN'),
+                   original.replace('"host_protected_ready": false', '"host_protected_ready": Infinity'),
+                   original.replace('"host_protected_ready": false', '"host_protected_ready": -Infinity'),
+                   original.replace('"ledger_identity":', '"worker": "duplicate", "ledger_identity":'),
+                   json.dumps({**value,'extra':'SYNTHETIC'}),
+                   json.dumps({**value,'sha256':'0'*64})]
+        for raw in malformed:
+            with self.subTest(raw=raw):
+                self.plan_path.write_text(raw);self.action('disable',ok=False)
+                self.assertEqual((self.home/'config.toml').read_bytes(),config)
+                self.assertEqual((self.home/'delivery-setup.json').read_bytes(),receipt)
+        self.plan_path.write_text(original)
+        self.action('disable',ok=False,digest='0'*64)
+        (self.home/'config.toml').write_bytes(config+b'# SYNTHETIC drift')
+        self.action('disable',ok=False)
+        self.assertEqual((self.home/'config.toml').read_bytes(),config+b'# SYNTHETIC drift')
+        (self.home/'config.toml').write_bytes(config)
+        (self.home/'delivery-setup.json').write_bytes(receipt+b' ')
+        self.action('disable',ok=False)
+        self.assertEqual((self.home/'delivery-setup.json').read_bytes(),receipt+b' ')
+        self.assertEqual(self.db.read_bytes(),self.original)
+
+    def test_separate_ledger_ancestor_replacement_refuses_stale_plan(self):
+        ledger_root=self.base/'ledger-root';ledger_root.mkdir(mode=0o700)
+        parent=ledger_root/'data';parent.mkdir(mode=0o700)
+        self.db.rename(parent/'ledger.sqlite');self.db=parent/'ledger.sqlite'
+        self.make_plan();self.action('enable')
+        before=(self.db.stat().st_dev,self.db.stat().st_ino,self.db.read_bytes())
+        config=(self.home/'config.toml').read_bytes()
+        receipt=(self.home/'delivery-setup.json').read_bytes()
+        for directory in (parent,ledger_root):
+            with self.subTest(directory=directory):
+                saved=directory.with_name(directory.name+'-saved');directory.rename(saved)
+                directory.mkdir(mode=0o700)
+                for item in saved.iterdir():item.rename(directory/item.name)
+                for action in ('enable','status'):self.action(action,ok=False)
+                self.assertEqual((self.db.stat().st_dev,self.db.stat().st_ino,self.db.read_bytes()),before)
+                self.assertEqual((self.home/'config.toml').read_bytes(),config)
+                self.assertEqual((self.home/'delivery-setup.json').read_bytes(),receipt)
+                self.assertEqual(self.action('disable')['status'],'disabled')
+                # Restore the original directory identity for the next case.
+                for item in directory.iterdir():item.rename(saved/item.name)
+                directory.rmdir();saved.rename(directory)
+                self.action('enable')
+
     def test_replaced_ledger_and_stale_digest_refuse(self):
         self.make_plan();self.action('enable',ok=False,digest='0'*64)
         replacement=self.trusted/'replacement';replacement.write_bytes(self.original);replacement.replace(self.db)

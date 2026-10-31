@@ -15,11 +15,31 @@ import stat
 import sys
 import tempfile
 
-from publication_service import PublicationStore, Refused, canonical, decode
-
 LIMIT = 65536
 RECEIPT = 'delivery-setup.json'
 TOOLS = ['delivery_publication_' + name for name in ('submit', 'publish', 'receipt')]
+
+
+class Refused(ValueError):
+    pass
+
+
+def canonical(value):
+    return json.dumps(value, sort_keys=True, separators=(',', ':'), ensure_ascii=True,
+                      allow_nan=False)
+
+
+def decode(data):
+    # Recovery must parse exactly without importing possibly damaged service code.
+    def pairs(items):
+        result = {}
+        for key, value in items:
+            if key in result:
+                raise Refused()
+            result[key] = value
+        return result
+    return json.loads(data.decode('utf-8'), object_pairs_hook=pairs,
+                      parse_constant=lambda _: (_ for _ in ()).throw(Refused()))
 
 
 def require(value):
@@ -79,6 +99,7 @@ def bound_spec(home, ledger, worker, expected):
         require(not worker.is_relative_to(root) and not root.is_relative_to(worker))
     require(not ledger.is_relative_to(home))
     before = identity(ledger)
+    from publication_service import PublicationStore
     store = PublicationStore(ledger)
     try:
         actual = store.control({'action':'binding', 'destination':expected['destination']})
@@ -87,7 +108,8 @@ def bound_spec(home, ledger, worker, expected):
         store.close()
     require(identity(ledger) == before)
     return {'home':str(home), 'ledger':str(ledger), 'worker':str(worker),
-            'binding':expected, 'ledger_identity':before, 'python':str(python),
+            'binding':expected, 'ledger_identity':before, 'ledger_ancestors':ancestors(ledger),
+            'python':str(python),
             'worker_identity':identity(worker), 'worker_ancestors':ancestors(worker),
             'home_identity':identity(home) if home.exists() else None,
             'home_ancestors':ancestors(home),
@@ -129,7 +151,7 @@ def validate_plan(value, expected_digest):
     require(value['sha256'] == expected_digest == digest(canonical(value['spec']).encode()))
     spec = value['spec']
     require(type(spec) is dict and set(spec) == {'home','ledger','worker','binding','ledger_identity','python','python_identity','files',
-            'worker_identity','worker_ancestors','home_identity','home_ancestors'})
+            'worker_identity','worker_ancestors','home_identity','home_ancestors','ledger_ancestors'})
     # The executable and script paths cannot be supplied independently of this
     # installed helper. Receipt validation alone grants no publication authority.
     require(set(spec['files']) == {str(p) for p in installed_files()})
