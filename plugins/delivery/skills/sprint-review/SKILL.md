@@ -42,6 +42,14 @@ acceptance and from each other. A passing test or our own walkthrough remains
 Claimed usefulness evidence, not Seen outside-user adoption. Carry unknowns and
 the next real-use/return check forward; never infer retirement from missing use.
 
+Check global assessment scope, not only the updated feature: inspect handoff's
+assessment result and compare right_shape, riskiest_assumption, cuts and next_slice
+with current intent and acceptance evidence. Flag obsolete or unscoped proposals
+carried as current direction, even when source freshness is true. A matching scope
+digest is only a declaration binding; semantic judgment remains this review's
+responsibility. Carry contradictions into realign, preserving owner statements
+and complete historical content rather than silently rewriting them.
+
 **1. Verify criteria against direct evidence.** Use the `qa-strategist` lens. Read
 criteria first, then inspect the actual current behavior. Record met / not-met / partial /
 unable-to-check with the surface, revision, command or capture, result and reviewer.

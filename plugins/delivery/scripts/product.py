@@ -123,6 +123,40 @@ def placement(value):
             'qualification':'arithmetic only; gate truth and form remain human-reviewed judgments'}
 
 
+def assessment_digest(value):
+    """Bind declared scope to exact product content and observed source, not meaning."""
+    assessed = {'mode':value['mode'], 'commit':value['commit'],
+        'product':{k:v for k,v in value['product'].items() if k!='assessment_scope'}}
+    return hashlib.sha256(json.dumps(assessed,sort_keys=True,separators=(',',':'),
+        ensure_ascii=True,allow_nan=False).encode('utf-8')).hexdigest()
+
+
+def validate_assessment_scope(scope):
+    exact_fields(scope, ('applicability','context','source','reviewed_sha256'), 'Assessment scope')
+    if scope['applicability'] not in ('current','historical','unknown'):
+        fail('Assessment applicability must be current, historical or unknown')
+    for key in ('context','source'):
+        text(scope[key], 'Assessment '+key)
+    if not isinstance(scope['reviewed_sha256'],str) or not re.fullmatch(r'[a-f0-9]{64}',scope['reviewed_sha256']):
+        fail('Assessment review requires the full lowercase SHA-256 from handoff')
+
+
+def assessment_handoff(value, source_freshness):
+    scope = value['product'].get('assessment_scope')
+    digest = assessment_digest(value)
+    matches = scope is not None and scope['reviewed_sha256']==digest
+    applicability = ('unscoped' if scope is None else
+        'stale' if not matches else scope['applicability'])
+    return {'applicability':applicability, 'recorded':scope,
+        'review_sha256':digest, 'binding_matches':matches if scope is not None else None,
+        'semantic_alignment':'unverified',
+        'reconcile_required':applicability!='current' or source_freshness.get('fresh') is False,
+        'instruction':'Do not treat unscoped, historical, unknown or stale assessment text as current direction. '
+            'Reconcile global choices and scope against current intent and acceptance evidence before dependent work. '
+            'Current means an explicit bound declaration only: verify its context applies to this task; '
+            'source freshness and a matching digest do not prove semantic alignment or authorize execution.'}
+
+
 def validate(value, repo):
     exact_fields(value, ('schema_version','mode','commit','features','product'), 'Map input')
     if type(value['schema_version']) is not int or value['schema_version'] != 1:
@@ -140,7 +174,10 @@ def validate(value, repo):
         files = tree(repo,commit)
     product = value['product']
     exact_fields(product, ('customer','problem','current_cost','proposition','before_after',
-        'riskiest_assumption','must_survive','cuts','next_slice','right_shape'), 'Product')
+        'riskiest_assumption','must_survive','cuts','next_slice','right_shape') +
+        (('assessment_scope',) if isinstance(product,dict) and 'assessment_scope' in product else ()), 'Product')
+    if 'assessment_scope' in product:
+        validate_assessment_scope(product['assessment_scope'])
     for key in ('customer','problem','current_cost','proposition','before_after','riskiest_assumption','next_slice'):
         decision(product[key])
     for key in ('must_survive','cuts'):
@@ -764,8 +801,10 @@ def handoff(value, repo, feature_id=None):
     product = value['product']
     unresolved = [k for k in ('customer','proposition','next_slice') if product[k]['basis']!='owner-stated']
     unresolved += [k for k in ('must_survive','cuts') if any(d['basis']!='owner-stated' for d in product[k])]
+    source_freshness = freshness(value,repo)
     result = {'product':product,'placement':placement(product['right_shape']),
-        'unconfirmed_choices':unresolved,'freshness':freshness(value,repo),
+        'assessment':assessment_handoff(value,source_freshness),
+        'unconfirmed_choices':unresolved,'freshness':source_freshness,
         'features':[{k:f[k] for k in ('id','name','state','summary','code','evidence','usefulness','unknowns') + (('retirement',) if 'retirement' in f else ())} for f in features],
         'authority':'Recorded choices are attributed submissions, not authenticated approvals; proposals never authorize execution or retirement'}
     if feature_id is not None:
