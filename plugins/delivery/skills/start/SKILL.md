@@ -22,6 +22,19 @@ handoff. Existing host tools can carry out authorized actions; planning
 initialization alone is not the completed workflow. Missing tools or permissions
 remain explicit, and loading this skill grants no shipping authority.
 
+Before treating a publication check as enforcement, establish which actual host
+routes it controls, including shell, HTTP, connectors, uploads and delegation.
+Keep unavailable routes and unverified audience checks explicit. The optional
+[local publication component](../../references/publication.md) includes an opt-in
+reviewed local bundle handler. For an explicitly requested local handoff, discover
+`delivery_publication_submit`, `delivery_publication_publish` and
+`delivery_publication_receipt` on the current host. Follow the documented envelope
+and trusted review flow; a submitted candidate is not a released bundle. If the
+tools or trusted reviewer are unavailable, keep the handoff pending and report
+the missing capability. Do not substitute another output route and call it gated.
+The handler's local effect does not establish remote publication, protection for
+other host tools, or a complete installed delivery journey.
+
 When the user requests persistent coordination or a persistent delivery team,
 read [local team runtime setup](../../references/team-runtime.md). Resolve the
 actual roster, planning project, product worktrees, available models and execution

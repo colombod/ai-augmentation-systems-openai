@@ -8,7 +8,7 @@ use std::os::unix::fs::{symlink, DirBuilderExt, PermissionsExt};
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
 use std::sync::atomic::{AtomicUsize, Ordering};
-use std::time::Instant;
+use std::time::{Duration, Instant};
 
 struct Fixture(PathBuf);
 impl Fixture {
@@ -34,9 +34,18 @@ fn run(data: Option<&Path>, bytes: &[u8]) -> std::process::Output {
     let mut command = Command::new(env!("CARGO_BIN_EXE_event-log-core"));
     command.env_remove("PLUGIN_DATA").stdin(Stdio::piped()).stdout(Stdio::piped()).stderr(Stdio::piped());
     if let Some(data) = data { command.env("PLUGIN_DATA", data); }
-    let mut child = command.spawn().unwrap();
-    child.stdin.take().unwrap().write_all(bytes).unwrap();
-    child.wait_with_output().unwrap()
+    collect(command.spawn().unwrap(), bytes)
+}
+fn collect(mut child: std::process::Child, bytes: &[u8]) -> std::process::Output {
+    let written = child.stdin.take().unwrap().write_all(bytes);
+    let output = child.wait_with_output().unwrap();
+    if let Err(error) = written {
+        // An invalid configuration may reject before reading any input. Preserve
+        // its exit/stderr assertions; no other write error counts as rejection.
+        assert_eq!(error.kind(), std::io::ErrorKind::BrokenPipe);
+        assert!(!output.status.success());
+    }
+    output
 }
 
 #[test]
@@ -92,6 +101,21 @@ fn process_contract_quiet_success_fixed_private_failures() {
 }
 
 #[test]
+fn process_rejection_before_stdin_write_retains_failure_contract() {
+    let mut child = Command::new(env!("CARGO_BIN_EXE_event-log-core"))
+        .env_remove("PLUGIN_DATA").stdin(Stdio::piped())
+        .stdout(Stdio::piped()).stderr(Stdio::piped()).spawn().unwrap();
+    // Force the valid early-rejection ordering instead of relying on scheduling.
+    let stdin = child.stdin.take().unwrap();
+    assert_eq!(child.wait().unwrap().code(), Some(1));
+    child.stdin = Some(stdin);
+    let result = collect(child, b"SYNTHETIC INPUT");
+    assert_eq!(result.status.code(), Some(1));
+    assert!(result.stdout.is_empty());
+    assert_eq!(result.stderr, b"event-log-core: logging failed\n");
+}
+
+#[test]
 fn thirty_two_processes_append_complete_records() {
     let fixture = Fixture::new();
     let mut children = Vec::new();
@@ -132,17 +156,61 @@ fn symlink_directories_targets_hardlinks_and_insecure_files_rejected() {
     assert_eq!(fs::read(fixture.log("s")).unwrap(), b"ORIGINAL");
 }
 
+// Setup must acquire a real lock before the child deadline is measured. A
+// surviving dup/fork reference can briefly retain the preceding append's lock.
+fn acquire_setup_lock(fd: std::os::fd::RawFd, timeout: Duration) -> std::io::Result<()> {
+    let deadline = Instant::now() + timeout;
+    loop {
+        if unsafe { libc::flock(fd, libc::LOCK_EX | libc::LOCK_NB) } == 0 { return Ok(()); }
+        let error = std::io::Error::last_os_error();
+        if !matches!(error.raw_os_error(), Some(libc::EWOULDBLOCK) | Some(libc::EINTR))
+            || Instant::now() >= deadline { return Err(error); }
+        std::thread::sleep(Duration::from_millis(5));
+    }
+}
+
+#[test]
+fn setup_lock_requires_release_and_rejects_invalid_descriptors() {
+    let fixture = Fixture::new();
+    append_event(&input("Stop", "s"), &fixture.0).unwrap();
+    let holder = File::open(fixture.log("s")).unwrap();
+    acquire_setup_lock(holder.as_raw_fd(), Duration::from_millis(300)).unwrap();
+    let retained = holder.try_clone().unwrap();
+    drop(holder);
+    let contender = File::open(fixture.log("s")).unwrap();
+    // Dropping one reference cannot make the same file available for locking.
+    let error = acquire_setup_lock(contender.as_raw_fd(), Duration::from_millis(20)).unwrap_err();
+    assert_eq!(error.raw_os_error(), Some(libc::EWOULDBLOCK));
+    assert_eq!(fs::read_to_string(fixture.log("s")).unwrap().lines().count(), 1);
+    let release = std::thread::spawn(move || {
+        std::thread::sleep(Duration::from_millis(20));
+        drop(retained);
+    });
+    let acquired = acquire_setup_lock(contender.as_raw_fd(), Duration::from_millis(300));
+    release.join().unwrap();
+    acquired.unwrap();
+    let invalid = acquire_setup_lock(-1, Duration::from_millis(300)).unwrap_err();
+    assert_eq!(invalid.raw_os_error(), Some(libc::EBADF));
+}
+
 #[test]
 fn lock_contention_is_bounded_and_does_not_write() {
     let fixture = Fixture::new();
     append_event(&input("Stop", "s"), &fixture.0).unwrap();
     let locked = File::open(fixture.log("s")).unwrap();
-    assert_eq!(unsafe { libc::flock(locked.as_raw_fd(), libc::LOCK_EX | libc::LOCK_NB) }, 0);
+    acquire_setup_lock(locked.as_raw_fd(), Duration::from_millis(300)).unwrap();
     let start = Instant::now();
     let output = run(Some(&fixture.0), &input("Stop", "s"));
     assert_eq!(output.status.code(), Some(1));
+    assert!(output.stdout.is_empty());
+    assert_eq!(output.stderr, b"event-log-core: logging failed\n");
     assert!(start.elapsed().as_millis() >= 250 && start.elapsed().as_secs() < 2);
     assert_eq!(fs::read_to_string(fixture.log("s")).unwrap().lines().count(), 1);
+    assert_eq!(unsafe { libc::flock(locked.as_raw_fd(), libc::LOCK_UN) }, 0);
+    let released = run(Some(&fixture.0), &input("Stop", "s"));
+    assert!(released.status.success());
+    assert!(released.stdout.is_empty()); assert!(released.stderr.is_empty());
+    assert_eq!(fs::read_to_string(fixture.log("s")).unwrap().lines().count(), 2);
 }
 
 #[test]

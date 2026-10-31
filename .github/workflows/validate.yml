@@ -11,6 +11,7 @@ jobs:
       - run: python3 -m pip install -r requirements-dev.txt
       - run: python3 scripts/validate_marketplace.py
       - run: python3 -m unittest discover -s tests/delivery -v
+      - run: python3 -m unittest discover -s tests -p 'test_qualify_delivery_host.py' -v
 
       - uses: actions/setup-node@v4
         with:

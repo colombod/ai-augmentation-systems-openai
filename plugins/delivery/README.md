@@ -19,7 +19,7 @@ brief, supporting research, customer personas, requirements, design, architectur
 roadmap, stories and a scoped implementation handoff. After implementation, it
 helps review the evidence and update the plan with what was learned.
 
-**Version `0.1.0-preview.15` — product and local runtime preview.** Sixteen skills use
+**Version `0.1.0-preview.16` — product and local runtime preview.** Sixteen skills use
 21 templates and 10 review lenses. Greenfield ideas and brownfield projects share
 one product contract: owner intent, customer promise, usefulness and planned or
 observed features. The local coordinator adds persistent Codex
@@ -43,6 +43,13 @@ and unresolved/unsupported coverage. It executes no project code and adds no
 service or registry. Other languages retain direct coverage. Planned greenfield
 features have no observed dependency graph; unavailable reach is informational,
 not a story-readiness gate. See [the product contract](references/product.md).
+
+For a reviewed local handoff, the optional [publication handler](references/publication.md)
+provides three stdio MCP tools and a trusted local consumer. It releases only an
+exact approved bundle into its local ledger and preserves receipts across restarts.
+It does not publish remotely, intercept other host tools or provide a semantic
+classifier. Operator control and ledger access must remain outside candidate access;
+loading the plugin does not establish that host boundary. Setup is explicit.
 
 ## Dependencies
 
