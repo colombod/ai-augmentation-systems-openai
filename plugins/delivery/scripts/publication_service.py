@@ -283,11 +283,15 @@ def mcp(store, request):
     try:
         if type(request) is not dict or request.get('jsonrpc') != '2.0':
             raise Refused()
-        if request.get('method') == 'notifications/initialized' and set(request) <= {'jsonrpc','method','params'}:
+        method = request.get('method')
+        if type(method) is not str or ('params' in request and type(request['params']) not in (dict, list)):
+            raise Refused()
+        # Notifications never receive replies, including unknown methods. Ignore
+        # them without invoking publication operations or treating them as review.
+        if 'id' not in request:
             return None
         if ident is None or set(request) - {'jsonrpc','method','id','params'}:
             raise Refused()
-        method = request.get('method')
         if method == 'initialize':
             result = {'protocolVersion':'2024-11-05', 'capabilities':{'tools':{}},
                       'serverInfo':{'name':'delivery-local-publication','version':'0.1.0'}}
@@ -297,7 +301,16 @@ def mcp(store, request):
             result = {'tools':TOOLS}
         elif method == 'tools/call':
             params = request.get('params')
-            exact(params, {'name','arguments'})
+            if type(params) is not dict or not {'name','arguments'} <= set(params) \
+                    or set(params) - {'name','arguments','_meta'}:
+                raise Refused()
+            if '_meta' in params:
+                metadata = params['_meta']
+                if type(metadata) is not dict or ('progressToken' in metadata and
+                        type(metadata['progressToken']) not in (str, int)):
+                    raise Refused()
+            # Protocol metadata stays on the private transport. Only candidate
+            # arguments reach the ledger; _meta grants no content authority.
             state = store.call(params['name'], params['arguments'])
             result = {'content':[{'type':'text','text':canonical(state)}],
                       'isError':state['status'] in ('blocked','unknown')}

@@ -130,6 +130,83 @@ class ServiceTests(unittest.TestCase):
         self.assertEqual(self.session.call('publish'), 'blocked')
         self.assertEqual(self.count(),0)
 
+    def test_notifications_do_not_reply_or_publish_and_next_request_stays_aligned(self):
+        self.approved()
+        notifications = [
+            {'method':'notifications/initialized'},
+            {'method':'notifications/cancelled','params':{'requestId':9}},
+            {'method':'notifications/progress','params':{'progressToken':'synthetic','progress':1}},
+            {'method':'unknown/notification','params':[]},
+            {'method':'unknown/notification','extension':{'synthetic':'ignored'}},
+            {'method':'tools/call','params':{'name':'delivery_publication_publish',
+                'arguments':{'operation_id':'sample-one','envelope':SAFE}}},
+        ]
+        for i, notice in enumerate(notifications):
+            self.session.process.stdin.write((json.dumps({'jsonrpc':'2.0',**notice})+'\n').encode())
+            self.session.process.stdin.flush()
+            response = self.session.rpc('ping',ident='after-notice-'+str(i))
+            self.assertEqual(response,{'jsonrpc':'2.0','id':'after-notice-'+str(i),'result':{}})
+        self.assertEqual(self.count(),0)
+        self.assertEqual(self.session.call('publish'),'completed')
+
+    def test_protocol_metadata_is_accepted_but_never_stored_or_released(self):
+        marker = 'SYNTHETIC_PRIVATE_TRANSPORT_ONLY'
+        for method in ('submit','publish','receipt'):
+            if method == 'publish':
+                forged = self.session.rpc('tools/call',{
+                    'name':'delivery_publication_publish',
+                    'arguments':{'operation_id':'sample-one','envelope':SAFE},
+                    '_meta':{'approved':True,'decision':'approve'}})
+                self.assertEqual(json.loads(forged['result']['content'][0]['text']),{'status':'blocked'})
+                self.assertEqual(self.session.review(self.binding)['status'],'recorded')
+            result = self.session.rpc('tools/call',{
+                'name':'delivery_publication_'+method,
+                'arguments':{'operation_id':'sample-one','envelope':SAFE},
+                '_meta':{'progressToken':'synthetic-progress','example/context':marker}})
+            self.assertFalse(result['result']['isError'])
+            self.assertNotIn(marker,json.dumps(result))
+        self.session.stop()
+        with sqlite3.connect(self.db) as connection:
+            self.assertNotIn(marker,'\n'.join(connection.iterdump()))
+        exported = subprocess.run([sys.executable,str(SCRIPT),'--db',str(self.db),
+            '--consume','sample-one'],capture_output=True,text=True,env=ENV)
+        self.assertEqual(exported.returncode,0)
+        self.assertEqual(json.loads(exported.stdout),SAFE)
+        self.assertNotIn(marker,exported.stdout+exported.stderr)
+        self.session = Session(self.db)
+
+    def test_invalid_protocol_forms_fail_without_echo_or_effect(self):
+        for metadata in (None,[],True,'SYNTHETIC_PRIVATE',{'progressToken':{}},{'progressToken':True}):
+            response = self.session.rpc('tools/call',{'name':'delivery_publication_submit',
+                'arguments':{'operation_id':'sample-one','envelope':SAFE},'_meta':metadata})
+            self.assertEqual(response['error']['message'],'Request blocked')
+            self.assertNotIn('SYNTHETIC_PRIVATE',json.dumps(response))
+        for invalid in ({'jsonrpc':'2.0','method':17},
+                        {'jsonrpc':'2.0','method':'notifications/cancelled','params':'invalid'},
+                        {'jsonrpc':'2.0','id':None,'method':'ping'}):
+            self.session.process.stdin.write((json.dumps(invalid)+'\n').encode())
+            self.session.process.stdin.flush()
+            self.assertTrue(select.select([self.session.process.stdout],[],[],5)[0])
+            self.assertIn('error',json.loads(self.session.process.stdout.readline()))
+            self.assertEqual(self.session.rpc('ping')['result'],{})
+        with sqlite3.connect(self.db) as connection:
+            self.assertEqual(connection.execute('SELECT count(*) FROM drafts').fetchone()[0],0)
+        self.assertEqual(self.count(),0)
+
+    def test_oversized_protocol_metadata_is_refused_before_submission(self):
+        request = {'jsonrpc':'2.0','id':'oversized','method':'tools/call','params':{
+            'name':'delivery_publication_submit',
+            'arguments':{'operation_id':'sample-one','envelope':SAFE},
+            '_meta':{'context':'x'*1_048_576}}}
+        self.session.process.stdin.write((json.dumps(request)+'\n').encode())
+        self.session.process.stdin.flush()
+        self.session.process.stdin.close();self.session.process.stdin=None
+        out,err=self.session.process.communicate(timeout=5)
+        self.assertEqual(self.session.process.returncode,2)
+        self.assertEqual(out,b'');self.assertEqual(err,b'{"status":"unavailable"}\n')
+        with sqlite3.connect(self.db) as connection:
+            self.assertEqual(connection.execute('SELECT count(*) FROM drafts').fetchone()[0],0)
+
     def test_protected_forms_rejected_then_corrected_safe_release(self):
         corpus = ['SYNTHETIC PRIVATE: violet robots launch on moon seven.',
                   'SYNTHETIC: purple automatons debut on the seventh moon.',
