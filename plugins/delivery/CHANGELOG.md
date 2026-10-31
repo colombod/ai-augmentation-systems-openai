@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased candidate — 0.1.0-preview.16
+
+- Add an opt-in stdio MCP handler for reviewed local bundles, with separate trusted
+  control, exact envelope and destination binding, durable receipts and a local
+  consumer that emits only released bundles. No remote publication is enabled.
+- Add a trusted-host publication callback contract and synthetic boundary tests.
+- Route requested local handoffs from start to available publication tools; keep
+  missing setup and whole-host enforcement separate from local operation results.
+
 ## Unreleased candidate — 0.1.0-preview.15
 
 - Add repeated explicit `inspect --scope PATH` component/test source scopes.
