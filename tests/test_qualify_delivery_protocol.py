@@ -434,5 +434,29 @@ class RepairTests(unittest.TestCase):
                 self.assertEqual(db.execute('SELECT * FROM sample').fetchall(), [('synthetic',)])
 
 
+class NativeFailureTests(unittest.TestCase):
+    def test_native_failure_classes_never_accept_or_echo_error_text(self):
+        secret = 'SYNTHETIC-PRIVATE-TEXT'
+        cases = [
+            ('MCP tool call requires approval, but approval policy is never', 'result-approval-required'),
+            ('user cancelled MCP tool call', 'result-cancelled'),
+            ('tool call error: ' + secret, 'result-tool-call-error'),
+            ('err: ' + secret, 'result-argument-error'), (secret, 'result-json')]
+        cases += [('MCP tool `delivery_publication/' + name + '` is not available to the model',
+                   'result-tool-unavailable') for name in probe.TOOLS]
+        for text, reason in cases:
+            output = {'type':'function_call_output','output':[
+                {'type':'input_text','text':'Wall time: 0.0010 seconds\nOutput:'},
+                {'type':'input_text','text':text}]}
+            with self.subTest(reason=reason), self.assertRaises(probe.ProbeFailure) as caught:
+                probe.result_status(output, 'submitted')
+            self.assertEqual(caught.exception.code, reason)
+            summary = probe.diagnostic_summary('submit', False, reason=caught.exception.code)
+            self.assertNotIn(secret, json.dumps(summary))
+        output['output'][1]['text'] = json.dumps({'status':'submitted'})
+        probe.result_status(output, 'submitted')
+        with self.assertRaises(probe.ProbeFailure): probe.result_status(output, 'blocked')
+
+
 if __name__ == '__main__':
     unittest.main()

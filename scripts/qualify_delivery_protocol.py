@@ -29,7 +29,8 @@ MAX_RPC_BYTES = 8 * 1024 * 1024
 
 REASON_CODES = frozenset({
     'rpc-capacity', 'result-type', 'result-content', 'result-header', 'result-json',
-    'result-status', 'consumer-refusal', 'handler-arguments', 'stored-draft', 'ledger-counts',
+    'result-status', 'result-approval-required', 'result-tool-unavailable',
+    'result-tool-call-error', 'result-argument-error', 'result-cancelled', 'consumer-refusal', 'handler-arguments', 'stored-draft', 'ledger-counts',
     'bootstrap-node-missing', 'bootstrap-node-version',
     'stage-failed', 'rpc-stream-failed', 'rpc-error', 'rpc-timeout', 'turn-failed',
     'turn-reply-invalid', 'fixture-incomplete', 'continuation-count', 'call-output-count',
@@ -337,7 +338,23 @@ def result_status(result, expected):
     try:
         state = json.loads(value[1]['text'])
     except ValueError:
-        raise ProbeFailure('result-json') from None
+        # Pinned native failures are text, not handler JSON. Classify only fixed
+        # source-defined forms; never print the text or reinterpret it as success.
+        text = value[1]['text']
+        if text == 'MCP tool call requires approval, but approval policy is never':
+            code = 'result-approval-required'
+        elif text in {'MCP tool `delivery_publication/' + name + '` is not available to the model'
+                      for name in TOOLS}:
+            code = 'result-tool-unavailable'
+        elif text == 'user cancelled MCP tool call':
+            code = 'result-cancelled'
+        elif text.startswith('tool call error: '):
+            code = 'result-tool-call-error'
+        elif text.startswith('err: '):
+            code = 'result-argument-error'
+        else:
+            code = 'result-json'
+        raise ProbeFailure(code) from None
     require(isinstance(state, dict) and state.get('status') == expected,
             'unexpected handler status', 'result-status')
 
