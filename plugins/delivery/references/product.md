@@ -136,6 +136,50 @@ not change. Unmapped files, dynamic wiring and external consumers remain unknown
 a fresh curated map is not a complete graph. Impact is direct file-level coverage,
 not transitive blast radius. Query results never authorize edits or removal.
 
+## Assessment scope is separate from source freshness
+
+A full or selected-feature `handoff` always includes the same global `assessment`
+result. Old schema-1 records remain readable and return `applicability: unscoped`
+and `reconcile_required: true`; their complete product text is preserved. Fresh
+source bytes do not establish that old proposed direction still applies. Never
+infer current scope from prose keywords or an owner-stated basis alone.
+
+After reconciling the global product choices against current intent, roadmap and
+acceptance evidence, an authorized writer may add optional `product.assessment_scope`
+through the existing expected-SHA `record` command. Older helpers reject this new
+optional field; use a helper supporting it for all readers before recording it.
+Leaving legacy records unscoped requires no migration. It has exactly four fields:
+
+```json
+{
+  "applicability": "current",
+  "context": "Synthetic example: bird-feeder reminder schedule",
+  "source": "Synthetic example: feeder timer review",
+  "reviewed_sha256": "<assessment.review_sha256 from the reconciled handoff>"
+}
+```
+
+Allowed applicability is `current`, `historical` or `unknown`. Context and source
+must be explicit nonempty text. The digest binds all product content except this
+metadata, plus mode and recorded source commit. To change the assessment, first
+record the reconciled product preserving owner choices and prior content in
+history, read its handoff and review that content, then record its scope using the
+returned digest and current map SHA. Copying a digest is not evidence of review.
+A later product/source change makes an old declaration `stale`; no read command
+writes or reaffirms it. Full and selected-feature views use the same scope and
+binding. Source drift also sets `reconcile_required`; no-code records retain
+explicitly absent source rather than inventing freshness.
+
+`current` means a bound declaration, not semantic agreement with the task. Check
+that its context actually applies before dependent work. `semantic_alignment`
+always remains `unverified`: neither binding nor source freshness authenticates
+owner consent, establishes acceptance or proves a proposed assessment true.
+Unscoped, unknown, historical or stale text must not be used as current direction.
+Reconcile it privately, preserve original owner statements and complete history,
+and compare assessment claims with their supporting evidence.
+Necessary new owner choices remain questions; recorded answers need no repeated
+confirmation. Existing scope declarations grant no new execution authority.
+
 ## Optional dependency-side impact
 
 Add `--transitive` to `impact` or `retire-plan`; no registry migration, extra

@@ -49,6 +49,16 @@ Where an assumption came from a persona, update the persona — and consider whe
 grounding grade should change. An `assumed` attribute that turned out true is still
 `assumed`; one that turned out false should be corrected and marked.
 
+When a product record exists, reconcile its global assessment as well as feature
+statuses: right_shape reason/alternatives/benchmark, riskiest_assumption, cuts and
+next_slice must describe the current scope or be explicitly historical. Preserve
+owner-stated goals and complete prior content; do not replace their provenance
+with a new inferred decision. Compare assessment claims with their supporting
+evidence. Use the product contract's assessment scope declaration
+only after this review; unknown applicability stays unknown. Source freshness and
+a bound declaration cannot establish semantic alignment. Full and selected-feature
+handoffs must expose the same unresolved global assessment before dependent work.
+
 **2. Estimates (where estimated comparable work exists).** The review recorded which sizings were wrong and in which direction.
 Apply the correction to the remaining roadmap items of similar shape. Do not just fix the
 one that was wrong — the bias usually generalises, and a team that under-sizes integration

@@ -1,6 +1,13 @@
 # Changelog
 
-## Unreleased candidate — 0.1.0-preview.18
+## Unreleased candidate — 0.1.0-preview.19
+
+- Separate declared product assessment scope from source freshness in full and
+  selected-feature handoffs. Legacy records remain readable with unscoped status.
+- Bind optional scope declarations to product content and source revision while
+  retaining history and explicit limits on semantic alignment and authority.
+
+## 0.1.0-preview.18
 
 - Add trusted opt-in setup planning, enable/status/disable and interrupted-setup
   recovery for an existing local ledger in a dedicated configuration home.

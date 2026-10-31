@@ -242,7 +242,12 @@ class ProductTests(unittest.TestCase):
             'unconfirmed_choices':['customer','proposition','next_slice','must_survive','cuts'],
             'freshness':P.freshness(value,self.repo),'features':value['features'],
             'authority':'Recorded choices are attributed submissions, not authenticated approvals; proposals never authorize execution or retirement'}
-        self.assertEqual(P.handoff(value,self.repo),expected)
+        actual=P.handoff(value,self.repo)
+        assessment=actual.pop('assessment')
+        self.assertEqual(assessment['applicability'],'unscoped')
+        self.assertTrue(assessment['reconcile_required'])
+        self.assertEqual(actual,expected)
+        expected['assessment']=assessment
         expected['map_sha256']=saved['sha256']
         result=self.run_cli('handoff')
         self.assertEqual(result.returncode,1,result.stderr)
