@@ -23,9 +23,14 @@ ARGS = {'operation_id': 'synthetic-one', 'envelope': {
     'operation': 'local-release', 'destination': 'synthetic-sink',
     'body': 'Synthetic public sample', 'files': [], 'metadata': {}}}
 MAX_BODY = 2 * 1024 * 1024
+MAX_RPC_ITEMS = 256
+MAX_RPC_BYTES = 8 * 1024 * 1024
 
 
 REASON_CODES = frozenset({
+    'rpc-capacity', 'result-type', 'result-content', 'result-header', 'result-json',
+    'result-status', 'consumer-refusal', 'handler-arguments', 'stored-draft', 'ledger-counts',
+    'bootstrap-node-missing', 'bootstrap-node-version',
     'stage-failed', 'rpc-stream-failed', 'rpc-error', 'rpc-timeout', 'turn-failed',
     'turn-reply-invalid', 'fixture-incomplete', 'continuation-count', 'call-output-count',
     'discovery-type', 'discovery-call-id', 'discovery-status', 'discovery-execution',
@@ -159,7 +164,11 @@ class RPC:
         self.log = []
         self.serial = 0
         self.completed = {}
-        self.inbox = queue.Queue()
+        self.inbox = queue.Queue(maxsize=MAX_RPC_ITEMS)
+        self.overflow = threading.Event()
+        self.log_bytes = 0
+        self.inbox_bytes = 0
+        self.inbox_lock = threading.Lock()
         self.evidence = evidence
         self.stderr = (evidence / 'stderr.txt').open('w')
         self.process = subprocess.Popen(command, cwd=ROOT / 'worker', env=env,
@@ -172,20 +181,44 @@ class RPC:
         try:
             while line := self.process.stdout.readline(MAX_BODY + 1):
                 require(len(line) <= MAX_BODY and line.endswith("\n"), 'RPC frame bound')
-                self.inbox.put(json.loads(line))
+                value = json.loads(line)
+                size = len(line.encode('utf-8'))
+                with self.inbox_lock:
+                    if self.inbox_bytes + size > MAX_RPC_BYTES:
+                        self.overflow.set()
+                        return
+                    self.inbox_bytes += size
+                self.inbox.put_nowait((value, size))
         except Exception as exc:
-            self.inbox.put({'local_error': str(exc)})
+            self.overflow.set() if isinstance(exc, queue.Full) else self._reader_end(str(exc))
         finally:
-            self.inbox.put({'local_error': 'EOF'})
+            self._reader_end('EOF')
+
+    def _reader_end(self, message):
+        try:
+            self.inbox.put_nowait(({'local_error': message}, 0))
+        except queue.Full:
+            self.overflow.set()
+
+    def retain(self, value):
+        size = len(json.dumps(value).encode('utf-8'))
+        require(len(self.log) < MAX_RPC_ITEMS and self.log_bytes + size <= MAX_RPC_BYTES,
+                'RPC log capacity', 'rpc-capacity')
+        self.log_bytes += size
+        self.log.append(value)
 
     def send(self, value):
-        self.log.append({'sent': value})
+        self.retain({'sent': value})
         self.process.stdin.write(json.dumps(value) + '\n')
         self.process.stdin.flush()
 
     def receive(self, deadline):
-        value = self.inbox.get(timeout=max(.01, deadline-time.monotonic()))
-        self.log.append({'received': value})
+        require(not self.overflow.is_set(), 'RPC inbox capacity', 'rpc-capacity')
+        value, size = self.inbox.get(timeout=max(.01, deadline-time.monotonic()))
+        with self.inbox_lock:
+            self.inbox_bytes -= size
+        require(not self.overflow.is_set(), 'RPC inbox capacity', 'rpc-capacity')
+        self.retain({'received': value})
         require('local_error' not in value, str(value), 'rpc-stream-failed')
         if 'id' in value and 'method' in value:
             self.send({'id': value['id'], 'error': {'code': -32601,
@@ -268,9 +301,12 @@ def discovered_tools(result, expected, call_id='discover', wanted=None):
     tools = result.get('tools')
     require(isinstance(tools, list), 'invalid tool list', 'discovery-tools-shape')
     for tool in tools:
-        require(isinstance(tool, dict), 'invalid tool', 'discovery-tools-shape')
+        require(isinstance(tool, dict) and tool.get('type') == 'namespace',
+                'invalid tool', 'discovery-tools-shape')
         if tool.get('type') == 'namespace':
-            require(isinstance(tool.get('name'), str) and isinstance(tool.get('tools'), list),
+            require(tool.get('name') == 'mcp__delivery_publication',
+                    'unexpected namespace', 'discovery-namespace')
+            require(isinstance(tool.get('tools'), list) and bool(tool['tools']),
                     'invalid namespace', 'discovery-tools-shape')
             require(all(isinstance(child, dict) and isinstance(child.get('name'), str)
                         for child in tool['tools']), 'invalid child tools', 'discovery-tools-shape')
@@ -282,7 +318,8 @@ def discovered_tools(result, expected, call_id='discover', wanted=None):
         require(name in wanted, 'unexpected tool name', 'discovery-name')
         require(name not in found, 'duplicate tool', 'discovery-duplicate')
         require(spec.get('type') == 'function', 'unexpected tool kind', 'discovery-tool-kind')
-        require(spec.get('parameters') == normalized_parameters(expected[name]),
+        require(json.dumps(spec.get('parameters'), sort_keys=True) ==
+                json.dumps(normalized_parameters(expected[name]), sort_keys=True),
                 'deferred parameters differ from live inventory', 'discovery-parameters')
         found[name] = (ns, name)
     require(set(found) == wanted, 'incomplete discovery', 'discovery-incomplete')
@@ -290,15 +327,19 @@ def discovered_tools(result, expected, call_id='discover', wanted=None):
 
 
 def result_status(result, expected):
-    require(result.get('type') == 'function_call_output', 'unexpected continuation type')
+    require(result.get('type') == 'function_call_output', 'unexpected continuation type', 'result-type')
     value = result.get('output')
-    require(isinstance(value, list) and len(value) == 2, 'unexpected MCP content')
-    require(all(v.get('type') == 'input_text' for v in value), 'unexpected content type')
+    require(isinstance(value, list) and len(value) == 2, 'unexpected MCP content', 'result-content')
+    require(all(isinstance(v, dict) and v.get('type') == 'input_text' for v in value), 'unexpected content type', 'result-content')
+    require(all(isinstance(v.get('text'), str) for v in value), 'invalid text', 'result-content')
     require(re.fullmatch(r'Wall time: [0-9]+\.[0-9]{4} seconds\nOutput:', value[0]['text'])
-            is not None, 'missing native MCP output header')
-    state = json.loads(value[1]['text'])
+            is not None, 'missing native MCP output header', 'result-header')
+    try:
+        state = json.loads(value[1]['text'])
+    except ValueError:
+        raise ProbeFailure('result-json') from None
     require(isinstance(state, dict) and state.get('status') == expected,
-            'unexpected handler status')
+            'unexpected handler status', 'result-status')
 
 
 def normal_config(root, port, service, observer=None):
@@ -386,11 +427,25 @@ def verify_handler_effects(root):
     with (root / 'handler.jsonl').open() as capture:
         raw = capture.read(MAX_BODY + 1)
     require(len(raw) <= MAX_BODY, 'handler capture over limit')
-    require([json.loads(line) for line in raw.splitlines()] == expected, 'handler arguments differ')
+    require([json.loads(line) for line in raw.splitlines()] == expected, 'handler arguments differ', 'handler-arguments')
     with sqlite3.connect((root / 'ledger.sqlite').resolve().as_uri() + '?mode=ro', uri=True) as db:
         rows = db.execute('SELECT operation_id,envelope FROM drafts').fetchall()
     canonical = json.dumps(ARGS['envelope'], sort_keys=True, separators=(',', ':'), ensure_ascii=True)
-    require(rows == [(ARGS['operation_id'], canonical)], 'stored draft differs')
+    require(rows == [(ARGS['operation_id'], canonical)], 'stored draft differs', 'stored-draft')
+
+
+def snapshot_ledger(root, out):
+    with sqlite3.connect((root / 'ledger.sqlite').resolve().as_uri() + '?mode=ro', uri=True) as source:
+        with sqlite3.connect(out / 'ledger.sqlite') as target:
+            source.backup(target)
+
+
+def verify_consumer(result, out):
+    write_json(out / 'consumer.json', {'returncode':result.returncode,
+        'stdout':result.stdout[:MAX_BODY], 'stderr':result.stderr[:MAX_BODY]})
+    require(result.returncode == 2 and result.stdout == '' and
+            result.stderr.strip() == '{"status":"unavailable"}',
+            'consumer refusal differs', 'consumer-refusal')
 
 
 STAGES = ('preflight','bootstrap','trusted-setup','initialize','inventory','discovery',
@@ -423,12 +478,12 @@ def resolve_bootstrap(codex, runtime_env, cwd, bootstrap_path):
     # Only Node's selected installation directory enters the trusted resolver.
     # The native runtime keeps its separate credential-free environment.
     selected = shutil.which('node', path=bootstrap_path)
-    require(selected is not None and Path(selected).is_absolute(), 'bootstrap Node unavailable')
+    require(selected is not None and Path(selected).is_absolute(), 'bootstrap Node unavailable', 'bootstrap-node-missing')
     node = Path(selected)
     bootstrap_env = dict(runtime_env, PATH=str(node.parent) + os.pathsep + runtime_env['PATH'])
     version = subprocess.run([str(node), '--version'], env=bootstrap_env, cwd=cwd,
                              capture_output=True, text=True, timeout=10, check=True)
-    require(version.stdout.strip() == 'v22.14.0', 'pinned bootstrap Node required')
+    require(version.stdout.strip() == 'v22.14.0', 'pinned bootstrap Node required', 'bootstrap-node-version')
     return resolve_native_codex(codex, bootstrap_env, cwd)
 
 
@@ -490,13 +545,14 @@ def _execute(codex, package, out, opt_in, progress):
                 result = run_case(rpc, server.script, thread, call_item(name, ARGS, suffix, ns))
                 result_status(result, status)
             progress['stage'] = 'effects'
+            snapshot_ledger(ROOT, out)
             verify_handler_effects(ROOT)
             counts = ledger(ROOT)
-            require(counts == {'drafts':1, 'reviews':0, 'releases':0}, 'unexpected ledger effects')
+            require(counts == {'drafts':1, 'reviews':0, 'releases':0}, 'unexpected ledger effects', 'ledger-counts')
             progress['stage'] = 'consume'
             consume = subprocess.run(command + ['--consume','synthetic-one'], env=env,
                                      capture_output=True, text=True, timeout=10)
-            require(consume.returncode == 2 and not consume.stdout.strip(), 'consumer released bundle')
+            verify_consumer(consume, out)
             progress['result'] = {'status':'canned-protocol-compatible', 'ledger':counts,
                 'model_inference':False, 'managed_enforcement':False, 'host_egress_isolation':False,
                 'real_actor_acceptance':False, 'binary_sha256':sha(binary), 'service_sha256':sha(service)}

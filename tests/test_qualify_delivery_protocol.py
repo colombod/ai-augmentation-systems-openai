@@ -9,6 +9,7 @@ import subprocess
 from pathlib import Path
 import sys
 import tempfile
+import threading
 import tomllib
 import unittest
 from unittest.mock import patch, MagicMock
@@ -236,12 +237,13 @@ class ProtocolTests(unittest.TestCase):
 
     def test_early_terminal_notification_is_correlated_to_thread_and_turn(self):
         rpc = probe.RPC.__new__(probe.RPC)
-        rpc.log = []; rpc.serial = 0; rpc.inbox = queue.Queue(); rpc.completed = {}
+        rpc.log = []; rpc.log_bytes = 0; rpc.serial = 0; rpc.inbox = queue.Queue(); rpc.completed = {}
+        rpc.overflow = threading.Event(); rpc.inbox_bytes = 0; rpc.inbox_lock = threading.Lock()
         rpc.send = lambda value: None
         for thread, turn in [('other','turn'), ('thread','other'), ('thread','turn')]:
-            rpc.inbox.put({'method':'turn/completed', 'params':{'threadId':thread,
-                'turn':{'id':turn,'status':'completed'}}})
-        rpc.inbox.put({'id':1, 'result':{'turn':{'id':'turn'}}})
+            rpc.inbox.put(({'method':'turn/completed', 'params':{'threadId':thread,
+                'turn':{'id':turn,'status':'completed'}}}, 0))
+        rpc.inbox.put(({'id':1, 'result':{'turn':{'id':'turn'}}}, 0))
         result = rpc.call('turn/start', {'threadId':'thread'})
         rpc.finish_turn('thread', result['turn']['id'])
         self.assertNotIn(('thread','turn'), rpc.completed)
@@ -280,6 +282,10 @@ class ProtocolTests(unittest.TestCase):
                 for i,suffix in enumerate(('submit','publish','receipt'),1)]
             observer = [sys.executable, '-B', str(ROOT / 'scripts/observe_publication_protocol.py'),
                         str(service), str(root / 'handler.jsonl'), '--db', str(db)]
+            inventory = {'jsonrpc':'2.0','id':0,'method':'tools/list'}
+            first = subprocess.run(observer, input=json.dumps(inventory)+'\n',
+                text=True, capture_output=True, timeout=10, check=True)
+            self.assertEqual(len(json.loads(first.stdout)['result']['tools']), 3)
             result = subprocess.run(observer, input=''.join(json.dumps(r)+'\n' for r in requests),
                                     text=True, capture_output=True, timeout=10, check=True)
             self.assertEqual(len(result.stdout.splitlines()), 3)
@@ -364,6 +370,68 @@ class ProtocolTests(unittest.TestCase):
             with contextlib.redirect_stdout(io.StringIO()):
                 self.assertEqual(probe.execute('/abs/codex', ROOT, Path('/tmp/not-created-protocol'), True), 1)
             run.assert_not_called(); popen.assert_not_called()
+
+
+
+
+class RepairTests(unittest.TestCase):
+    def test_discovery_rejects_hidden_extra_entries_and_boolean_number_alias(self):
+        fixture = ProtocolTests(); fixture.setUp()
+        for extra in [{}, {'type':'unknown'}, {'type':'namespace','name':'foreign','tools':[]},
+                      {'type':'namespace','name':'mcp__delivery_publication','tools':[]}]:
+            bad = copy.deepcopy(fixture.result); bad['tools'].append(extra)
+            with self.subTest(extra=extra), self.assertRaises(probe.ProbeFailure):
+                probe.discovered_tools(bad, fixture.expected)
+        bad = copy.deepcopy(fixture.result)
+        bad['tools'][0]['tools'][0]['parameters']['additionalProperties'] = 0
+        with self.assertRaises(probe.ProbeFailure) as caught:
+            probe.discovered_tools(bad, fixture.expected)
+        self.assertEqual(caught.exception.code, 'discovery-parameters')
+
+    def test_rpc_queue_and_retention_fail_on_capacity(self):
+        rpc = probe.RPC.__new__(probe.RPC)
+        rpc.inbox = queue.Queue(maxsize=1); rpc.overflow = threading.Event()
+        rpc.inbox_bytes = 0; rpc.inbox_lock = threading.Lock()
+        rpc.process = MagicMock(); rpc.process.stdout = io.StringIO('{}\n{}\n')
+        rpc._read()
+        self.assertTrue(rpc.overflow.is_set())
+        with self.assertRaises(probe.ProbeFailure) as caught:
+            rpc.receive(0)
+        self.assertEqual(caught.exception.code, 'rpc-capacity')
+        rpc.log = []; rpc.log_bytes = probe.MAX_RPC_BYTES
+        with self.assertRaises(probe.ProbeFailure): rpc.retain({'received':{}})
+        self.assertEqual(rpc.log, [])
+        rpc.log_bytes = 0; rpc.log = [{}] * probe.MAX_RPC_ITEMS
+        with self.assertRaises(probe.ProbeFailure): rpc.retain({})
+        rpc.inbox = queue.Queue(); rpc.overflow.clear(); rpc.inbox_bytes = probe.MAX_RPC_BYTES
+        rpc.process.stdout = io.StringIO('{}\n')
+        rpc._read()
+        self.assertTrue(rpc.overflow.is_set())
+
+    def test_consumer_refusal_is_structured_and_saved_before_validation(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp)
+            for result in [subprocess.CompletedProcess([],2,'','usage: unknown argument'),
+                           subprocess.CompletedProcess([],0,'','{"status":"unavailable"}'),
+                           subprocess.CompletedProcess([],2,'bundle','{"status":"unavailable"}')]:
+                with self.assertRaises(probe.ProbeFailure): probe.verify_consumer(result, out)
+                self.assertEqual(json.loads((out / 'consumer.json').read_text())['stderr'],result.stderr)
+            probe.verify_consumer(subprocess.CompletedProcess([],2,'','{"status":"unavailable"}\n'),out)
+
+    def test_ledger_snapshot_survives_source_removal(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); out = root / 'evidence'; out.mkdir()
+            with probe.sqlite3.connect(root / 'ledger.sqlite') as db:
+                db.execute('CREATE TABLE sample(value TEXT)')
+                db.execute("INSERT INTO sample VALUES ('synthetic')")
+                probe.snapshot_ledger(root, out)
+            with probe.sqlite3.connect(out / 'ledger.sqlite') as db:
+                # Snapshot is consistent and does not include an uncommitted transaction.
+                self.assertEqual(db.execute('SELECT * FROM sample').fetchall(), [])
+            probe.snapshot_ledger(root, out)
+            (root / 'ledger.sqlite').unlink()
+            with probe.sqlite3.connect(out / 'ledger.sqlite') as db:
+                self.assertEqual(db.execute('SELECT * FROM sample').fetchall(), [('synthetic',)])
 
 
 if __name__ == '__main__':

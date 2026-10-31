@@ -12,8 +12,9 @@ def main():
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     original = module.mcp
-    # Opening exclusively prevents an old run from supplying observation rows.
-    with Path(capture).open('x', encoding='utf-8') as output:
+    # Inventory and thread runtimes may start separate processes. The caller
+    # supplies a fresh private run directory; append preserves both observations.
+    with Path(capture).open('a', encoding='utf-8') as output:
         def observed(store, request):
             if isinstance(request, dict) and request.get('method') == 'tools/call':
                 params = request.get('params', {})
