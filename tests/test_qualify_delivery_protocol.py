@@ -11,7 +11,7 @@ import sys
 import tempfile
 import tomllib
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
@@ -55,6 +55,45 @@ class ProtocolTests(unittest.TestCase):
                        lambda b:b['tools'][0]['tools'][0].update(parameters={})]:
             bad = copy.deepcopy(self.result); mutate(bad)
             with self.assertRaises(RuntimeError): probe.discovered_tools(bad, self.expected)
+
+    def test_discovery_invariants_have_distinct_fixed_reason_codes(self):
+        cases = [
+            ('discovery-type', lambda b:b.update(type='wrong')),
+            ('discovery-call-id', lambda b:b.update(call_id='wrong')),
+            ('discovery-status', lambda b:b.update(status='failed')),
+            ('discovery-execution', lambda b:b.update(execution='server')),
+            ('discovery-tools-shape', lambda b:b.update(tools={})),
+            ('discovery-tool-count', lambda b:b.update(tools=[])),
+            ('discovery-namespace', lambda b:b['tools'][0].update(name='other')),
+            ('discovery-name', lambda b:b['tools'][0]['tools'][0].update(name='other')),
+            ('discovery-duplicate', lambda b:b['tools'][0]['tools'].__setitem__(1,b['tools'][0]['tools'][0])),
+            ('discovery-tool-kind', lambda b:b['tools'][0]['tools'][0].update(type='custom')),
+            ('discovery-parameters', lambda b:b['tools'][0]['tools'][0].update(parameters={})),
+        ]
+        for reason, mutate in cases:
+            bad = copy.deepcopy(self.result); mutate(bad)
+            with self.subTest(reason=reason), self.assertRaises(probe.ProbeFailure) as caught:
+                probe.discovered_tools(bad, self.expected)
+            self.assertEqual(caught.exception.code, reason)
+            output = io.StringIO()
+            with patch.object(probe, '_execute', side_effect=caught.exception), \
+                    contextlib.redirect_stdout(output):
+                self.assertEqual(probe.execute('/unused', ROOT, ROOT, True), 1)
+            self.assertEqual(json.loads(output.getvalue())['reason'], reason)
+        self.assertEqual(set(probe.discovered_tools(self.result,self.expected)),probe.TOOLS)
+
+    def test_untrusted_reason_text_cannot_escape_fixed_summary(self):
+        sentinel = 'SYNTHETIC-PRIVATE-REASON'
+        for value in [sentinel, [sentinel], {'code':sentinel}, None]:
+            summary = probe.diagnostic_summary('discovery', False, reason=value)
+            self.assertEqual(summary['reason'], 'stage-failed')
+            self.assertNotIn(sentinel, json.dumps(summary))
+        for error in [RuntimeError(sentinel), ValueError(sentinel), probe.ProbeFailure(sentinel)]:
+            output = io.StringIO()
+            with patch.object(probe, '_execute', side_effect=error), contextlib.redirect_stdout(output):
+                self.assertEqual(probe.execute('/unused',ROOT,ROOT,True),1)
+            self.assertEqual(json.loads(output.getvalue())['reason'],'stage-failed')
+            self.assertNotIn(sentinel,output.getvalue())
 
     def test_actual_native_header_and_structural_status(self):
         value = {'type':'function_call_output', 'output':[
@@ -238,6 +277,52 @@ class ProtocolTests(unittest.TestCase):
         self.assertEqual(json.loads(output.getvalue())['reason'], 'stage-failed')
         script.requests *= 100
         self.assertEqual(probe.diagnostic_summary('effects',False,script)['requests'],12)
+
+    def test_sqlite_uri_special_characters_and_private_evidence_directory(self):
+        with tempfile.TemporaryDirectory(prefix='synthetic-?#-') as tmp:
+            root = Path(tmp)
+            store = self.service.PublicationStore(str(root / 'ledger.sqlite'), True)
+            try:
+                self.assertEqual(probe.ledger(root), {'drafts':0,'reviews':0,'releases':0})
+            finally:
+                store.close()
+            out = root / 'evidence'
+            original_exists = Path.exists
+            old_umask = os.umask(0o022)
+            try:
+                with patch.object(probe, 'check_host'), patch.object(probe.os, 'geteuid', return_value=1000), \
+                        patch.object(Path, 'exists', lambda p: False if str(p) == '/etc/codex' else original_exists(p)), \
+                        patch.object(probe, 'resolve_bootstrap', side_effect=RuntimeError('stop-before-runtime')), \
+                        contextlib.redirect_stdout(io.StringIO()):
+                    self.assertEqual(probe.execute('/unused',ROOT,out,True),1)
+                self.assertEqual(out.stat().st_mode & 0o777, 0o700)
+                self.assertFalse((out / 'result.json').exists())
+            finally:
+                os.umask(old_umask)
+
+    def test_header_timeout_precedes_stream_creation(self):
+        handler = probe.Handler.__new__(probe.Handler)
+        handler.request = MagicMock()
+        handler.setup()
+        calls = handler.request.mock_calls
+        self.assertEqual(calls[0][0], 'settimeout')
+        self.assertEqual(calls[0][1], (10,))
+        self.assertEqual(calls[1][0], 'makefile')
+
+    def test_cleanup_failure_cannot_leave_success_record(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp)
+            def failed_cleanup(codex, package, evidence, opt_in, progress):
+                progress['result'] = {'status':'canned-protocol-compatible'}
+                progress['evidence'] = evidence
+                raise OSError('synthetic cleanup failure')
+            with patch.object(probe, '_execute', side_effect=failed_cleanup), \
+                    contextlib.redirect_stdout(io.StringIO()):
+                self.assertEqual(probe.execute('/unused',ROOT,out,True),1)
+            self.assertFalse((out / 'result.json').exists())
+            self.assertTrue((out / 'failure.json').exists())
+            self.assertEqual(probe.diagnostic_summary('effects',False)['raw_trace_retention'],
+                             'local-files-not-uploaded')
 
     def test_cloud_host_refusal_precedes_all_processes_and_writes(self):
         with patch.object(probe, 'check_host', side_effect=RuntimeError('refused')), \

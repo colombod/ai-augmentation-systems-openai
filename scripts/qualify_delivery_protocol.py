@@ -25,8 +25,25 @@ ARGS = {'operation_id': 'synthetic-one', 'envelope': {
 MAX_BODY = 2 * 1024 * 1024
 
 
-def require(ok, message):
+REASON_CODES = frozenset({
+    'stage-failed', 'rpc-stream-failed', 'rpc-error', 'rpc-timeout', 'turn-failed',
+    'turn-reply-invalid', 'fixture-incomplete', 'continuation-count', 'call-output-count',
+    'discovery-type', 'discovery-call-id', 'discovery-status', 'discovery-execution',
+    'discovery-tools-shape', 'discovery-tool-count', 'discovery-namespace',
+    'discovery-name', 'discovery-duplicate', 'discovery-tool-kind',
+    'discovery-parameters', 'discovery-incomplete', 'expected-schema-invalid'})
+
+
+class ProbeFailure(RuntimeError):
+    def __init__(self, code):
+        self.code = code if isinstance(code, str) and code in REASON_CODES else 'stage-failed'
+        super().__init__(self.code)
+
+
+def require(ok, message, code=None):
     if not ok:
+        if code is not None:
+            raise ProbeFailure(code)
         raise RuntimeError(message)
 
 
@@ -98,6 +115,10 @@ class Script:
 
 
 class Handler(http.server.BaseHTTPRequestHandler):
+    def setup(self):
+        self.request.settimeout(10)  # Bound request-line/header reads as well as body reads.
+        super().setup()
+
     def log_message(self, *_):
         pass
 
@@ -165,7 +186,7 @@ class RPC:
     def receive(self, deadline):
         value = self.inbox.get(timeout=max(.01, deadline-time.monotonic()))
         self.log.append({'received': value})
-        require('local_error' not in value, str(value))
+        require('local_error' not in value, str(value), 'rpc-stream-failed')
         if 'id' in value and 'method' in value:
             self.send({'id': value['id'], 'error': {'code': -32601,
                 'message': 'Fixture refuses client action'}})
@@ -185,9 +206,9 @@ class RPC:
         while time.monotonic() < deadline:
             value = self.receive(deadline)
             if value.get('id') == ident and 'method' not in value:
-                require('error' not in value, json.dumps(value))
+                require('error' not in value, json.dumps(value), 'rpc-error')
                 return value['result']
-        raise RuntimeError('RPC timeout: outcome unknown, no automatic retry')
+        raise ProbeFailure('rpc-timeout')
 
     def finish_turn(self, thread, turn):
         deadline = time.monotonic()+45
@@ -195,10 +216,10 @@ class RPC:
         while time.monotonic() < deadline:
             if key in self.completed:
                 result = self.completed.pop(key)
-                require(result['status'] == 'completed', 'turn failed')
+                require(result['status'] == 'completed', 'turn failed', 'turn-failed')
                 return
             self.receive(deadline)
-        raise RuntimeError('turn timeout: outcome unknown')
+        raise ProbeFailure('rpc-timeout')
 
     def close(self):
         self.process.terminate()
@@ -221,10 +242,10 @@ def normalized_parameters(schema):
     Native tools omit maxLength/maxItems/maxProperties; the handler still enforces
     its own limits. This comparison is not evidence of model-side validation.
     """
-    require(isinstance(schema, dict), 'invalid parameter schema')
+    require(isinstance(schema, dict), 'invalid parameter schema', 'expected-schema-invalid')
     allowed = {'type', 'properties', 'required', 'additionalProperties', 'items',
                'const', 'enum', 'maxLength', 'maxItems', 'maxProperties'}
-    require(set(schema) <= allowed, 'unhandled schema keyword')
+    require(set(schema) <= allowed, 'unhandled schema keyword', 'expected-schema-invalid')
     result = {k:v for k,v in schema.items() if k not in {'maxLength','maxItems','maxProperties'}}
     if 'const' in result:
         result['enum'] = [result.pop('const')]
@@ -238,19 +259,32 @@ def normalized_parameters(schema):
 
 
 def discovered_tools(result, expected):
-    require(result.get('type') == 'tool_search_output' and result.get('call_id') == 'discover'
-            and result.get('status') == 'completed' and result.get('execution') == 'client',
-            'invalid discovery continuation')
-    rows = schemas({'tools': result.get('tools', [])})
-    require(len(rows) == 3, 'unexpected deferred tool count')
+    require(isinstance(result, dict) and result.get('type') == 'tool_search_output',
+            'invalid discovery type', 'discovery-type')
+    require(result.get('call_id') == 'discover', 'invalid discovery call', 'discovery-call-id')
+    require(result.get('status') == 'completed', 'invalid discovery status', 'discovery-status')
+    require(result.get('execution') == 'client', 'invalid discovery execution', 'discovery-execution')
+    tools = result.get('tools')
+    require(isinstance(tools, list), 'invalid tool list', 'discovery-tools-shape')
+    for tool in tools:
+        require(isinstance(tool, dict), 'invalid tool', 'discovery-tools-shape')
+        if tool.get('type') == 'namespace':
+            require(isinstance(tool.get('name'), str) and isinstance(tool.get('tools'), list),
+                    'invalid namespace', 'discovery-tools-shape')
+            require(all(isinstance(child, dict) and isinstance(child.get('name'), str)
+                        for child in tool['tools']), 'invalid child tools', 'discovery-tools-shape')
+    rows = schemas({'tools': tools})
+    require(len(rows) == 3, 'unexpected deferred tool count', 'discovery-tool-count')
     found = {}
     for ns, name, spec in rows:
-        require(ns == 'mcp__delivery_publication' and name in TOOLS and name not in found,
-                'unexpected deferred identity')
-        require(spec.get('type') == 'function' and spec.get('parameters') == normalized_parameters(expected[name]),
-                'deferred parameters differ from live inventory')
+        require(ns == 'mcp__delivery_publication', 'unexpected namespace', 'discovery-namespace')
+        require(name in TOOLS, 'unexpected tool name', 'discovery-name')
+        require(name not in found, 'duplicate tool', 'discovery-duplicate')
+        require(spec.get('type') == 'function', 'unexpected tool kind', 'discovery-tool-kind')
+        require(spec.get('parameters') == normalized_parameters(expected[name]),
+                'deferred parameters differ from live inventory', 'discovery-parameters')
         found[name] = (ns, name)
-    require(set(found) == TOOLS, 'incomplete discovery')
+    require(set(found) == TOOLS, 'incomplete discovery', 'discovery-incomplete')
     return found
 
 
@@ -303,7 +337,7 @@ enabled_tools = {json.dumps(sorted(TOOLS))}
 
 
 def ledger(root):
-    with sqlite3.connect('file:' + str(root / 'ledger.sqlite') + '?mode=ro', uri=True) as db:
+    with sqlite3.connect((root / 'ledger.sqlite').resolve().as_uri() + '?mode=ro', uri=True) as db:
         return {t: db.execute('SELECT count(*) FROM ' + t).fetchone()[0]
                 for t in ('drafts', 'reviews', 'releases')}
 
@@ -313,11 +347,13 @@ def run_case(rpc, script, thread, item):
     try:
         started = rpc.call('turn/start', {'threadId': thread, 'input': [
             {'type': 'text', 'text': 'Run the canned synthetic protocol step.', 'text_elements': []}]})
+        require(isinstance(started, dict) and isinstance(started.get('turn'), dict)
+                and isinstance(started['turn'].get('id'), str), 'invalid turn reply', 'turn-reply-invalid')
         rpc.finish_turn(thread, started['turn']['id'])
-        require(not script.steps and not script.errors and not script.contacts, 'script failed')
-        require(len(script.requests) == 2, 'missing native continuation')
+        require(not script.steps and not script.errors and not script.contacts, 'script failed', 'fixture-incomplete')
+        require(len(script.requests) == 2, 'missing native continuation', 'continuation-count')
         results = output_for(script.requests[1], item['call_id'])
-        require(len(results) == 1, 'missing unique matching call output')
+        require(len(results) == 1, 'missing unique matching call output', 'call-output-count')
         return results[0]
     finally:
         if getattr(rpc, 'evidence', None) is not None:
@@ -334,7 +370,7 @@ def verify_handler_effects(root):
         raw = capture.read(MAX_BODY + 1)
     require(len(raw) <= MAX_BODY, 'handler capture over limit')
     require([json.loads(line) for line in raw.splitlines()] == expected, 'handler arguments differ')
-    with sqlite3.connect('file:' + str(root / 'ledger.sqlite') + '?mode=ro', uri=True) as db:
+    with sqlite3.connect((root / 'ledger.sqlite').resolve().as_uri() + '?mode=ro', uri=True) as db:
         rows = db.execute('SELECT operation_id,envelope FROM drafts').fetchall()
     canonical = json.dumps(ARGS['envelope'], sort_keys=True, separators=(',', ':'), ensure_ascii=True)
     require(rows == [(ARGS['operation_id'], canonical)], 'stored draft differs')
@@ -344,10 +380,11 @@ STAGES = ('preflight','bootstrap','trusted-setup','initialize','inventory','disc
           'submit','publish','receipt','effects','consume','complete')
 
 
-def diagnostic_summary(stage, passed, script=None):
+def diagnostic_summary(stage, passed, script=None, reason=None):
     # Only fixed labels and saturated counts leave the runner. Never serialize
     # exceptions, request values, prompts, paths, headers or arbitrary hashes.
     stage = stage if stage in STAGES else 'preflight'
+    reason = reason if isinstance(reason, str) and reason in REASON_CODES else 'stage-failed'
     kinds = ('function_call_output','tool_search_output','custom_tool_call_output')
     counts = {k:0 for k in kinds}
     requests = getattr(script, 'requests', [])
@@ -357,11 +394,11 @@ def diagnostic_summary(stage, passed, script=None):
                 if isinstance(item, dict) and isinstance(item.get('type'), str) and item['type'] in counts:
                     kind = item['type']; counts[kind] = min(128, counts[kind] + 1)
     return {'status':'canned-protocol-compatible' if passed else 'canned-protocol-failed',
-        'stage':stage, 'reason':'checks-passed' if passed else 'stage-failed',
+        'stage':stage, 'reason':'checks-passed' if passed else reason,
         'requests':min(12,len(requests)), 'output_types':counts,
         'fixture_errors':min(12,len(getattr(script,'errors',[]))),
         'unexpected_contacts':min(12,len(getattr(script,'contacts',[]))),
-        'raw_trace_retention':'ephemeral-not-uploaded', 'model_inference':False,
+        'raw_trace_retention':'local-files-not-uploaded', 'model_inference':False,
         'managed_enforcement':False, 'host_egress_isolation':False, 'real_actor_acceptance':False}
 
 
@@ -384,7 +421,7 @@ def _execute(codex, package, out, opt_in, progress):
     require(os.geteuid() != 0, 'ordinary runner required')
     require(not Path('/etc/codex').exists(), 'system configuration present')
     require(not out.exists(), 'new evidence directory required')
-    out.mkdir(parents=True)
+    out.mkdir(parents=True, mode=0o700)
     progress['evidence'] = out
     with tempfile.TemporaryDirectory(prefix='delivery-protocol-') as tmp:
         ROOT = Path(tmp)
@@ -446,9 +483,9 @@ def _execute(codex, package, out, opt_in, progress):
             consume = subprocess.run(command + ['--consume','synthetic-one'], env=env,
                                      capture_output=True, text=True, timeout=10)
             require(consume.returncode == 2 and not consume.stdout.strip(), 'consumer released bundle')
-            write_json(out / 'result.json', {'status':'canned-protocol-compatible', 'ledger':counts,
+            progress['result'] = {'status':'canned-protocol-compatible', 'ledger':counts,
                 'model_inference':False, 'managed_enforcement':False, 'host_egress_isolation':False,
-                'real_actor_acceptance':False, 'binary_sha256':sha(binary), 'service_sha256':sha(service)})
+                'real_actor_acceptance':False, 'binary_sha256':sha(binary), 'service_sha256':sha(service)}
         finally:
             try:
                 write_json(out / 'last-fixture.json', {'requests':server.script.requests,
@@ -470,9 +507,12 @@ def execute(codex, package, out, opt_in):
     passed = False
     try:
         _execute(codex, package, out, opt_in, progress)
+        write_json(out / 'result.json', progress['result'])
         progress['stage'] = 'complete'
         passed = True
     except Exception as error:
+        progress['reason'] = error.code if isinstance(error, ProbeFailure) else (
+            'rpc-timeout' if isinstance(error, queue.Empty) else 'stage-failed')
         if 'evidence' in progress:
             try:
                 write_json(progress['evidence'] / 'failure.json', {
@@ -481,10 +521,10 @@ def execute(codex, package, out, opt_in):
                     'stderr':str(getattr(error, 'stderr', ''))[:MAX_BODY]})
             except Exception:
                 pass  # A failed local save never becomes a claim of preservation.
-        # Detailed local files are ephemeral. There is no authorized private
-        # transfer configured, and raw traces must not enter public CI output.
+        # Detailed files remain at the selected local path; disposable CI storage
+        # is ephemeral. No transfer is configured and raw traces never enter CI output.
         pass
-    print(json.dumps(diagnostic_summary(progress['stage'], passed, progress.get('script'))))
+    print(json.dumps(diagnostic_summary(progress['stage'], passed, progress.get('script'), progress.get('reason'))))
     return 0 if passed else 1
 
 
