@@ -78,6 +78,21 @@ class PreparationTests(unittest.TestCase):
         self.assertNotEqual(result.stdout,first.stdout)
         self.assertNotIn('SYNTHETIC_PRIVATE_NOTE',result.stdout)
 
+    def test_repository_root_preserves_trailing_whitespace(self):
+        baseline = self.run_prepare()
+        self.assertEqual(baseline.returncode, 0, baseline.stderr)
+        for ending in (' ', '\t', '\n'):
+            renamed = self.root/('repo'+ending)
+            self.repo.rename(renamed); self.repo = renamed
+            reported = subprocess.check_output(['git', '-C', str(self.repo), 'rev-parse', '--show-toplevel'], env=ENV)
+            self.assertEqual(reported, (str(self.repo)+'\n').encode())
+            with self.subTest(ending=repr(ending)):
+                result = self.run_prepare()
+                self.assertEqual((result.returncode, result.stdout, result.stderr), (0, baseline.stdout, ''))
+            nested = subprocess.run([sys.executable, str(SCRIPT), '--repo', str(self.repo/'pkg')],
+                                    input=json.dumps(self.request), capture_output=True, text=True, env=ENV, timeout=35)
+            self.refused(nested)
+
     def test_mutable_refs_missing_objects_wrong_roots_and_unsafe_names_refuse(self):
         for commit in ['HEAD',self.head[:12],self.head.upper(),'0'*40]:
             self.refused(self.run_prepare({**self.request,'commit':commit}))

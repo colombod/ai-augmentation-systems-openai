@@ -77,7 +77,7 @@ def prepare(repo, request):
     deadline = time.monotonic() + 30
     def read(*args, limit=1024):
         return git_read(root, args, limit, deadline)
-    if not root.is_dir() or read('rev-parse', '--show-toplevel', limit=4096).decode().strip() != str(root):
+    if not root.is_dir() or read('rev-parse', '--show-toplevel', limit=4096).decode() != str(root)+'\n':
         raise Refused()
     if read('rev-parse', '--verify', commit).decode('ascii').strip() != commit:
         raise Refused()
