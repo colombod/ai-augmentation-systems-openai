@@ -79,6 +79,8 @@ def prepare(repo, request):
         return git_read(root, args, limit, deadline)
     if not root.is_dir() or read('rev-parse', '--show-toplevel', limit=4096).decode().strip() != str(root):
         raise Refused()
+    if read('rev-parse', '--verify', commit).decode('ascii').strip() != commit:
+        raise Refused()
     if read('cat-file', '-t', commit) != b'commit\n':
         raise Refused()
     tree = read('rev-parse', '--verify', commit+':'+source).decode().strip()

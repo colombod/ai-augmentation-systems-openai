@@ -116,6 +116,8 @@ class PreparationTests(unittest.TestCase):
         (self.repo/'pkg/run.sh').write_text('echo synthetic\n')
         (self.repo/'pkg/run.sh').chmod(0o755)
         self.commit(); self.assertEqual(len(self.head), 64)
+        self.assertEqual(self.git('rev-parse', '--verify', self.head[:40]), self.head)
+        self.refused(self.run_prepare({**self.request, 'commit':self.head[:40]}))
         request = {**self.request, 'commit': self.head}
         first = self.run_prepare(request); second = self.run_prepare(request)
         self.assertEqual((first.returncode, second.returncode), (0, 0))
