@@ -222,6 +222,44 @@ class ProductTests(unittest.TestCase):
             P.save(self.project,self.repo,self.data(),first['sha256'])
         self.assertEqual(path.read_bytes(),original)
 
+    def test_cli_record_refuses_invalid_current_record_without_history_changes(self):
+        self.record()
+        path=P.map_path(self.project)
+        original=path.read_bytes()
+        history=path.parent/'product-map-history';history.mkdir()
+        preserved=history/'existing.json';preserved.write_bytes(b'prior evidence\n')
+        candidate=self.root/'candidate.json';candidate.write_text(json.dumps(self.data()))
+        cases=[]
+        invalid=json.loads(original);invalid['product']['customer']['basis']='invalid-basis'
+        cases.append(json.dumps(invalid).encode())
+        invalid=json.loads(original);invalid['snapshot']['a.py']['blob']='0'*40
+        cases.append(json.dumps(invalid).encode())
+        invalid=json.loads(original);del invalid['product']
+        cases.append(json.dumps(invalid).encode())
+        cases.append(original+b' '*(P.MAX_RECORD+1))
+        for damaged in cases:
+            with self.subTest(size=len(damaged)):
+                path.write_bytes(damaged)
+                before={p.name:p.read_bytes() for p in history.iterdir()}
+                result=self.run_cli('record','--input',str(candidate),'--expected-sha256',hashlib.sha256(damaged).hexdigest())
+                self.assertEqual(result.returncode,2,result.stdout)
+                self.assertIn('error',json.loads(result.stderr))
+                self.assertEqual(path.read_bytes(),damaged)
+                self.assertEqual({p.name:p.read_bytes() for p in history.iterdir()},before)
+
+    def test_cli_valid_record_refresh_preserves_prior_bytes(self):
+        first=self.record();path=P.map_path(self.project);original=path.read_bytes()
+        (self.repo/'a.py').write_text('updated source\n')
+        self.git('add','a.py');self.git('commit','-qm','Update synthetic source')
+        candidate=self.data();candidate['commit']=self.git('rev-parse','HEAD').strip()
+        source=self.root/'candidate.json';source.write_text(json.dumps(candidate))
+        result=self.run_cli('record','--input',str(source),'--expected-sha256',first['sha256'])
+        self.assertEqual(result.returncode,0,result.stderr)
+        self.assertEqual((path.parent/'product-map-history'/(first['sha256']+'.json')).read_bytes(),original)
+        refreshed,_=P.read_map(self.project,self.repo)
+        self.assertEqual(refreshed['commit'],candidate['commit'])
+        self.assertEqual(refreshed['features'],candidate['features'])
+
     def test_git_replacement_cannot_rewrite_the_named_snapshot(self):
         self.record();(self.repo/'a.py').write_text('replacement')
         self.git('add','a.py');self.git('commit','-qm','Replacement content')

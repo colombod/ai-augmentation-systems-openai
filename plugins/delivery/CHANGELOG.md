@@ -1,6 +1,13 @@
 # Changelog
 
-## Unreleased candidate — 0.1.0-preview.19
+## 0.1.0-preview.20
+
+- Validate existing product records and their derived snapshots before updates;
+  refuse invalid records without changing the map or history.
+- Preserve expected-hash conflict checks and complete prior-record history for
+  valid updates, including source refreshes.
+
+## 0.1.0-preview.19
 
 - Separate declared product assessment scope from source freshness in full and
   selected-feature handoffs. Legacy records remain readable with unscoped status.
