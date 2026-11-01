@@ -18,6 +18,7 @@ import sys
 
 MAX_FRAME = 1_048_576
 MAX_ENVELOPE = MAX_FRAME - 32768  # Reserve worst-case escaped control-binding overhead.
+MAX_FILES = 128
 MAX_OPERATIONS = 256
 MAX_RPC_ID = MAX_FRAME - 16384  # Canonical ASCII bytes; reserve response overhead.
 NOW = "((julianday('now') - 2440587.5) * 86400.0)"
@@ -47,7 +48,7 @@ def envelope(value):
     exact(value, {'operation', 'destination', 'body', 'files', 'metadata'})
     if value['operation'] != 'local-release' or not identifier(value['destination']):
         raise Refused()
-    if type(value['body']) is not str or type(value['files']) is not list or len(value['files']) > 64:
+    if type(value['body']) is not str or type(value['files']) is not list or len(value['files']) > MAX_FILES:
         raise Refused()
     names = set()
     for item in value['files']:
@@ -330,7 +331,7 @@ ENVELOPE_SCHEMA = {'type':'object', 'additionalProperties':False,
     'properties':{'operation':{'const':'local-release'}, 'destination':{'type':'string'},
         'body':{'type':'string'}, 'metadata':{'type':'object','maxProperties':64,
                                           'additionalProperties':{'type':'string'}},
-        'files':{'type':'array','maxItems':64,'items':{'type':'object','additionalProperties':False,
+        'files':{'type':'array','maxItems':MAX_FILES,'items':{'type':'object','additionalProperties':False,
             'required':['name','content'],'properties':{'name':{'type':'string','maxLength':256},
                                                      'content':{'type':'string'}}}}}}
 TOOLS = [{'name':name, 'description':'Local reviewed bundle '+name.rsplit('_',1)[1]+'. No remote publication.',

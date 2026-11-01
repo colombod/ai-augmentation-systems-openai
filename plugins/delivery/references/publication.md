@@ -196,7 +196,11 @@ python3 /absolute/plugin/scripts/publication_service.py --db /private/bundles.sq
 
 Historical consume remains available after registration changes, and completed
 receipts remain completed. It is trusted retrieval, not recipient verification.
-Unknown or unreleased IDs produce no bundle. The ledger has a fixed capacity of 256 operation IDs and 64
+Unknown or unreleased IDs produce no bundle. Envelopes contain at most 128 files; the aggregate byte limit still applies.
+No files are truncated or split into separate releases automatically. Older
+packages supporting fewer files may refuse these larger envelopes on retrieval;
+retain the ledger and use a compatible package rather than reset history.
+The ledger has a fixed capacity of 256 operation IDs and 64
 registered destinations; it refuses additional entries when full. Wire frames are
 at most 1 MiB; canonical envelopes are at most 1,015,808 bytes, reserving control
 message overhead. SQLite uses the trusted host wall clock; rollback before review
