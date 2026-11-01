@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-preview.5
+
+- Prepare and run with Node alone; no native executable or compiler build.
+- Publish complete event records in a separate versioned per-event layout, preserving legacy files and simultaneous older writers.
+- Add explicit session export/follow across both layouts with bounded scans and fixed failure output.
+- Retain the legacy latest-log locator. Legacy tail commands do not receive new-version records.
+- Preserve event allowlists, private storage and bounded hook transport; host qualification is documented separately.
+
 ## 0.1.0-preview.4
 
 - Package a complete twelve-event catalogue, common/per-event field reference and examples.

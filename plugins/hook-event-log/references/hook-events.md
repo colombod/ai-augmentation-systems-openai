@@ -81,7 +81,7 @@ Ordinary saved record:
 {"event_type":"PreToolUse"}
 ```
 
-Metadata is optional in saved records because invalid/missing values are omitted while the event survives. Rust additionally enforces nonempty fields without control characters and UTF-8 byte limits: agent ID 1024 bytes, agent type 256 bytes, transcript path 4096 bytes. Transcript paths must be absolute for the supported Unix platform. The saved-record schema documents character bounds and these byte limits as annotations; standard JSON Schema counts characters, not UTF-8 bytes, so the Rust implementation remains authoritative for byte-length and platform-path checks. Historical one-key subagent records remain valid.
+Metadata is optional in saved records because invalid/missing values are omitted while the event survives. The runtime additionally enforces nonempty fields without control characters and UTF-8 byte limits: agent ID 1024 bytes, agent type 256 bytes, transcript path 4096 bytes. Transcript paths must be absolute for the supported Unix platform. The saved-record schema documents character bounds and these byte limits as annotations; standard JSON Schema counts characters, not UTF-8 bytes, so the runtime implementation remains authoritative for byte-length and platform-path checks. Historical one-key subagent records remain valid.
 
 ## Hook responses
 

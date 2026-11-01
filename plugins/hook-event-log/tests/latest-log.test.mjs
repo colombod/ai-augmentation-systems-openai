@@ -1,8 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { spawnSync } from 'node:child_process';
+import { spawnSync, spawn } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { mkdtemp, realpath, rm, mkdir, readFile, stat, utimes, symlink, readdir } from 'node:fs/promises';
+import { mkdtemp, realpath, rm, mkdir, readFile, stat, utimes, symlink, readdir, writeFile, chmod } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -25,13 +25,13 @@ async function fixture(run) {
   finally { await rm(directory, {recursive: true, force: true}); }
 }
 async function record(data, session) {
-  const result = spawnSync(process.execPath, [join(root, 'dist/hook.js')], {
-    input: JSON.stringify({hook_event_name: 'Stop', session_id: session}),
-    env: env({PLUGIN_DATA: data}), encoding: 'utf8', timeout: 4000,
-  });
-  assert.equal(result.status, 0, result.stderr);
-  return join(data, 'event-types', createHash('sha256').update(session).digest('hex') + '.jsonl');
+  const directory = join(data, 'event-types');
+  await mkdir(directory, {recursive: true, mode: 0o700});
+  const path = join(directory, createHash('sha256').update(session).digest('hex') + '.jsonl');
+  await writeFile(path, '{"event_type":"Stop"}\n', {mode: 0o600});
+  return path;
 }
+
 function failed(result) {
   assert.equal(result.status, 1);
   assert.equal(result.stdout, '');
@@ -97,4 +97,29 @@ test('symlink roots and entries are not followed', {skip: process.platform === '
   await symlink(other, expected);
   failed(latest({PLUGIN_DATA: data}));
   assert.deepEqual(await readdir(other), []);
+}));
+
+
+test('equal timestamps use filename tie-break and selection never reads contents', () => fixture(async directory => {
+  const a = await record(directory, 'tie-a');
+  const b = await record(directory, 'tie-b');
+  for (const path of [a,b]) { await writeFile(path, 'SENTINEL_NOT_JSON'); await utimes(path, 100, 200); await chmod(path, 0o000); }
+  const before = await Promise.all([a,b].map(path => stat(path)));
+  const result = latest({PLUGIN_DATA: directory});
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(result.stdout, [a,b].sort().at(-1) + '\n');
+  for (let i=0;i<2;i++) { const after=await stat([a,b][i]); assert.equal(after.mode, before[i].mode); assert.equal(after.mtimeMs,before[i].mtimeMs); assert.equal(after.size,before[i].size); }
+}));
+
+test('latest helper ignores open stdin and does not consider v2 fragments legacy paths', () => fixture(async directory => {
+  const expected=await record(directory,'legacy');
+  const output=await new Promise((accept,reject)=>{
+    const child=spawn(process.execPath,[join(root,'dist/latest-log.js')],{env:env({PLUGIN_DATA:directory}),stdio:['pipe','pipe','pipe']});
+    let stdout='',stderr='';child.stdout.on('data',b=>stdout+=b);child.stderr.on('data',b=>stderr+=b);child.stdin.on('error',()=>{});child.on('error',reject);
+    const timer=setTimeout(()=>{child.kill('SIGKILL');reject(Error('Helper waited for stdin'));},3000);
+    child.on('close',code=>{clearTimeout(timer);accept({code,stdout,stderr});});
+  });
+  assert.deepEqual(output,{code:0,stdout:expected+'\n',stderr:''});
+  const onlyNew=join(directory,'v2-only');await mkdir(join(onlyNew,'event-types-v2'),{recursive:true,mode:0o700});
+  failed(latest({PLUGIN_DATA:onlyNew}));assert.deepEqual(await readdir(onlyNew),['event-types-v2']);
 }));

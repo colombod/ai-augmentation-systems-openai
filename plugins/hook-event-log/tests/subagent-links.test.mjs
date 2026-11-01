@@ -1,70 +1,36 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { spawnSync } from 'node:child_process';
-import { createHash } from 'node:crypto';
-import { mkdtemp, realpath, rm, readFile } from 'node:fs/promises';
-import { tmpdir } from 'node:os';
-import { dirname, join, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import {mkdir,writeFile,readFile,stat,chmod,readdir} from 'node:fs/promises';
+import {join} from 'node:path';
+import {events,session,hash,payload,invoke,isolated,success,rows,canonical} from './helpers.mjs';
 
-const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const session = 'subagent-metadata-test-parent';
-async function fixture(run) {
-  const directory = await realpath(await mkdtemp(join(tmpdir(), 'subagent-links-')));
-  try { return await run(directory); }
-  finally { await rm(directory, {recursive: true, force: true}); }
-}
-function append(directory, event, fields) {
-  const result = spawnSync(process.execPath, [join(root, 'dist/hook.js')], {
-    input: JSON.stringify({session_id: session, hook_event_name: event,
-      prompt: 'PRIVATE_CONTENT_SENTINEL', tool_input: 'PRIVATE_CONTENT_SENTINEL',
-      last_assistant_message: 'PRIVATE_CONTENT_SENTINEL', ...fields}),
-    env: {...process.env, PLUGIN_DATA: directory}, encoding: 'utf8', timeout: 4000,
-  });
-  assert.equal(result.status, 0, result.stderr);
-  assert.equal(result.stdout, '');
-  assert.equal(result.stderr, '');
-}
-async function rows(directory) {
-  const name = createHash('sha256').update(session).digest('hex') + '.jsonl';
-  const bytes = await readFile(join(directory, 'event-types', name), 'utf8');
-  assert.ok(!bytes.includes('PRIVATE_CONTENT_SENTINEL'));
-  return bytes.trim().split('\n').map(JSON.parse);
-}
-
-test('subagent lifecycle pairs correlate IDs; only stop includes the host transcript path', () => fixture(async directory => {
-  const fields = {agent_id: 'child-42', agent_type: 'reviewer',
-    agent_transcript_path: '/private/tmp/a-native-transcript-that-does-not-exist.jsonl'};
-  append(directory, 'SubagentStart', fields);
-  append(directory, 'SubagentStop', fields);
-  assert.deepEqual(await rows(directory), [
-    {event_type: 'SubagentStart', agent_id: fields.agent_id, agent_type: fields.agent_type},
-    {event_type: 'SubagentStop', ...fields},
-  ]);
+test('subagent fields are scoped to the right events and escaped without content capture',()=>isolated(async directory=>{
+ const fields={agent_id:'child-"quoted"-\\-雪',agent_type:'reviewer',agent_transcript_path:'/nonexistent/host transcript.jsonl',parent_agent_id:'EXCLUDED',last_assistant_message:'EXCLUDED',tool_response:'EXCLUDED',event_log_path:'EXCLUDED'};
+ for(const event of events)success(await invoke(payload(event,fields),directory));
+ const output=await rows(directory);
+ const expected=events.map(event_type=>{const record={event_type};if(event_type==='SubagentStart'||event_type==='SubagentStop'){record.agent_id=fields.agent_id;record.agent_type=fields.agent_type;}if(event_type==='SubagentStop')record.agent_transcript_path=fields.agent_transcript_path;return record;});
+ assert.deepEqual(canonical(output),canonical(expected));assert.ok(!JSON.stringify(output).includes('EXCLUDED'));assert.deepEqual(await readdir(join(directory,'event-types-v2')),[hash(session)]);
 }));
 
-test('non-subagent events ignore metadata and existing one-key rows stay readable', () => fixture(async directory => {
-  append(directory, 'SubagentStart', {});
-  append(directory, 'PostToolUse', {agent_id: 'child', agent_type: 'worker',
-    agent_transcript_path: '/private/tmp/not-to-log'});
-  append(directory, 'SubagentStop', {agent_id: 'child'});
-  assert.deepEqual(await rows(directory), [{event_type: 'SubagentStart'},
-    {event_type: 'PostToolUse'}, {event_type: 'SubagentStop', agent_id: 'child'}]);
+test('invalid optional metadata is omitted without losing the event',()=>isolated(async directory=>{
+ const generic=[null,42,false,[],{unknown:'excluded'},'','  ','\u0085','bad\nfield','bad\u0085field','bad\u0000field','bad\u007ffield'];let count=0;
+ for(const [field,limit] of [['agent_id',1024],['agent_type',256],['agent_transcript_path',4096]]){
+  const invalid=[...generic,'/'+'x'.repeat(limit),'/'+'é'.repeat(limit/2)];if(field==='agent_transcript_path')invalid.push('relative/transcript.jsonl');
+  for(const value of invalid){success(await invoke(payload('SubagentStop',{[field]:value}),directory));count++;}
+ }
+ assert.deepEqual(await rows(directory),Array.from({length:count},()=>({event_type:'SubagentStop'})));
 }));
 
-test('invalid optional metadata is omitted without losing lifecycle records', () => fixture(async directory => {
-  for (const fields of [
-    {agent_id: null, agent_type: 123, agent_transcript_path: null},
-    {agent_id: '', agent_type: ' ', agent_transcript_path: 'relative.jsonl'},
-    {agent_id: 'x'.repeat(1025), agent_type: 'x'.repeat(257), agent_transcript_path: '/' + 'x'.repeat(4096)},
-    {agent_id: 'bad\nline', agent_type: 'bad\u0000type', agent_transcript_path: '/bad\npath'},
-  ]) append(directory, 'SubagentStop', fields);
-  assert.deepEqual(await rows(directory), Array.from({length: 4}, () => ({event_type: 'SubagentStop'})));
+test('optional metadata accepts exact UTF8 byte limits and preserves BOM characters',()=>isolated(async directory=>{
+ const fields={agent_id:'é'.repeat(512),agent_type:'é'.repeat(128),agent_transcript_path:'/'+'p'.repeat(4095)};
+ success(await invoke(payload('SubagentStop',fields),directory));success(await invoke(payload('SubagentStart',{agent_id:'\ufeff',agent_type:'\ufeff'}),directory));
+ assert.deepEqual(canonical(await rows(directory)),canonical([{event_type:'SubagentStop',...fields},{event_type:'SubagentStart',agent_id:'\ufeff',agent_type:'\ufeff'}]));
 }));
 
-test('JSON escaping preserves identifiers without injecting additional records', () => fixture(async directory => {
-  const fields = {agent_id: 'child-"quoted"-\\-雪', agent_type: 'reviewer',
-    agent_transcript_path: '/private/tmp/a "quoted" path.jsonl'};
-  append(directory, 'SubagentStop', fields);
-  assert.deepEqual(await rows(directory), [{event_type: 'SubagentStop', ...fields}]);
+test('transcript references never read, alter or create the referenced file',()=>isolated(async directory=>{
+ const data=join(directory,'data');await mkdir(data,{mode:0o700});const transcript=join(directory,'host.jsonl');await writeFile(transcript,'TRANSCRIPT_CONTENT_MUST_NOT_APPEAR',{mode:0o000});
+ const missing=join(directory,'must-not-be-created.jsonl');
+ for(const path of [transcript,missing])success(await invoke(payload('SubagentStop',{agent_id:'child',agent_transcript_path:path}),data));
+ assert.equal((await stat(transcript)).mode&0o777,0);assert.ok(!JSON.stringify(await rows(data)).includes('TRANSCRIPT_CONTENT_MUST_NOT_APPEAR'));await assert.rejects(stat(missing),{code:'ENOENT'});
+ await chmod(transcript,0o600);assert.equal(await readFile(transcript,'utf8'),'TRANSCRIPT_CONTENT_MUST_NOT_APPEAR');assert.deepEqual(await readdir(join(data,'event-types-v2')),[hash(session)]);
 }));
