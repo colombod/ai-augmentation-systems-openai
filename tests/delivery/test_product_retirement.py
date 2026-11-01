@@ -1,5 +1,6 @@
 """Synthetic fixture retirements only; decision references authenticate nobody."""
 import copy
+import fcntl
 import json
 import unittest
 import test_product as fixtures
@@ -53,6 +54,21 @@ class RetirementTests(unittest.TestCase):
         self.assertIn('unknown',impact['warning'])
         # Existing record input shape round-trips without a schema migration.
         P.save(self.project,self.repo,{k:value[k] for k in ('schema_version','mode','commit','features','product')},sha)
+
+    def test_cli_retirement_refuses_busy_record_then_preserves_history_on_retry(self):
+        saved=self.record();path=P.map_path(self.project);before=path.read_bytes()
+        self.complete_source();source=self.root/'outcome.json';source.write_text(json.dumps(self.outcome()))
+        args=('retire-record','--feature','feature-a','--input',str(source),'--expected-sha256',saved['sha256'])
+        with (path.parent/'.product-map.lock').open('a') as holder:
+            fcntl.flock(holder,fcntl.LOCK_EX)
+            result=self.run_cli(*args)
+            self.assertEqual(result.returncode,2,result.stdout)
+            self.assertIn('busy',json.loads(result.stderr)['error'])
+            self.assertEqual(path.read_bytes(),before)
+            self.assertFalse((path.parent/'product-map-history').exists())
+        result=self.run_cli(*args)
+        self.assertEqual(result.returncode,0,result.stderr)
+        self.assertEqual((path.parent/'product-map-history'/(saved['sha256']+'.json')).read_bytes(),before)
 
     def test_shipped_retirement_retains_removed_prior_evidence_and_writes_no_source(self):
         data=self.data();data['features'][0]['state']='shipped'

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.0-preview.21
+
+- Return a busy error instead of waiting when another writer holds the product
+  record lock. Preserve the map, history and active lock on refusal.
+- Keep expected-hash and history checks on later record and retirement updates;
+  do not retry automatically or remove another writer's lock.
+
 ## 0.1.0-preview.20
 
 - Validate existing product records and their derived snapshots before updates;

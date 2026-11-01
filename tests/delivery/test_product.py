@@ -1,4 +1,6 @@
 import copy
+import errno
+import fcntl
 import hashlib
 import json
 import os
@@ -7,6 +9,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest import mock
 
 PACKAGE = Path(__file__).resolve().parents[2]/'plugins/delivery'
 sys.path.insert(0,str(PACKAGE/'scripts'))
@@ -221,6 +224,62 @@ class ProductTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'History conflicts'):
             P.save(self.project,self.repo,self.data(),first['sha256'])
         self.assertEqual(path.read_bytes(),original)
+
+    def test_cli_busy_new_record_preserves_lock_and_allows_later_creation(self):
+        source=self.root/'input.json';source.write_text(json.dumps(self.starter))
+        path=P.map_path(self.project);lock_path=path.parent/'.product-map.lock'
+        with lock_path.open('a') as holder:
+            fcntl.flock(holder,fcntl.LOCK_EX)
+            identity=lock_path.stat().st_ino
+            for _ in range(2):
+                result=self.run_cli('record','--input',str(source),'--expected-sha256','new',repo=False)
+                self.assertEqual(result.returncode,2,result.stdout)
+                self.assertIn('busy',json.loads(result.stderr)['error'])
+                self.assertFalse(path.exists())
+                self.assertFalse((path.parent/'product-map-history').exists())
+                self.assertEqual(lock_path.stat().st_ino,identity)
+            with lock_path.open('a') as contender:
+                with self.assertRaises(OSError):
+                    fcntl.flock(contender,fcntl.LOCK_EX | fcntl.LOCK_NB)
+        result=self.run_cli('record','--input',str(source),'--expected-sha256','new',repo=False)
+        self.assertEqual(result.returncode,0,result.stderr)
+
+    def test_cli_busy_update_then_intervening_writer_keeps_stale_hash_refused(self):
+        saved=self.record();path=P.map_path(self.project);original=path.read_bytes()
+        P.save(self.project,self.repo,self.data(),saved['sha256'])
+        history=path.parent/'product-map-history'
+        history_before={p.name:p.read_bytes() for p in history.iterdir()}
+        source=self.root/'input.json';data=self.data();source.write_text(json.dumps(data))
+        with (path.parent/'.product-map.lock').open('a') as holder:
+            fcntl.flock(holder,fcntl.LOCK_EX)
+            result=self.run_cli('record','--input',str(source),'--expected-sha256',saved['sha256'])
+            self.assertEqual(result.returncode,2,result.stdout)
+            self.assertIn('busy',json.loads(result.stderr)['error'])
+            self.assertEqual(path.read_bytes(),original)
+            self.assertEqual({p.name:p.read_bytes() for p in history.iterdir()},history_before)
+        data['features'][0]['summary']='Updated synthetic outcome'
+        source.write_text(json.dumps(data))
+        updated=self.run_cli('record','--input',str(source),'--expected-sha256',saved['sha256'])
+        self.assertEqual(updated.returncode,0,updated.stderr)
+        current=path.read_bytes();history=path.parent/'product-map-history'
+        prior={p.name:p.read_bytes() for p in history.iterdir()}
+        self.assertEqual(prior[saved['sha256']+'.json'],original)
+        stale=self.run_cli('record','--input',str(source),'--expected-sha256',saved['sha256'])
+        self.assertEqual(stale.returncode,2,stale.stdout)
+        self.assertIn('expected SHA mismatch',json.loads(stale.stderr)['error'])
+        self.assertEqual(path.read_bytes(),current)
+        self.assertEqual({p.name:p.read_bytes() for p in history.iterdir()},prior)
+
+    def test_lock_errors_distinguish_contention_from_io_failure(self):
+        for number in (errno.EAGAIN,errno.EACCES):
+            with self.subTest(errno=number),mock.patch.object(P.fcntl,'flock',side_effect=OSError(number,'fixture')):
+                with self.assertRaisesRegex(ValueError,'busy'):
+                    P.save(self.project,None,self.starter,'new')
+        with mock.patch.object(P.fcntl,'flock',side_effect=OSError(errno.EIO,'fixture')):
+            with self.assertRaises(OSError) as caught:
+                P.save(self.project,None,self.starter,'new')
+            self.assertEqual(caught.exception.errno,errno.EIO)
+        self.assertFalse(P.map_path(self.project).exists())
 
     def test_cli_record_refuses_invalid_current_record_without_history_changes(self):
         self.record()
