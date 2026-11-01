@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.0-preview.23
+
+- Allow up to 128 files in reviewed local bundles while retaining the aggregate
+  byte limit and exact content and recipient checks.
+- Refuse oversized bundles without truncation; preserve release history when
+  using a compatible package to retrieve larger bundles.
+
 ## 0.1.0-preview.22
 
 - Add trusted local checked handoff against the expected, released and current

@@ -120,6 +120,49 @@ class ServiceTests(unittest.TestCase):
         with sqlite3.connect(self.db) as connection:
             return connection.execute('SELECT count(*) FROM releases').fetchone()[0]
 
+    def test_file_capacity_supports_complete_bundles_without_weakening_review(self):
+        discovered = self.session.rpc('tools/list')['result']['tools']
+        for tool in discovered:
+            self.assertEqual(tool['inputSchema']['properties']['envelope']
+                             ['properties']['files']['maxItems'], 128)
+        for count in (64, 87, 128):
+            value = copy.deepcopy(SAFE)
+            value['files'] = [{'name':f'file-{n}.txt', 'content':f'SYNTHETIC {n}'} for n in range(count)]
+            ident = f'bundle-{count}'
+            self.assertEqual(self.session.call('submit', ident, value), 'submitted')
+            self.assertEqual(self.session.call('publish', ident, value), 'blocked')
+            self.assertEqual(self.session.review(self.binding, ident, value)['status'], 'recorded')
+            changed = copy.deepcopy(value); changed['files'][-1]['content'] += ' changed'
+            self.assertEqual(self.session.call('publish', ident, changed), 'blocked')
+            self.assertEqual(self.session.call('publish', ident, value), 'completed')
+            exported = self.handoff(ident=ident)
+            self.assertEqual(exported.returncode, 0)
+            self.assertEqual(json.loads(exported.stdout), value)
+        original = self.db.read_bytes()
+        too_many = copy.deepcopy(value)
+        too_many['files'].append({'name':'extra.txt', 'content':'SYNTHETIC excess'})
+        self.assertEqual(self.session.call('submit', 'too-many', too_many), 'blocked')
+        duplicate = copy.deepcopy(value); duplicate['files'][-1]['name'] = duplicate['files'][0]['name']
+        self.assertEqual(self.session.call('submit', 'duplicate', duplicate), 'blocked')
+        self.assertEqual(self.db.read_bytes(), original)
+
+    def test_file_capacity_retains_exact_aggregate_byte_limit(self):
+        value = copy.deepcopy(SAFE)
+        value['files'] = [{'name':f'file-{n}.txt', 'content':''} for n in range(128)]
+        value['body'] = ''
+        encoded = json.dumps(value, sort_keys=True, separators=(',', ':'), ensure_ascii=True)
+        value['body'] = 'x' * (1015808 - len(encoded.encode()))
+        self.assertEqual(self.session.call('submit', 'byte-boundary', value), 'submitted')
+        self.assertEqual(self.session.review(self.binding, 'byte-boundary', value)['status'], 'recorded')
+        self.assertEqual(self.session.call('publish', 'byte-boundary', value), 'completed')
+        result = self.handoff(ident='byte-boundary')
+        self.assertEqual(result.returncode, 0)
+        self.assertEqual(json.loads(result.stdout), value)
+        original = self.db.read_bytes()
+        value['body'] += 'x'
+        self.assertEqual(self.session.call('submit', 'over-bytes', value), 'blocked')
+        self.assertEqual(self.db.read_bytes(), original)
+
     def test_actual_mcp_discovery_and_no_approval_tool(self):
         result = self.session.rpc('tools/list', ident='host-request-1')
         self.assertEqual(result['id'], 'host-request-1')
