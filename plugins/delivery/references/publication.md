@@ -279,3 +279,52 @@ and cooperative setup lock do not isolate malicious same-user host processes.
 Actual protected actor use requires a separately established host boundary;
 configuration success or three discovered tools does not establish it. Do not
 use setup to change real settings without specific action-time consent.
+
+
+### Prepare a committed subtree for review
+
+With a trusted local Git executable and repository, `scripts/publication_prepare.py`
+prepares an **unapproved** envelope. It does not submit, register, review, publish,
+materialize files or modify the source. It reads committed objects, not working-tree
+files; untracked files and later working changes do not alter a selected historical
+commit. Tracked sensitive content remains included and requires independent review.
+No source identity, manifest or hash establishes semantic safety or disclosure authority.
+
+```sh
+python3 /absolute/plugin/scripts/publication_prepare.py --repo /absolute/source < /private/request.json > /private/candidate.json
+```
+
+The request contains exactly `commit` (full lowercase commit ID), `source` (one
+explicit repository-relative subtree), `prefix` (its output directory), `destination`,
+`body`, `metadata`, and `extras`. Source and prefix must be canonical nonempty relative
+paths, not `.` or traversal. Each explicit companion in `extras` has `name`, `content`
+and `mode`; this can supply a local marketplace wrapper without including siblings.
+An empty extras list is valid. No repository or subtree is selected by default.
+
+Preparation includes the complete subtree, sorting output names. Git regular-file
+modes become `0644` or `0755`; companion modes may also be `0600` or `0700`. These are
+source modes, not a promise about a later installer's permissions. Generated mode
+information is a JSON string in envelope metadata `modes`; that key is reserved and
+cannot be supplied by the caller. No repository URL, absolute path or source revision
+is automatically added to the envelope. Review every output field before release.
+
+Strict UTF-8 preserves original content bytes, including CRLF. Symlinks, gitlinks,
+unsupported modes/encodings, duplicate or file-parent paths, missing objects, mutable
+refs and count/byte overflow refuse with empty stdout and a fixed error on stderr.
+The existing 128-file and aggregate-byte limits include companions and mode metadata.
+Git output and object reads are bounded; preparation uses a 30-second Git inspection
+budget and disables lazy fetching and transports per process. It executes no source
+filters or hooks. Trusted Git/repository metadata remain prerequisites; this is not
+an untrusted-repository sandbox or a host-wide network policy.
+
+The canonical candidate can be saved and separately reviewed through the existing
+local-release workflow. Later source changes do not rewrite that saved artifact;
+preparing another commit produces another candidate needing its own review. Use a
+clean recipient and inspect its actual installed bytes/modes and useful behavior;
+preparation itself supplies no installation or remote-publication guarantee.
+
+Preparation requires an already existing local commit. It does not prevent that
+commit or its history from being created or distributed. A private source snapshot
+still requires separate review before any content crosses to a distributable
+repository or artifact. Tracked sensitive content inside the selected subtree is
+included, not classified or removed; reject that candidate before release.

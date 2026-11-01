@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.0-preview.24
+
+- Prepare unapproved local bundles from an explicit full Git commit and complete
+  subtree, with explicitly supplied companion files and reviewed mode metadata.
+- Exclude working-tree changes and untracked files. Refuse unsupported entries,
+  collisions, unavailable objects and oversized output without a partial bundle.
+
 ## 0.1.0-preview.23
 
 - Allow up to 128 files in reviewed local bundles while retaining the aggregate
