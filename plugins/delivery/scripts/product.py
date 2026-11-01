@@ -7,6 +7,7 @@ No model, service, hooks, Git writes or automatic code deletion are used here.
 import argparse
 import ast
 from collections import deque
+import errno
 import fcntl
 import hashlib
 import json
@@ -404,7 +405,12 @@ def save(project, repo, value, expected_sha, retirement_id=None):
     path = map_path(project)
     # Serialize local helper writes and retain each previous complete record.
     with checked_path(path.parent/'.product-map.lock').open('a') as lock:
-        fcntl.flock(lock,fcntl.LOCK_EX)
+        try:
+            fcntl.flock(lock,fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except OSError as error:
+            if error.errno in (errno.EACCES, errno.EAGAIN):
+                fail('Product record is busy; no update saved. Retry after the other writer finishes and reread the current record hash')
+            raise
         current = path.read_bytes() if path.exists() else None
         actual = hashlib.sha256(current).hexdigest() if current is not None else 'new'
         if actual != expected_sha:

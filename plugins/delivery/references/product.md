@@ -27,7 +27,13 @@ required for brownfield code mapping and unnecessary for a greenfield idea.
 `project.py init` creates directories first. Record updates use a local file lock,
 expected digest and atomic replacement. Prior complete bytes are retained in
 `.delivery/product-map-history/<sha256>.json`. This is a local concurrency guard,
-not a distributed transaction. Updates validate the existing complete record and
+not a distributed transaction. Lock acquisition is nonblocking: if another writer
+holds it, `record` and `retire-record` return exit 2 with a busy error without
+changing the map or history. They do not queue, retry automatically or remove the
+other writer's lock. After it finishes, reread the current record and use its hash
+for a new invocation; stale expected hashes still fail. This does not bound time
+spent validating input or inspecting Git before acquiring the lock.
+Updates validate the existing complete record and
 its derived snapshot before changing the map or history. An exact expected digest
 does not permit overwriting an invalid record; preserve it and reconcile the
 source records first. Helpers never edit source, reset Git, install
