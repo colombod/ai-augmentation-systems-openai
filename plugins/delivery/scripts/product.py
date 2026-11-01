@@ -380,16 +380,20 @@ def map_path(project):
     return checked_path(root/'product-map.json')
 
 
-def read_map(project, repo):
-    path = map_path(project)
-    data = path.read_bytes()
+def decode_map(data, repo):
+    """Validate the complete saved record, including its derived snapshot."""
     if len(data)>MAX_RECORD:
         fail('Map exceeds four megabytes')
     value = json.loads(data)
     expected = validate({k:value[k] for k in ('schema_version','mode','commit','features','product')},repo)
     if expected != value:
-        fail('Map snapshot does not match its recorded commit; re-record from curated inputs')
-    return value, hashlib.sha256(data).hexdigest()
+        fail('Map snapshot does not match its recorded commit; preserve the invalid record and reconcile original source records before updating')
+    return value
+
+
+def read_map(project, repo):
+    data = map_path(project).read_bytes()
+    return decode_map(data, repo), hashlib.sha256(data).hexdigest()
 
 
 def save(project, repo, value, expected_sha, retirement_id=None):
@@ -406,7 +410,7 @@ def save(project, repo, value, expected_sha, retirement_id=None):
         if actual != expected_sha:
             fail('Map changed; read current state before writing (expected SHA mismatch)')
         if current is not None:
-            prior = json.loads(current)
+            prior = decode_map(current, repo)
             if {f['id'] for f in prior['features']} - {f['id'] for f in result['features']}:
                 fail('Preserve old feature IDs/history; mark retirement through a reviewed proposal, never silently drop')
             old_features = {f['id']:f for f in prior['features']}

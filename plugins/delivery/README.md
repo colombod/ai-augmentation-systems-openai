@@ -19,7 +19,7 @@ brief, supporting research, customer personas, requirements, design, architectur
 roadmap, stories and a scoped implementation handoff. After implementation, it
 helps review the evidence and update the plan with what was learned.
 
-**Version `0.1.0-preview.16` — product and local runtime preview.** Sixteen skills use
+**Version `0.1.0-preview.20` — product and local runtime preview.** Sixteen skills use
 21 templates and 10 review lenses. Greenfield ideas and brownfield projects share
 one product contract: owner intent, customer promise, usefulness and planned or
 observed features. The local coordinator adds persistent Codex

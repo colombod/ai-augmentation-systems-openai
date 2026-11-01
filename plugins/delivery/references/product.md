@@ -27,7 +27,10 @@ required for brownfield code mapping and unnecessary for a greenfield idea.
 `project.py init` creates directories first. Record updates use a local file lock,
 expected digest and atomic replacement. Prior complete bytes are retained in
 `.delivery/product-map-history/<sha256>.json`. This is a local concurrency guard,
-not a distributed transaction. Helpers never edit source, reset Git, install
+not a distributed transaction. Updates validate the existing complete record and
+its derived snapshot before changing the map or history. An exact expected digest
+does not permit overwriting an invalid record; preserve it and reconcile the
+source records first. Helpers never edit source, reset Git, install
 hooks, select a model, contact a service or delete features. Exit codes: 0 for a
 valid command, 1 for stale source or unconfirmed handoff choices, 2 for invalid
 input/conflict. A concept has no code freshness verdict (`fresh: null`).
