@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.0-preview.22
+
+- Add trusted local checked handoff against the expected, released and current
+  recipient binding, refusing changed bindings without exporting a bundle.
+- Preserve historical consume and completed receipts. The check applies at local
+  export admission; it does not authenticate recipients or authorize remote sends.
+
 ## 0.1.0-preview.21
 
 - Return a busy error instead of waiting when another writer holds the product
