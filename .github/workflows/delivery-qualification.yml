@@ -1,10 +1,23 @@
 name: Delivery deterministic host qualification
 on:
   workflow_dispatch:
+    inputs:
+      synthetic_approvals:
+        description: 'Authorize this run only: three exact synthetic native per-call approvals'
+        type: boolean
+        required: true
+        default: false
+      reviewed_sha:
+        description: 'Exact reviewed commit; required only for synthetic approvals'
+        type: string
+        required: false
   pull_request:
     types: [opened, synchronize, reopened]
     paths:
       - 'scripts/qualify_delivery_host.py'
+      - 'scripts/qualify_delivery_protocol.py'
+      - 'scripts/observe_publication_protocol.py'
+      - 'tests/test_qualify_delivery_protocol.py'
       - '.github/workflows/delivery-qualification.yml'
       - 'tests/test_qualify_delivery_host.py'
       - 'plugins/delivery/**'
@@ -23,10 +36,23 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: '22.14.0'
-      - name: Install pinned CLI and qualify
+      - name: Install pinned CLI
+        id: install
         shell: bash
         run: |
           set -euo pipefail
           delivery_cli_prefix="$(mktemp -d)"
           npm install --prefix "$delivery_cli_prefix" --ignore-scripts --no-audit --no-fund @openai/codex@0.163.0
-          python3 scripts/qualify_delivery_host.py --clean-runner --codex "$delivery_cli_prefix/node_modules/.bin/codex" --package-root "$GITHUB_WORKSPACE"
+          echo "cli=$delivery_cli_prefix/node_modules/.bin/codex" >> "$GITHUB_OUTPUT"
+      - name: Canned native protocol compatibility
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.synthetic_approvals == true }}
+        env:
+          REVIEWED_SHA: ${{ inputs.reviewed_sha }}
+          NATIVE_RUN_ATTEMPT: ${{ github.run_attempt }}
+        run: |
+          [[ "$NATIVE_RUN_ATTEMPT" == "1" ]] || exit 1
+          [[ "$REVIEWED_SHA" =~ ^[0-9a-f]{40}$ ]] && [[ "$(git rev-parse HEAD)" == "$REVIEWED_SHA" ]] || exit 1
+          python3 scripts/qualify_delivery_protocol.py --clean-runner --synthetic-approvals --codex "${{ steps.install.outputs.cli }}" --package-root "$GITHUB_WORKSPACE" --evidence "$RUNNER_TEMP/delivery-protocol-evidence"
+      - name: Existing deterministic host qualification
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: python3 scripts/qualify_delivery_host.py --clean-runner --codex "${{ steps.install.outputs.cli }}" --package-root "$GITHUB_WORKSPACE"
