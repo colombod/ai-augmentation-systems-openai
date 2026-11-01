@@ -76,3 +76,12 @@ receive no new write, push, merge, approval or deployment permissions.
    source-shipped is distinct from installed, deployed and customer-observed.
    Report what the customer can now do, what remains unknown, and the next real-use
    or return check. A failed or partial shipment remains explicitly incomplete.
+
+For the local first-history surface, include the complete
+[reviewed Git-bundle workflow](publication.md#first-distributable-git-history)
+in the change: private candidate, independent review, exact control receipt,
+publication/recovery, clean installation and useful behavior. A script alone or
+successful installation without using the delivered behavior is insufficient.
+Use the same installed route on subsequent changes; record actual reuse rather
+than inventing a second feature as a release prerequisite. This local action does
+not authorize remote publication or establish protection of other host routes.

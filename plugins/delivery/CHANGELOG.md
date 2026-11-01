@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.0-preview.25
+
+- Create reviewed parentless Git bundles from complete file and commit proposals,
+  with explicit trusted control, no-overwrite publication and durable recovery.
+- Connect the installed product workflow to independent review, exact control
+  receipts, clean installation and useful behavior checks.
+- Preserve existing local-release ledgers. This local action does not provide
+  semantic classification, recipient authentication or whole-host protection.
+
 ## 0.1.0-preview.24
 
 - Prepare unapproved local bundles from an explicit full Git commit and complete

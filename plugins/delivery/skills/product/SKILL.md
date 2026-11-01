@@ -88,3 +88,10 @@ change through authorized shipping, follow [the bounded-change route](../../refe
 Keep observed, planned and deferred distinct with IDs, reasons and next actions;
 agent judgment is permitted but owner confirmation must never be invented.
 This route also applies to no-code greenfield work and does not force full-pipeline documents.
+
+For a selected change whose delivery surface is a reviewed local Git bundle,
+follow [first distributable history](../../references/publication.md#first-distributable-git-history)
+as part of the bounded shipping handoff. Use the installed commands and separate
+native builder/reviewer roles when available; preserve their actual independence.
+The authorized coordinator applies trusted control decisions. Instructions and
+role names do not isolate control authority from an unrestricted host.
