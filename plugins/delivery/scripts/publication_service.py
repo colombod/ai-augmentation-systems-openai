@@ -277,6 +277,40 @@ class PublicationStore:
             self._rollback_or_quarantine()
             return {'status':'unknown' if committing and name == 'delivery_publication_publish' else 'blocked'}
 
+    def handoff(self, ident, expected):
+        """Admit a local export against a caller-selected recipient snapshot.
+
+        This is not recipient authentication or an atomic external transmission.
+        Historical consume and release receipts remain independent of this check.
+        """
+        try:
+            if not identifier(ident):
+                raise Refused()
+            exact(expected, BINDING_FIELDS | {'generation'})
+            if type(expected['generation']) is not int or expected['generation'] < 1 \
+                    or any(type(expected[k]) is not str or not expected[k].strip()
+                           or len(expected[k]) > 256 for k in BINDING_FIELDS) \
+                    or not identifier(expected['destination']) \
+                    or expected['visibility'] not in ('private', 'public'):
+                raise Refused()
+            binding = canonical({k:expected[k] for k in BINDING_FIELDS})
+            self._begin()
+            row = self.db.execute('''SELECT r.envelope FROM releases r
+                JOIN routes t ON t.destination=?
+                WHERE r.operation_id=? AND r.binding=? AND r.generation=?
+                AND t.binding=r.binding AND t.generation=r.generation''',
+                (expected['destination'], ident, binding, expected['generation'])).fetchone()
+            if not row:
+                raise Refused()
+            value = decode(row[0].encode())
+            if envelope(value) != row[0] or value['destination'] != expected['destination']:
+                raise Refused()
+            self.db.execute('COMMIT')
+            return value
+        except Exception:
+            self._rollback_or_quarantine()
+            raise Refused() from None
+
     def consume(self, ident):
         if not identifier(ident):
             raise Refused()
@@ -404,14 +438,22 @@ def main():
     parser.add_argument('--control-fd', type=int)
     parser.add_argument('--control', action='store_true', help='Trusted single JSON control request on stdin; not an MCP tool')
     parser.add_argument('--consume')
+    parser.add_argument('--handoff', help='Trusted checked export; exact expected binding JSON on stdin')
     args = parser.parse_args()
     store = None
     try:
-        if args.consume and (args.initialize or args.control_fd is not None or args.control) \
+        if (args.consume is not None or args.handoff is not None) and (
+                args.initialize or args.control_fd is not None or args.control) \
+                or args.consume is not None and args.handoff is not None \
                 or args.control and args.control_fd is not None:
             raise Refused()
         store = PublicationStore(args.db, args.initialize)
-        if args.consume:
+        if args.handoff is not None:
+            raw = sys.stdin.buffer.read(MAX_FRAME + 1)
+            if len(raw) > MAX_FRAME:
+                raise Refused()
+            print(canonical(store.handoff(args.handoff, decode(raw))))
+        elif args.consume is not None:
             print(canonical(store.consume(args.consume)))
         elif args.control:
             raw = sys.stdin.buffer.read(MAX_FRAME + 1)

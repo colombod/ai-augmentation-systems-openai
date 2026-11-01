@@ -593,6 +593,136 @@ class ServiceTests(unittest.TestCase):
             input=exported.stdout,capture_output=True,text=True,env=ENV)
         self.assertEqual(consumer.returncode,0);self.assertEqual(consumer.stdout.strip(),'counter behavior verified')
 
+    def handoff(self, binding=None, ident='sample-one', raw=None, extra=()):
+        return subprocess.run([sys.executable, str(SCRIPT), '--db', str(self.db),
+            '--handoff', ident, *extra], input=json.dumps(self.binding if binding is None else binding)
+            if raw is None else raw, capture_output=True, text=True, timeout=5, env=ENV)
+
+    def assert_handoff_refused(self, result):
+        self.assertEqual(result.returncode, 2)
+        self.assertEqual(result.stdout, '')
+        self.assertEqual(result.stderr, '{"status":"unavailable"}\n')
+
+    def test_checked_handoff_requires_completed_release_and_exact_expected_binding(self):
+        self.assert_handoff_refused(self.handoff())
+        self.approved()
+        self.assert_handoff_refused(self.handoff())
+        self.assertEqual(self.session.call('publish'), 'completed')
+        original = self.db.read_bytes()
+        exported = self.handoff()
+        self.assertEqual(exported.returncode, 0)
+        self.assertEqual(json.loads(exported.stdout), SAFE)
+        for field in self.binding:
+            wrong = {**self.binding, field: self.binding[field] + 1 if field == 'generation'
+                     else 'public' if field == 'visibility' else 'other-value'}
+            with self.subTest(field=field):
+                self.assert_handoff_refused(self.handoff(wrong))
+        self.assertEqual(self.db.read_bytes(), original)
+        self.assertEqual(self.session.call('receipt'), 'completed')
+
+    def test_checked_handoff_refuses_drift_and_restored_labels_but_new_release_works(self):
+        self.approved(); self.assertEqual(self.session.call('publish'), 'completed')
+        for field in REGISTER.keys() - {'action', 'destination'}:
+            changed = {**REGISTER, field: 'public' if field == 'visibility' else 'other-value'}
+            with self.subTest(field=field):
+                current = self.session.trusted(changed)['binding']
+                self.assert_handoff_refused(self.handoff(self.binding))
+                self.assert_handoff_refused(self.handoff(current))
+                restored = self.session.trusted(REGISTER)['binding']
+                self.assert_handoff_refused(self.handoff(self.binding))
+                self.assert_handoff_refused(self.handoff(restored))
+        self.assertEqual(self.session.call('receipt'), 'completed')
+        historical = subprocess.run([sys.executable, str(SCRIPT), '--db', str(self.db),
+            '--consume', 'sample-one'], capture_output=True, text=True, timeout=5, env=ENV)
+        self.assertEqual(historical.returncode, 0)
+        self.assertEqual(json.loads(historical.stdout), SAFE)
+        self.binding = restored
+        self.approved('sample-two'); self.assertEqual(self.session.call('publish', 'sample-two'), 'completed')
+        exported = self.handoff(ident='sample-two')
+        self.assertEqual(exported.returncode, 0)
+        self.assertEqual(json.loads(exported.stdout), SAFE)
+        self.assertEqual(self.count(), 2)
+
+    def test_checked_handoff_malformed_inputs_and_ambiguous_modes_emit_no_bundle(self):
+        self.approved(); self.assertEqual(self.session.call('publish'), 'completed')
+        original = self.db.read_bytes()
+        bad = ['{}', 'null', '[]', '{', ' ' * 1048577,
+               json.dumps(self.binding)[:-1] + ',"generation":1}']
+        bad += [json.dumps({**self.binding, 'generation': v}) for v in [True, 0, 1.0, '1', None]]
+        bad += [json.dumps({**self.binding, 'owner': v}) for v in [None, [], '', 'x' * 257]]
+        bad += [json.dumps({**self.binding, 'extra': 'no'})]
+        for raw in bad:
+            self.assert_handoff_refused(self.handoff(raw=raw))
+        for extra in [('--consume', 'sample-one'), ('--control',), ('--initialize',), ('--control-fd', '3')]:
+            self.assert_handoff_refused(self.handoff(extra=extra))
+        self.assert_handoff_refused(self.handoff(ident=''))
+        self.assertEqual(self.db.read_bytes(), original)
+
+    def test_checked_handoff_locked_ledger_refuses_without_mutation(self):
+        self.approved(); self.assertEqual(self.session.call('publish'), 'completed')
+        original = self.db.read_bytes()
+        with sqlite3.connect(self.db) as holder:
+            holder.execute('BEGIN IMMEDIATE')
+            self.assert_handoff_refused(self.handoff())
+            self.assertTrue(holder.in_transaction)
+        self.assertEqual(self.db.read_bytes(), original)
+        self.assertEqual(self.handoff().returncode, 0)
+
+    def test_checked_handoff_serializes_admission_and_refuses_failed_commit(self):
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('publication_handoff_test', SCRIPT)
+        service = importlib.util.module_from_spec(spec); spec.loader.exec_module(service)
+        self.approved(); self.assertEqual(self.session.call('publish'), 'completed')
+        original = self.db.read_bytes()
+        store = service.PublicationStore(self.db)
+        underlying = store.db
+        observed = []
+        fail_commit = False
+
+        class AdmissionProbe:
+            @property
+            def in_transaction(self):
+                return underlying.in_transaction
+
+            def execute(probe, sql, *args):
+                if 'SELECT r.envelope' in sql:
+                    with sqlite3.connect(self.db, timeout=0) as other:
+                        with self.assertRaises(sqlite3.OperationalError):
+                            other.execute('UPDATE routes SET generation=generation+1')
+                    observed.append('registration-write-blocked')
+                if sql == 'COMMIT' and fail_commit:
+                    raise sqlite3.OperationalError('synthetic commit failure')
+                return underlying.execute(sql, *args)
+
+            def close(probe):
+                underlying.close()
+
+        store.db = AdmissionProbe()
+        try:
+            self.assertEqual(store.handoff('sample-one', self.binding), SAFE)
+            self.assertEqual(observed, ['registration-write-blocked'])
+            fail_commit = True
+            with self.assertRaises(service.Refused):
+                store.handoff('sample-one', self.binding)
+            self.assertFalse(underlying.in_transaction)
+            self.assertEqual(self.db.read_bytes(), original)
+        finally:
+            store.close()
+
+    def test_checked_handoff_does_not_renew_expired_review(self):
+        self.approved(); self.assertEqual(self.session.call('publish'), 'completed')
+        # Expiry applies at release insertion; completed releases retain history.
+        with sqlite3.connect(self.db) as connection:
+            connection.execute('UPDATE reviews SET expires=issued-1')
+        original = self.db.read_bytes()
+        self.assertEqual(self.handoff().returncode, 0)
+        self.assertEqual(self.db.read_bytes(), original)
+        self.approved('sample-two')
+        with sqlite3.connect(self.db) as connection:
+            connection.execute('UPDATE reviews SET expires=issued-1')
+        self.assertEqual(self.session.call('publish', 'sample-two'), 'blocked')
+        self.assert_handoff_refused(self.handoff(ident='sample-two'))
+
     def test_missing_corrupt_or_reinitialized_ledger_does_not_reset_history(self):
         self.approved();self.assertEqual(self.session.call('publish'),'completed')
         original=self.db.read_bytes()

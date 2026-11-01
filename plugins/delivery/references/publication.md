@@ -84,8 +84,8 @@ reuse that ID. This guarantee concerns the local SQLite operation only. It is no
 a claim that a remote GET followed by a send is atomic. A missing or corrupt ledger
 is unavailable, never automatically replaced. Keep recovery copies private.
 
-A clean consumer receives only the stdout of the trusted `--consume` command,
-never the ledger, which also contains unreleased drafts. Consume returns a full
+A clean consumer receives only the successful stdout of a trusted export command,
+never the ledger, which also contains unreleased drafts. Export returns a full
 reviewed JSON envelope and does not interpret file names as filesystem paths.
 Any later remote transmission is a separate operation requiring its own authority
 and verification. Retrying an unknown result must use the original ID/envelope.
@@ -119,7 +119,7 @@ enabled_tools = ["delivery_publication_submit", "delivery_publication_publish", 
 Use the actual installed package path in this configuration. Codex starts the stdio
 process on connection; you do not need to launch it manually. Restart/reconnect
 uses the same existing ledger. Missing or corrupt state stays unavailable; never
-add `--initialize`, `--control`, or `--consume` to server arguments. Remove the
+add `--initialize`, `--control`, `--consume`, or `--handoff` to server arguments. Remove the
 server configuration to opt out; retain the private ledger for reconciliation.
 
 This explicit opt-in avoids starting an unconfigured service for every plugin
@@ -167,14 +167,36 @@ event loop. If candidate stdout is not drained, that control socket can stall.
 Use the separate `--control` invocation when trusted control availability must
 be independent of candidate output.
 
-To obtain the released bundle for a recipient:
+To admit an export against an independently selected local recipient, supply its
+complete expected binding (including generation) as JSON on stdin:
+
+```sh
+python3 /absolute/plugin/scripts/publication_service.py --db /private/bundles.sqlite --handoff example-operation < /private/expected-binding.json
+```
+
+The expected binding must match both the completed release and current registration
+in one transaction. Every binding field and generation participates. Changed or
+restored registrations refuse old releases; a new reviewed operation is required.
+Malformed expectations, unknown or unreleased IDs, unavailable state and transaction
+failure produce no bundle on stdout. Successful stdout is the canonical reviewed
+envelope with unchanged file contents. No drafts, reviews or receipts are changed.
+Select the expected recipient independently; copying the current registration is
+not proof that it is the intended recipient. Labels do not authenticate remote accounts.
+
+This checks local export admission. Registration may change after commit and before
+stdout delivery. Review expiry governs initial release insertion; this command does
+not renew review or grant fresh transmission authority. Any later transmission needs
+its own current authorization and verification at the point of effect.
+
+For historical recovery without a current-recipient check, use the existing command:
 
 ```sh
 python3 /absolute/plugin/scripts/publication_service.py --db /private/bundles.sqlite --consume example-operation
 ```
 
-Only this command's successful stdout is the handoff. Unknown or unreleased IDs
-produce no bundle. The ledger has a fixed capacity of 256 operation IDs and 64
+Historical consume remains available after registration changes, and completed
+receipts remain completed. It is trusted retrieval, not recipient verification.
+Unknown or unreleased IDs produce no bundle. The ledger has a fixed capacity of 256 operation IDs and 64
 registered destinations; it refuses additional entries when full. Wire frames are
 at most 1 MiB; canonical envelopes are at most 1,015,808 bytes, reserving control
 message overhead. SQLite uses the trusted host wall clock; rollback before review
