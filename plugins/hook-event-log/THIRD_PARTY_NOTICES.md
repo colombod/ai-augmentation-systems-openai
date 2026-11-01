@@ -1,9 +1,6 @@
-# Rust dependency notices
+# Third-party notices
 
-The native executable includes code from the compiled dependencies below. Each
-dependency retains its own licence; the plugin source is MIT. The lockfile can
-also include optional dependencies not compiled into this executable. Node,
-Rust and TypeScript build tools are not bundled.
+The current JavaScript package uses Node built-ins and bundles no third-party runtime dependencies. Node itself is not bundled. The following notices are retained as provenance for native dependencies distributed in earlier previews; those binaries and dependencies are not part of this version. The plugin source remains MIT licensed.
 
 ## block-buffer 0.10.4
 

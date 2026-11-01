@@ -1,5 +1,5 @@
 {
-  "description": "Record lifecycle event types and allowlisted subagent identifiers and transcript paths using a local Rust logger.",
+  "description": "Record lifecycle event types and allowlisted subagent metadata using local Node commands.",
   "hooks": {
     "SessionStart": [
       {
